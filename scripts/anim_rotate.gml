@@ -54,7 +54,7 @@ var flip_multiplier = sign(anim_timer - anim_flip_frame)
 
 
 // the x distance the flip needs to travel, acounting delta time
-var trav_dis = anim_travel_dis * lag()
+//var trav_dis = anim_travel_dis * lag()
 
 /// a negative number means we were right, and we're turning left
 var trav_dis_x = cos(anim_timer * pi_time) * (sprite_width/2) - abs(sprite_width/2)*anim_rotate_dir

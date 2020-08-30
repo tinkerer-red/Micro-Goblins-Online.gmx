@@ -352,6 +352,7 @@ for (var i = 0; i &lt; 3; i++)
             <kind>1</kind>
             <string>///REMOVE THIS
 
+ani = false
 
 circle_size = 0
 radius_i = 1
@@ -387,6 +388,30 @@ debug = false
           <argument>
             <kind>1</kind>
             <string>show_debug_message("CONNECTED!!!")
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Define Outfit
+
+head = spr_head_template
+body = spr_body_template
 </string>
           </argument>
         </arguments>
@@ -878,6 +903,28 @@ scr_player_state_move(self.player_id_global, 1)
         </arguments>
       </action>
     </event>
+    <event eventtype="5" enumb="16">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string></string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="5" enumb="13">
       <action>
         <libid>1</libid>
@@ -988,7 +1035,9 @@ if (visible = true)
       //x = x - (2*image_xscale)
     }
   }else{ //if not rotating
-    draw_self()
+    if !ani{
+      draw_self()
+    }
   }
   
   
@@ -1000,6 +1049,34 @@ if (visible = true)
     draw_text_transformed(x, bbox_top-sting_offset*obj_camera_control.upscale_val, name, view_res*obj_camera_control.upscale_val, view_res*obj_camera_control.upscale_val, 0)
     draw_set_halign(fa_left);
   }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///[DEBUG] draw testing
+
+if keyboard_check(vk_shift) ani = true
+if ani
+{
+  if anim_idle() ani = false
+
 }
 </string>
           </argument>

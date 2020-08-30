@@ -10,16 +10,28 @@
   </NewExtensions>
   <sounds name="sound"/>
   <sprites name="sprites">
+    <sprite>sprites\sprite9</sprite>
+    <sprites name="Player">
+      <sprites name="Weapons">
+        <sprite>sprites\spr_weap_test</sprite>
+      </sprites>
+      <sprites name="Outfits">
+        <sprites name="Bodies">
+          <sprite>sprites\spr_body_template</sprite>
+        </sprites>
+        <sprites name="Heads">
+          <sprite>sprites\spr_head_template</sprite>
+        </sprites>
+      </sprites>
+    </sprites>
     <sprite>sprites\sprite0</sprite>
     <sprite>sprites\spr_green</sprite>
     <sprite>sprites\spr_red</sprite>
     <sprite>sprites\spr_yellow</sprite>
-    <sprite>sprites\spr_weap_test</sprite>
     <sprite>sprites\spr_black</sprite>
     <sprite>sprites\sprite6</sprite>
     <sprite>sprites\spr_red_wall</sprite>
     <sprite>sprites\spr_ball</sprite>
-    <sprite>sprites\sprite9</sprite>
     <sprite>sprites\sprite10</sprite>
   </sprites>
   <backgrounds name="background">
@@ -277,6 +289,8 @@
     <scripts name="Drawing">
       <script>scripts\draw_cone.gml</script>
       <script>scripts\anim_rotate.gml</script>
+      <script>scripts\anim_walk.gml</script>
+      <script>scripts\anim_idle.gml</script>
     </scripts>
     <scripts name="Utillity">
       <script>scripts\show_debug_player.gml</script>
