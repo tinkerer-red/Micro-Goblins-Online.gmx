@@ -1,4 +1,4 @@
-///anim_walk(dir)
+///anim_damage(dir)
 
 /* This script is used to animate the sprite rotation mimicing
      the paper mario style with out the need for seperate arm
@@ -17,14 +17,14 @@
 returned = false
 
 
-if !variable_instance_exists(self.id, "anim_walk_start") {anim_walk_start = true}
+if !variable_instance_exists(self.id, "anim_damage_start") {anim_damage_start = true}
 
 
 //set the animation variables
-if (anim_walk_start)
+if (anim_damage_start)
 {
   // anim_time is used to equate exactly how many frames the animation needs to take
-  anim_time = floor(room_speed*0.25)
+  anim_time = floor(room_speed*0.3)
   
   // anim_timer is used to equate where the sin/cos wave currently is
   anim_timer = anim_time
@@ -42,11 +42,12 @@ if (anim_walk_start)
   view_loop = 9
   
   // lastly max_-_multiplier is the maximum distance we want the axis to move, the cos/sin function would move it a parcent of the max
-  max_x_multiplier = abs(sprite_width)*0.05
-  max_y_multiplier = abs(sprite_height)*0.05
+  max_x_multiplier = lengthdir_x(abs(sprite_width)*0.8, argument0)
+  max_y_multiplier = lengthdir_y(abs(sprite_height)*0.8, argument0)
   
   // this variable is only used to make sure we only calculate the animation's variables once
-  anim_walk_start = false
+  anim_damage_start = false
+  
 }
 
 
@@ -60,37 +61,50 @@ if (anim_walk_start)
 // pi_time is just a method to make the wave it's self. multiplying pi_time will dictate how many times to wave peaks/vallies before it finishes the timer
 // lastly max_-_multiplier is the maximum distance we want the axis to move, the cos/sin function would move it a parcent of the max
 
-/// a negative number means we were facing right, and we're turning left
-//var trav_dis_x = sin((anim_timer) * pi_time) * max_x_multiplier
-
-// how much we skew the y for either the front of back of the player
-var trav_dis_y = sin((anim_timer) * pi_time*2) * max_y_multiplier
 
 /// a negative number means we were facing right, and we're turning left
+// 3 wave peak
+var trav_dis_x = (-cos(anim_time*pi_time*(anim_timer/anim_flip_frame)*1.25) * (anim_timer/(anim_time*0.8972256054)))  * max_x_multiplier
+// 2 wave peak
+//var trav_dis_x = (-sin(anim_time*pi_time*(anim_timer/anim_flip_frame)) * (anim_timer/(anim_time*0.8707991555)))  * max_x_multiplier
+//var trav_dis_x = ((-cos(anim_timer *pi_time *(anim_timer/anim_time) *2))/2+0.5)  * max_x_multiplier
+//var trav_dis_x = sin((anim_timer) * pi_time*2) * max_x_multiplier
+
+// how much we skew the y for either the top or bottom of the player
+// 3 wave peak
+var trav_dis_y = (-cos(anim_time*pi_time*(anim_timer/anim_flip_frame)*1.25) * (anim_timer/(anim_time*0.8972256054)))  * max_y_multiplier;
+// 2 wave peak
+// var trav_dis_y = (-sin(anim_time*pi_time*(anim_timer/anim_flip_frame)) * (anim_timer/(anim_time*0.8707991555)))  * max_y_multiplier;
+//var trav_dis_y = ((-cos(anim_timer *pi_time *(anim_timer/anim_time) *2))/2+0.5)  * max_y_multiplier
+//var trav_dis_y = sin((anim_timer) * pi_time*2) * max_y_multiplier
+
+/// a negative number means we were facing right, and we're turning left
+//var trav_dis_x_head = ((-cos(anim_timer *pi_time *(anim_timer/anim_time) *2))/2+0.5)  * max_x_multiplier
 //var trav_dis_x_head = sin((anim_timer) * pi_time) * max_x_multiplier
 
 // how much we skew the y for either the front of back of the player
-var trav_dis_y_head = sin((anim_timer+anim_flip_frame*0.5) * pi_time*2) * max_y_multiplier
+//var trav_dis_y_head = ((-cos(anim_timer *pi_time *(anim_timer/anim_time) *2))/2+0.5)  * max_y_multiplier
+//var trav_dis_y_head = sin((anim_timer+anim_flip_frame*0.5) * pi_time*2) * max_y_multiplier
 
 
 draw_sprite_pos(body,
                 image_index, 
                 
                 //top left
-                x-(sprite_xoffset),//+trav_dis_x, 
-                y-(sprite_yoffset)+trav_dis_y*2.5,
+                x-(sprite_xoffset)+trav_dis_x,
+                y-(sprite_yoffset)+trav_dis_y,
                 
                 //top right
-                x+(sprite_width-sprite_xoffset),//+trav_dis_x, 
-                y-(sprite_yoffset)+trav_dis_y*2.5,
+                x+(sprite_width-sprite_xoffset)+trav_dis_x, 
+                y-(sprite_yoffset)+trav_dis_y,
                 
                 //bottom right
-                x+(sprite_width-sprite_xoffset),//-trav_dis_x, 
-                y+(sprite_height-sprite_yoffset)+trav_dis_y*1.5,
+                x+(sprite_width-sprite_xoffset),//+trav_dis_x, 
+                y+(sprite_height-sprite_yoffset),//+trav_dis_y,
                 
                 //bottom left
                 x-(sprite_xoffset),//+trav_dis_x, 
-                y+(sprite_height-sprite_yoffset)+trav_dis_y*1.5,
+                y+(sprite_height-sprite_yoffset),//+trav_dis_y*1.5,
                 
                 image_alpha);
 
@@ -98,20 +112,20 @@ draw_sprite_pos(head,
                 image_index, 
                 
                 //top left
-                x-(sprite_xoffset),//+trav_dis_x, 
-                y-(sprite_yoffset)+trav_dis_y_head*1.5,
+                x-(sprite_xoffset)+trav_dis_x,
+                y-(sprite_yoffset)+trav_dis_y,
                 
                 //top right
-                x+(sprite_width-sprite_xoffset),//+trav_dis_x, 
-                y-(sprite_yoffset)+trav_dis_y_head*1.5,
+                x+(sprite_width-sprite_xoffset)+trav_dis_x,
+                y-(sprite_yoffset)+trav_dis_y,
                 
                 //bottom right
-                x+(sprite_width-sprite_xoffset),//-trav_dis_x, 
-                y+(sprite_height-sprite_yoffset)+trav_dis_y_head*0.5,
+                x+(sprite_width-sprite_xoffset),//+trav_dis_x,
+                y+(sprite_height-sprite_yoffset),//+trav_dis_y_head,
                 
                 //bottom left
-                x-(sprite_xoffset),//+trav_dis_x, 
-                y+(sprite_height-sprite_yoffset)+trav_dis_y_head*0.5,
+                x-(sprite_xoffset),//+trav_dis_x,
+                y+(sprite_height-sprite_yoffset),//+trav_dis_y_head,
                 
                 image_alpha);
 
@@ -120,7 +134,7 @@ draw_sprite_pos(head,
 if (anim_timer <= 0)
 {
   returned = true
-  anim_walk_start = true
+  anim_damage_start = true
 }
 
 //this will keep track of the view ports we've iterated through, that way we never count down the anim timer more then once each frame

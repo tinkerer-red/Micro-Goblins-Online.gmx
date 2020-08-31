@@ -1075,7 +1075,7 @@ if (visible = true)
 if keyboard_check(vk_shift) ani = true
 if ani
 {
-  if anim_idle() ani = false
+  if anim_damage(point_direction(x,y,mouse_x,mouse_y)) ani = false
 
 }
 </string>

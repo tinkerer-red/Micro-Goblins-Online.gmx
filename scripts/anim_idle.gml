@@ -17,11 +17,11 @@
 returned = false
 
 
-if !variable_instance_exists(self.id, "anim_rotate_start") {anim_rotate_start = true}
+if !variable_instance_exists(self.id, "anim_idle_start") {anim_idle_start = true}
 
 
 //set the animation variables
-if (anim_rotate_start)
+if (anim_idle_start)
 {
   // anim_time is used to equate exactly how many frames the animation needs to take
   anim_time = floor(room_speed*1)
@@ -46,7 +46,8 @@ if (anim_rotate_start)
   max_y_multiplier = abs(sprite_height)*0.05
   
   // this variable is only used to make sure we only calculate the animation's variables once
-  anim_rotate_start = false
+  anim_idle_start = false
+  
 }
 
 
@@ -120,7 +121,7 @@ draw_sprite_pos(head,
 if (anim_timer <= 0)
 {
   returned = true
-  anim_rotate_start = true
+  anim_idle_start = true
 }
 
 //this will keep track of the view ports we've iterated through, that way we never count down the anim timer more then once each frame

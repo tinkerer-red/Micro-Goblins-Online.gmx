@@ -291,6 +291,7 @@
       <script>scripts\anim_rotate.gml</script>
       <script>scripts\anim_walk.gml</script>
       <script>scripts\anim_idle.gml</script>
+      <script>scripts\anim_damage.gml</script>
     </scripts>
     <scripts name="Utillity">
       <script>scripts\show_debug_player.gml</script>
