@@ -266,7 +266,8 @@ mp_setType("controls",mp_type.FAST)
 for (var i = 0; i &lt; 3; i++)
 {
   self.item_data[i, weapon_name] = "Sword of Testing"
-  self.item_data[i, weapon_type] = weapon_type_range
+  self.item_data[i, weapon_type] = weapon_type_melee
+  if (i = 0) self.item_data[i, weapon_type] = weapon_type_range
   self.item_data[i, weapon_sprite] = spr_weap_test
   self.item_data[i, weapon_proj_sprite] = spr_weap_test
   
@@ -297,33 +298,33 @@ for (var i = 0; i &lt; 3; i++)
   
   
   
-  repeat(0) ds_priority_add(queue_button_mods, scr_mod_charged, 1);
-  repeat(0) ds_priority_add(queue_button_mods, scr_mod_repeater, 2);
-  repeat(0) ds_priority_add(queue_button_mods, scr_1, 3);
+  repeat( 0 ) ds_priority_add(queue_button_mods, scr_mod_charged, 1);
+  repeat( 0 ) ds_priority_add(queue_button_mods, scr_mod_repeater, 2);
+  repeat( 0 ) ds_priority_add(queue_button_mods, scr_1, 3);
   
-  repeat(0) ds_priority_add(queue_pre_weap_mods, scr_mod_dash, 1);
-  repeat(0) ds_priority_add(queue_pre_weap_mods, scr_2, 2);
+  repeat( 1 ) ds_priority_add(queue_pre_weap_mods, scr_mod_dash, 1);
+  repeat( 0 ) ds_priority_add(queue_pre_weap_mods, scr_2, 2);
   
-  repeat(0) ds_priority_add(queue_weap_spawn_mods, scr_mod_swiftness, 1);
-  repeat(4) ds_priority_add(queue_weap_spawn_mods, scr_mod_slowness, 2);
-  repeat(0) ds_priority_add(queue_weap_spawn_mods, scr_mod_enlarge, 3);
-  //repeat(0) ds_priority_add(queue_weap_spawn_mods, scr_mod_shrink, 4);
-  repeat(0) ds_priority_add(queue_weap_spawn_mods, scr_mod_knockback, 5);
-  repeat(0) ds_priority_add(queue_weap_spawn_mods, scr_3, 1);
+  repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_swiftness, 1);
+  repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_slowness, 2);
+  repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_enlarge, 3);
+  //repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_shrink, 4);
+  repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_knockback, 5);
+  repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_3, 1);
   
-  repeat(0) ds_priority_add(queue_proj_spawn_mods, scr_mod_inaccurate, 1);
-  repeat(0) ds_priority_add(queue_proj_spawn_mods, scr_4, 1);
+  repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_inaccurate, 1);
+  repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_4, 1);
   
-  repeat(0) ds_priority_add(queue_attack_step_mods, scr_5, 1);
+  repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_5, 1);
   
-  repeat(0) ds_priority_add(queue_pre_col_mods, scr_mod_boomerang, 1);
-  repeat(0) ds_priority_add(queue_pre_col_mods, scr_6, 2);
+  repeat( 0 ) ds_priority_add(queue_pre_col_mods, scr_mod_boomerang, 1);
+  repeat( 0 ) ds_priority_add(queue_pre_col_mods, scr_6, 2);
   
-  repeat(1) ds_priority_add(queue_col_mods, scr_mod_negarang, 1);
-  repeat(0) ds_priority_add(queue_col_mods, scr_7, 2);
+  repeat( 0 ) ds_priority_add(queue_col_mods, scr_mod_negarang, 1);
+  repeat( 0 ) ds_priority_add(queue_col_mods, scr_7, 2);
   
-  repeat(0) ds_priority_add(queue_post_attack_mods, scr_mod_evade, 1);
-  repeat(0) ds_priority_add(queue_post_attack_mods, scr_8, 1);
+  repeat( 0 ) ds_priority_add(queue_post_attack_mods, scr_mod_evade, 1);
+  repeat( 0 ) ds_priority_add(queue_post_attack_mods, scr_8, 1);
   
   
 }
@@ -620,12 +621,47 @@ for (var i = 0; i &lt; 3; i++)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Run Modifiers / Attack Check
-
+            <string>///[Modifier] Button Queue / Attack Start
 //show_debug_message("item_used_check = "+string(item_used_check))
 ////////////////////////////////////////////////////////////////////
 //Button Queue
 ////////////////////////////////////////////////////////////////////
+
+image_blend = c_green
+
+//Melee weapon cancel check
+if (self.item_a_pressed || self.item_b_pressed || self.item_c_pressed)
+{
+  if (self.weap_num &gt;= 0) &amp;&amp; (self.player_state = e_player_state.attack)
+  {
+    if (self.item_data[self.weap_num, weapon_type] = weapon_type_melee)
+    {
+      if ds_exists(self.weapon_event_queues, ds_type_priority){
+        ds_priority_destroy(self.weapon_event_queues)
+      }
+      if ds_exists(self.active_queue, ds_type_priority){
+        ds_priority_destroy(self.active_queue)
+      }
+      self.weapon_event_queues = -1
+      self.active_queue = -1
+      self.repeater_in_queue = false
+      self.attack = false
+      self.post_attack = false
+      self.player_state = e_player_state.move
+      instance_destroy(weap_inst)
+      
+      
+      //show_debug_message("melee attack canceled")
+      self.item_used_check = -1
+      
+      self.mod_charge_timer = 0
+    }
+  }
+}
+
+
+
+
 if (self.player_state = e_player_state.move)
 {
   if (self.item_a || self.item_b || self.item_c)
@@ -638,13 +674,16 @@ if (self.player_state = e_player_state.move)
     if self.item_a {self.weap_num = 0}
     
     
-    if (self.weap_num_old != self.weap_num) &amp;&amp; (self.weap_num_old != -1) //if the button was changed while charging
+    //if the button was changed while charging
+    if (self.weap_num_old != self.weap_num) &amp;&amp; (self.weap_num_old != -1)
     {
       if ds_exists(self.active_queue, ds_type_priority)
       {
         //show_debug_message("first destroy")
+        
         ds_priority_destroy(self.weapon_event_queues)
         ds_priority_destroy(self.active_queue)
+        
         self.weapon_event_queues = -1
         self.active_queue = -1
         self.repeater_in_queue = false
@@ -655,7 +694,19 @@ if (self.player_state = e_player_state.move)
       
       self.mod_charge_timer = 0
     }
-    /*
+    
+    
+    
+    
+    /*  {
+        self.active_w_cooldown = 2
+        
+        
+      }
+    */
+    
+      
+      /*
     //check to make sure all the data is there
     if ds_exists(self.weapon_event_queues, ds_type_priority)
     {
@@ -665,7 +716,11 @@ if (self.player_state = e_player_state.move)
       }
     }
     */
-    //create the data
+    
+    
+    ///////////////////////////////////////////////////////
+    // create the active weapon queues from the queue array
+    ///////////////////////////////////////////////////////
     if !ds_exists(self.active_queue, ds_type_priority)// || new_queue
     {
       self.weapon_event_queues = ds_priority_create() //make sure to delete after the projectile inherits
@@ -683,11 +738,15 @@ if (self.player_state = e_player_state.move)
         {self.repeater_in_queue = true} else {self.repeater_in_queue = false}
       
       
+      /// Cool Downs
       self.active_w_cooldown = room_speed/3
+      
       
       self.active_w_damage = 1
       
+      
       self.active_w_knockback = 16
+      
       //self.active_w_size = 1
       //self.active_w_speed = 22.5
       //self.active_w_proj_speed = 8
@@ -696,11 +755,14 @@ if (self.player_state = e_player_state.move)
     }
     
     
-    
-      
+    //////////////////////////////////////////////////
+    /// log the button queue into the currently active queue
+    //////////////////////////////////////////////////
     if (self.cooldown_array[0, self.weap_num]) &amp;&amp; ((self.item_used_check != self.weap_num) || (self.repeater_in_queue))
     {
     
+      if ds_exists(self.active_queue, ds_type_priority)
+      {
       if !ds_priority_empty(self.active_queue)
       {
         while !ds_priority_empty(self.active_queue)
@@ -732,6 +794,7 @@ if (self.player_state = e_player_state.move)
         self.player_state = e_player_state.attack
         
         
+      }
       }
     }
     
@@ -772,6 +835,28 @@ if (self.player_state = e_player_state.move)
 
 
 
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///[Modifier] Pre Weapon Queue
 ////////////////////////////////////////////////////////////////////
 //Pre Weapon Queue
 ////////////////////////////////////////////////////////////////////
@@ -792,6 +877,28 @@ if self.player_state = e_player_state.attack &amp;&amp; !self.attack &amp;&amp; 
 
 
 
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///[Modifier] Weapon Spawn Queue
 ////////////////////////////////////////////////////////////////////
 //Weapon Spawn Queue
 ////////////////////////////////////////////////////////////////////
@@ -801,7 +908,12 @@ if self.player_state = e_player_state.attack &amp;&amp; self.attack &amp;&amp; !
     var self.result = scr_run_modifiers()  //weapon spawn mods //like enlarging the sprite and what not
   if self.result = true
   {
-    
+    ///If the weapon is a melee type then allow the weapon to be inturupted by another attack
+    //if (self.item_data[self.weap_num, weapon_type] = weapon_type_melee)
+    //{
+    //  self.player_state = e_player_state.move
+    //  self.cooldown_array[0, self.weap_num] = false
+    //}
     
     self.weap_inst.weapon_event_queues = ds_priority_create()
     
@@ -817,12 +929,33 @@ if self.player_state = e_player_state.attack &amp;&amp; self.attack &amp;&amp; !
   }
 }
 
-
-
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///[Modifier] Post Attack Queue
 ////////////////////////////////////////////////////////////////////
 //Post Attack Queue
 ////////////////////////////////////////////////////////////////////
-if self.player_state = e_player_state.attack &amp;&amp; !self.attack &amp;&amp; self.post_attack //if attacking and spawning the attack
+
+//if finished attacking
+if self.player_state = e_player_state.attack &amp;&amp; !self.attack &amp;&amp; self.post_attack
 {
   //show_debug_message("made it")
   var self.result = scr_run_modifiers()  //post attack modifiers
@@ -837,6 +970,9 @@ if self.player_state = e_player_state.attack &amp;&amp; !self.attack &amp;&amp; 
   }
   
 }
+
+
+
 
 </string>
           </argument>

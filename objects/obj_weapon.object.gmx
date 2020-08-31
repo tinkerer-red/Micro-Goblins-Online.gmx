@@ -32,7 +32,7 @@ w_type = weapon_type_melee
 w_damage = 1
 w_knockback = 8
 w_size = 1
-w_speed = 22.5
+w_speed = 180/(room_speed * 0.5)  //6 degrees at 60fps
 proj_speed = 8
 w_range = 16 * 20
 
