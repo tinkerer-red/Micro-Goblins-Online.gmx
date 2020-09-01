@@ -95,6 +95,7 @@ facing = 1
 
 //weapon stuff
 weap_num_old = -1
+weap_inst = -1
 item_used_check = -1
 weap_num = -1
 attack = false
@@ -302,7 +303,7 @@ for (var i = 0; i &lt; 3; i++)
   repeat( 0 ) ds_priority_add(queue_button_mods, scr_mod_repeater, 2);
   repeat( 0 ) ds_priority_add(queue_button_mods, scr_1, 3);
   
-  repeat( 1 ) ds_priority_add(queue_pre_weap_mods, scr_mod_dash, 1);
+  repeat( 5 ) ds_priority_add(queue_pre_weap_mods, scr_mod_dash, 1);
   repeat( 0 ) ds_priority_add(queue_pre_weap_mods, scr_2, 2);
   
   repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_swiftness, 1);
@@ -623,13 +624,12 @@ for (var i = 0; i &lt; 3; i++)
             <kind>1</kind>
             <string>///[Modifier] Button Queue / Attack Start
 //show_debug_message("item_used_check = "+string(item_used_check))
-////////////////////////////////////////////////////////////////////
-//Button Queue
-////////////////////////////////////////////////////////////////////
 
-image_blend = c_green
 
+
+///////////////////////////
 //Melee weapon cancel check
+///////////////////////////
 if (self.item_a_pressed || self.item_b_pressed || self.item_c_pressed)
 {
   if (self.weap_num &gt;= 0) &amp;&amp; (self.player_state = e_player_state.attack)
@@ -648,8 +648,13 @@ if (self.item_a_pressed || self.item_b_pressed || self.item_c_pressed)
       self.attack = false
       self.post_attack = false
       self.player_state = e_player_state.move
-      instance_destroy(weap_inst)
       
+      
+      
+      if instance_exists(weap_inst) &amp;&amp; (weap_inst != -1){
+        instance_destroy(weap_inst)
+      }
+      weap_inst = -1
       
       //show_debug_message("melee attack canceled")
       self.item_used_check = -1
@@ -661,6 +666,11 @@ if (self.item_a_pressed || self.item_b_pressed || self.item_c_pressed)
 
 
 
+
+
+////////////////////////////////////////////////////////////////////
+//Button Queue
+////////////////////////////////////////////////////////////////////
 
 if (self.player_state = e_player_state.move)
 {
@@ -687,6 +697,10 @@ if (self.player_state = e_player_state.move)
         self.weapon_event_queues = -1
         self.active_queue = -1
         self.repeater_in_queue = false
+        if instance_exists(weap_inst) &amp;&amp; (weap_inst != -1){
+          instance_destroy(weap_inst)
+        }
+        weap_inst = -1
       }
       
       //show_debug_message("the button was changed while charging")
@@ -822,6 +836,10 @@ if (self.player_state = e_player_state.move)
         self.active_queue = -1
         
         self.repeater_in_queue = false
+        if instance_exists(weap_inst) &amp;&amp; (weap_inst != -1){
+          instance_destroy(weap_inst)
+        }
+        weap_inst = -1
       }
       //show_debug_message("the button was released")
       self.item_used_check = -1
@@ -908,13 +926,6 @@ if self.player_state = e_player_state.attack &amp;&amp; self.attack &amp;&amp; !
     var self.result = scr_run_modifiers()  //weapon spawn mods //like enlarging the sprite and what not
   if self.result = true
   {
-    ///If the weapon is a melee type then allow the weapon to be inturupted by another attack
-    //if (self.item_data[self.weap_num, weapon_type] = weapon_type_melee)
-    //{
-    //  self.player_state = e_player_state.move
-    //  self.cooldown_array[0, self.weap_num] = false
-    //}
-    
     self.weap_inst.weapon_event_queues = ds_priority_create()
     
     //ds_priority_copy(self.weap_inst.weapon_event_queues, self.weapon_event_queues)
@@ -965,6 +976,11 @@ if self.player_state = e_player_state.attack &amp;&amp; !self.attack &amp;&amp; 
     self.post_attack = false
     self.player_state = e_player_state.move
     
+    if instance_exists(weap_inst) &amp;&amp; (weap_inst != -1){
+      instance_destroy(weap_inst)
+    }
+    weap_inst = -1
+      
     self.cooldown_array[1, self.weap_num] = floor(self.active_w_cooldown)
     if (self.cooldown_array[1, self.weap_num] &gt;= 1) {self.cooldown_array[0, self.weap_num] = false}
   }

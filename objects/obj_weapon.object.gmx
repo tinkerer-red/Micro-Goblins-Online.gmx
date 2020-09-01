@@ -159,7 +159,7 @@ if (w_type = weapon_type_melee) &amp;&amp; !stabbing
     
     if ds_exists(weapon_event_queues, ds_type_priority)
     {
-      show_debug_message("weapon finished")
+      //show_debug_message("weapon finished")
       ds_priority_destroy(weapon_event_queues)
       weapon_event_queues = -1
     }

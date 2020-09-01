@@ -39,6 +39,7 @@ if (self.weap.w_type != weapon_type_range)
   if (self.weap.w_end_dir <= 0) {self.weap.w_end_dir += 360}
   
 } else { //if ranged
+  self.weap.w_start_dir = self.direction-45
   /// need to make a bow and test this
   //might need to flip image aswell?
 }

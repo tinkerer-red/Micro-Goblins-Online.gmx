@@ -49,6 +49,8 @@
         <scripts name="Modifiers">
           <script>scripts\scr_run_modifiers.gml</script>
           <script>scripts\scr_item_has_mod.gml</script>
+          <script>scripts\scr_queue_has_mod.gml</script>
+          <script>scripts\scr_queue_has_mod_count.gml</script>
           <scripts name="Weapon">
             <script>scripts\scr_spawn_weapon.gml</script>
             <scripts name="Global Mods">
