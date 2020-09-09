@@ -226,13 +226,17 @@ if self.attack  //if spawning projectiles
     
     //we store them in a queue so all modifiers can deal with all bullets
     self.recent_proj_queue = ds_queue_create()
+    
     var self.proj = instance_create(xx, yy, obj_weap_proj)
     self.proj.direction = direction
+    
     ds_queue_enqueue(self.recent_proj_queue, self.proj)
-    //we also create a full queue to give these projectiles their step events
+    //we also create a full queue to give these projectiles their step events in the next code block
     self.proj_queue = ds_queue_create()
+    
     //copy the OG bullet into the queue because mod scripts will handle their spawned projetiles on their own
-    ds_queue_copy(self.proj_queue, self.recent_proj_queue) 
+    ds_queue_copy(self.proj_queue, self.recent_proj_queue)
+    
   }  
   //show_debug_message("[WEAPON] weapon_event_queues = "+string(weapon_event_queues))
   var self.result = scr_run_modifiers() //projectile spawn modifiers
@@ -241,8 +245,8 @@ if self.attack  //if spawning projectiles
     if (w_type = weapon_type_range) || (ranged = true)
     {
       ds_queue_destroy(self.recent_proj_queue)
-      self.recent_proj_queue = -1
-    
+      var recent_proj_queue = -1
+      
       while !ds_queue_empty(self.proj_queue)
       {
         var proj = ds_queue_dequeue(self.proj_queue);
@@ -254,10 +258,10 @@ if self.attack  //if spawning projectiles
         proj.owner_id = owner_id
         
         //proj.direction = direction
-        proj.image_angle = direction
+        proj.image_angle = proj.direction-45
         
         proj.sprite_index = sprite_proj
-        if (proj.sprite_index = sprite_index) {proj.image_angle -= 45}
+        //if (proj.sprite_index = sprite_index) {proj.image_angle -= 45}
         
         proj.image_xscale = w_size
         proj.image_yscale = w_size

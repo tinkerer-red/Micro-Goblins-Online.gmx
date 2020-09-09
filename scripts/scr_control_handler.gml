@@ -8,18 +8,17 @@ self.down  = obj_controller.down[pid]
 self.left  = obj_controller.left[pid]
 self.right = obj_controller.right[pid]
 
-if (gamepad_is_connected(pid))
-{
-  if (obj_controller.lv_axis[pid] < 0) && ( up = 0)
+
+if (gamepad_is_connected(pid)){
+  if (obj_controller.lv_axis[pid] < -0.1) && ( up = 0)
     {self.up    = abs(obj_controller.lv_axis[pid])}
-  if (obj_controller.lv_axis[pid] > 0) && ( down = 0)
+  if (obj_controller.lv_axis[pid] > 0.1) && ( down = 0)
     {self.down  = abs(obj_controller.lv_axis[pid])}
-  if (obj_controller.lh_axis[pid] > 0) && ( left = 0)
+  if (obj_controller.lh_axis[pid] < -0.1) && ( left = 0)
     {self.left  = abs(obj_controller.lh_axis[pid])}
-  if (obj_controller.lh_axis[pid] < 0) && ( right = 0)
+  if (obj_controller.lh_axis[pid] > 0.1) && ( right = 0)
     {self.right = abs(obj_controller.lh_axis[pid])}
 }
-  
   
   
   //action
@@ -42,18 +41,6 @@ if (gamepad_is_connected(pid))
   self.item_c_pressed  = obj_controller.item_c_pressed[pid]
   self.item_c_held     = obj_controller.item_c_held[pid]
   
-
-if (gamepad_is_connected(pid))
-{
-  if (obj_controller.lv_axis[pid] < 0) && ( up = 0)
-    {self.up    = abs(obj_controller.lv_axis[pid])}
-  if (obj_controller.lv_axis[pid] > 0) && ( down = 0)
-    {self.down  = abs(obj_controller.lv_axis[pid])}
-  if (obj_controller.lh_axis[pid] > 0) && ( left = 0)
-    {self.left  = abs(obj_controller.lh_axis[pid])}
-  if (obj_controller.lh_axis[pid] < 0) && ( right = 0)
-    {self.right = abs(obj_controller.lh_axis[pid])}
-}
-
-
-
+  
+  
+  

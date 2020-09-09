@@ -23,6 +23,8 @@ if !variable_instance_exists(self.id, "anim_damage_start") {anim_damage_start = 
 //set the animation variables
 if (anim_damage_start)
 {
+  anim_dmg_active = true
+  
   // anim_time is used to equate exactly how many frames the animation needs to take
   anim_time = floor(room_speed*0.3)
   
@@ -131,19 +133,36 @@ draw_sprite_pos(head,
 
 
 
-if (anim_timer <= 0)
-{
-  returned = true
-  anim_damage_start = true
-}
-
 //this will keep track of the view ports we've iterated through, that way we never count down the anim timer more then once each frame
-if (view_current < view_loop){
+if (view_current < view_loop) || (global.numberOfLocalPlayers = 1){
   view_loop = view_current
   anim_timer -= 1*lag()
 }else if (view_current > view_loop){
   view_loop = view_current
 }
+
+
+
+if (anim_timer <= 0)
+{
+  returned = true
+  anim_damage_start = true
+  anim_dmg_active = false
+  
+  anim_time = 0
+  anim_timer = 0
+  anim_flip_frame = 0
+  anim_travel_dis = 0
+  pi_time = 0
+  view_loop = 9
+  max_y_multiplier = 0
+  max_x_multiplier = 0
+  anim_idle_start = 1
+  anim_walk_start = 1
+  anim_rotate_start = 1
+  anim_damage_start = 1
+}
+
 
 
 return returned

@@ -1,0 +1,164 @@
+=====[FUTURE CONTENT?]=====
+-----[REMOVED]-----
+[Attack] quick (attacks in 3 quick successions)
+
+---Leveled Summon (Fable style summon, when it deals the killing blow to a non-boss monster that is stronger then it then it's stats are changed permenantly to become the stronger monster (does not work on players, bosses, or summoned monsters.))
+---Double Summon (each summon cap is doubled for this item, and summons 2 at once)
+---Minion Plus (adds one additional minion)
+---Siamese minions (two minions are spawned linked together by a chain, they count as a single minion, though they can and will occassionally pull against the chain preventing either one from doing anything, if one dies so does the other)
+--speedy minions (any moving minion has 1.5x speed)
+--large minions (minions are 2x larger)
+--Heavy Minions (slow minions, but more health)
+--Light minions (normal speed movement, half health, but each ones counts as half a summon)
+?hologram (it would summon a hologram of it's self, the hologram phases out when hit and is slightly less saturated)
+------------------
+==other==
+Stone Fist/Power Punch (melee)
+Open (unlocks stuff)
+Lock
+Dodge (cant be hit for x amount of time, can be armor as well)
+Poison Strike (causes "dot"?)
+Ward/Shield (could be armor mod as well)
+Illusion (spawn an exact duplicate of your self also controlled by you, when ever you take damage the damaged instance disapears, untill you only have one of you left.)
+Incorporeal (walk through walls, attacks go through you (can still hit ppl behind u))
+Switch Places
+natures gift (chance to spawn unique apples which cant be picked up but will heal)
+natures curse (summons allied snakes, or rats?)
+Absorb life
+
+
+===================================================================================================
+
+
+
+
+
+=====Armor Mods=====
+Ward/Shield (Takes a hit then recharges and repeats)
+"Lightweight" [not usable with heavyweight] (Move faster but knockback effects send you back 5x further)
+"Heavyweight" [not usable with lightweight] (move slower but ignores any knockback (including lightweights knockback aplifier))
+Haste
+Burning Embers (aoe fire dmg to nearby enemies)
+Hell Fire (sets you on fire)
+Reflect (Reflects the next attack back then recharges and repeats)
+Sanctuary/Dodge (Chance to miss you is x)
+Vigor/Tank (Extra Health)
+Adrenal Gland (faster speed)
+Paralyze (cant move)
+Empower (extra dmg)
+Water walking (walks on water)
+wings (move over all non wall objects)
+ice skates (playermovement on ice is un effected but max speed is doubled)
+Anti AOE (needs a better name)
+Explorer (For every one hundred blocks explored on the map, you regain a small amount of health)
+Spike trail (leave)
+Surprise Gift (Whenever you use a consumable, you sometimes create a random consumables)
+Radiance (slowly heals allies)
+Fright (at half max HP, you move 2x speed)
+Slimmy Armor (when damage is taken summon a slime)
+Ankhed? (prevents debuff effects)
+True Sight (Lets you see through fog of war)
+Agro (enemy monsters will make you and others with agro their priority)
+Passive (enemy monsters will attack you less often when other players or summons are around)
+-
+-
+-
+-
+-
+-
+
+==================================================================
+
+
+
+
+
+=====Toy Mods=====
+X launcher (Replaces the projectile with the random sprite it genorated with)
+Breakable (will break after X number of hits, but deals 10x damage on the final hit)
+Stinky (green outline of their sprite, and green smell lines, effects are visible in the fog of war)
+Polymorph
+Portal
+spray paint
+confeti (like cluster, but ya know..)
+Grapple
+grappling hook
+binoculars (this can increase your view distance by one more, making eash tile a single pixel)
+mower (allows you to cut grass faster, idk)
+block-aid (summons a pushable block)
+rotten egg (just makes a stinky effect on a player for a while, creatures notice you from a further distance and around walls)
+Drunk (randomly adds velocity in a random direction)
+compass? (draws arrows to things out of screen, tells you if things are traps)
+Eggnialation/Insta Kill (makes you lay an egg that does nothing) <-- haha
+Spectre (summons unless ghosts that cant hurt anything)
+Shiny (adds a shiny effect)
+Light ()
+Superstition (does absolutely nothing)
+broken modem (Online only!)
+Soulbound (can not drop the bound object)
+Breaking (has a damage meter and breaks after a while)
+banish/sunder (despells summoned objects)
+bow-wow (a pet chain chomp)
+Demi-Plane (creates a trap door which leads to a small 30x30 room, objects placed in this room never go away)
+Aim Bot (will always face you in the direction of the closest entity)
+
+
+=================================================================
+
+=====Consumables=====
+Flash (freezes everything in the room)
+Presents (combine with an item to wrap it in a present)
+Trapped present (combine with a consumable to wrap it in a present, the consumable will activate when the present is opened)
+Chest
+potion (healing)
+curse flame (molotov? or was this ment to be a temporary flame bluff to weapons?)
+binding (this would bind a mod gem you have to an item temprarily with out using it up)
+bombachue
+horror Frost (freeze the ground in a medium radius)
+Lava Core - Divinity Original Sin (instant one hit kill AEO)
+A Normal Quarter - Ready Player One (VERY rare item which seemingly does absolutly nothing, having it in your inventory while you die prevents death and gives you a 3x longer I frames at revival, healing you all the way to full. It's the only item in the game which gives you an etra life.)
+Pandora's Box - Mytholigy (Basically just a chance cube, could heal, could summon a bunch of monsters to fight for or against you, could summon every single boss monster in the game)
+2up - irl (2up your ass, thanks for reading)
+
+=====Possible Mods=====
+Curses which give you a shitty mod which hinders you.
+
+---[Possibly in the future]----
+Dynamic Charge? (this would allow for bows and halo's plasma pistals to work with releasing the charge much sooner)
+Targeting (This is a charge submod, which allows you to move a cross hair anywhere on screen while you're charging)
+web slinger (spawns webs)
+Arcane Shot (chance to summon an arcane bullet with heat seeking)
+bouncy (1 floor collision prevention)
+??Power Shot (strong range shot, could even be for melee or see "stone fist" below)
+??Blank Shot/Dud/Blank Strike (every so often shoots blanks, or just totally misses in melee)
+??Scatter (at the end of it's range it wanders in random back and forth motions like a bee)
+??Chains (Has a 30% chance to chain a cluster of mobs together and keep them bound for a short time) (AOE + force pull?)
+-------------------------------
+
+---[Possibly in the future]----
+---Plasma (gives a plasma shader to the sprite, and increase damage)
+---slight of hand/Magician (this modifier will select a random modifer to use instead for each attack)
+---Healing Light (person u hit with the weapon heals them)
+---Luck (anything which has a chance to do something, rolls a second time if the first one failed)
+---Paralyze/Stun (has to recharge, could be an armor as well) (this is basically just an over powered frost)
+---Charm (enemy cant do dmg to you unless he is attacked, recharge)
+---Fear (Makes the enemy run opposite direction, recharge)
+-------------------------------
+
+
+
+---[Summon] Summon *impalers* [that is the name of a zerg unit changed the name] (summons a creature which can burrow underground and shoots spikes up from the ground in a short range)
+---[Summon] Summon Chaos Portal (Summons a portal which it's self summons a random allied monster (low level only) Portals have their own summon limit, but only count as a single summon)
+---[Summon] something which leaves a damaging trail
+
+
+[Weapon] orbital airstrike/Hammer of dawn - halo reach/gears of war 4 ()
+[Weapon] Dubstep gun/Alien Gizmo - Saints Row 4/South Park ()
+[Weapon] Shrink Ray - Duke Nukem ()
+[Weapon] Sheepinator/quacko-ray - Ratchet and Clank [turns enemies into sheep/ducks] ()
+[Weapon] The Bane - Borderlands [screams when shoots, and you move very slowly] ()
+[Weapon] Far Sight XR20 - Perfect dark [sniper rifle which aimbots enemies, shoots through walls, and instant kills] (ranged + FUCK NO)
+[Weapon] Gnome Sword - Starbound [A gnome which shoots out rainbows] ()
+[Weapon] Golden Fleece - Mytholigy (Armor? + healing)
+[Weapon] key blade - kingdom hearts (melee + lock + open)
+[Weapon] 

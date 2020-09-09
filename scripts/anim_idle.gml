@@ -62,7 +62,7 @@ if (anim_idle_start)
 // lastly max_-_multiplier is the maximum distance we want the axis to move, the cos/sin function would move it a parcent of the max
 
 /// a negative number means we were facing right, and we're turning left
-var trav_dis_x = sin((anim_timer) * pi_time*2) * max_x_multiplier
+var trav_dis_x = cos((anim_timer) * pi_time*2) * max_x_multiplier
 
 // how much we skew the y for either the top or bottom of the player
 //var trav_dis_y = sin((anim_timer) * pi_time*2) * max_y_multiplier
@@ -71,7 +71,7 @@ var trav_dis_x = sin((anim_timer) * pi_time*2) * max_x_multiplier
 //var trav_dis_x_head = sin((anim_timer) * pi_time) * max_x_multiplier
 
 // how much we skew the y for either the front of back of the player
-var trav_dis_y_head = sin((anim_timer+anim_flip_frame*0.5) * pi_time*2) * max_y_multiplier
+var trav_dis_y_head = cos((anim_timer+anim_flip_frame*0.5) * pi_time*2) * max_y_multiplier
 
 
 draw_sprite_pos(body,
@@ -118,19 +118,35 @@ draw_sprite_pos(head,
 
 
 
-if (anim_timer <= 0)
-{
-  returned = true
-  anim_idle_start = true
-}
-
 //this will keep track of the view ports we've iterated through, that way we never count down the anim timer more then once each frame
-if (view_current < view_loop){
+if (view_current < view_loop) || (global.numberOfLocalPlayers = 1){
   view_loop = view_current
   anim_timer -= 1*lag()
 }else if (view_current > view_loop){
   view_loop = view_current
 }
+
+
+
+if (anim_timer <= 0)
+{
+  returned = true
+  anim_idle_start = true
+  
+  anim_time = 0
+  anim_timer = 0
+  anim_flip_frame = 0
+  anim_travel_dis = 0
+  pi_time = 0
+  view_loop = 9
+  max_y_multiplier = 0
+  max_x_multiplier = 0
+  anim_idle_start = 1
+  anim_walk_start = 1
+  anim_rotate_start = 1
+  anim_damage_start = 1
+}
+
 
 
 return returned

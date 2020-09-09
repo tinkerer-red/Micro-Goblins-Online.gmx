@@ -1,0 +1,124 @@
+
+
+---[WELCOME]---
+Welcome Artists! We have a massive list of modifiers you should have along with this insperation file.
+  Incase you haven't been informed the idea of the game revolves around taking the enchantment /augment
+  systems from other games and making that the primary focus. Unfortunately this means we will need an
+  absolute ton of images for each combination of 2. This file is a list of some of the insperations
+  which helped me refine the modifier system down to a few key components. There have been a ton of which
+  I had to cut out for the initial builds due to the sheer number sprites we already have to deal with.
+  If there is anything you would like to make please feel free to. Most all of the work will be used
+  regardless. The system will genorate the sprite depending on the modifiers when it spawns, for instance
+  if a monster dropped the Num-Chucks (melee + doublestrike + swift) and the player added the "ranged"
+  modifier, then the base image would still be the Num-Chucks. Adding a modifier will not change it's
+  sprite or it's projectile sprite. This really shouldn't cause for any issues but this method will cut
+  back on the number of sprites by about 130,000. Which should really make this system far more managable
+  for a small team. Any art posted to the #Art channel in the discord will imediately be saved, so if any
+  updates are needed to be made please make sure the file name is the same as when you uploaded it. Also
+  make sure you've marked your work in the meta data for the file. If you dont know how to do this there
+  are plenty of tutorials online, or simply ask Red. Once more thanks for being on the team. The following
+  is just a mark up of the total rough estimated number of sprites for each catagory.
+-------------
+
+---[Stats]---
+16 global mods and 16 specific 16 mods would be a base33 numeral system, since we will include the
+  nill value (if a mod isnt equipped to that slot)
+This means we have 1,089. Although only need to do half that art since "dash + evade" would use the
+  same sprite as "evade + dash"
+There for 544 sprites, plus any special doubles deserving of it.
+
+Melee = 544+17 mod combinations (the +16 is because once you have ranged that only opens up 1 slot
+  for a ranged mod, and there is only 16 ranged mods planned for alpha, and the blank mod slot)
+Ranged = 544 mod combinations
+Projectiles = 544+16 (the ranged weapons, and the 16 melee weapons with the ranged mod)
+
+Some simple math means a total of 1666-ish sprites doing 2 a day would take about 2.2 years, So feel
+ free to rush through the ones you dont really wanna work on. If anything stands out we can clean it
+ up in the future.
+
+-------------
+
+===[Current Notes]===
+9/9/2020 (mm/dd/yyyy)
+
+At the time of writing I'm having issues finding some unique and interesting Melee weapons from games,
+ movies, and mytholigy. We only need 5 more modifiers for the beta list to be finished. And really the
+ hardest part for the melee weapons will be designing the unique sprites for them so they actually feel
+ different. Which is a monumental task, how would "repeater+swiftness" be much different from "repeater+tiny"?
+=====================
+
++++++++++++++++++++++++Insperations++++++++++++++++++++++
+Play some (three - means you've played enough)
+soul knight, 
+-enter the gungeon, 
+-binding of isaac,
+path of exile,
+tyrian? or some other mechanic based top down shooter
+phantom dust
+halo 3's grenade types, equipment, and weapons
+
+
+[Weapon] laser blade enemy - enter the gungeon (melee + ranged + change + multishotx3)
+[Weapon] Lancer (chain saw assault rifle) - gears of war (melee + ranged + Repeater)
+[Weapon] crowbar - halflife (melee... nothing else)
+[Weapon] energy sword - Halo (melee + aimbot + dash)
+
+[Weapon] Scarab Gun - Halo 2 (ranged + laser + explosion/aoe)
+[Weapon] mr toots - red faction armageddon (ranged + laser)
+[Weapon] Sparton Laser - Halo 3 (ranged + charged + piercing + stream/laser?)
+[Weapon] Taser gun - IRL (ranged + stun)
+[Weapon] Buzz blade - Ratchet and Clank [this weapon shoots saw blades which bounce between targets] (ranged + piercing + ricochet)
+[Weapon] Kratos's Chain blades - God of war (fire + double strike + chains)
+[Weapon] Fat man - Fallout (ranged + size increase + explosion)
+[Weapon] Experimental MIRV - Fallout (ranged + size increase + cluster + explosion)
+[Weapon] BFG - Doom (ranged + size increase + explosion + chain lightning)
+[Weapon] gravity gun - halflife (ranged + gravity + force push)
+[Weapon] fire flower - mario (ranged + fire)
+[Weapon] Blue shell - mario kart (ranged + heat seeking + aoe) ========== [Should only damage the highest health in the room?]
+[Weapon] banana grenade - Worms (ranged + cluster + explosive)
+[Weapon] Cerebral Bore - Turok (ranged + heat seeking + continuous)
+[Weapon] Missle battery/Rhino - Soul Knight/Ratchet and Clank (ranged + Repeater + explosive)
+[Weapon] GalGun - Gal*Gun [orgasm gun] (ranged + charm + stun)
+[Weapon] Mjolnir - Thor (melee + lightning Strike + Chain Lightning)
+[Weapon] Poseidon's Trident - Mytholigy (Ranged + Multishot + some lightning ability)
+[Weapon] Master Sword/Excalibur - Zelda/Mytholigy [Each map genorates ONLY 1 either in a lake for excalibur or in a stone for master sword] (melee (completely empty mods but has one more mod slot then anything else in the game))
+[Weapon] Frying Pan - PUBG? (melee + reflect + attack speed up?)
+[Weapon] Num-Chucks - IRL (melee + doublestrike + swift)
+[Weapon] Divine Fury spell - Fable (ranged + AOE? + targeting)
+[Weapon] Dager of Many Daggers - dnd (melee + small + ranged)
+[Weapon] Ghost Busters gun thing - ghost busters (ranged + laser + heat seeking + repeater)
+[Weapon] Lar's Axe - most things (melee + ranged + multishot) (you know, the kind of guitars in shows which shoot a shock wave) [also Lar's is a musician which commonly gets shit on by the gaming comunity because of some guitar hero game, dont know the story entirely]
+[Weapon] Distructor Disc - Dragon Ball Z (ranged + boomerang + piercing)
+[Weapon] firework launcher - - (range + cluster + cluster)
+[Weapon] magicians hat - - (ranged + multishot + multishot) (shoots doves and shit)
+[Weapon] black hole - - (ranged + continuous + forcepull)
+
+[Summon] Turret (summon + defualtHelth + ranged + Stationary)
+[Summon] summon Slime (summon + defaultHealth + defaultAttack + Jumpy)
+[Summon] Summon Undead (Summon + defaultEverything)
+[Summon] Summon Genie (summon + Boss + Leaper + Rotational)
+[Summon] hive (Summon + minion + quick + Spastic)
+[Summon] summon lightning ball (Summon + defaultHealth + Drain + Bouncy)
+[Summon] Summon Sheild (Summon + timed + Passive + Rotational)
+[Summon] Summon Blockade (Summon + Boss + Passive + Stationary)
+[Summon] Summon Pheonix (Summon + timed + ranged + rotational)
+[Summon] Summon giant worm (Summon + Sectioned + defaultAttack + Momentum)
+[Summon] Summon UFO (Summon + defaultHealth + ranged + Hover)
+[Summon] Summon Raven (Summon + defaultHealth + Leaper + Hover)
+[Summon] Summon Apple tree (Summon + boss + healing + stationary)
+[Summon] Summon Ghost swords (Summon + minion + quick + defaultMove)
+[Summon] Fire Wall (Summon + Boss + defaultAttack + Stationary)
+[Summon] Stone Wall (Summon + Timer + Passive + Stationary)
+[Summon] Storm (Summon + Timer + Drain + Hover)
+[Summon] Power Wheel thing from over-watch (summon + defaultHealth + Self Destruct + momentum)
+[Summon] Creeper (Summon + defaultHealth + Self Destruct + defaultMove)
++++++++++++++++++++++++++++++++++++++++++++
+
+
+===[Thanks]===
+I really want to take a moment to thank you for joining the team. The sheer number of sprites is far
+to much for one man to produce on his own with in a reasonable time. Having you on the team is a
+privilage and is greatly appreciated.
+
+Thank you;
+Red

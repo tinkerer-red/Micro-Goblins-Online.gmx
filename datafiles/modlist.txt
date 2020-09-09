@@ -1,0 +1,104 @@
+=====Weapon Mods=====
+
+
+===Global===
+Accelerate (Increase attack speed for each consecutive shot. Resets one second after the attack)
++++Repeater (Full Auto attacks)
++++Charge (you must charge up the weapon first)
+++Dash
+++Evade
+explosive (this gives AOE, multiples cause larger AOE size)
+continuous (this will make an AOE continuous, or cause bleeding, mutliples cause longer time)
++++knockback
++++Enlarge (double the size of the weapon and projectiles) 
+shrink (half size)
+Force Push
+Force Pull (basically grapple) (happens before melee weapon spawns, happens at collision for ranged)
+Chain Lightning (hits each enemy in a certain distance)
+Teleport (teleports the colided to a random open position)
+Frosty (slows the target)
+Blind (when mixed with aoe and continuous, this becomes the fog of war)
+
+
+
+===Melee===
++++Swift (swings Faster)
++++Slow (swings slower)
++++Ranged (unlocks ranged mods for the melee weapon, assigns a random projectile sprite perminately)
+Back Stab (swings behind you; also?)
+Multi Stab (Chun Li kick annimation for weapons)
+double strike (attacks a second time)
+Reflect (reflects bullets back at their owner)
+??Meteor Strike (every time you attack a small-ish meteor falls from the sky)
+??Chained (Similar to yoyo's and Flail maces, good for rope darts and what not)
+??AutoSwing (This is NOT rapid fire! As long as it's actively equipped it will automatically swing at enemies, if reflect is also on the weapon it wil swing at projectiles too)
+??punching glove (doesnt matter what weapon you're using, it launches a punching glove out aswell)
+-
+-
+-
+-
+-
+
+
+
+===Ranged===
+Piercing (attacks through multiple enemies)
+Ricochet (projectiles will bounce 1 time if coliding at a 45 degree angle or less, if piercing is present they will bounce at any angle but only 5 times)
+ethernal (attacks through walls)
++++boomerang (returning projectiles, 1 floor collision prevention)
++++nega-rang? (return TO the projectile) //get a better name for this. its a bit like a hook shot, but probably instant? maybe add the vectors?
++++inaccurate (random projectile angles)
+Scoped/Snipe (Extra range)
+Quick shot (projectiles move at double speed)
+Drag (projectiles move at half speed)
+magic misile (heat seeking projectiles)
+Burst (3 shots in a row, with a 2-3 frame delay between them, input direction can be chnged but not movement?)
+Laser/Beam (10 shots in a row, every frame)
++++Cluster (it's like buck shot but happens after the projectile was sent out)
++++Multishot (3 projectile)
++++Bonus Shot (1 projectile in a random angle)
++++Mirror Shot (Shoots a projectile behind you)
+
+
+
+
+
+
+
+
+
+
+===Summon===
+--health styles (default is normal health)
+[Health] duplicate (when killed spawn 2 smaller ones with half health, this will increase size)
+[Health] boss (makes spawn larger with more health)
+[Health] twins (makes 2 of the same spawn with 75% damage)
+[Health] masked (can only be hit from behind, this also gives it an ice like effect locking it's direction)
+[Health] sectioned (basically snake like creatures which have sections, a single one would be like siamese twins) (doubles each time)
+[Health] Reflective (causes the reflect modifier for ranged shots) (for use with bubble shield style summons, also a massive damper on ranged weapons)
+[Health] Minion (half default health, but summons 3) (useful for Zerge rushes)
+[Health] Timed (has 9999 health but will die on it's own after a specific amount of time)
+
+--attack styles (default is walking into the player)
+[Attack] Sef Destruct (explodes, dealing half it's remaining health with a max of ___)
+[Attack] ranged (will shoot projectiles)
+[Attack] bumper (doesnt actually hurt the player but gives a high knockback)
+[Attack] Leaper (lunges twords the player)
+[Attack] Passive (no attack, instead any damage multiplier is given to health)
+[Attack] Childish (no attack, instead any damage multiplier is given to movement)
+[Attack] Drain (constant AOE damage, very slow rate though) (halo 3's power drain equipment)
+[Attack] Healing (constant AOE healing, very slow rate though) (halo 3's regen equipment)
+
+--movement (the default is directly walking at the nearest player)
+[Move] Bouncy (spawns in the direction the player was facing, will continue to move and bounce off walls untill dead)
+[Move] Spastic (bee like movement, very random, much wow)
+[Move] Jumpy (only moves in bursts, similar to terarria's slimes)
+[Move] Rotational (rotates around the player)
+[Move] Chained (massive increase to damage but cant move from it's location region)
+[Move] Momentum (moves quickly but had a hard time turning) (like a wheel or ball, similar to terarria's demon eyes)
+[Move] Stationary (massive health increase, with no movement)
+[Move] Hover (pit falls, and floor damage wont hurt)
+
+
+
+

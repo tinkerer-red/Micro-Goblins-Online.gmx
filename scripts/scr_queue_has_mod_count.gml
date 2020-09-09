@@ -1,7 +1,6 @@
 ///scr_queue_has_mod_count(queue_id, modifier_script_id)
 
 
-
 var mod_count = 0
 var queue_id = argument0
 var modifier_script_id = argument1

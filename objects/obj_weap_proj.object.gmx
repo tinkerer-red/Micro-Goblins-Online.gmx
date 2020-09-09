@@ -51,6 +51,68 @@ self.constant_timer = 0
         </arguments>
       </action>
     </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///[MOD] Cluster Shot
+
+ds_priority_delete_value(self.step_event_queues, scr_mod_cluster)
+
+repeat(irandom_range(2,3)){ //ideally 3
+//  if (irandom(2) &gt; 0){ //this helps cut down on the massive entities when 5 cluster mods are active
+    var proj = instance_copy(false);
+    
+    //create new queues
+    //proj.active_queue = ds_priority_create()
+    //ds_priority_copy(proj.active_queue, active_queue);
+    
+    proj.weapon_event_queues = ds_priority_create()
+    ds_priority_copy(proj.weapon_event_queues, self.weapon_event_queues)
+    
+    proj.step_event_queues = ds_priority_create()
+    ds_priority_copy(proj.step_event_queues, self.step_event_queues)
+    
+    //variables
+    proj.direction = random_range(0, 360)
+    
+    proj.w_range = w_range*0.666
+    proj.dis_traveled = 0
+    proj.speed = speed*0.666
+    
+    proj.image_angle = proj.direction-45
+    
+    proj.x = x+lengthdir_x(2,proj.direction)
+    proj.y = y+lengthdir_y(2,proj.direction)
+    
+    proj.start_x = proj.x
+    proj.start_y = proj.y
+    
+    mod_cluster_init = false
+//  }
+}
+
+scr_clear_modifiers()
+ds_priority_destroy(self.step_event_queues)
+instance_destroy(self.id)
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>

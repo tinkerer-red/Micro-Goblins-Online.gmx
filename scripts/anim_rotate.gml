@@ -48,7 +48,6 @@ if (anim_rotate_start)
   anim_rotate_start = false
 }
 
-
 /// tris will multiply variables by 1 or -1 fepending on the flip
 var flip_multiplier = sign(anim_timer - anim_flip_frame)
 
@@ -84,18 +83,32 @@ draw_sprite_pos(sprite_index,
                 
                 image_alpha);
 
-//this will keep track of the view ports we've iterated through, that way we never count down the anim timer more then once each frame
-if (view_current < view_loop){
-  view_loop = view_current
-  anim_timer -= 1*lag()
-}else if (view_current > view_loop){
-  view_loop = view_current
-}
 
 if (anim_timer <= 0)
 {
   returned = true
   anim_rotate_start = true
+  anim_face_dir = 0
+  
+  anim_time = 0
+  anim_timer = 0
+  anim_flip_frame = 0
+  anim_travel_dis = 0
+  pi_time = 0
+  view_loop = 9
+  max_y_multiplier = 0
+  max_x_multiplier = 0
+  anim_idle_start = 1
+  anim_walk_start = 1
+  anim_rotate_start = 1
+  anim_damage_start = 1
+}
+//this will keep track of the view ports we've iterated through, that way we never count down the anim timer more then once each frame
+if (view_current < view_loop) || (global.numberOfLocalPlayers = 1){
+  view_loop = view_current
+  anim_timer -= 1*lag()
+}else if (view_current > view_loop){
+  view_loop = view_current
 }
 
 

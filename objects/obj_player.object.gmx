@@ -145,13 +145,21 @@ mod_evade_frame = 0
             <kind>1</kind>
             <string>///define player states
 
-enum e_player_state
-{
+enum e_player_state{
   move,
   attack,
-}
+};
 
 self.player_state = e_player_state.move
+
+enum e_player_anim{
+  idle,
+  walk,
+  rot,
+  dmg,
+};
+
+self.player_anim_state = e_player_anim.idle
 </string>
           </argument>
         </arguments>
@@ -181,6 +189,9 @@ self.right = 0
 self.item_a = 0
 self.item_b = 0
 self.item_c = 0
+self.item_a_pressed = 0
+self.item_b_pressed = 0
+self.item_c_pressed = 0
 
 self.zoom_in_pressed = 0
 self.zoom_out_pressed = 0
@@ -235,7 +246,7 @@ mp_setType("playerName",mp_type.SMART)
 
 
 //add controls
-mp_add("controls", "up,down,left,right,item_a,item_b,item_c", buffer_f32, 1) //buffer_f16 isn't supported
+mp_add("controls", "up,down,left,right,item_a,item_b,item_c,item_a_pressed,item_b_pressed,item_c_pressed", buffer_f32, 1) //buffer_f16 isn't supported
 mp_setType("controls",mp_type.FAST)
 
 
@@ -298,35 +309,39 @@ for (var i = 0; i &lt; 3; i++)
   
   
   
-  
+  ///////////////////////////////////////////////////////////////////////////
   repeat( 0 ) ds_priority_add(queue_button_mods, scr_mod_charged, 1);
-  repeat( 0 ) ds_priority_add(queue_button_mods, scr_mod_repeater, 2);
+  repeat( 5 ) ds_priority_add(queue_button_mods, scr_mod_repeater, 2);
   repeat( 0 ) ds_priority_add(queue_button_mods, scr_1, 3);
-  
-  repeat( 5 ) ds_priority_add(queue_pre_weap_mods, scr_mod_dash, 1);
+  ///////////////////////////////////////////////////////////////////////////
+  repeat( 0 ) ds_priority_add(queue_pre_weap_mods, scr_mod_dash, 1);
   repeat( 0 ) ds_priority_add(queue_pre_weap_mods, scr_2, 2);
-  
+  ///////////////////////////////////////////////////////////////////////////
   repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_swiftness, 1);
   repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_slowness, 2);
   repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_enlarge, 3);
   //repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_shrink, 4);
   repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_knockback, 5);
   repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_3, 1);
-  
-  repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_inaccurate, 1);
+  ///////////////////////////////////////////////////////////////////////////
+  repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_bonusShot, 1);
+  repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_mirrorShot, 1);
+  repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_multishot, 2);
+  repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_inaccurate, 4);
   repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_4, 1);
-  
+  ///////////////////////////////////////////////////////////////////////////
+  repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_cluster, 1);
   repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_5, 1);
-  
+  ///////////////////////////////////////////////////////////////////////////
   repeat( 0 ) ds_priority_add(queue_pre_col_mods, scr_mod_boomerang, 1);
   repeat( 0 ) ds_priority_add(queue_pre_col_mods, scr_6, 2);
-  
+  ///////////////////////////////////////////////////////////////////////////
   repeat( 0 ) ds_priority_add(queue_col_mods, scr_mod_negarang, 1);
   repeat( 0 ) ds_priority_add(queue_col_mods, scr_7, 2);
-  
+  ///////////////////////////////////////////////////////////////////////////
   repeat( 0 ) ds_priority_add(queue_post_attack_mods, scr_mod_evade, 1);
   repeat( 0 ) ds_priority_add(queue_post_attack_mods, scr_8, 1);
-  
+  ///////////////////////////////////////////////////////////////////////////
   
 }
 
@@ -447,6 +462,9 @@ self.right = mp_map_syncOut("right", right)
 self.item_a = mp_map_syncOut("item_a", item_a)
 self.item_b = mp_map_syncOut("item_b", item_b)
 self.item_c = mp_map_syncOut("item_c", item_c)
+self.item_a_pressed = mp_map_syncOut("item_a_pressed", item_a_pressed)
+self.item_b_pressed = mp_map_syncOut("item_b_pressed", item_b_pressed)
+self.item_c_pressed = mp_map_syncOut("item_c_pressed", item_c_pressed)
 
 //player_state = mp_map_syncOut("player_state", player_state)
 }
@@ -472,19 +490,55 @@ self.item_c = mp_map_syncOut("item_c", item_c)
             <kind>1</kind>
             <string>/// Animation handler
 
-if (abs(angle_difference(direction, 0)) &lt; 70){
-  if (facing = -1) || (image_xscale &lt; 0){
-    facing = 1
-    anim_rot_active = true
+if (spd = 0){
+  self.player_anim_state = e_player_anim.idle
+}
+
+
+if (self.player_anim_state &lt;= e_player_anim.walk){
+  if spd &gt; 0{// if damaged activte damaged step
+    if self.player_anim_state = e_player_anim.idle{
+      anim_time = 0
+      anim_timer = 0
+      anim_flip_frame = 0
+      anim_travel_dis = 0
+      pi_time = 0
+      view_loop = 9
+      max_y_multiplier = 0
+      max_x_multiplier = 0
+    }
+    self.player_anim_state = e_player_anim.walk
   }
 }
 
-if (abs(angle_difference(direction, 180)) &lt; 70){
-  if (facing = 1) || (image_xscale &gt; 0){
-    facing = -1
-    anim_rot_active = true
+  
+    
+if (self.player_anim_state &lt;= e_player_anim.rot){
+  if (abs(angle_difference(direction, 0)) &lt; 70){
+    if (facing = -1) || (image_xscale &lt; 0){
+      facing = 1
+      anim_rot_active = true
+      self.player_anim_state = e_player_anim.rot
+    }
+  }
+    
+  if (abs(angle_difference(direction, 180)) &lt; 70){
+    if (facing = 1) || (image_xscale &gt; 0){
+      facing = -1
+      anim_rot_active = true
+      self.player_anim_state = e_player_anim.rot
+    }
   }
 }
+
+
+  
+if self.player_anim_state &lt;= e_player_anim.dmg{
+  if false{// if damaged activte damaged step
+    self.player_anim_state = e_player_anim.dmg
+  }
+}
+
 </string>
           </argument>
         </arguments>
@@ -526,6 +580,9 @@ mp_map_syncIn("right",self.right)
 mp_map_syncIn("item_a",self.item_a)
 mp_map_syncIn("item_b",self.item_b)
 mp_map_syncIn("item_c",self.item_c)
+mp_map_syncIn("item_a_pressed",self.item_a_pressed)
+mp_map_syncIn("item_b_pressed",self.item_b_pressed)
+mp_map_syncIn("item_c_pressed",self.item_c_pressed)
 //mp_map_syncIn("player_state",player_state)
 
 }
@@ -1072,7 +1129,8 @@ scr_player_state_move(self.player_id_global, 1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string></string>
+            <string>anim_idle(dir)
+</string>
           </argument>
         </arguments>
       </action>
@@ -1176,24 +1234,48 @@ scr_player_state_move(self.player_id_global, 1)
             <string>///draw self and name
 //scr_view_visble_handler()
 
-
+show_debug_player(0, "e_player_anim.rot = "+string(e_player_anim.rot))
+show_debug_player(0, "e_player_anim.walk = "+string(e_player_anim.walk))
+show_debug_player(0, "e_player_anim.idle = "+string(e_player_anim.idle))
 if (visible = true)
 {
-  //draw_self()
-  if (anim_rot_active) {
-    if anim_rotate(){
-      anim_rot_active = false
-      image_xscale = -image_xscale
-      //x = x - (2*image_xscale)
-    }
-  }else{ //if not rotating
-    if !ani{
-      draw_self()
-    }
-  }
+  //damage
+  if (self.player_anim_state = e_player_anim.dmg) {
+    ///if anim_damage(INCOMING DAMAGE DIRECTION){
+    ///  self.player_anim_state = e_player_anim.idle
+    ///}
+  }else{
+  
+  //rotate
+    if (self.player_anim_state = e_player_anim.rot) {
+      if anim_rotate(){
+        anim_rot_active = false
+        image_xscale = -image_xscale
+        //x = x - (2*image_xscale)
+        self.player_anim_state = e_player_anim.idle
+      }
+    }else{ //if not rotating
+    
+  //walk
+      if (self.player_anim_state = e_player_anim.walk) {
+        if anim_walk(dir){
+          self.player_anim_state = e_player_anim.idle
+        }
+      }else{
+      
+  //idle
+        if (self.player_anim_state = e_player_anim.idle) {
+          anim_idle(dir)
+        }//end idle
+        
+      } // end !walk
+      
+    }// end !rotate
+    
+  }/// end !damage
   
   
-  
+  // draw name
   if (view_object[view_current] != id){
     view_res = view_hview[view_current]/view_hport[view_current]
     draw_set_halign(fa_center);
@@ -1223,7 +1305,7 @@ if (visible = true)
           <argument>
             <kind>1</kind>
             <string>///[DEBUG] draw testing
-
+/*
 if keyboard_check(vk_shift) ani = true
 if ani
 {

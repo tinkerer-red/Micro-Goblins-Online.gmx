@@ -3,7 +3,59 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <datafiles number="1" name="datafiles"/>
+  <datafiles number="4" name="datafiles">
+    <datafile>
+      <name>modlist.txt</name>
+      <exists>-1</exists>
+      <size>16193</size>
+      <exportAction>2</exportAction>
+      <exportDir></exportDir>
+      <overwrite>0</overwrite>
+      <freeData>-1</freeData>
+      <removeEnd>0</removeEnd>
+      <store>0</store>
+      <ConfigOptions>
+        <Config name="Default">
+          <CopyToMask>9223372036854775807</CopyToMask>
+        </Config>
+      </ConfigOptions>
+      <filename>modlist.txt</filename>
+    </datafile>
+    <datafile>
+      <name>post alpha - future modifiers.txt</name>
+      <exists>-1</exists>
+      <size>8557</size>
+      <exportAction>2</exportAction>
+      <exportDir></exportDir>
+      <overwrite>0</overwrite>
+      <freeData>-1</freeData>
+      <removeEnd>0</removeEnd>
+      <store>0</store>
+      <ConfigOptions>
+        <Config name="Default">
+          <CopyToMask>9223372036854775807</CopyToMask>
+        </Config>
+      </ConfigOptions>
+      <filename>post alpha - future modifiers.txt</filename>
+    </datafile>
+    <datafile>
+      <name>Insperations.txt</name>
+      <exists>-1</exists>
+      <size>7871</size>
+      <exportAction>2</exportAction>
+      <exportDir></exportDir>
+      <overwrite>0</overwrite>
+      <freeData>-1</freeData>
+      <removeEnd>0</removeEnd>
+      <store>0</store>
+      <ConfigOptions>
+        <Config name="Default">
+          <CopyToMask>9223372036854775807</CopyToMask>
+        </Config>
+      </ConfigOptions>
+      <filename>Insperations.txt</filename>
+    </datafile>
+  </datafiles>
   <NewExtensions>
     <extension index="0">extensions\Network Engine</extension>
     <extension index="1">extensions\WinDev</extension>
@@ -48,6 +100,7 @@
         <script>scripts\scr_player_state_move_old.gml</script>
         <scripts name="Modifiers">
           <script>scripts\scr_run_modifiers.gml</script>
+          <script>scripts\scr_clear_modifiers.gml</script>
           <script>scripts\scr_item_has_mod.gml</script>
           <script>scripts\scr_queue_has_mod.gml</script>
           <script>scripts\scr_queue_has_mod_count.gml</script>
@@ -68,7 +121,11 @@
               <script>scripts\scr_mod_range.gml</script>
             </scripts>
             <scripts name="Range Mods">
+              <script>scripts\scr_mod_bonusShot.gml</script>
+              <script>scripts\scr_mod_mirrorShot.gml</script>
+              <script>scripts\scr_mod_multishot.gml</script>
               <script>scripts\scr_mod_inaccurate.gml</script>
+              <script>scripts\scr_mod_cluster.gml</script>
               <script>scripts\scr_mod_boomerang.gml</script>
               <script>scripts\scr_mod_negarang.gml</script>
             </scripts>
@@ -287,12 +344,13 @@
       <script>scripts\collision_normal.gml</script>
       <script>scripts\add_vectors.gml</script>
       <script>scripts\mean_vectors.gml</script>
+      <script>scripts\sec_to_frames.gml</script>
     </scripts>
     <scripts name="Drawing">
       <script>scripts\draw_cone.gml</script>
-      <script>scripts\anim_rotate.gml</script>
-      <script>scripts\anim_walk.gml</script>
       <script>scripts\anim_idle.gml</script>
+      <script>scripts\anim_walk.gml</script>
+      <script>scripts\anim_rotate.gml</script>
       <script>scripts\anim_damage.gml</script>
     </scripts>
     <scripts name="Utillity">
