@@ -26,16 +26,16 @@ Blind (when mixed with aoe and continuous, this becomes the fog of war)
 +++Slow (swings slower)
 +++Ranged (unlocks ranged mods for the melee weapon, assigns a random projectile sprite perminately)
 Back Stab (swings behind you; also?)
-Multi Stab (Chun Li kick annimation for weapons)
+Thrust (Chun Li kick annimation for weapons) (multiple will act as a combo attack from a single button press)
+Flail (changes the attacking method into a flail attack, adds attack range but makes it a bit slower.) (multiples will give it a further reach)
 double strike (attacks a second time)
 Reflect (reflects bullets back at their owner)
-??Meteor Strike (every time you attack a small-ish meteor falls from the sky)
+AimBot (always attacks in the direction of the closest enemy) (this is a melee modifier for balancing purposes) (Stack [90, 180, 360] degree assistance)
+Aerial Strike (every time you hit it spawn a copies of itself, which slams into the ground)
 ??Chained (Similar to yoyo's and Flail maces, good for rope darts and what not)
 ??AutoSwing (This is NOT rapid fire! As long as it's actively equipped it will automatically swing at enemies, if reflect is also on the weapon it wil swing at projectiles too)
 ??punching glove (doesnt matter what weapon you're using, it launches a punching glove out aswell)
--
--
--
+??move faster when you're swinging it?
 -
 -
 
@@ -80,7 +80,7 @@ Laser/Beam (10 shots in a row, every frame)
 [Health] Timed (has 9999 health but will die on it's own after a specific amount of time)
 
 --attack styles (default is walking into the player)
-[Attack] Sef Destruct (explodes, dealing half it's remaining health with a max of ___)
+[Attack] Sef Destruct (explodes, dealing half it's remaining health with a max of ___) (if this modifier is mixed with timer, just make it explode at the end of the timer)
 [Attack] ranged (will shoot projectiles)
 [Attack] bumper (doesnt actually hurt the player but gives a high knockback)
 [Attack] Leaper (lunges twords the player)

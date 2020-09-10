@@ -50,6 +50,8 @@ Water walking (walks on water)
 wings (move over all non wall objects)
 ice skates (playermovement on ice is un effected but max speed is doubled)
 Anti AOE (needs a better name)
+Anti Continuous (needs a better name)
+Anti trap (allows hovering over pitfalls and spike traps)
 Explorer (For every one hundred blocks explored on the map, you regain a small amount of health)
 Spike trail (leave)
 Surprise Gift (Whenever you use a consumable, you sometimes create a random consumables)
@@ -60,6 +62,12 @@ Ankhed? (prevents debuff effects)
 True Sight (Lets you see through fog of war)
 Agro (enemy monsters will make you and others with agro their priority)
 Passive (enemy monsters will attack you less often when other players or summons are around)
+increase max life
+vampirism (chance to gain life after a kill)
+summoner's buff (increase minion strength and health)
+force push when damage is taken
+chance to force pull when damage is dealt
+replace your activate buttom with another weapon slot (not stackable)
 -
 -
 -

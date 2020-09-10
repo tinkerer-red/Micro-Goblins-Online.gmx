@@ -311,7 +311,7 @@ for (var i = 0; i &lt; 3; i++)
   
   ///////////////////////////////////////////////////////////////////////////
   repeat( 0 ) ds_priority_add(queue_button_mods, scr_mod_charged, 1);
-  repeat( 5 ) ds_priority_add(queue_button_mods, scr_mod_repeater, 2);
+  repeat( 0 ) ds_priority_add(queue_button_mods, scr_mod_repeater, 2);
   repeat( 0 ) ds_priority_add(queue_button_mods, scr_1, 3);
   ///////////////////////////////////////////////////////////////////////////
   repeat( 0 ) ds_priority_add(queue_pre_weap_mods, scr_mod_dash, 1);

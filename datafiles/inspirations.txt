@@ -23,19 +23,17 @@ Welcome Artists! We have a massive list of modifiers you should have along with 
 ---[Stats]---
 16 global mods and 16 specific 16 mods would be a base33 numeral system, since we will include the
   nill value (if a mod isnt equipped to that slot)
-This means we have 1,089. Although only need to do half that art since "dash + evade" would use the
-  same sprite as "evade + dash"
-There for 544 sprites, plus any special doubles deserving of it.
 
-Melee = 544+17 mod combinations (the +16 is because once you have ranged that only opens up 1 slot
+There for 550 sprites per catagory.
+
+Melee = 550+17 mod combinations (the +16 is because once you have ranged that only opens up 1 slot
   for a ranged mod, and there is only 16 ranged mods planned for alpha, and the blank mod slot)
-Ranged = 544 mod combinations
-Projectiles = 544+16 (the ranged weapons, and the 16 melee weapons with the ranged mod)
+Ranged = 550 mod combinations
+Projectiles = 550+16 (the ranged weapons, and the 16 melee weapons with the ranged mod)
 
-Some simple math means a total of 1666-ish sprites doing 2 a day would take about 2.2 years, So feel
+Some simple math means a total of 1684 sprites doing 2 a day would take about 2.3 years, So feel
  free to rush through the ones you dont really wanna work on. If anything stands out we can clean it
  up in the future.
-
 -------------
 
 ===[Current Notes]===
@@ -49,19 +47,27 @@ At the time of writing I'm having issues finding some unique and interesting Mel
 
 +++++++++++++++++++++++Insperations++++++++++++++++++++++
 Play some (three - means you've played enough)
-soul knight, 
+https://www.curseforge.com/minecraft/mc-mods/so-many-enchantments
+https://www.curseforge.com/minecraft/mc-mods/not-enough-enchantments
+---soul knight, (looked through every buff and melee weapon on the wiki)
 -enter the gungeon, 
--binding of isaac,
+--binding of isaac,
 path of exile,
 tyrian? or some other mechanic based top down shooter
 phantom dust
 halo 3's grenade types, equipment, and weapons
 
 
+[Weapon] Long Sword - - (melee + enlarge)
+[Weapon] Longer Sword - - (melee + enlarge + enlarge)
 [Weapon] laser blade enemy - enter the gungeon (melee + ranged + change + multishotx3)
 [Weapon] Lancer (chain saw assault rifle) - gears of war (melee + ranged + Repeater)
 [Weapon] crowbar - halflife (melee... nothing else)
 [Weapon] energy sword - Halo (melee + aimbot + dash)
+[Weapon] gravity Hammer - Halo (melee + forcePush + AOE)
+[Weapon] Windu Morningstar - - (melee + forcePush)
+[Weapon] Divine Hammer - - (melee + aoe + Aerial Strike) (drops hammers from the sky)
+
 
 [Weapon] Scarab Gun - Halo 2 (ranged + laser + explosion/aoe)
 [Weapon] mr toots - red faction armageddon (ranged + laser)
