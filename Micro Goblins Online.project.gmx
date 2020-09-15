@@ -59,6 +59,8 @@
   <NewExtensions>
     <extension index="0">extensions\Network Engine</extension>
     <extension index="1">extensions\WinDev</extension>
+    <extension index="2">extensions\HOA gGUI - Graphical Interface</extension>
+    <extension index="3">extensions\DSPrint</extension>
   </NewExtensions>
   <sounds name="sound"/>
   <sprites name="sprites">
@@ -104,6 +106,7 @@
           <script>scripts\scr_item_has_mod.gml</script>
           <script>scripts\scr_queue_has_mod.gml</script>
           <script>scripts\scr_queue_has_mod_count.gml</script>
+          <script>scripts\scr_modifier_adjust.gml</script>
           <scripts name="Weapon">
             <script>scripts\scr_spawn_weapon.gml</script>
             <scripts name="Global Mods">
@@ -354,13 +357,53 @@
       <script>scripts\anim_damage.gml</script>
     </scripts>
     <scripts name="Utillity">
+      <scripts name="DS Print">
+        <script>scripts\array_print.gml</script>
+        <script>scripts\ds_grid_print.gml</script>
+        <script>scripts\ds_list_print.gml</script>
+        <script>scripts\ds_map_print.gml</script>
+        <scripts name="Utility">
+          <script>scripts\scr_string_pad_right.gml</script>
+          <script>scripts\scr_string_trim_right.gml</script>
+        </scripts>
+      </scripts>
+      <scripts name="gGUI">
+        <script>scripts\gui_create_gui.gml</script>
+        <script>scripts\gui_set_gui.gml</script>
+        <script>scripts\gui_destroy_gui.gml</script>
+        <script>scripts\gui_set_value.gml</script>
+        <script>scripts\gui_get_value.gml</script>
+        <script>scripts\gui_get_item.gml</script>
+        <script>scripts\gui_check.gml</script>
+        <script>scripts\gui_draw.gml</script>
+        <scripts name="Items">
+          <script>scripts\gui_create_slider.gml</script>
+          <script>scripts\gui_create_checkbox.gml</script>
+          <script>scripts\gui_create_menu.gml</script>
+          <script>scripts\gui_create_button.gml</script>
+          <script>scripts\gui_create_watcher.gml</script>
+          <script>scripts\gui_create_string.gml</script>
+          <script>scripts\gui_item_draw.gml</script>
+          <script>scripts\gui_item_check.gml</script>
+          <script>scripts\gui_item_set.gml</script>
+        </scripts>
+        <scripts name="Internal">
+          <script>scripts\_gui_create_item.gml</script>
+          <script>scripts\src_url.gml</script>
+        </scripts>
+      </scripts>
       <script>scripts\show_debug_player.gml</script>
       <script>scripts\scr_view_visble_handler.gml</script>
+      <script>scripts\src_restart.gml</script>
+      <script>scripts\src_end.gml</script>
     </scripts>
     <script>scripts\scr_collision_test.gml</script>
     <script>scripts\scr_draw_circle.gml</script>
     <script>scripts\lag.gml</script>
   </scripts>
+  <fonts name="fonts">
+    <font>fonts\fontGGUI</font>
+  </fonts>
   <objects name="objects">
     <objects name="Game Objects">
       <object>objects\obj_solid</object>

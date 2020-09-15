@@ -58,6 +58,77 @@ h = 0
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Debug Controller
+
+draw_set_font(fontGGUI);
+
+x = 0;
+y = 0;
+
+guid = gui_create_gui();
+
+gui_create_string(guid, "text", "Debug Controller", c_white);
+//gui_create_menu(guid, "FPS", true, 3, c_black);
+gui_create_watcher(guid, "FPS", fps, c_green);
+//gui_create_watcher(guid, "FPS_real", fps_real, c_yellow);
+gui_create_watcher(guid, "FPS_mean", fps_real, c_orange);
+
+gui_create_menu(guid, "Modifiers", false, 17, c_black);
+  gui_create_menu(guid, "Global", false, 8, c_black);
+    gui_create_slider(guid, "Charge", 0, 0, 3, c_aqua)
+    gui_create_slider(guid, "Repeater", 0, 0, 3, c_aqua)
+    gui_create_slider(guid, "Dash", 0, 0, 3, c_aqua)
+    gui_create_slider(guid, "Evade", 0, 0, 3, c_aqua)
+    gui_create_slider(guid, "Swiftness", 0, 0, 3, c_aqua)
+    gui_create_slider(guid, "Slowness", 0, 0, 3, c_aqua)
+    gui_create_slider(guid, "Enlarge", 0, 0, 3, c_aqua)
+    gui_create_slider(guid, "Shrink", 0, 0, 3, c_aqua)
+  gui_create_menu(guid, "Ranged", false, 7, c_black);
+    gui_create_slider(guid, "Bonus Shot", 0, 0, 3, c_aqua)
+    gui_create_slider(guid, "Mirror Shot", 0, 0, 3, c_aqua)
+    gui_create_slider(guid, "Multi Shot", 0, 0, 3, c_aqua)
+    gui_create_slider(guid, "Inaccurate", 0, 0, 3, c_aqua)
+    gui_create_slider(guid, "Cluster", 0, 0, 3, c_aqua)
+    gui_create_slider(guid, "Boomerang", 0, 0, 3, c_aqua)
+    gui_create_slider(guid, "Nega-Rang", 0, 0, 3, c_aqua)
+
+  
+
+gui_create_menu(guid, "Graphics", false, 1, c_black);
+gui_create_checkbox(guid, "Smooth Camera", obj_camera_control.smooth_camera);
+
+
+gui_create_button(guid, "Restart", src_restart, $0202a4);
+gui_create_button(guid, "Discord", src_url, $0202a4);
+
+
+time = 0;
+spd = 0.1;
+
+
+//  display_set_gui_size(display_get_width(),display_get_height()); // need to be done for mobile
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="3" enumb="1">
       <action>
@@ -80,8 +151,309 @@ h = 0
 for (var i = 0; i &lt; 8; i++)
 {
   debug_string[i] = "        [DEBUG MENU]        #"
-  if (i = 0) debug_string[i] = "        [DEBUG MENU]        #"+"fps_real = "+string(fps_real)+"#fps_mean = "+string(ds_grid_get_mean(fps_grid,0,0,0,5*room_speed-1))+"#"
+  if (i = 0) debug_string[i] = "        [DEBUG MENU]        #"+"fps_real = "+string(fps_real)+"#fps_mean = "+string(fps_mean)+"#"
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Debug Controller Previous Values
+if (global.debug = true){
+  if (mouse_check_button(mb_left)){
+    if (device_mouse_x_to_gui(0) &gt; (display_get_gui_width()-243)*(1+obj_camera_control.smooth_camera)){
+      
+      last_smooth = gui_get_value(guid, 'Smooth Camera');
+      
+      if gui_get_value(guid, 'Modifiers'){
+        //if gui_get_value(guid, 'Global'){
+          last_charge = gui_get_value(guid, "Charge");
+          last_repeater = gui_get_value(guid, "Repeater");
+          last_dash = gui_get_value(guid, "Dash");
+          last_evade = gui_get_value(guid, "Evade");
+          last_swift = gui_get_value(guid, "Swiftness");
+          last_slow = gui_get_value(guid, "Slowness");
+          last_enlarge = gui_get_value(guid, "Enlarge");
+          last_shrink = gui_get_value(guid, "Shrink");
+        //}
+        
+        //if gui_get_value(guid, 'Ranged'){
+          last_bonusShot = gui_get_value(guid, "Bonus Shot");
+          last_mirrorShot = gui_get_value(guid, "Mirror Shot");
+          last_multiShot = gui_get_value(guid, "Multi Shot");
+          last_inaccurate = gui_get_value(guid, "Inaccurate");
+          last_cluster = gui_get_value(guid, "Cluster");
+          last_boomerang = gui_get_value(guid, "Boomerang");
+          last_negarang = gui_get_value(guid, "Nega-Rang");
+        //}
+        
+        
+        
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Debug Controller Updates
+if (global.debug = true){
+      ////////// Updated items
+      ///FPS tab
+      gui_set_value(guid, 'FPS', fps);
+      //gui_set_value(guid, "FPS_real", fps_real);
+      gui_set_value(guid, "FPS_mean", fps_mean);
+      
+      
+      
+      
+  if (device_mouse_x_to_gui(0) &gt; (display_get_gui_width()-243)*(1+obj_camera_control.smooth_camera)){
+      
+    // Interact with gui
+    gui_check(guid, (display_get_gui_width()-243)*(1+obj_camera_control.smooth_camera), 0, device_mouse_x_to_gui(0), device_mouse_y_to_gui(0));
+  
+  }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Clamp the modifier's scales
+if (global.debug = true){
+    if (device_mouse_x_to_gui(0) &gt; (display_get_gui_width()-243)*(1+obj_camera_control.smooth_camera)){
+  
+      ///Debug Controller New Values
+      if gui_get_value(guid, 'Modifiers'){
+      
+      //Global
+        if gui_get_value(guid, 'Global'){
+          gui_set_value(guid, "Charge", floor(0.5+gui_get_value(guid, "Charge")) div 1);
+          gui_set_value(guid, "Repeater", floor(0.5+gui_get_value(guid, "Repeater")) div 1);
+          gui_set_value(guid, "Dash", floor(0.5+gui_get_value(guid, "Dash")) div 1);
+          gui_set_value(guid, "Evade", floor(0.5+gui_get_value(guid, "Evade")) div 1);
+          gui_set_value(guid, "Swiftness", floor(0.5+gui_get_value(guid, "Swiftness")) div 1);
+          gui_set_value(guid, "Slowness", floor(0.5+gui_get_value(guid, "Slowness")) div 1);
+          gui_set_value(guid, "Enlarge", floor(0.5+gui_get_value(guid, "Enlarge")) div 1);
+          gui_set_value(guid, "Shrink", floor(0.5+gui_get_value(guid, "Shrink")) div 1);
+        }
+      //Range
+        if gui_get_value(guid, 'Ranged'){
+          gui_set_value(guid, "Bonus Shot", floor(0.5+gui_get_value(guid, "Bonus Shot")) div 1);
+          gui_set_value(guid, "Mirror Shot", floor(0.5+gui_get_value(guid, "Mirror Shot")) div 1);
+          gui_set_value(guid, "Multi Shot", floor(0.5+gui_get_value(guid, "Multi Shot")) div 1);
+          gui_set_value(guid, "Inaccurate", floor(0.5+gui_get_value(guid, "Inaccurate"))div 1);
+          gui_set_value(guid, "Cluster", floor(0.5+gui_get_value(guid, "Cluster")) div 1);
+          gui_set_value(guid, "Boomerang", floor(0.5+gui_get_value(guid, "Boomerang")) div 1);
+          gui_set_value(guid, "Nega-Rang", floor(0.5+gui_get_value(guid, "Nega-Rang")) div 1);
+        }
+      }
+    }
+  
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Debug Controller Apply Variables
+if (global.debug = true){
+  if (mouse_check_button_pressed(mb_left)){
+    if (device_mouse_x_to_gui(0) &gt; (display_get_gui_width()-243)*(1+obj_camera_control.smooth_camera)){
+      
+      
+      //adjust camera draw settings///////////////////
+      obj_camera_control.smooth_camera = gui_get_value(guid, 'Smooth Camera');
+            
+      if obj_camera_control.smooth_camera != last_smooth {
+        gui_set_gui(guid,
+                    168*(1+obj_camera_control.smooth_camera),
+                    18*(1+obj_camera_control.smooth_camera),
+                    70*(1+obj_camera_control.smooth_camera),
+                    16*(1+obj_camera_control.smooth_camera),
+                    3*(1+obj_camera_control.smooth_camera)
+                    )
+        
+      }
+      ////////////////////////////////////////////////
+      
+      
+      
+      
+      
+    }
+  }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Debug Controller Apply New Values [Modifiers]
+if (global.debug = true){
+  //if (mouse_check_button_released(mb_left)){
+    if (device_mouse_x_to_gui(0) &gt; (display_get_gui_width()-243)*(1+obj_camera_control.smooth_camera)){
+      
+      if gui_get_value(guid, 'Modifiers') &amp;&amp; (gui_get_value(guid, 'Global') || gui_get_value(guid, 'Ranged') /*|| gui_get_value(guid, 'Melee')*/){
+        for (var i = 0; i &lt; 3; i++){  //for all three weapons
+          
+          var queue_button_mods = ds_priority_delete_min(obj_player.item_queues[i]);
+          var queue_pre_weap_mods = ds_priority_delete_min(obj_player.item_queues[i]);
+          var queue_weap_spawn_mods = ds_priority_delete_min(obj_player.item_queues[i]);
+          var queue_proj_spawn_mods = ds_priority_delete_min(obj_player.item_queues[i]);
+          var queue_attack_step_mods = ds_priority_delete_min(obj_player.item_queues[i]);
+          var queue_pre_col_mods = ds_priority_delete_min(obj_player.item_queues[i]);
+          var queue_col_mods = ds_priority_delete_min(obj_player.item_queues[i]);
+          var queue_post_attack_mods = ds_priority_delete_min(obj_player.item_queues[i]);
+            
+          //Global
+          if gui_get_value(guid, 'Global'){
+            if last_charge != gui_get_value(guid, "Charge") scr_modifier_adjust(queue_button_mods, scr_mod_charged, 1, gui_get_value(guid, "Charge"));
+            if last_repeater != gui_get_value(guid, "Repeater") scr_modifier_adjust(queue_button_mods, scr_mod_repeater, 2, gui_get_value(guid, "Repeater")); 
+            if last_dash != gui_get_value(guid, "Dash") scr_modifier_adjust(queue_pre_weap_mods, scr_mod_dash, 1, gui_get_value(guid, "Dash"));
+            if last_evade != gui_get_value(guid, "Evade") scr_modifier_adjust(queue_post_attack_mods, scr_mod_evade, 1, gui_get_value(guid, "Evade"));
+            if last_swift != gui_get_value(guid, "Swiftness") scr_modifier_adjust(queue_weap_spawn_mods, scr_mod_swiftness, 1, gui_get_value(guid, "Swiftness"));
+            if last_slow != gui_get_value(guid, "Slowness") scr_modifier_adjust(queue_weap_spawn_mods, scr_mod_slowness, 2, gui_get_value(guid, "Slowness"));
+            if last_enlarge != gui_get_value(guid, "Enlarge") scr_modifier_adjust(queue_weap_spawn_mods, scr_mod_enlarge, 3, gui_get_value(guid, "Enlarge"));
+            if last_shrink != gui_get_value(guid, "Shrink") scr_modifier_adjust(queue_weap_spawn_mods, scr_mod_shrink, 4, gui_get_value(guid, "Shrink"));
+          }
+          
+          //Ranged
+          if gui_get_value(guid, 'Ranged'){
+            if obj_player.item_data[i, weapon_type] = weapon_type_range{
+              if last_bonusShot != gui_get_value(guid, "Bonus Shot") scr_modifier_adjust(queue_proj_spawn_mods, scr_mod_bonusShot, 1, gui_get_value(guid, "Bonus Shot"));
+              if last_mirrorShot != gui_get_value(guid, "Mirror Shot") scr_modifier_adjust(queue_proj_spawn_mods, scr_mod_mirrorShot, 1, gui_get_value(guid, "Mirror Shot"));
+              if last_multiShot != gui_get_value(guid, "Multi Shot") scr_modifier_adjust(queue_proj_spawn_mods, scr_mod_multishot, 2, gui_get_value(guid, "Multi Shot"));
+              if last_inaccurate != gui_get_value(guid, "Inaccurate") scr_modifier_adjust(queue_proj_spawn_mods, scr_mod_inaccurate, 4, gui_get_value(guid, "Inaccurate"));
+              if last_cluster != gui_get_value(guid, "Cluster") scr_modifier_adjust(queue_attack_step_mods, scr_mod_cluster, 1, gui_get_value(guid, "Cluster"));
+              if last_boomerang != gui_get_value(guid, "Boomerang") scr_modifier_adjust(queue_pre_col_mods, scr_mod_boomerang, 1, gui_get_value(guid, "Boomerang"));
+              if last_negarang != gui_get_value(guid, "Nega-Rang") scr_modifier_adjust(queue_col_mods, scr_mod_negarang, 1, gui_get_value(guid, "Nega-Rang"));
+            }
+          }
+          
+          ds_priority_add(obj_player.item_queues[i], queue_button_mods, 1);
+          ds_priority_add(obj_player.item_queues[i], queue_pre_weap_mods, 2);
+          ds_priority_add(obj_player.item_queues[i], queue_weap_spawn_mods, 3);
+          ds_priority_add(obj_player.item_queues[i], queue_proj_spawn_mods, 4);
+          ds_priority_add(obj_player.item_queues[i], queue_attack_step_mods, 5);
+          ds_priority_add(obj_player.item_queues[i], queue_pre_col_mods, 6);
+          ds_priority_add(obj_player.item_queues[i], queue_col_mods, 7);
+          ds_priority_add(obj_player.item_queues[i], queue_post_attack_mods, 8);
+        }
+      }
+      
+    }
+  //}
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="3">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>gui_destroy_gui(guid);
 </string>
           </argument>
         </arguments>
@@ -109,7 +481,7 @@ frame_i++
 if (frame_i &gt;= 5*room_speed) {frame_i -= 5*room_speed}
 
 fps_grid[#0, frame_i] = fps_real
-//fps_grid[# 0, i] = fps
+fps_mean = ds_grid_get_mean(fps_grid,0,0,0,5*room_speed-1)
 
 </string>
           </argument>
@@ -147,7 +519,7 @@ for (var i = 0; i &lt; 8; i++)
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="64">
+    <event eventtype="8" enumb="75">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -164,12 +536,20 @@ for (var i = 0; i &lt; 8; i++)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Debug Display
+            <string>///Debug Display Text
 if (global.debug = true){
   if (global.numberOfLocalPlayers = 1){
-     h = 20
-     draw_text_transformed(0,0+h*obj_camera_control.upscale_val, debug_string[0], obj_camera_control.upscale_val, obj_camera_control.upscale_val, 0)
-  
+     h = 40
+     var xx = view_xport
+     var yy = view_yport
+     var width = string_width(debug_string[0])*obj_camera_control.upscale_val
+     draw_set_alpha(0.5)
+     draw_set_color(c_dkgray)
+     draw_rectangle(xx,yy+(h*obj_camera_control.upscale_val)*((1+obj_camera_control.smooth_camera)/3), xx+width*((1+obj_camera_control.smooth_camera)/3), yy+((h+string_height(debug_string[0]))*obj_camera_control.upscale_val)*((1+obj_camera_control.smooth_camera)/3), 0)
+     draw_set_alpha(1)
+     draw_set_color(c_white)
+     draw_text_transformed(xx,(yy+h*obj_camera_control.upscale_val)*((1+obj_camera_control.smooth_camera)/3), debug_string[0], obj_camera_control.upscale_val*((1+obj_camera_control.smooth_camera)/3), obj_camera_control.upscale_val*((1+obj_camera_control.smooth_camera)/3), 0)
+     
   }else{
     
     for (var i = 0; i &lt; global.numberOfLocalPlayers; i++){
@@ -179,25 +559,51 @@ if (global.debug = true){
       //height = 
       
       if view_visible[i]{
-        h = 20
+        h = 40
         if (i = 0){
           draw_set_alpha(0.5)
           draw_set_color(c_dkgray)
-          draw_rectangle(xx,yy+h*obj_camera_control.upscale_val, xx+width, yy+(h+string_height(debug_string[i]))*obj_camera_control.upscale_val, 0)
+          draw_rectangle(xx,yy+(h*obj_camera_control.upscale_val)*((1+obj_camera_control.smooth_camera)/3), xx+width*((1+obj_camera_control.smooth_camera)/3), yy+((h+string_height(debug_string[i]))*obj_camera_control.upscale_val)*((1+obj_camera_control.smooth_camera)/3), 0)
           draw_set_alpha(1)
           draw_set_color(c_white)
-          draw_text_transformed(xx,yy+h*obj_camera_control.upscale_val, debug_string[i], obj_camera_control.upscale_val, obj_camera_control.upscale_val, 0)
+          draw_text_transformed(xx,(yy+h*obj_camera_control.upscale_val)*((1+obj_camera_control.smooth_camera)/3), debug_string[i], obj_camera_control.upscale_val*((1+obj_camera_control.smooth_camera)/3), obj_camera_control.upscale_val*((1+obj_camera_control.smooth_camera)/3), 0)
         } else {
           draw_set_alpha(0.5)
           draw_set_color(c_dkgray)
-          draw_rectangle(xx,yy, xx+width, yy+string_height(debug_string[i])*obj_camera_control.upscale_val, 0)
+          draw_rectangle(xx,yy, xx+width*((1+obj_camera_control.smooth_camera)/3), yy+(string_height(debug_string[i])*obj_camera_control.upscale_val)*((1+obj_camera_control.smooth_camera)/3), 0)
           draw_set_alpha(1)
           draw_set_color(c_white)
-          draw_text_transformed(xx,yy, debug_string[i], obj_camera_control.upscale_val, obj_camera_control.upscale_val, 0)
+          draw_text_transformed(xx,yy, debug_string[i], obj_camera_control.upscale_val*((1+obj_camera_control.smooth_camera)/3), obj_camera_control.upscale_val*((1+obj_camera_control.smooth_camera)/3), 0)
         }
       }
     }
   }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Debug Display Controller
+
+if (global.debug = true){
+    gui_draw(guid, (display_get_gui_width()-243)*(1+obj_camera_control.smooth_camera), 0);
+    
 }
 </string>
           </argument>

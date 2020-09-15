@@ -817,7 +817,7 @@ if (global.numberOfLocalPlayers != 1)
   
   var view_port_height = hh/2
   
-  var line_width = 3*upscale_val
+  var line_width = 3*(1+obj_camera_control.smooth_camera)
   
   for (var i = 0; i &lt; global.numberOfLocalPlayers; i++)
   {

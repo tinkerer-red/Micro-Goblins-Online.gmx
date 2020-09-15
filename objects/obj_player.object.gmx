@@ -1234,9 +1234,9 @@ scr_player_state_move(self.player_id_global, 1)
             <string>///draw self and name
 //scr_view_visble_handler()
 
-show_debug_player(0, "e_player_anim.rot = "+string(e_player_anim.rot))
-show_debug_player(0, "e_player_anim.walk = "+string(e_player_anim.walk))
-show_debug_player(0, "e_player_anim.idle = "+string(e_player_anim.idle))
+//show_debug_player(0, "e_player_anim.rot = "+string(e_player_anim.rot))
+//show_debug_player(0, "e_player_anim.walk = "+string(e_player_anim.walk))
+//show_debug_player(0, "e_player_anim.idle = "+string(e_player_anim.idle))
 if (visible = true)
 {
   //damage

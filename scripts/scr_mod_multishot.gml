@@ -1,9 +1,7 @@
 /// scr_mod_multishot()
 
-
 if (w_type = weapon_type_range) || (ranged = true){
   while ds_queue_size(self.recent_proj_queue) != 0{
-    
     var _proj = ds_queue_dequeue(self.recent_proj_queue)
     
     var shots_to_spawn = scr_queue_has_mod_count(active_queue, scr_mod_multishot)
