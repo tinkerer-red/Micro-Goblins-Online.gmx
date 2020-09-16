@@ -32,7 +32,6 @@ if collide_ground && (self.do_not_collide = false)
       self.collide = false
       self.pre_collide = false
       
-      do_not_collide = true
       
       returned = true
     }
@@ -49,10 +48,11 @@ if collide_ground && (self.do_not_collide = false)
       forward  = false
       direction =  direction + 180
       if (direction > 360) {direction -= 360}
+      image_angle = direction-45
     }
     
   }
-  
+  do_not_collide = true
 }
 
 //if returned = true

@@ -317,11 +317,12 @@ for (var i = 0; i &lt; 3; i++)
   repeat( 0 ) ds_priority_add(queue_pre_weap_mods, scr_mod_dash, 1);
   repeat( 0 ) ds_priority_add(queue_pre_weap_mods, scr_2, 2);
   ///////////////////////////////////////////////////////////////////////////
-  repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_swiftness, 1);
-  repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_slowness, 2);
-  repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_enlarge, 3);
-  //repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_shrink, 4);
-  repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_knockback, 5);
+  repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_backStab, 1);
+  repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_swiftness, 2);
+  repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_slowness, 3);
+  repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_enlarge, 4);
+  //repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_shrink, 5);
+  repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_knockback, 6);
   repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_3, 1);
   ///////////////////////////////////////////////////////////////////////////
   repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_bonusShot, 1);
@@ -333,8 +334,9 @@ for (var i = 0; i &lt; 3; i++)
   repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_cluster, 1);
   repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_5, 1);
   ///////////////////////////////////////////////////////////////////////////
-  repeat( 0 ) ds_priority_add(queue_pre_col_mods, scr_mod_boomerang, 1);
-  repeat( 0 ) ds_priority_add(queue_pre_col_mods, scr_6, 2);
+  repeat( 1 ) ds_priority_add(queue_pre_col_mods, scr_mod_ricochet, 1);
+  repeat( 0 ) ds_priority_add(queue_pre_col_mods, scr_mod_boomerang, 2);
+  repeat( 0 ) ds_priority_add(queue_pre_col_mods, scr_6, 3);
   ///////////////////////////////////////////////////////////////////////////
   repeat( 0 ) ds_priority_add(queue_col_mods, scr_mod_negarang, 1);
   repeat( 0 ) ds_priority_add(queue_col_mods, scr_7, 2);
@@ -706,12 +708,22 @@ if (self.item_a_pressed || self.item_b_pressed || self.item_c_pressed)
       self.post_attack = false
       self.player_state = e_player_state.move
       
-      
-      
-      if instance_exists(weap_inst) &amp;&amp; (weap_inst != -1){
-        instance_destroy(weap_inst)
+      //destroy previous weapons
+      if ds_exists(self.weap_queue, ds_type_priority){
+        while !ds_priority_empty(self.weap_queue){
+          self.weap_inst = ds_priority_delete_min(self.weap_queue)
+          if instance_exists(weap_inst) &amp;&amp; (weap_inst != -1){
+            if (weap_inst.object_index = obj_weapon) {
+              ds_priority_destroy(self.weap_inst.weapon_event_queues)
+              self.weap_inst.weapon_event_queues = -1
+            
+              instance_destroy(weap_inst)
+            }
+              weap_inst = -1
+          }
+        }
       }
-      weap_inst = -1
+      
       
       //show_debug_message("melee attack canceled")
       self.item_used_check = -1
@@ -754,10 +766,22 @@ if (self.player_state = e_player_state.move)
         self.weapon_event_queues = -1
         self.active_queue = -1
         self.repeater_in_queue = false
-        if instance_exists(weap_inst) &amp;&amp; (weap_inst != -1){
-          instance_destroy(weap_inst)
+        //destroy previous weapons
+        if ds_exists(self.weap_queue, ds_type_priority){
+          while !ds_priority_empty(self.weap_queue){
+            self.weap_inst = ds_priority_delete_min(self.weap_queue)
+            if instance_exists(weap_inst) &amp;&amp; (weap_inst != -1){
+              if (weap_inst.object_index = obj_weapon) {
+                ds_priority_destroy(self.weap_inst.weapon_event_queues)
+                self.weap_inst.weapon_event_queues = -1
+              
+                instance_destroy(weap_inst)
+              }
+                weap_inst = -1
+            }
+          }
         }
-        weap_inst = -1
+        
       }
       
       //show_debug_message("the button was changed while charging")
@@ -893,10 +917,22 @@ if (self.player_state = e_player_state.move)
         self.active_queue = -1
         
         self.repeater_in_queue = false
-        if instance_exists(weap_inst) &amp;&amp; (weap_inst != -1){
-          instance_destroy(weap_inst)
+        //destroy previous weapons
+        if ds_exists(self.weap_queue, ds_type_priority){
+          while !ds_priority_empty(self.weap_queue){
+            self.weap_inst = ds_priority_delete_min(self.weap_queue)
+            if instance_exists(weap_inst) &amp;&amp; (weap_inst != -1){
+              if (weap_inst.object_index = obj_weapon) {
+                ds_priority_destroy(self.weap_inst.weapon_event_queues)
+                self.weap_inst.weapon_event_queues = -1
+              
+                instance_destroy(weap_inst)
+              }
+                weap_inst = -1
+            }
+          }
         }
-        weap_inst = -1
+        
       }
       //show_debug_message("the button was released")
       self.item_used_check = -1
@@ -944,7 +980,7 @@ if self.player_state = e_player_state.attack &amp;&amp; !self.attack &amp;&amp; 
     self.item_used_check = self.weap_num
     
     self.attack = true
-    self.weap_inst = scr_spawn_weapon(self.weap_num) 
+    self.weap_inst = scr_spawn_weapon(self.weap_num)
   }
 }
 
@@ -980,17 +1016,36 @@ if self.player_state = e_player_state.attack &amp;&amp; !self.attack &amp;&amp; 
 if self.player_state = e_player_state.attack &amp;&amp; self.attack &amp;&amp; !self.post_attack//if attacking and spawning the attack
 {
     //show_debug_message("weapon queue")
+    recent_weap_queue = ds_priority_create()
+    ds_priority_add(recent_weap_queue, weap_inst, 1)
+    
+    self.weap_queue = ds_priority_create()
+    ds_priority_copy(weap_queue, recent_weap_queue)
+    
     var self.result = scr_run_modifiers()  //weapon spawn mods //like enlarging the sprite and what not
+    
   if self.result = true
   {
-    self.weap_inst.weapon_event_queues = ds_priority_create()
+    ds_priority_copy(weap_queue, recent_weap_queue)
     
-    //ds_priority_copy(self.weap_inst.weapon_event_queues, self.weapon_event_queues)
-    //ds_priority_delete_max(self.weap_inst.weapon_event_queues)
-    ds_priority_add(self.weap_inst.weapon_event_queues, ds_priority_delete_min(self.weapon_event_queues), 1) //projectile spawn mods
-    ds_priority_add(self.weap_inst.weapon_event_queues, ds_priority_delete_min(self.weapon_event_queues), 2) //attack step event mods
-    ds_priority_add(self.weap_inst.weapon_event_queues, ds_priority_delete_min(self.weapon_event_queues), 3) //pre collision Mods
-    ds_priority_add(self.weap_inst.weapon_event_queues, ds_priority_delete_min(self.weapon_event_queues), 4) //collision mods
+    var queue_proj_spawn_mods = ds_priority_delete_min(self.weapon_event_queues)
+    var queue_attack_step_mods = ds_priority_delete_min(self.weapon_event_queues)
+    var queue_pre_col_mods = ds_priority_delete_min(self.weapon_event_queues)
+    var queue_col_mods = ds_priority_delete_min(self.weapon_event_queues)
+    
+    while !ds_priority_empty(self.recent_weap_queue){
+        self.weap_inst = ds_priority_delete_min(self.recent_weap_queue)
+        self.weap_inst.weapon_event_queues = ds_priority_create()
+        
+        ds_priority_add(self.weap_inst.weapon_event_queues, queue_proj_spawn_mods, 1) //projectile spawn mods
+        ds_priority_add(self.weap_inst.weapon_event_queues, queue_attack_step_mods, 2) //attack step event mods
+        ds_priority_add(self.weap_inst.weapon_event_queues, queue_pre_col_mods, 3) //pre collision Mods
+        ds_priority_add(self.weap_inst.weapon_event_queues, queue_col_mods, 4) //collision mods
+        
+        self.weap_inst.owner_id = self.id
+    }
+    ds_priority_destroy(recent_weap_queue)
+    recent_weap_queue = -1
     
     self.attack = true
     self.post_attack = true
@@ -1033,10 +1088,24 @@ if self.player_state = e_player_state.attack &amp;&amp; !self.attack &amp;&amp; 
     self.post_attack = false
     self.player_state = e_player_state.move
     
-    if instance_exists(weap_inst) &amp;&amp; (weap_inst != -1){
-      instance_destroy(weap_inst)
+    //destroy previous weapons
+    if ds_exists(self.weap_queue, ds_type_priority){
+      while !ds_priority_empty(self.weap_queue){
+        self.weap_inst = ds_priority_delete_min(self.weap_queue)
+        if instance_exists(weap_inst) &amp;&amp; (weap_inst != -1){
+          if (weap_inst.object_index = obj_weapon) {
+            ds_priority_destroy(self.weap_inst.weapon_event_queues)
+            self.weap_inst.weapon_event_queues = -1
+          
+            instance_destroy(weap_inst)
+          }
+            weap_inst = -1
+        }
+      }
     }
-    weap_inst = -1
+    ds_priority_destroy(self.weap_queue)
+    self.weap_queue = -1
+    
       
     self.cooldown_array[1, self.weap_num] = floor(self.active_w_cooldown)
     if (self.cooldown_array[1, self.weap_num] &gt;= 1) {self.cooldown_array[0, self.weap_num] = false}
@@ -1152,32 +1221,7 @@ scr_player_state_move(self.player_id_global, 1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
-//for (var i = 10000; i &gt; 0; i--)
-//{
-//  collision_line(x,y,i,i,obj_wall,1,true)
-//}
-
-
-
-//var list = collision_cone_list(x, y, direction, 16*8, 90, 8, obj_wall)//, false, true);
-//var list = collision_cone_list(x, y, direction, 16*8, 90, 9, obj_wall)
-//draw_set_alpha(1)
-
-//show_debug_message("ds_list_size = "+string(ds_list_size(list)))
-
-//while (!ds_list_empty(list))
-//{
-//  with list[| 0]
-//  {
-//    sprite_index = spr_red_wall
-//  }
-//  ds_list_delete(list, 0)
-//}
-//ds_list_destroy(list)
-
-//draw_set_color(c_white)
-
+            <string>show_debug_player(0, "instance_number(obj_weap_proj) = "+string(instance_number(obj_weap_proj)))
 </string>
           </argument>
         </arguments>

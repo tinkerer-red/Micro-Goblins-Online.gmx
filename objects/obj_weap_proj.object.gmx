@@ -51,6 +51,94 @@ self.constant_timer = 0
         </arguments>
       </action>
     </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Clean up left over queues
+
+
+if variable_instance_exists(id, "active_queue"){
+  if active_queue != -1{
+    if ds_exists(active_queue, ds_type_priority){
+      ds_priority_destroy(active_queue)
+      active_queue = -1
+    }
+  }
+}
+
+if variable_instance_exists(id, "queue_hold"){
+  if queue_hold != -1{
+    if ds_exists(queue_hold, ds_type_priority){
+      ds_priority_destroy(queue_hold)
+      queue_hold = -1
+    }
+  }
+}
+
+if variable_instance_exists(id, "step_event_queues"){
+  if step_event_queues != -1{
+    if ds_exists(step_event_queues, ds_type_priority){
+      ds_priority_destroy(step_event_queues)
+      step_event_queues = -1
+    }
+  }
+}
+
+if variable_instance_exists(id, "step_event_queues_temp"){
+  if step_event_queues_temp != -1{
+    if ds_exists(step_event_queues_temp, ds_type_priority){
+      ds_priority_destroy(step_event_queues_temp)
+      step_event_queues_temp = -1
+    }
+  }
+}
+//*/
+if variable_instance_exists(id, "pre_col_queues"){
+  if pre_col_queues != -1{
+    if ds_exists(pre_col_queues, ds_type_priority){
+      ds_priority_destroy(pre_col_queues)
+      pre_col_queues = -1
+    }
+  }
+}
+
+if variable_instance_exists(id, "pre_col_queues_temp"){
+  if pre_col_queues_temp != -1{
+    if ds_exists(pre_col_queues_temp, ds_type_priority){
+      ds_priority_destroy(pre_col_queues_temp)
+      pre_col_queues_temp = -1
+    }
+  }
+}
+
+if variable_instance_exists(id, "weapon_event_queues"){
+  if weapon_event_queues != -1{
+    if ds_exists(weapon_event_queues, ds_type_priority){
+      ds_priority_destroy(weapon_event_queues)
+      weapon_event_queues = -1
+    }
+  }
+}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="2" enumb="0">
       <action>
         <libid>1</libid>
@@ -85,6 +173,9 @@ repeat(irandom_range(2,3)){ //ideally 3
     
     proj.step_event_queues = ds_priority_create()
     ds_priority_copy(proj.step_event_queues, self.step_event_queues)
+    
+    self.step_event_queues_temp = -1
+    //the step event will fill this priority for us
     
     //variables
     proj.direction = random_range(0, 360)
@@ -166,11 +257,9 @@ if !self.collide &amp;&amp; !self.pre_collide  //if spawning projectiles
   
   ///if we are about to collide
   dis_traveled += speed
-  if (dis_traveled &gt;= w_range)
-  {
-    self.pre_collide = true
-    collide_ground = true
-  }
+  col_proj_ground()
+  col_proj_solid()
+  col_proj_enemy() //this function will not activate when colliding with an ally or a friendly summon
 }
 
 
@@ -190,42 +279,46 @@ if !self.collide &amp;&amp; self.pre_collide //if collision is detected, before 
   }
   //dont delete the queue untill the collision actually happens
   //so instead we make a copy to deal with
-  if !ds_exists(self.pre_col_queues_temp, ds_type_priority)
-  {
+  if !ds_exists(self.pre_col_queues_temp, ds_type_priority){
     self.pre_col_queues_temp = ds_priority_create()
     ds_priority_copy(self.pre_col_queues_temp, self.pre_col_queues)
   }
   
-  
-  while !ds_priority_empty(self.pre_col_queues_temp)
-  {
+  //cycle through all pre collision modifiers, when the modifier is finished it'll return true
+  while !ds_priority_empty(self.pre_col_queues_temp){
     var scr = ds_priority_delete_min(self.pre_col_queues_temp)
     var returned = script_execute(scr)
-    //if (returned = false) {break}
     if (returned = true) {ds_priority_delete_value(self.pre_col_queues, scr)}
   }
   
-  if ds_priority_empty(self.pre_col_queues_temp)
-  {
+  //refill the temp list
+  if ds_priority_empty(self.pre_col_queues_temp){
     ds_priority_copy(self.pre_col_queues_temp, self.pre_col_queues)
   }
   
+  
   //if pre coliisions are empty then we must have collided
-  if ds_priority_empty(self.pre_col_queues) &amp;&amp; self.collide = false &amp;&amp; self.pre_collide = true
-  {
-    ////if collision is final destroy the step events
-    if ds_exists(self.pre_col_queues_temp, ds_type_priority)
-    {
-      ds_priority_destroy(self.pre_col_queues_temp)
-      self.step_event_queues_temp = -1
-    }
-    ////if collision is final destroy the step events
-    if ds_exists(self.pre_col_queues, ds_type_priority)
-    {
-      ds_priority_destroy(self.pre_col_queues)
-      self.step_event_queues = -1
-    }
+  if (ds_priority_empty(self.pre_col_queues) || !do_not_collide) &amp;&amp; self.collide = false &amp;&amp; self.pre_collide = true{
     
+        ////if collision is final destroy the left over queues
+        if ds_exists(self.pre_col_queues_temp, ds_type_priority){
+          ds_priority_destroy(self.pre_col_queues_temp)
+          self.pre_col_queues_temp = -1
+        }
+        if ds_exists(self.pre_col_queues, ds_type_priority){
+          ds_priority_destroy(self.pre_col_queues)
+          self.pre_col_queues = -1
+        }
+        if ds_exists(self.step_event_queues_temp, ds_type_priority){
+          ds_priority_destroy(self.step_event_queues_temp)
+          self.step_event_queues_temp = -1
+        }
+        if ds_exists(self.step_event_queues, ds_type_priority){
+          ds_priority_destroy(self.step_event_queues)
+          self.step_event_queues = -1
+        }
+        ///////////////////////////////////////////////////////
+        
     self.collide = true
     self.pre_collide = false
   
@@ -314,27 +407,6 @@ if self.collide &amp;&amp; !self.pre_collide  //if officially collided
 
 
 
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>//show_debug_message("[PROJ] dis_traveled = "+string(dis_traveled))
 </string>
           </argument>
         </arguments>

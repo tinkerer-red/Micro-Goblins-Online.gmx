@@ -96,6 +96,67 @@ proj_queue = -1
         </arguments>
       </action>
     </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///clean up left over queues
+
+if variable_instance_exists(id, "active_queue"){
+  if active_queue != -1{
+    if ds_exists(active_queue, ds_type_priority){
+      ds_priority_destroy(active_queue)
+      active_queue = -1
+    }
+  }
+}
+
+if variable_instance_exists(id, "recent_proj_queue"){
+  if recent_proj_queue != -1{
+    if ds_exists(recent_proj_queue, ds_type_queue){
+      ds_queue_destroy(recent_proj_queue)
+      recent_proj_queue = -1
+    }
+  }
+}
+
+if variable_instance_exists(id, "proj_queue"){
+  if proj_queue != -1{
+    if ds_exists(proj_queue, ds_type_queue){
+      ds_queue_destroy(proj_queue)
+      proj_queue = -1
+    }
+  }
+}
+
+if variable_instance_exists(id, "weapon_event_queues"){
+  if weapon_event_queues != -1{
+    if ds_exists(weapon_event_queues, ds_type_priority){
+      ds_priority_destroy(weapon_event_queues)
+      weapon_event_queues = -1
+    }
+  }
+}
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="2" enumb="0">
       <action>
         <libid>1</libid>
@@ -232,7 +293,7 @@ if (w_type = weapon_type_range) &amp;&amp; (self.attack = false)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///run modifiers
+            <string>///Run Modifiers
 
 ////////////////////////////////////////////////////////////////////
 //Projectile spawn modifiers
@@ -243,7 +304,6 @@ if self.attack  //if spawning projectiles
   
   if (w_type = weapon_type_range) || (ranged = true)
   {
-    //show_debug_message("w_type = range")
     var self.distance = ((self.sprite_width*self.image_xscale)/2 + (self.sprite_height*self.image_yscale)/2) /2 +1
     var self.xx = x+lengthdir_x(self.distance, self.direction);
     var self.yy = y+lengthdir_y(self.distance, self.direction);
@@ -262,14 +322,14 @@ if self.attack  //if spawning projectiles
     ds_queue_copy(self.proj_queue, self.recent_proj_queue)
     
   }  
-  //show_debug_message("[WEAPON] weapon_event_queues = "+string(weapon_event_queues))
+  
   var self.result = scr_run_modifiers() //projectile spawn modifiers
   if self.result = true
   {
     if (w_type = weapon_type_range) || (ranged = true)
     {
       ds_queue_destroy(self.recent_proj_queue)
-      var recent_proj_queue = -1
+      recent_proj_queue = -1
       
       while !ds_queue_empty(self.proj_queue)
       {
@@ -301,7 +361,7 @@ if self.attack  //if spawning projectiles
         
       }
       ds_queue_destroy(self.proj_queue)
-      var proj_queue = -1
+      proj_queue = -1
       
       if (w_type = weapon_type_range) //|| ranged
       {

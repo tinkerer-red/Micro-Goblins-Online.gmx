@@ -147,7 +147,7 @@ if (surface_get_width(application_surface) != floor(ww)) || (surface_get_height(
   }
   
   surface_resize(application_surface, ww, hh)
-  
+  /*
   show_debug_message("RESIZED")
   show_debug_message("ww = "+string(ww))
   show_debug_message("surface width = "+string(surface_get_width(application_surface)))
@@ -155,7 +155,7 @@ if (surface_get_width(application_surface) != floor(ww)) || (surface_get_height(
   show_debug_message("hh = "+string(hh))
   show_debug_message("surface height = "+string(surface_get_height(application_surface)))
   show_debug_message("display_get_gui_height = "+string(display_get_gui_height()))
-  
+  */
   
   
   

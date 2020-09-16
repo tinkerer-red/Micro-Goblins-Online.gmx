@@ -89,16 +89,22 @@ gui_create_watcher(guid, "FPS", fps, c_green);
 //gui_create_watcher(guid, "FPS_real", fps_real, c_yellow);
 gui_create_watcher(guid, "FPS_mean", fps_real, c_orange);
 
-gui_create_menu(guid, "Modifiers", false, 17, c_black);
-  gui_create_menu(guid, "Global", false, 8, c_black);
+gui_create_menu(guid, "Modifiers", false, 20, c_black);
+  
+  gui_create_menu(guid, "Global", false, 6, c_black);
     gui_create_slider(guid, "Charge", 0, 0, 3, c_aqua)
     gui_create_slider(guid, "Repeater", 0, 0, 3, c_aqua)
     gui_create_slider(guid, "Dash", 0, 0, 3, c_aqua)
     gui_create_slider(guid, "Evade", 0, 0, 3, c_aqua)
-    gui_create_slider(guid, "Swiftness", 0, 0, 3, c_aqua)
-    gui_create_slider(guid, "Slowness", 0, 0, 3, c_aqua)
     gui_create_slider(guid, "Enlarge", 0, 0, 3, c_aqua)
     gui_create_slider(guid, "Shrink", 0, 0, 3, c_aqua)
+  
+  gui_create_menu(guid, "Melee", false, 4, c_black);
+    gui_create_checkbox(guid, "Melee Ranged", false);
+    gui_create_slider(guid, "Swiftness", 0, 0, 3, c_aqua)
+    gui_create_slider(guid, "Slowness", 0, 0, 3, c_aqua)
+   gui_create_checkbox(guid, "Back Stab", false, c_aqua)
+   
   gui_create_menu(guid, "Ranged", false, 7, c_black);
     gui_create_slider(guid, "Bonus Shot", 0, 0, 3, c_aqua)
     gui_create_slider(guid, "Mirror Shot", 0, 0, 3, c_aqua)
@@ -188,12 +194,15 @@ if (global.debug = true){
           last_repeater = gui_get_value(guid, "Repeater");
           last_dash = gui_get_value(guid, "Dash");
           last_evade = gui_get_value(guid, "Evade");
-          last_swift = gui_get_value(guid, "Swiftness");
-          last_slow = gui_get_value(guid, "Slowness");
           last_enlarge = gui_get_value(guid, "Enlarge");
           last_shrink = gui_get_value(guid, "Shrink");
         //}
         
+          last_meleeRanged = gui_get_value(guid, "Melee Ranged");
+          last_swift = gui_get_value(guid, "Swiftness");
+          last_slow = gui_get_value(guid, "Slowness");
+          last_backStab = gui_get_value(guid, "Back Stab");
+          
         //if gui_get_value(guid, 'Ranged'){
           last_bonusShot = gui_get_value(guid, "Bonus Shot");
           last_mirrorShot = gui_get_value(guid, "Mirror Shot");
@@ -288,10 +297,16 @@ if (global.debug = true){
           gui_set_value(guid, "Repeater", floor(0.5+gui_get_value(guid, "Repeater")) div 1);
           gui_set_value(guid, "Dash", floor(0.5+gui_get_value(guid, "Dash")) div 1);
           gui_set_value(guid, "Evade", floor(0.5+gui_get_value(guid, "Evade")) div 1);
-          gui_set_value(guid, "Swiftness", floor(0.5+gui_get_value(guid, "Swiftness")) div 1);
-          gui_set_value(guid, "Slowness", floor(0.5+gui_get_value(guid, "Slowness")) div 1);
           gui_set_value(guid, "Enlarge", floor(0.5+gui_get_value(guid, "Enlarge")) div 1);
           gui_set_value(guid, "Shrink", floor(0.5+gui_get_value(guid, "Shrink")) div 1);
+        }
+      //Melee
+        if gui_get_value(guid, 'Melee'){
+          //gui_set_value(guid, "Melee Ranged", floor(0.5+gui_get_value(guid, "Swiftness")) div 1);
+          gui_set_value(guid, "Swiftness", floor(0.5+gui_get_value(guid, "Swiftness")) div 1);
+          gui_set_value(guid, "Slowness", floor(0.5+gui_get_value(guid, "Slowness")) div 1);
+          //gui_set_value(guid, "Back Stab", floor(0.5+gui_get_value(guid, "Back Stab")) div 1);
+          
         }
       //Range
         if gui_get_value(guid, 'Ranged'){
@@ -380,7 +395,7 @@ if (global.debug = true){
   //if (mouse_check_button_released(mb_left)){
     if (device_mouse_x_to_gui(0) &gt; (display_get_gui_width()-243)*(1+obj_camera_control.smooth_camera)){
       
-      if gui_get_value(guid, 'Modifiers') &amp;&amp; (gui_get_value(guid, 'Global') || gui_get_value(guid, 'Ranged') /*|| gui_get_value(guid, 'Melee')*/){
+      if gui_get_value(guid, 'Modifiers') &amp;&amp; (gui_get_value(guid, 'Global') || gui_get_value(guid, 'Ranged') || gui_get_value(guid, 'Melee')){
         for (var i = 0; i &lt; 3; i++){  //for all three weapons
           
           var queue_button_mods = ds_priority_delete_min(obj_player.item_queues[i]);
@@ -398,10 +413,16 @@ if (global.debug = true){
             if last_repeater != gui_get_value(guid, "Repeater") scr_modifier_adjust(queue_button_mods, scr_mod_repeater, 2, gui_get_value(guid, "Repeater")); 
             if last_dash != gui_get_value(guid, "Dash") scr_modifier_adjust(queue_pre_weap_mods, scr_mod_dash, 1, gui_get_value(guid, "Dash"));
             if last_evade != gui_get_value(guid, "Evade") scr_modifier_adjust(queue_post_attack_mods, scr_mod_evade, 1, gui_get_value(guid, "Evade"));
-            if last_swift != gui_get_value(guid, "Swiftness") scr_modifier_adjust(queue_weap_spawn_mods, scr_mod_swiftness, 1, gui_get_value(guid, "Swiftness"));
-            if last_slow != gui_get_value(guid, "Slowness") scr_modifier_adjust(queue_weap_spawn_mods, scr_mod_slowness, 2, gui_get_value(guid, "Slowness"));
             if last_enlarge != gui_get_value(guid, "Enlarge") scr_modifier_adjust(queue_weap_spawn_mods, scr_mod_enlarge, 3, gui_get_value(guid, "Enlarge"));
             if last_shrink != gui_get_value(guid, "Shrink") scr_modifier_adjust(queue_weap_spawn_mods, scr_mod_shrink, 4, gui_get_value(guid, "Shrink"));
+          }
+          
+          //Melee
+          if gui_get_value(guid, 'Melee'){
+            if last_meleeRanged != gui_get_value(guid, "Melee Ranged") scr_modifier_adjust(queue_weap_spawn_mods, scr_mod_range, 1, gui_get_value(guid, "Melee Ranged"));
+            if last_swift != gui_get_value(guid, "Swiftness") scr_modifier_adjust(queue_weap_spawn_mods, scr_mod_swiftness, 1, gui_get_value(guid, "Swiftness"));
+            if last_slow != gui_get_value(guid, "Slowness") scr_modifier_adjust(queue_weap_spawn_mods, scr_mod_slowness, 2, gui_get_value(guid, "Slowness"));
+            if last_backStab != gui_get_value(guid, "Back Stab") scr_modifier_adjust(queue_weap_spawn_mods, scr_mod_backStab, 1, gui_get_value(guid, "Back Stab"));
           }
           
           //Ranged
