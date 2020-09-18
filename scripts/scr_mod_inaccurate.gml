@@ -13,7 +13,7 @@ if (w_type = weapon_type_range) || (ranged = true)
   {
     with (ds_queue_dequeue(self.temp_queue))
     {
-      self.direction += random_range(-18, 18);
+      self.direction += htme_random_range(-18, 18);
     }
   }
   

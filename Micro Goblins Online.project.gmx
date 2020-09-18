@@ -78,15 +78,18 @@
         </sprites>
       </sprites>
     </sprites>
-    <sprite>sprites\sprite0</sprite>
+    <sprites name="Utility Sprite">
+      <sprite>sprites\spr_dualbooting</sprite>
+      <sprite>sprites\spr_controller</sprite>
+      <sprite>sprites\spr_rng</sprite>
+      <sprite>sprites\spr_debug</sprite>
+    </sprites>
     <sprite>sprites\spr_green</sprite>
     <sprite>sprites\spr_red</sprite>
     <sprite>sprites\spr_yellow</sprite>
     <sprite>sprites\spr_black</sprite>
     <sprite>sprites\sprite6</sprite>
-    <sprite>sprites\spr_red_wall</sprite>
     <sprite>sprites\spr_ball</sprite>
-    <sprite>sprites\sprite10</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
@@ -155,11 +158,13 @@
       </scripts>
     </scripts>
     <scripts name="Maths">
+      <script>scripts\normalize.gml</script>
       <script>scripts\rangePercentage.gml</script>
       <script>scripts\collision_normal.gml</script>
       <script>scripts\add_vectors.gml</script>
       <script>scripts\mean_vectors.gml</script>
       <script>scripts\sec_to_frames.gml</script>
+      <script>scripts\lag.gml</script>
     </scripts>
     <scripts name="Drawing">
       <script>scripts\draw_cone.gml</script>
@@ -363,6 +368,13 @@
           </scripts>
           <script>scripts\udphp_config.gml</script>
         </scripts>
+        <scripts name="Random">
+          <script>scripts\htme_random.gml</script>
+          <script>scripts\htme_irandom.gml</script>
+          <script>scripts\htme_random_range.gml</script>
+          <script>scripts\htme_irandom_range.gml</script>
+          <script>scripts\htme_choose.gml</script>
+        </scripts>
       </scripts>
       <scripts name="DS Print">
         <script>scripts\array_print.gml</script>
@@ -406,7 +418,7 @@
     </scripts>
     <script>scripts\scr_collision_test.gml</script>
     <script>scripts\scr_draw_circle.gml</script>
-    <script>scripts\lag.gml</script>
+    <script>scripts\string_split_to_array.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fontGGUI</font>
@@ -441,17 +453,17 @@
     <object>objects\obj_wall</object>
     <object>objects\obj_ball</object>
     <object>objects\obj_test</object>
+    <object>objects\obj_rng</object>
   </objects>
   <rooms name="rooms">
-    <room>rooms\room_one_player_TEST</room>
     <rooms name="htme_demo">
       <room>rooms\htme_rom_menu</room>
       <room>rooms\htme_rom_connecting</room>
       <room>rooms\htme_lanlobby</room>
     </rooms>
+    <room>rooms\room_one_player_TEST</room>
     <room>rooms\room_lvl_one</room>
-    <room>rooms\room_lvl_one_bckup</room>
-    <room>rooms\room_lvl_one_bck</room>
+    <room>rooms\room_lvl_one_bk</room>
     <room>rooms\room0</room>
   </rooms>
   <constants number="7">

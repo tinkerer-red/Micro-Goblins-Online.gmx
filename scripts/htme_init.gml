@@ -95,7 +95,7 @@ self.debuglevel = htme_debug.INFO;
  * debug information. 
  * Make sure you updated obj_htme to at least V. 1.2.0
 */
-self.debugoverlay = false;
+self.debugoverlay = true;
 
 /** 
  * ID of the Object that controls the engine. You normally don't have to change this.

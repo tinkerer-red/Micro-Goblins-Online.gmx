@@ -8,6 +8,10 @@ var returned = false
 
 if collide_solid && (self.do_not_collide = false)
 {
+  var hype = sqrt( power(sprite_height,2) + power(sprite_width,2))
+  var xx = x+lengthdir_x(hype/2,direction)
+  var yy = y+lengthdir_y(hype/2,direction)
+  
   var _dist = 0
   while !place_free(x,y){
     if (_dist > speed) break;
@@ -18,9 +22,8 @@ if collide_solid && (self.do_not_collide = false)
   }
   
   //when we're no longer in the wall do the actual ricochet
-  var xx = x+lengthdir_x(_dist,direction)
-  var yy = y+lengthdir_y(_dist,direction)
-  var norm_dir = collision_normal(xx,yy,obj_solid,sprite_height*1.25,4);
+  
+  var norm_dir = collision_normal(xx,yy,obj_solid,hype*0.6,4);
   
   // this will find the angle difference then double it for the 
   direction = (direction-180)+angle_difference(norm_dir, direction-180)*2

@@ -216,7 +216,40 @@ self.zoom_out_pressed = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Netcode
+            <string>///Netcode //buffer_f16 isn't supported
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/***************************************************
+  buffer_f16 IS NOT SUPPORTED!
+ ***************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 self.name = "Test-icle"
 
@@ -244,7 +277,7 @@ mp_setType("physics", mp_type.SMART)
 mp_add("playerName", "name", buffer_string, 60*room_speed)
 mp_setType("playerName",mp_type.SMART)
 
-
+//buffer_f16 isn't supported
 //add controls
 mp_add("controls", "up,down,left,right,item_a,item_b,item_c,item_a_pressed,item_b_pressed,item_c_pressed", buffer_f32, 1) //buffer_f16 isn't supported
 mp_setType("controls",mp_type.FAST)
@@ -331,10 +364,10 @@ for (var i = 0; i &lt; 3; i++)
   repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_inaccurate, 4);
   repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_4, 1);
   ///////////////////////////////////////////////////////////////////////////
-  repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_cluster, 1);
+  repeat( 1 ) ds_priority_add(queue_attack_step_mods, scr_mod_cluster, 1);
   repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_5, 1);
   ///////////////////////////////////////////////////////////////////////////
-  repeat( 1 ) ds_priority_add(queue_pre_col_mods, scr_mod_ricochet, 1);
+  repeat( 0 ) ds_priority_add(queue_pre_col_mods, scr_mod_ricochet, 1);
   repeat( 0 ) ds_priority_add(queue_pre_col_mods, scr_mod_boomerang, 2);
   repeat( 0 ) ds_priority_add(queue_pre_col_mods, scr_6, 3);
   ///////////////////////////////////////////////////////////////////////////
@@ -1150,32 +1183,6 @@ scr_player_state_move(self.player_id_global, 1)
 
 
 
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="5" enumb="18">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>if player_id_local = 0
-{
-  instance_create(x,y,obj_ball)
-}
 </string>
           </argument>
         </arguments>

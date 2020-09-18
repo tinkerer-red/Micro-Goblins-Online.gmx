@@ -27,8 +27,8 @@
             <kind>1</kind>
             <string>if (!htme_isStarted())
 {
-  show_message("Something broke! Restarting game...")
-  game_restart()
+  //show_message("Something broke! Restarting game...")
+  game_end()
 }
 
 </string>

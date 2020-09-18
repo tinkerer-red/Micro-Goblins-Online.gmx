@@ -3,8 +3,8 @@
 
 
 if (w_type = weapon_type_range) || (ranged = true){
-  var _dir = random_range(0, 360)
-  var _acc = random_range(-22.5, 22.5)
+  var _dir = htme_random_range(0, 360)
+  var _acc = htme_random_range(-22.5, 22.5)
   
   var distance = ((owner_id.sprite_width*owner_id.image_xscale) + (owner_id.sprite_height*owner_id.image_yscale))/2
   

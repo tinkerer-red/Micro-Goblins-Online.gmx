@@ -2,8 +2,8 @@
 <sprite>
   <type>0</type>
   <xorig>0</xorig>
-  <yorigin>16</yorigin>
-  <colkind>0</colkind>
+  <yorigin>0</yorigin>
+  <colkind>1</colkind>
   <coltolerance>0</coltolerance>
   <sepmasks>0</sepmasks>
   <bboxmode>0</bboxmode>
@@ -20,6 +20,6 @@
   <width>16</width>
   <height>16</height>
   <frames>
-    <frame index="0">images\spr_weap_test_0.png</frame>
+    <frame index="0">images\spr_rng_0.png</frame>
   </frames>
 </sprite>

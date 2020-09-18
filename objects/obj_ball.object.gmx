@@ -53,11 +53,10 @@ direction = point_direction(x,y,mouse_x,mouse_y)
           <argument>
             <kind>1</kind>
             <string>/// collision
-
-var array = scr_collision_test()
-//speed = array[0]
-direction = array[1]
-
+do_not_collide = false
+if col_proj_solid(){
+  scr_mod_ricochet()
+}
 
 if place_free(x,y)
 {
