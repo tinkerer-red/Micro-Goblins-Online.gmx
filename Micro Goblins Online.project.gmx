@@ -83,13 +83,16 @@
       <sprite>sprites\spr_controller</sprite>
       <sprite>sprites\spr_rng</sprite>
       <sprite>sprites\spr_debug</sprite>
+      <sprite>sprites\spr_camera</sprite>
     </sprites>
-    <sprite>sprites\spr_green</sprite>
-    <sprite>sprites\spr_red</sprite>
-    <sprite>sprites\spr_yellow</sprite>
-    <sprite>sprites\spr_black</sprite>
-    <sprite>sprites\sprite6</sprite>
-    <sprite>sprites\spr_ball</sprite>
+    <sprites name="Test Sprites">
+      <sprite>sprites\spr_red</sprite>
+      <sprite>sprites\spr_green</sprite>
+      <sprite>sprites\spr_yellow</sprite>
+      <sprite>sprites\spr_black</sprite>
+      <sprite>sprites\sprite6</sprite>
+      <sprite>sprites\spr_ball</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
@@ -159,7 +162,6 @@
     </scripts>
     <scripts name="Maths">
       <script>scripts\normalize.gml</script>
-      <script>scripts\rangePercentage.gml</script>
       <script>scripts\collision_normal.gml</script>
       <script>scripts\add_vectors.gml</script>
       <script>scripts\mean_vectors.gml</script>
@@ -456,12 +458,12 @@
     <object>objects\obj_rng</object>
   </objects>
   <rooms name="rooms">
+    <room>rooms\room_one_player_TEST</room>
     <rooms name="htme_demo">
       <room>rooms\htme_rom_menu</room>
       <room>rooms\htme_rom_connecting</room>
       <room>rooms\htme_lanlobby</room>
     </rooms>
-    <room>rooms\room_one_player_TEST</room>
     <room>rooms\room_lvl_one</room>
     <room>rooms\room_lvl_one_bk</room>
     <room>rooms\room0</room>

@@ -27,9 +27,9 @@
             <kind>1</kind>
             <string>if (obj_debug.fps_mean &gt; 120)
 {
-  alarm_set(0, room_speed)
+//  alarm_set(0, room_speed)
 }else{
-  alarm_set(0, room_speed*3)
+//  alarm_set(0, room_speed*3)
 }
 loaded = false
 
@@ -129,7 +129,7 @@ if (dis &gt; view_distance_max)
   if (dis &gt; view_distance_min )
   {
     visible = true
-    image_alpha = rangePercentage(dis, view_distance_min, view_distance_max)/100
+    image_alpha = normalize(dis, view_distance_min, view_distance_max)/100
   } else {
     visible = true
     image_alpha = 1

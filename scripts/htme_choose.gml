@@ -21,6 +21,7 @@ if (argument_count = 14) var a13 = argument13
 if (argument_count = 15) var a14 = argument14
 if (argument_count = 16) var a15 = argument15
 //sorry about that
+if(variable_global_exists("htme_object")){
 
 global.num++
 
@@ -31,6 +32,10 @@ var value = range * perc
 
 var value = floor(value+0.5)
 
-
+}else{
+  var value = irandom(argument_count-1)
+  
+  
+}
 return argument[value]
 

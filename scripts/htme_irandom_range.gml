@@ -2,7 +2,7 @@
 
 
 // Returns a random integer between 0 and n. This includes n if n itself is an integer value.
-
+if(variable_global_exists("htme_object")){
 
 global.num++
 
@@ -13,6 +13,9 @@ var value = range * perc
 var value = value + argument0
 var value = floor(value+0.5)
 
+}else{
+  var value = irandom_range(argument0, argument1)
+}
 
 return value
 

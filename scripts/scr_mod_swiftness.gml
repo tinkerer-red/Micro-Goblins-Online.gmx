@@ -3,7 +3,7 @@
 //melee
 //weap spawn modifier
 
-show_debug_message("swiftness")
+//show_debug_message("swiftness")
 while !ds_priority_empty(self.recent_weap_queue){
   self.weap_inst = ds_priority_delete_min(self.recent_weap_queue)
     

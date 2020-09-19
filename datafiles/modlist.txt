@@ -10,7 +10,7 @@ Accelerate (Increase attack speed for each consecutive shot. Resets one second a
 explosive (this gives AOE, multiples cause larger AOE size)
 continuous (this will make an AOE continuous, or cause bleeding, mutliples cause longer time)
 +++knockback
-+++Enlarge (double the size of the weapon and projectiles) 
++++Enlarge (double the size of the weapon and projectiles)
 shrink (half size)
 Force Push
 Force Pull (basically grapple) (happens before melee weapon spawns, happens at collision for ranged)

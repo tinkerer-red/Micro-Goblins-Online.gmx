@@ -162,7 +162,7 @@ if variable_instance_exists(id, "weapon_event_queues"){
 
 ds_priority_delete_value(self.step_event_queues, scr_mod_cluster)
 
-repeat(htme_irandom_range(2,3)){ //ideally 3
+repeat(3){ //ideally 3
 //  if (irandom(2) &gt; 0){ //this helps cut down on the massive entities when 5 cluster mods are active
     var proj = instance_copy(false);
     
