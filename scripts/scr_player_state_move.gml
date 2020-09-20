@@ -2,7 +2,7 @@
 
 var player_id_local = argument[0]
 var modifier = argument[1]
-debug=false
+
 if (spd != 0)
 {
   ///apply friction
@@ -30,56 +30,63 @@ if (spd != 0)
   }
   
   
-  if place_free(x, y)
+  if place_free(x, y) && !tile_meeting_precise(x, y, TileLayerBottom)
   {
     var xx = x+lengthdir_x(spd*lag(), dir)
     var yy = y+lengthdir_y(spd*lag(), dir)
     
-    if place_free(xx, yy)
+    if place_free(xx, yy) && !tile_meeting_precise(xx, yy, TileLayerBottom)
     {
       x = xx
       y = yy
       direction = dir
-      show_debug_player(player_id_local, "spd = "+string(spd))
-      show_debug_player(player_id_local, "lag() = "+string(lag()))
-      show_debug_player(player_id_local, "spd*lag = "+string(spd*lag()))
     }
     else
     {  
-      debug=true
-      
       //flat wall check
       hype = sqrt(power(sprite_width,2)+power(sprite_height,2))
       
+      //Check for solid objects aswell as solid tiles
       wall_dir = scr_draw_circle(x,y,hype*0.5*1.25,hype*1.25/21,false);
+      //tile_dir = tile_collision_normal(x,y,hype*0.5*1.25,hype*1.25/21,false);
       
-      if (abs(angle_difference(dir,wall_dir)) > 165)
+      if (abs(angle_difference(dir,wall_dir)) > 165)// || (abs(angle_difference(dir,tile_dir)) > 165)
       { //165 degrees is the magic number to allow the player to move around a flat wall if they are halfway off it already
         //move as close to the wall as possible
         for (var dis = spd*lag(); dis > 0; dis--){
           var xx = x+lengthdir_x(dis, dir)
           var yy = y+lengthdir_y(dis, dir)
           
-          if (place_free(xx, yy)){
+          if (place_free(xx, yy)) && !tile_meeting_precise(xx, yy, TileLayerBottom){
             x=xx
             y=yy
             spd -= dis
+            break;
           }
         }
         
         //this check is only here to make sure that it actually is a flat wall instead of moving at the exact angle of two different slopes
-        if (!place_free(x+lengthdir_x(spd*lag(),dir-80),y+lengthdir_y(spd*lag(),dir-80)) && !place_free(x+lengthdir_x(spd*lag(),dir+80),y+lengthdir_y(spd*lag(),dir+80)))
+        if !place_free(x+lengthdir_x(spd*lag(),dir-80),y+lengthdir_y(spd*lag(),dir-80))
+          && !place_free(x+lengthdir_x(spd*lag(),dir+80),y+lengthdir_y(spd*lag(),dir+80))
         {
         spd = 0
         direction = dir
         exit;
+        }else{ //if it's not a solid object check if we're dealing with a tiled object (only saves a few collision calls)
+          if tile_meeting_precise(x+lengthdir_x(spd*lag(),dir-80), y+lengthdir_y(spd*lag(),dir-80), TileLayerBottom)
+            && tile_meeting_precise(x+lengthdir_x(spd*lag(),dir+80), y+lengthdir_y(spd*lag(),dir+80), TileLayerBottom)
+          {
+          spd = 0
+          direction = dir
+          exit;
+          }
         }
       }
       
       
       
       //this is used to help iterate each possible angle, so check left 10 degrees, then check right 10 degrees
-      var collision_angle_precision = 10
+      var collision_angle_precision = 15
       
       // which would be the prefered side
       var prefer = -sign(angle_difference(dir,direction))
@@ -102,7 +109,7 @@ if (spd != 0)
             //show_debug_player(0,"angle = "+string(angle))
             //show_debug_player(0,"angle_to_check = "+string(angle_to_check))
             
-            if place_free(xx, yy){
+            if place_free(xx, yy) && !tile_meeting_precise(xx, yy, TileLayerBottom){
               x = x+lengthdir_x(spd*speed_multiplier, angle_to_check)
               y = y+lengthdir_y(spd*speed_multiplier, angle_to_check)
                 
@@ -114,7 +121,7 @@ if (spd != 0)
               exit;
             }
           }
-          if (angle >= 80) var collision_angle_precision = 5;
+          if (angle >= 80) var collision_angle_precision = 10;
         }
       
       //if no possible exit was found, this code will get ran.

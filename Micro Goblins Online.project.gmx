@@ -84,6 +84,7 @@
       <sprite>sprites\spr_rng</sprite>
       <sprite>sprites\spr_debug</sprite>
       <sprite>sprites\spr_camera</sprite>
+      <sprite>sprites\spr_tile_checker</sprite>
     </sprites>
     <sprites name="Test Sprites">
       <sprite>sprites\spr_red</sprite>
@@ -97,6 +98,8 @@
   <backgrounds name="background">
     <background>background\background0</background>
     <background>background\background8</background>
+    <background>background\tile_map</background>
+    <background>background\background3</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -142,6 +145,17 @@
             </scripts>
             <script>scripts\scr_spawn_weapon.gml</script>
           </scripts>
+          <scripts name="Summons">
+            <scripts name="Movement">
+              <script>scripts\scr_mod_summon_movement_default.gml</script>
+            </scripts>
+            <scripts name="Attack">
+              <script>scripts\scr_mod_summon_attack_default.gml</script>
+            </scripts>
+            <scripts name="Health">
+              <script>scripts\scr_mod_summon_health_default.gml</script>
+            </scripts>
+          </scripts>
           <script>scripts\scr_run_modifiers.gml</script>
           <script>scripts\scr_clear_modifiers.gml</script>
           <script>scripts\scr_item_has_mod.gml</script>
@@ -155,9 +169,16 @@
         <script>scripts\scr_player_state_move_old.gml</script>
       </scripts>
       <scripts name="Collisions">
+        <script>scripts\tile_meeting_precise.gml</script>
         <script>scripts\col_proj_solid.gml</script>
         <script>scripts\col_proj_ground.gml</script>
         <script>scripts\col_proj_enemy.gml</script>
+        <scripts name="unused">
+          <script>scripts\tile_meeting_precise_gms2.gml</script>
+          <script>scripts\tile_meeting_precise_orig.gml</script>
+          <script>scripts\tile_collision_normal.gml</script>
+          <script>scripts\tile_point_precise.gml</script>
+        </scripts>
       </scripts>
     </scripts>
     <scripts name="Maths">
@@ -422,13 +443,12 @@
     <script>scripts\scr_draw_circle.gml</script>
     <script>scripts\string_split_to_array.gml</script>
   </scripts>
+  <shaders name="shaders"/>
   <fonts name="fonts">
     <font>fonts\fontGGUI</font>
   </fonts>
   <objects name="objects">
     <objects name="Game Objects">
-      <object>objects\obj_solid</object>
-      <object>objects\o_sensor</object>
       <object>objects\obj_entity</object>
       <object>objects\obj_player</object>
       <object>objects\obj_weapon</object>
@@ -449,6 +469,11 @@
         <objects name="htme">
           <object>objects\obj_htme</object>
         </objects>
+      </objects>
+      <objects name="Collision">
+        <object>objects\o_sensor</object>
+        <object>objects\obj_precise_tile_checker</object>
+        <object>objects\obj_solid</object>
       </objects>
     </objects>
     <object>objects\obj_diag_wall</object>

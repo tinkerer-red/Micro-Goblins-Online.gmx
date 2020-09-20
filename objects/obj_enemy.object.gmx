@@ -25,52 +25,25 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (obj_debug.fps_mean &gt; 120)
-{
-//  alarm_set(0, room_speed)
-}else{
-//  alarm_set(0, room_speed*3)
-}
-loaded = false
+            <string>///Define Default Values
 
-knockback = 8
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="2" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>////*
-/*
-if (obj_debug.fps_mean &gt; 120)
-{
-  loaded = true
-}
 
-if (obj_debug.fps_mean &gt; 120) //|| (loaded = false)
-{
-  instance_create(x+(random(32)-16),y+(random(32)-16),obj_enemy)
-  
-  
-}
+//predefine the event steps each modifier will activate on
+self.eMovement_event = ev_create;
+self.eAttack_event   = ev_create;
+self.eHealth_event   = ev_create;
 
-//alarm_set(0, room_speed)
+
+//define the modifiers we will be using
+self.eMovement = scr_mod_summon_movement_default;
+self.eAttack   = scr_mod_summon_attack_default;
+self.eHealth   = scr_mod_summon_health_default;
+
+
+self.mods_init = false
+
+
+
 </string>
           </argument>
         </arguments>
@@ -93,7 +66,16 @@ if (obj_debug.fps_mean &gt; 120) //|| (loaded = false)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>sprite_index = spr_red
+            <string>///Initialize modifiers, and run them if they're create event mods
+
+
+if (self.mods_init = false) {
+  script_execute(self.eMovement)
+  script_execute(self.eAttack)
+  script_execute(self.eHealth)
+
+  self.mods_init = true
+}  
 </string>
           </argument>
         </arguments>
@@ -170,7 +152,7 @@ if instance_exists(obj_player)
   
   speed += 1
   
-  speed = clamp(speed, -50, 5)
+  speed = clamp(speed, -10, 5)
   
 }
 </string>
@@ -193,63 +175,22 @@ if instance_exists(obj_player)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///keep track of random data
-/*for (var i = 0; i &lt; 50; i++)
-{
-  //delta[i] = delta_time
-}
-*/
-global.data_sent = true
-//show_debug_player(0, "inastance_number = "+string(instance_number(obj_enemy)))
+            <string>///Run modifiers for the step event
 
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="4" ename="obj_player">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>
-other.speed = 1//self.knockback
-other.direction = point_direction(x, y, other.x, other.y)
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="77">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>global.data_sent = false
+if (self.eMovement_event = ev_step) {
+  script_execute(self.eMovement)
+}
+
+if (self.eAttack_event   = ev_step) {
+  script_execute(self.eAttack)
+}
+
+if (self.eHealth_event   = ev_step) {
+  script_execute(self.eHealth)
+}
+
+
+
 </string>
           </argument>
         </arguments>
