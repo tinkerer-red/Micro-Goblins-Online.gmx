@@ -61,6 +61,7 @@
     <extension index="1">extensions\WinDev</extension>
     <extension index="2">extensions\HOA gGUI - Graphical Interface</extension>
     <extension index="3">extensions\DSPrint</extension>
+    <extension index="4">extensions\TMC SGS Fast Collision System</extension>
   </NewExtensions>
   <sounds name="sound"/>
   <sprites name="sprites">
@@ -84,7 +85,10 @@
       <sprite>sprites\spr_rng</sprite>
       <sprite>sprites\spr_debug</sprite>
       <sprite>sprites\spr_camera</sprite>
+      <sprite>sprites\spr_collision</sprite>
       <sprite>sprites\spr_tile_checker</sprite>
+      <sprite>sprites\spr_chunk_supervisor</sprite>
+      <sprite>sprites\spr_chunk</sprite>
     </sprites>
     <sprites name="Test Sprites">
       <sprite>sprites\spr_red</sprite>
@@ -99,6 +103,7 @@
     <background>background\background0</background>
     <background>background\background8</background>
     <background>background\tile_map</background>
+    <background>background\background4</background>
     <background>background\background3</background>
   </backgrounds>
   <paths name="paths"/>
@@ -170,6 +175,7 @@
       </scripts>
       <scripts name="Collisions">
         <script>scripts\tile_meeting_precise.gml</script>
+        <script>scripts\tile_free.gml</script>
         <script>scripts\col_proj_solid.gml</script>
         <script>scripts\col_proj_ground.gml</script>
         <script>scripts\col_proj_enemy.gml</script>
@@ -434,6 +440,51 @@
           <script>scripts\src_url.gml</script>
         </scripts>
       </scripts>
+      <scripts name="TMC_SGS">
+        <scripts name="TMC_SGS_API">
+          <script>scripts\sgs_field_create.gml</script>
+          <script>scripts\sgs_field_destroy.gml</script>
+          <script>scripts\sgs_step.gml</script>
+          <script>scripts\sgs_collision_line.gml</script>
+          <script>scripts\sgs_collision_line_s.gml</script>
+          <script>scripts\sgs_collision_point.gml</script>
+          <script>scripts\sgs_collision_point_s.gml</script>
+          <script>scripts\sgs_instance_place.gml</script>
+          <script>scripts\sgs_instance_place_c.gml</script>
+          <script>scripts\sgs_instance_place_s.gml</script>
+          <script>scripts\sgs_instance_place_c_s.gml</script>
+          <script>scripts\sgs_place_meeting.gml</script>
+          <script>scripts\sgs_place_meeting_c.gml</script>
+          <script>scripts\sgs_place_meeting_s.gml</script>
+          <script>scripts\sgs_place_meeting_c_s.gml</script>
+          <script>scripts\sgs_collision_event_emu.gml</script>
+          <script>scripts\sgs_collision_event_emu_c.gml</script>
+          <script>scripts\sgs_instance_nearest.gml</script>
+          <script>scripts\READ_ME_TMC_SGS.gml</script>
+        </scripts>
+        <scripts name="TMC_SGS_CALLBACK">
+          <script>scripts\callBack_GenericCollision.gml</script>
+          <script>scripts\callBack_AlphaSet.gml</script>
+          <script>scripts\callBack_SGS_DEMO_Collision.gml</script>
+        </scripts>
+        <scripts name="TMC_SGS_CORE">
+          <script>scripts\sgs_PointInRect.gml</script>
+          <script>scripts\sgs_LineIntersectsLine.gml</script>
+          <script>scripts\sgs_LineTouchesRect.gml</script>
+        </scripts>
+      </scripts>
+      <scripts name="Chunks">
+        <script>scripts\chunk_init.gml</script>
+        <script>scripts\chunk_call.gml</script>
+        <script>scripts\chunk_uncall.gml</script>
+        <script>scripts\chunk_call_region.gml</script>
+        <script>scripts\chunk_uncall_region.gml</script>
+        <script>scripts\chunk_save_to_disk.gml</script>
+        <script>scripts\chunk_debug_toggle.gml</script>
+        <scripts name="Buffers">
+          <script>scripts\file_save_map_async.gml</script>
+        </scripts>
+      </scripts>
       <script>scripts\show_debug_player.gml</script>
       <script>scripts\scr_view_visble_handler.gml</script>
       <script>scripts\src_restart.gml</script>
@@ -442,10 +493,12 @@
     <script>scripts\scr_collision_test.gml</script>
     <script>scripts\scr_draw_circle.gml</script>
     <script>scripts\string_split_to_array.gml</script>
+    <script>scripts\breadth_first_search_create.gml</script>
+    <script>scripts\sgs_place_free.gml</script>
   </scripts>
-  <shaders name="shaders"/>
   <fonts name="fonts">
     <font>fonts\fontGGUI</font>
+    <font>fonts\font_debug</font>
   </fonts>
   <objects name="objects">
     <objects name="Game Objects">
@@ -457,10 +510,10 @@
     </objects>
     <objects name="Universal">
       <object>objects\obj_debug</object>
-      <object>objects\obj_dualbooting</object>
       <object>objects\obj_controller</object>
       <objects name="Visuals">
         <object>objects\obj_camera_control</object>
+        <object>objects\obj_dualbooting</object>
       </objects>
       <objects name="Network">
         <object>objects\htme_obj_menu</object>
@@ -471,9 +524,14 @@
         </objects>
       </objects>
       <objects name="Collision">
-        <object>objects\o_sensor</object>
-        <object>objects\obj_precise_tile_checker</object>
         <object>objects\obj_solid</object>
+        <object>objects\obj_precise_tile_checker</object>
+        <object>objects\obj_collision_module</object>
+        <object>objects\o_sensor</object>
+      </objects>
+      <objects name="Chunks">
+        <object>objects\obj_chunk_supervisor</object>
+        <object>objects\obj_chunk</object>
       </objects>
     </objects>
     <object>objects\obj_diag_wall</object>

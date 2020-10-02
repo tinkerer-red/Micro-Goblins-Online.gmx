@@ -117,12 +117,13 @@ gui_create_menu(guid, "Modifiers", false, 21, c_black);
     
     
 
-gui_create_menu(guid, "Graphics", false, 1, c_black);
+gui_create_menu(guid, "Graphics", false, 2, c_black);
 gui_create_checkbox(guid, "Smooth Camera", obj_camera_control.smooth_camera);
+gui_create_button(guid, "Show Chunks", chunk_debug_toggle, c_yellow);
 
 
 gui_create_button(guid, "Restart", src_restart, $0202a4);
-gui_create_button(guid, "Discord", src_url, $0202a4);
+gui_create_button(guid, "Discord", src_url, $b6599b);
 
 
 time = 0;
@@ -565,24 +566,27 @@ fps_mean = ds_grid_get_mean(fps_grid,0,0,0,5*room_speed-1)
             <string>///Debug Display Text
 
 if (global.debug = true){
+  draw_set_font(font_debug)
+  var scale = obj_camera_control.upscale_val/2;
+  
   if (global.numberOfLocalPlayers = 1){
      h = 40
      var xx = view_xport
      var yy = view_yport
-     var width = string_width(debug_string[0])*obj_camera_control.upscale_val
+     var width = string_width(debug_string[0])*scale
      draw_set_alpha(0.5)
      draw_set_color(c_dkgray)
-     draw_rectangle(xx,yy+(h*obj_camera_control.upscale_val)*((1+obj_camera_control.smooth_camera)/3), xx+width*((1+obj_camera_control.smooth_camera)/3), yy+((h+string_height(debug_string[0]))*obj_camera_control.upscale_val)*((1+obj_camera_control.smooth_camera)/3), 0)
+     draw_rectangle(xx,yy+(h*scale)*(1+obj_camera_control.smooth_camera), xx+width*(1+obj_camera_control.smooth_camera), yy+((h+string_height(debug_string[0]))*scale)*(1+obj_camera_control.smooth_camera), 0)
      draw_set_alpha(1)
      draw_set_color(c_white)
-     draw_text_transformed(xx,(yy+h*obj_camera_control.upscale_val)*((1+obj_camera_control.smooth_camera)/3), debug_string[0], obj_camera_control.upscale_val*((1+obj_camera_control.smooth_camera)/3), obj_camera_control.upscale_val*((1+obj_camera_control.smooth_camera)/3), 0)
+     draw_text_transformed(xx,(yy+h*scale)*(1+obj_camera_control.smooth_camera), debug_string[0], scale*(1+obj_camera_control.smooth_camera), scale*(1+obj_camera_control.smooth_camera), 0)
      
   }else{
     
     for (var i = 0; i &lt; global.numberOfLocalPlayers; i++){
       var xx = view_xport[i]
       var yy = view_yport[i]
-      var width = string_width(debug_string[i])*obj_camera_control.upscale_val
+      var width = string_width(debug_string[i])*scale
       //height = 
       
       if view_visible[i]{
@@ -590,17 +594,17 @@ if (global.debug = true){
         if (i = 0){
           draw_set_alpha(0.5)
           draw_set_color(c_dkgray)
-          draw_rectangle(xx,yy+(h*obj_camera_control.upscale_val)*((1+obj_camera_control.smooth_camera)/3), xx+width*((1+obj_camera_control.smooth_camera)/3), yy+((h+string_height(debug_string[i]))*obj_camera_control.upscale_val)*((1+obj_camera_control.smooth_camera)/3), 0)
+          draw_rectangle(xx,yy+(h*scale)*(1+obj_camera_control.smooth_camera), xx+width*(1+obj_camera_control.smooth_camera), yy+((h+string_height(debug_string[i]))*scale)*(1+obj_camera_control.smooth_camera), 0)
           draw_set_alpha(1)
           draw_set_color(c_white)
-          draw_text_transformed(xx,(yy+h*obj_camera_control.upscale_val)*((1+obj_camera_control.smooth_camera)/3), debug_string[i], obj_camera_control.upscale_val*((1+obj_camera_control.smooth_camera)/3), obj_camera_control.upscale_val*((1+obj_camera_control.smooth_camera)/3), 0)
+          draw_text_transformed(xx,(yy+h*scale)*(1+obj_camera_control.smooth_camera), debug_string[i], scale*(1+obj_camera_control.smooth_camera), scale*(1+obj_camera_control.smooth_camera), 0)
         } else {
           draw_set_alpha(0.5)
           draw_set_color(c_dkgray)
-          draw_rectangle(xx,yy, xx+width*((1+obj_camera_control.smooth_camera)/3), yy+(string_height(debug_string[i])*obj_camera_control.upscale_val)*((1+obj_camera_control.smooth_camera)/3), 0)
+          draw_rectangle(xx,yy, xx+width*(1+obj_camera_control.smooth_camera), yy+(string_height(debug_string[i])*scale)*(1+obj_camera_control.smooth_camera), 0)
           draw_set_alpha(1)
           draw_set_color(c_white)
-          draw_text_transformed(xx,yy, debug_string[i], obj_camera_control.upscale_val*((1+obj_camera_control.smooth_camera)/3), obj_camera_control.upscale_val*((1+obj_camera_control.smooth_camera)/3), 0)
+          draw_text_transformed(xx,yy, debug_string[i], scale*(1+obj_camera_control.smooth_camera), scale*(1+obj_camera_control.smooth_camera), 0)
         }
       }
     }
@@ -629,6 +633,7 @@ if (global.debug = true){
             <string>///Debug Display Controller
 
 if (global.debug = true){
+    draw_set_font(fontGGUI)
     gui_draw(guid, (display_get_gui_width()-243)*(1+obj_camera_control.smooth_camera), 0);
     
 }

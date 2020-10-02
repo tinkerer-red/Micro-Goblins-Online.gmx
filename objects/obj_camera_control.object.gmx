@@ -526,7 +526,11 @@ if (global.numberOfLocalPlayers = 1)
       {player_zoom[0] = player_zoom[0] / 2};
     
     //player_zoom[0] = clamp(player_zoom[0], 0.125, 8)
-    player_zoom[0] = clamp(player_zoom[0], 0.25, 4)
+    if (global.debug = false){
+      player_zoom[0] = clamp(player_zoom[0], 0.25, 4)
+    }else{
+      player_zoom[0] = clamp(player_zoom[0], 0.125, 8)
+    }
     
     view_hview[0] = view_hport[0]/(player_zoom[0]*res_scale[0])
     view_wview[0] = view_wport[0]/(player_zoom[0]*res_scale[0])

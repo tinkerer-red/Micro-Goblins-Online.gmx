@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//define variable stats
+            <string>///define variable stats
 w_name = "Default Weapon"
 w_type = weapon_type_melee
 
@@ -87,7 +87,7 @@ ranged = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//init variables
+            <string>///init variables
 recent_proj_queue = -1
 proj_queue = -1
 

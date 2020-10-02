@@ -8,6 +8,30 @@
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
+    <event eventtype="0" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>queue = ds_queue_create()
+array = 0
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
@@ -25,36 +49,119 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//show_debug_player(0,"mouse_x = "+string(mouse_x))
-//show_debug_player(0,"mouse_y = "+string(mouse_y))
+            <string>
+show_debug_player(0, "tile_free = "+string(tile_free(mouse_x, mouse_y, TileLayerBottom)))
 
 /*
-show_debug_player(0, tile_layer_find(TileLayerBottom, mouse_x, mouse_y));
-
-show_debug_player(0, "mouse_x = "+string(mouse_x));
-show_debug_player(0, "mouse_y = "+string(mouse_y));
-
-x = mouse_x
-y = mouse_y
-if tile_meeting_precise(x, y, TileLayerBottom) {
-  image_blend = c_red
-}else{
-  image_blend = c_white
+for (var i = 1600*8; i &gt; 0; i--){
+  var inst = instance_nearest(x,y, all)
+  if point_distance(inst.x,inst.y,x,y) &lt; 16*4
+  {
+    place_free(x,y)
+  }
+  tile_free(x,y,TileLayerBottom)  
 }
-/*
 
-show_debug_player(0, "pos = "+string(pos));
-show_debug_player(0, "bg = "+string(bg));
-show_debug_player(0, "bg_ww = "+string(bg_ww));
-show_debug_player(0, "ww = "+string(ww));
-show_debug_player(0, "ll = "+string(ll));
-show_debug_player(0, "tt = "+string(tt));
-
-
-show_debug_player(0, "_checker.x = "+string(_checker.x));
-show_debug_player(0, "_checker.y = "+string(_checker.y));
 
 </string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="5">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>a1[0,1]= 1
+a1[1,0]= 2
+a1[1,0]= 3
+a1[0,1]= 4
+
+a2[0,1]= 1
+a2[1,0]= 2
+a2[1,0]= 3
+a2[0,1]= 4
+
+m_array = matrix_build(0, 0, 0, 0, 0, 0, 0, 0, 0); 
+m1 = matrix_get(matrix_world)
+//a3 = a1*a2
+
+show_debug_message(a1)
+show_debug_message(a2)
+show_debug_message(m1)
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>    width = 21;
+    height = 21;
+    tile_width = 32;
+    tile_height = 32;
+    half_width  = tile_width div 2;
+    half_height = tile_height div 2;
+    xx = mouse_x - (mouse_x mod tile_width) - (tile_width*10);
+    yy = mouse_y - (mouse_y mod tile_height) - (tile_height*10);
+    cx = (mouse_x - xx) div tile_width;
+    cy = (mouse_y - yy) div tile_height;
+    
+    
+breadth_first_search_create(xx, yy, width, height, tile_width, tile_height, mouse_x, mouse_y)
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string></string>
           </argument>
         </arguments>
       </action>
@@ -84,6 +191,54 @@ draw_circle(_x2,_y1,0.5,0)
 draw_circle(_x2,_y2,0.5,0)
 
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// draw collision array
+
+if is_array(array){
+  
+
+  draw_set_alpha(0.5)
+  
+  for (var i = 0; i &lt; array_length_1d(array); i++){
+    for (var j = 0; j &lt; array_height_2d(array); j++){
+      
+      //world_x = xx + (i * tile_width)
+      //world_y = yy + (j * tile_height)
+      world_x = (xx - xx mod tile_width) + (i * tile_width)
+      world_y = (yy - yy mod tile_width) + (j * tile_height)
+    
+      if (array[i,j] != 0){
+        var color = make_colour_rgb(array[i,j],array[i,j],array[i,j])
+        draw_set_color(color)
+        draw_rectangle(world_x, world_y, world_x+tile_width-1, world_y+tile_height-1, 0)
+        draw_set_colour(c_white)
+        draw_circle(world_x+half_width, world_y+half_height, 0.5, 0)
+        //array[i,j]
+      }
+    }
+  }
+  
+  draw_set_alpha(1)
+}
 </string>
           </argument>
         </arguments>

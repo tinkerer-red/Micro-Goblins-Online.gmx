@@ -98,6 +98,7 @@ Laser/Beam (10 shots in a row, every frame)
 [Move] Momentum (moves quickly but had a hard time turning) (like a wheel or ball, similar to terarria's demon eyes)
 [Move] Stationary (massive health increase, with no movement)
 [Move] Hover (pit falls, and floor damage wont hurt)
+[Move] Remote controlled (player controls it, and the player can not move when doing so)
 
 
 

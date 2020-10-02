@@ -678,8 +678,11 @@
     <option_xbone_title_id></option_xbone_title_id>
   </Options>
   <ConfigConstants>
-    <constants number="1">
+    <constants number="4">
       <constant name="TileLayerBottom">1000000</constant>
+      <constant name="TileLayerMiddle">900000</constant>
+      <constant name="TileLayerTop">800000</constant>
+      <constant name="TileLayerDecor">700000</constant>
     </constants>
   </ConfigConstants>
 </Config>

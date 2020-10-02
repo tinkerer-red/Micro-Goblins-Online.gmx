@@ -2,6 +2,7 @@
 
 var returned = false
 
+//if sgs_place_meeting_c_s(global.entity_sgs_field, x, y, obj_entity){
 if place_meeting(x, y, obj_entity){
   var proj_id = id
   var _dist = 999999999

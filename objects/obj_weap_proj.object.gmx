@@ -162,7 +162,7 @@ if variable_instance_exists(id, "weapon_event_queues"){
 
 ds_priority_delete_value(self.step_event_queues, scr_mod_cluster)
 
-repeat(3){ //ideally 3
+repeat(2){ //ideally 3
 //  if (irandom(2) &gt; 0){ //this helps cut down on the massive entities when 5 cluster mods are active
     var proj = instance_copy(false);
     
@@ -198,9 +198,29 @@ repeat(3){ //ideally 3
 //  }
 }
 
-scr_clear_modifiers()
-ds_priority_destroy(self.step_event_queues)
-instance_destroy(self.id)
+//scr_clear_modifiers()
+//ds_priority_destroy(self.step_event_queues)
+//instance_destroy(self.id)
+
+// with self
+
+var proj = self.id;
+//variables
+proj.direction = htme_random_range(0, 360)
+
+proj.w_range = w_range*0.666
+proj.dis_traveled = 0
+proj.speed = speed*0.666
+
+proj.image_angle = proj.direction-45
+
+proj.x = x+lengthdir_x(2,proj.direction)
+proj.y = y+lengthdir_y(2,proj.direction)
+
+proj.start_x = proj.x
+proj.start_y = proj.y
+
+mod_cluster_init = false
 </string>
           </argument>
         </arguments>
@@ -237,6 +257,7 @@ if !self.collide &amp;&amp; !self.pre_collide  //if spawning projectiles
     self.step_event_queues = ds_priority_create()
     ds_priority_copy(self.step_event_queues, ds_priority_delete_min(self.weapon_event_queues))
   }
+  
   //dont delete the queue untill the collision actually happens
   //so instead we make a copy to deal with
   if !ds_exists(self.step_event_queues_temp, ds_type_priority)
@@ -245,17 +266,19 @@ if !self.collide &amp;&amp; !self.pre_collide  //if spawning projectiles
     ds_priority_copy(self.step_event_queues_temp, self.step_event_queues)
   }
   
-  
-  while !ds_priority_empty(self.step_event_queues_temp)
-  {
-    scr = script_execute(ds_priority_delete_min(self.step_event_queues_temp))
+  //check to see if there is even anything in the step queue
+  if !ds_priority_empty(self.step_event_queues){
+    
+    while !ds_priority_empty(self.step_event_queues_temp)
+    {
+      scr = script_execute(ds_priority_delete_min(self.step_event_queues_temp))
+    }
+    
+    if ds_priority_empty(self.step_event_queues_temp)
+    {
+      ds_priority_copy(self.step_event_queues_temp, self.step_event_queues)
+    }
   }
-  
-  if ds_priority_empty(self.step_event_queues_temp)
-  {
-    ds_priority_copy(self.step_event_queues_temp, self.step_event_queues)
-  }
-  
   
   ///if we are about to collide
   dis_traveled += speed

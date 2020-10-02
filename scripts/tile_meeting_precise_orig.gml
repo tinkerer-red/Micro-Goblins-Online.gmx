@@ -2,7 +2,20 @@
 ///@param x
 ///@param y
 ///@param layer
+/*
+  Returns true or false
+  
+  place_meeting() for use with tiles.
+  [Requires] obj_precise_tile_checker
+  more information can be found here:
+  https://www.yoyogames.com/blog/577/precise-tile-collisions-by-pixelated-pope
 
+  make a sprite sheet with the exact same tiles. and for gms 1.4.9999 you may
+  wish to expand the mask 1 in every direction (assists with sub pixel movement)
+  
+  Ported by Red#9475
+*/
+/// GMLscripts.com/license
 var _layer = argument2;
 
 _checker = obj_precise_tile_checker;
@@ -25,8 +38,6 @@ for(var _x = _x1; _x <= _x2; _x++){
           tt = (tile_get_top(_tile) / hh);
       
       var pos = ll + tt*(bg_ww div ww);
-      
-      if(pos == 0) return true;
       
      _checker.x = _x - (_x mod tile_get_width(_tile));
      _checker.y = _y - (_y mod tile_get_height(_tile));

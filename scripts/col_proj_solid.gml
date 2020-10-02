@@ -1,8 +1,9 @@
-///col_projectile_ground()
+///col_proj_solid()
 
 var returned = false
 
-if !place_free(x,y) {
+//if sgs_place_meeting_c_s(global.solid_sgs_field, x, y, obj_solid) {
+if place_meeting(x, y, obj_solid) {
   self.pre_collide = true
   collide_solid = true
   

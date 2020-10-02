@@ -39,6 +39,8 @@ if (htme_isLocal())
     player_id_local = global.numberOfLocalPlayers
     global.numberOfLocalPlayers++
   }
+}else{
+player_id_local = -1
 }
 
 
@@ -114,6 +116,7 @@ for (var i = 0; i &lt; 3; i++){
 mod_queue = -1
 active_queue = -1
 weapon_event_queues = -1
+weap_queue = -1
 
 //global modifiers variable
 repeater_in_queue = false
@@ -364,7 +367,7 @@ for (var i = 0; i &lt; 3; i++)
   repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_inaccurate, 4);
   repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_4, 1);
   ///////////////////////////////////////////////////////////////////////////
-  repeat( 1 ) ds_priority_add(queue_attack_step_mods, scr_mod_cluster, 1);
+  repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_cluster, 1);
   repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_5, 1);
   ///////////////////////////////////////////////////////////////////////////
   repeat( 0 ) ds_priority_add(queue_pre_col_mods, scr_mod_ricochet, 1);
@@ -424,27 +427,6 @@ _y2=0
 //image_yscale = 2
 trav = sprite_width*sprite_height
 debug = false
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>show_debug_message("CONNECTED!!!")
 </string>
           </argument>
         </arguments>

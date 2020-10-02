@@ -29,9 +29,9 @@
 
 
 //predefine the event steps each modifier will activate on
-self.eMovement_event = ev_create;
-self.eAttack_event   = ev_create;
-self.eHealth_event   = ev_create;
+//self.eMovement_event = ev_create;
+//self.eAttack_event   = ev_create;
+//self.eHealth_event   = ev_create;
 
 
 //define the modifiers we will be using
@@ -43,6 +43,17 @@ self.eHealth   = scr_mod_summon_health_default;
 self.mods_init = false
 
 
+
+//Init mods
+script_execute(self.eMovement)
+script_execute(self.eAttack)
+script_execute(self.eHealth)
+
+
+//re-define the event steps each modifier will activate on, incase they were not set for some reason
+if !variable_instance_exists(self.id, "eMovement_event")  eMovement_event = ev_create;
+if !variable_instance_exists(self.id, "eAttack_event")  eAttack_event = ev_create;
+if !variable_instance_exists(self.id, "eHealth_event")  eHealth_event = ev_create;
 
 </string>
           </argument>
@@ -138,6 +149,7 @@ if (dis &gt; view_distance_max)
           <argument>
             <kind>1</kind>
             <string>///Track player
+/*
 if instance_exists(obj_player)
 {
   var p, dir_diff;
