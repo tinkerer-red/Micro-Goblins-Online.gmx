@@ -20,6 +20,7 @@ chunk.chunk_y = cell_y
 chunk.world_name = world_name;
 
 chunk.show_chunks = show_chunks;
+chunk.loadid = -1
 
 with (chunk) {
   event_user(0); 

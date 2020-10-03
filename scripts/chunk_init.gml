@@ -11,10 +11,12 @@ chunk_center_x = chunk_width/2
 chunk_center_y = chunk_height/2
 
 world_name = "World"
+chunk_loaded_this_frame = false
 
 saving_async = ds_priority_create()
-save_pointer = 0
 loading_async = ds_priority_create()
-load_pointer = 0
+
+
+
 
 

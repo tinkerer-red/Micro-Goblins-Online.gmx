@@ -4,7 +4,7 @@ var tile_size = 16
 
 _map = ds_map_create()
 
-
+/*
 // Bottom
 var tile_layer_bottom_list = ds_list_create()
 var tile_layer_bottom_background_list = ds_list_create()
@@ -33,12 +33,10 @@ for (var i = 0; i < sprite_height; i += tile_size){
     if(_tile){
       var bg = tile_get_background(_tile),
           bg_ww = background_get_width(bg),
-          ww = tile_get_width(_tile),
-          hh = tile_get_height(_tile),
-          ll = (tile_get_left(_tile) / ww),
-          tt = (tile_get_top(_tile) / hh);
+          ll = (tile_get_left(_tile) / tile_size),
+          tt = (tile_get_top(_tile) / tile_size);
       
-      var pos = ll + tt*(bg_ww div ww);
+      var pos = ll + tt*(bg_ww div tile_size);
     }else{
       var pos = -1
       var bg = -1
@@ -52,12 +50,10 @@ for (var i = 0; i < sprite_height; i += tile_size){
     if(_tile){
       var bg = tile_get_background(_tile),
           bg_ww = background_get_width(bg),
-          ww = tile_get_width(_tile),
-          hh = tile_get_height(_tile),
-          ll = (tile_get_left(_tile) / ww),
-          tt = (tile_get_top(_tile) / hh);
+          ll = (tile_get_left(_tile) / tile_size),
+          tt = (tile_get_top(_tile) / tile_size);
       
-      var pos = ll + tt*(bg_ww div ww);
+      var pos = ll + tt*(bg_ww div tile_size);
     }else{
       var pos = -1
       var bg  = -1
@@ -71,12 +67,10 @@ for (var i = 0; i < sprite_height; i += tile_size){
     if(_tile){
       var bg = tile_get_background(_tile),
           bg_ww = background_get_width(bg),
-          ww = tile_get_width(_tile),
-          hh = tile_get_height(_tile),
-          ll = (tile_get_left(_tile) / ww),
-          tt = (tile_get_top(_tile) / hh);
+          ll = (tile_get_left(_tile) / tile_size),
+          tt = (tile_get_top(_tile) / tile_size);
       
-      var pos = ll + tt*(bg_ww div ww);
+      var pos = ll + tt*(bg_ww div tile_size);
     }else{
       var pos = -1
       var bg  = -1
@@ -90,12 +84,10 @@ for (var i = 0; i < sprite_height; i += tile_size){
     if(_tile){
       var bg = tile_get_background(_tile),
           bg_ww = background_get_width(bg),
-          ww = tile_get_width(_tile),
-          hh = tile_get_height(_tile),
-          ll = (tile_get_left(_tile) / ww),
-          tt = (tile_get_top(_tile) / hh);
+          ll = (tile_get_left(_tile) / tile_size),
+          tt = (tile_get_top(_tile) / tile_size);
       
-      var pos = ll + tt*(bg_ww div ww);
+      var pos = ll + tt*(bg_ww div tile_size);
     }else{
       var pos = -1;
       var bg  = -1;
@@ -105,7 +97,7 @@ for (var i = 0; i < sprite_height; i += tile_size){
     
   }
 }
-
+*/
 
 // Compile Map
 ds_map_add_list(_map, "TileLayerBottom", tile_layer_bottom_list)
@@ -113,19 +105,25 @@ ds_map_add_list(_map, "TileLayerMiddle", tile_layer_middle_list)
 ds_map_add_list(_map, "TileLayerTop", tile_layer_top_list)
 ds_map_add_list(_map, "TileLayerDecor", tile_layer_decor_list)
 
+ds_map_add_list(_map, "TileLayerBottomBackground", tile_layer_bottom_background_list)
+ds_map_add_list(_map, "TileLayerMiddleBackground", tile_layer_middle_background_list)
+ds_map_add_list(_map, "TileLayerTopBackground", tile_layer_top_background_list)
+ds_map_add_list(_map, "TileLayerDecorBackground", tile_layer_decor_background_list)
 
 // Save
 var _filename = "Worlds\"+string(world_name)+"\"+string(chunk_x)+","+string(chunk_y)+".chnk"
 var async_array = file_save_map_async(_filename, _map)
-//show_debug_message("async_array[0] = "+string(async_array[0]))
-//show_debug_message("async_array[1] = "+string(async_array[1]))
+
 ds_priority_add(global.chunk_handler.saving_async, async_array[0], async_array[1])
+
+////The old file saving system, which is not async
 //var _json = json_encode(_map)
 //var file = file_text_open_write(_filename)
 //file_text_write_string(file, _json)
 //file_text_close(file)
 
-// Clean Up
-ds_map_destroy(_map)
+
+
+
 
 

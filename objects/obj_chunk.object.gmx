@@ -8,6 +8,70 @@
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
+    <event eventtype="0" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>tile_layer_bottom_list = -1
+tile_layer_middle_list = -1
+tile_layer_top_list = -1
+tile_layer_decor_list = -1
+tile_layer_bottom_background_list = -1
+tile_layer_middle_background_list = -1
+tile_layer_top_background_list = -1
+tile_layer_decor_background_list = -1
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Stagger the chunk gen
+
+if (global.chunk_handler.chunk_loaded_this_frame = false){
+  global.chunk_handler.chunk_loaded_this_frame = true
+  //show_debug_message("global.chunk_handler.chunk_loaded_this_frame = false")
+  event_user(2);
+}else{
+  alarm_set(1, 1)
+  //show_debug_message("global.chunk_handler.chunk_loaded_this_frame = TRUE!!!")
+  
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="2" enumb="0">
       <action>
         <libid>1</libid>
@@ -30,6 +94,148 @@
 chunk_save_to_disk()
 
 alarm_set(0, room_speed*60*2)
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="72">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Loading
+
+if (async_load[? "id"] == loadid) {
+  if (async_load[? "status"] = 1) { 
+    chunk_data = ds_map_secure_load_buffer(load_buff);
+    
+    alarm_set(1,1)
+  }else{ // If there was an error loading, try to load again
+    event_user(0)
+    ///this may need to be fixed because it could cause for an infinate loop. but it works for now
+  }
+}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="12">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Place Chunk Data
+
+
+if (chunk_data != undefined) {
+    ///variables
+    var tile_size = 16;
+    var list_pointer = 0
+    
+    // Decompile Map
+    tile_layer_bottom_list = chunk_data[? "TileLayerBottom"];
+    tile_layer_middle_list = chunk_data[? "TileLayerMiddle"];
+    tile_layer_top_list = chunk_data[? "TileLayerTop"];
+    tile_layer_decor_list = chunk_data[? "TileLayerDecor"];
+    
+    tile_layer_bottom_background_list = chunk_data[? "TileLayerBottomBackground"];
+    tile_layer_middle_background_list = chunk_data[? "TileLayerMiddleBackground"];
+    tile_layer_top_background_list = chunk_data[? "TileLayerTopBackground"];
+    tile_layer_decor_background_list = chunk_data[? "TileLayerDecorBackground"];
+    
+    // Bottom
+    var b_layer = TileLayerBottom
+    
+    // MIDDLE
+    var m_layer = TileLayerMiddle
+    
+    // TOP
+    var t_layer = TileLayerTop
+    
+    // DECOR
+    var d_layer = TileLayerDecor
+    
+    // do a single cycle through the chunk
+    for (var i = 0; i &lt; sprite_height; i += tile_size){
+      for (var j = 0; j &lt; sprite_width; j += tile_size){
+        //bottom
+        var pos = tile_layer_bottom_list[| list_pointer]
+        var bg = tile_layer_bottom_background_list[| list_pointer] 
+        if (pos != -1) &amp;&amp; (bg != -1) {
+          var ww = background_get_width(bg) div tile_size,
+              xx = pos mod ww,
+              yy = pos div ww;
+            
+          tile_add(bg, xx*tile_size, yy*tile_size, tile_size, tile_size, x+j, y+i, b_layer);
+        }
+        
+        
+        //middle
+        var pos = tile_layer_middle_list[| list_pointer]
+        var bg = tile_layer_middle_background_list[| list_pointer] 
+        if (pos != -1) &amp;&amp; (bg != -1) {
+          var ww = background_get_width(bg) div tile_size,
+              xx = pos mod ww,
+              yy = pos div ww;
+            
+          tile_add(bg, xx*tile_size, yy*tile_size, tile_size, tile_size, x+j, y+i, m_layer);
+        }
+        
+        
+        //top
+        var pos = tile_layer_top_list[| list_pointer]
+        var bg = tile_layer_top_background_list[| list_pointer] 
+        if (pos != -1) &amp;&amp; (bg != -1) {
+          var ww = background_get_width(bg) div tile_size,
+              xx = pos mod ww,
+              yy = pos div ww;
+            
+          tile_add(bg, xx*tile_size, yy*tile_size, tile_size, tile_size, x+j, y+i, t_layer);
+        }
+        
+        
+        //decor
+        var pos = tile_layer_decor_list[| list_pointer]
+        var bg = tile_layer_decor_background_list[| list_pointer] 
+        if (pos != -1) &amp;&amp; (bg != -1) {
+          var ww = background_get_width(bg) div tile_size,
+              xx = pos mod ww,
+              yy = pos div ww;
+            
+          tile_add(bg, xx*tile_size, yy*tile_size, tile_size, tile_size, x+j, y+i, d_layer);
+        }
+        
+        list_pointer++
+      }
+    }
+}
 </string>
           </argument>
         </arguments>
@@ -88,9 +294,17 @@ if !point_in_rectangle(player.x, player.y, bbox_left-sprite_width-margin, bbox_t
             <string>///If chunk shouldnt exist Save Data
 
 if should_exist = false{
+  if !ds_exists(tile_layer_bottom_list, ds_type_list)
+  || !ds_exists(tile_layer_middle_list, ds_type_list)
+  || !ds_exists(tile_layer_top_list, ds_type_list)
+  || !ds_exists(tile_layer_decor_list, ds_type_list)
+  || !ds_exists(tile_layer_bottom_background_list, ds_type_list)
+  || !ds_exists(tile_layer_middle_background_list, ds_type_list)
+  || !ds_exists(tile_layer_top_background_list, ds_type_list)
+  || !ds_exists(tile_layer_decor_background_list, ds_type_list)
+  { exit; }
   
   chunk_save_to_disk()
-  
 }
 </string>
           </argument>
@@ -175,6 +389,8 @@ if should_exist = false{
 
 if should_exist = false{
   
+  // Clean Up
+  ds_map_destroy(_map)
   instance_destroy()
   
 }
@@ -223,36 +439,28 @@ if should_exist = false{
           <argument>
             <kind>1</kind>
             <string>///Load Chunk data
-/*
-if file_exists(string(world_name)+"\"+string(cell_x)+","+string(cell_y)+".chnk"){
+
+_filename = "default\"+"Worlds\"+string(world_name)+"\"+string(chunk_x)+","+string(chunk_y)+".chnk"
+
+if file_exists(_filename){
+  //show_debug_message(_filename+" exists!")
   //load the chunk data here
+  
+  load_buff = buffer_create(128,buffer_grow,4)
+  loadid = buffer_load_async(load_buff, _filename, 0, 2500000);
+  ///When ever you add new stuff to the save chunks you'll need to find
+  // out how large the file ends up being, but 32,768 bytes is the size
+  // for 4 tile layers.
 }else{
-  var chunk_data = ""
+  chunk_data = undefined
+  //event_user(2)
+  show_debug_message(_filename+" does NOT exists!")
 }
 
 
-//for string_length
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Place Chunk data
+
+
+
 </string>
           </argument>
         </arguments>
