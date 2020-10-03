@@ -476,6 +476,7 @@
       <scripts name="Chunks">
         <script>scripts\chunk_init.gml</script>
         <script>scripts\chunk_debug_toggle.gml</script>
+        <script>scripts\chunk_generate.gml</script>
         <script>scripts\chunk_call.gml</script>
         <script>scripts\chunk_uncall.gml</script>
         <script>scripts\chunk_call_region.gml</script>

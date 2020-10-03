@@ -10,6 +10,6 @@ ds_map_secure_save_buffer(argument1, buff);
 
 async_array[1] = buff;
 async_array[0] = buffer_save_async(buff, argument0, 0, buffer_get_size(buff));
-show_debug_message("File save location = "+argument0)
+//show_debug_message("File save location = "+argument0)
 
 return async_array;

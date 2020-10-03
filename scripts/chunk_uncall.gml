@@ -6,7 +6,7 @@ var cell_y = argument1;
 //if the cell already exists, dont try to make a new one
 with (obj_chunk){
   if (chunk_x = cell_x) && (chunk_y = cell_y) {
-    event_user(1);
+    alarm_set(3,1);
     return true;
   }
 }

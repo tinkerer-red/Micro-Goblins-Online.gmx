@@ -39,6 +39,113 @@ tile_layer_decor_background_list = -1
         </arguments>
       </action>
     </event>
+    <event eventtype="2" enumb="3">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Have Existential Crisis
+//find out if you should even exist
+
+
+should_exist = true
+var margin = 0
+//is the player with in distance of you?
+var player = instance_nearest(x+sprite_width/2, y+sprite_height/2, obj_player)
+
+if !point_in_rectangle(player.x, player.y, bbox_left-(sprite_width*chunk_dist)-margin, bbox_top-(sprite_height*chunk_dist)-margin, bbox_right+(sprite_width*chunk_dist)+margin, bbox_bottom+(sprite_height*chunk_dist)+margin){
+  should_exist = false
+  //show_debug_message("Chunk: ("+string(chunk_x)+","+string(chunk_y)+") Should NOT exists")
+}//else{
+  //show_debug_message("Chunk: ("+string(chunk_x)+","+string(chunk_y)+") Should exists")
+//}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Stagger the chunk Saving
+
+if should_exist = false {
+  if (global.chunk_handler.chunk_saved_this_frame = false){
+    global.chunk_handler.chunk_saved_this_frame = true
+    //show_debug_message("global.chunk_handler.chunk_saved_this_frame = false")
+    event_user(1);
+  }else{
+    alarm_set(3, 1)
+    //show_debug_message("global.chunk_handler.chunk_saved_this_frame = TRUE!!!")
+    
+  }
+}
+
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Stagger the chunk Loading
+
+if (global.chunk_handler.chunk_loaded_this_frame = false){
+  global.chunk_handler.chunk_loaded_this_frame = true
+  //show_debug_message("global.chunk_handler.chunk_loaded_this_frame = false")
+  event_user(4);
+}else{
+  alarm_set(2, 1)
+  //show_debug_message("global.chunk_handler.chunk_loaded_this_frame = TRUE!!!")
+  
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="2" enumb="1">
       <action>
         <libid>1</libid>
@@ -58,13 +165,13 @@ tile_layer_decor_background_list = -1
             <kind>1</kind>
             <string>///Stagger the chunk gen
 
-if (global.chunk_handler.chunk_loaded_this_frame = false){
-  global.chunk_handler.chunk_loaded_this_frame = true
-  //show_debug_message("global.chunk_handler.chunk_loaded_this_frame = false")
+if (global.chunk_handler.chunk_gen_this_frame = false){
+  global.chunk_handler.chunk_gen_this_frame = true
+  //show_debug_message("global.chunk_handler.chunk_gen_this_frame = false")
   event_user(2);
 }else{
   alarm_set(1, 1)
-  //show_debug_message("global.chunk_handler.chunk_loaded_this_frame = TRUE!!!")
+  //show_debug_message("global.chunk_handler.chunk_gen_this_frame = TRUE!!!")
   
 }
 </string>
@@ -89,11 +196,16 @@ if (global.chunk_handler.chunk_loaded_this_frame = false){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// Save every 2 minutes.
+            <string>///Save every 2 minutes.
 
-chunk_save_to_disk()
-
-alarm_set(0, room_speed*60*2)
+if (global.chunk_handler.chunk_saved_this_frame = false){
+  global.chunk_handler.chunk_saved_this_frame = true
+  chunk_save_to_disk()
+  
+  alarm_set(0, room_speed*60*2)
+}else{
+  alarm_set(0, 1)
+}
 </string>
           </argument>
         </arguments>
@@ -120,14 +232,78 @@ alarm_set(0, room_speed*60*2)
 
 if (async_load[? "id"] == loadid) {
   if (async_load[? "status"] = 1) { 
+    
     chunk_data = ds_map_secure_load_buffer(load_buff);
+    //show_debug_message("Chunk: ("+string(chunk_x)+","+string(chunk_y)+") async active")
+    
+    ///make sure to check the chunk to know it saved/loaded properly
+    if chunk_data[? "TileLayerBottom"] = undefined
+    || chunk_data[? "TileLayerMiddle"] = undefined
+    || chunk_data[? "TileLayerTop"] = undefined
+    || chunk_data[? "TileLayerDecor"] = undefined
+    || chunk_data[? "TileLayerBottomBackground"] = undefined
+    || chunk_data[? "TileLayerMiddleBackground"] = undefined
+    || chunk_data[? "TileLayerTopBackground"] = undefined
+    || chunk_data[? "TileLayerDecorBackground"] = undefined
+    {
+      ds_map_destroy(chunk_data);
+      show_debug_message("[Chunk][Load]: Chunk File ("+string(chunk_x)+","+string(chunk_y)+") was currupted, regenerating")
+      chunk_data = chunk_generate()
+    }
+    
     
     alarm_set(1,1)
+    
   }else{ // If there was an error loading, try to load again
     event_user(0)
     ///this may need to be fixed because it could cause for an infinate loop. but it works for now
   }
 }
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="14">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Load Chunk data
+
+_filename = "default\"+"Worlds\"+string(world_name)+"\"+string(chunk_x)+","+string(chunk_y)+".chnk"
+
+if file_exists(_filename){
+  //load the chunk data here
+  chunk_data = -1
+  load_buff = buffer_create(128,buffer_grow,4)
+  loadid = buffer_load_async(load_buff, _filename, 0, 2500000);
+  ///When ever you add new stuff to the save chunks you'll need to find
+  // out how large the file ends up being, but 32,768 bytes is the size
+  // for 4 tile layers.
+}else{
+  chunk_data = -1
+  chunk_data = chunk_generate()
+  //event_user(2)
+  //show_debug_message(_filename+" does NOT exists!")
+}
+
+
+
+
 
 </string>
           </argument>
@@ -154,10 +330,10 @@ if (async_load[? "id"] == loadid) {
             <string>///Place Chunk Data
 
 
-if (chunk_data != undefined) {
+if ds_exists(chunk_data, ds_type_map) {
     ///variables
     var tile_size = 16;
-    var list_pointer = 0
+    list_pointer = 0;
     
     // Decompile Map
     tile_layer_bottom_list = chunk_data[? "TileLayerBottom"];
@@ -234,7 +410,9 @@ if (chunk_data != undefined) {
         
         list_pointer++
       }
+      
     }
+    
 }
 </string>
           </argument>
@@ -258,53 +436,12 @@ if (chunk_data != undefined) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Have Existential Crisis
-//find out if you should even exist
-
-
-should_exist = true
-var margin = 0
-//is the player with in distance of you?
-var player = instance_nearest(x+sprite_width/2, y+sprite_height/2, obj_player)
-
-if !point_in_rectangle(player.x, player.y, bbox_left-sprite_width-margin, bbox_top-sprite_height-margin, bbox_right+sprite_width+margin, bbox_bottom+sprite_height+margin){
-  should_exist = false
-}
-
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>///If chunk shouldnt exist Save Data
 
 if should_exist = false{
-  if !ds_exists(tile_layer_bottom_list, ds_type_list)
-  || !ds_exists(tile_layer_middle_list, ds_type_list)
-  || !ds_exists(tile_layer_top_list, ds_type_list)
-  || !ds_exists(tile_layer_decor_list, ds_type_list)
-  || !ds_exists(tile_layer_bottom_background_list, ds_type_list)
-  || !ds_exists(tile_layer_middle_background_list, ds_type_list)
-  || !ds_exists(tile_layer_top_background_list, ds_type_list)
-  || !ds_exists(tile_layer_decor_background_list, ds_type_list)
-  { exit; }
-  
-  chunk_save_to_disk()
+  if ds_exists(chunk_data, ds_type_map) {
+    chunk_save_to_disk()
+  }
 }
 </string>
           </argument>
@@ -329,40 +466,40 @@ if should_exist = false{
             <string>///Destroy tiles and object
 
 if should_exist = false{
-  
-  var tile_size = 16
-  
-  // Bottom
-  var b_layer = TileLayerBottom
-  
-  // MIDDLE
-  var m_layer = TileLayerMiddle
-  
-  // TOP
-  var t_layer = TileLayerTop
-  
-  // DECOR
-  var d_layer = TileLayerDecor
-  
-  // Full Cycle
-  for (var i = 0; i &lt; sprite_height; i += tile_size){
-    for (var j = 0; j &lt; sprite_width; j += tile_size){
-      tile_layer_delete_at(b_layer, x+j, y+i);
-      tile_layer_delete_at(m_layer, x+j, y+i);
-      tile_layer_delete_at(t_layer, x+j, y+i);
-      tile_layer_delete_at(d_layer, x+j, y+i);
+  if ds_exists(chunk_data, ds_type_map) {
+    var tile_size = 16
+    
+    // Bottom
+    var b_layer = TileLayerBottom
+    
+    // MIDDLE
+    var m_layer = TileLayerMiddle
+    
+    // TOP
+    var t_layer = TileLayerTop
+    
+    // DECOR
+    var d_layer = TileLayerDecor
+    
+    // Full Cycle
+    for (var i = 0; i &lt; sprite_height; i += tile_size){
+      for (var j = 0; j &lt; sprite_width; j += tile_size){
+        tile_layer_delete_at(b_layer, x+j, y+i);
+        tile_layer_delete_at(m_layer, x+j, y+i);
+        tile_layer_delete_at(t_layer, x+j, y+i);
+        tile_layer_delete_at(d_layer, x+j, y+i);
+      }
     }
-  }
-  
-  
-  
-  var active_chunk = id
-  
-  with (obj_solid){
-    if point_in_rectangle(x,y, active_chunk.bbox_left, active_chunk.bbox_top, active_chunk.bbox_right, active_chunk.bbox_bottom){
-      instance_destroy()
+    
+  }  
+    
+    var active_chunk = id
+    
+    with (obj_solid){
+      if point_in_rectangle(x,y, active_chunk.bbox_left, active_chunk.bbox_top, active_chunk.bbox_right, active_chunk.bbox_bottom){
+        instance_destroy()
+      }
     }
-  }
   
 }
 </string>
@@ -390,7 +527,7 @@ if should_exist = false{
 if should_exist = false{
   
   // Clean Up
-  ds_map_destroy(_map)
+  if ds_exists(chunk_data, ds_type_map) ds_map_destroy(chunk_data);
   instance_destroy()
   
 }
@@ -418,6 +555,8 @@ if should_exist = false{
           <argument>
             <kind>1</kind>
             <string>///Check for already existing objects in the chunk
+
+objects_in_chunk = false
 </string>
           </argument>
         </arguments>
@@ -438,29 +577,11 @@ if should_exist = false{
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Load Chunk data
+            <string>///queue up the loading
 
-_filename = "default\"+"Worlds\"+string(world_name)+"\"+string(chunk_x)+","+string(chunk_y)+".chnk"
-
-if file_exists(_filename){
-  //show_debug_message(_filename+" exists!")
-  //load the chunk data here
-  
-  load_buff = buffer_create(128,buffer_grow,4)
-  loadid = buffer_load_async(load_buff, _filename, 0, 2500000);
-  ///When ever you add new stuff to the save chunks you'll need to find
-  // out how large the file ends up being, but 32,768 bytes is the size
-  // for 4 tile layers.
-}else{
-  chunk_data = undefined
-  //event_user(2)
-  show_debug_message(_filename+" does NOT exists!")
+if (objects_in_chunk = false){
+  alarm_set(2,1)
 }
-
-
-
-
-
 </string>
           </argument>
         </arguments>

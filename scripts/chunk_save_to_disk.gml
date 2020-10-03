@@ -2,7 +2,7 @@
 
 var tile_size = 16
 
-_map = ds_map_create()
+//_map = ds_map_create()
 
 /*
 // Bottom
@@ -97,7 +97,7 @@ for (var i = 0; i < sprite_height; i += tile_size){
     
   }
 }
-*/
+
 
 // Compile Map
 ds_map_add_list(_map, "TileLayerBottom", tile_layer_bottom_list)
@@ -109,10 +109,11 @@ ds_map_add_list(_map, "TileLayerBottomBackground", tile_layer_bottom_background_
 ds_map_add_list(_map, "TileLayerMiddleBackground", tile_layer_middle_background_list)
 ds_map_add_list(_map, "TileLayerTopBackground", tile_layer_top_background_list)
 ds_map_add_list(_map, "TileLayerDecorBackground", tile_layer_decor_background_list)
+*/
 
 // Save
 var _filename = "Worlds\"+string(world_name)+"\"+string(chunk_x)+","+string(chunk_y)+".chnk"
-var async_array = file_save_map_async(_filename, _map)
+var async_array = file_save_map_async(_filename, chunk_data)
 
 ds_priority_add(global.chunk_handler.saving_async, async_array[0], async_array[1])
 

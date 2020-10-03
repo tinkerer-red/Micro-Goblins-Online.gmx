@@ -18,6 +18,7 @@ chunk.chunk_x = cell_x
 chunk.chunk_y = cell_y
 
 chunk.world_name = world_name;
+chunk.chunk_dist = global.chunk_handler.chunk_dist
 
 chunk.show_chunks = show_chunks;
 chunk.loadid = -1
