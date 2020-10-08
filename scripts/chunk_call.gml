@@ -23,9 +23,11 @@ chunk.chunk_dist = global.chunk_handler.chunk_dist
 chunk.show_chunks = show_chunks;
 chunk.loadid = -1
 
+
 with (chunk) {
   event_user(0); 
-  alarm_set(0, room_speed*60*2);
+  alarm_set(0, room_speed*60); //set the initial alarm to 1 minute to evenly space out the supervisor saving from the initial cell's saving
+  //alarm_set(0, room_speed*60*2);
 }
 
 return true;

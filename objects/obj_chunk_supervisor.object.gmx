@@ -71,9 +71,67 @@ chunk_init(256, 2)
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>///Init Auto Save
+
+alarm_set(0, room_speed*60*2)
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>///[Debug] Show Chunks init
 
 show_chunks = false;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Save every 2 minutes.
+
+if (global.chunk_handler.chunk_saved_this_frame = false){
+  global.chunk_handler.chunk_saved_this_frame = true
+  
+  var _filename = "Worlds\"+string(world_name)+".map"
+  file_save_map(_filename, world_map)
+  show_debug_message("World Map Saved.")
+  
+  alarm_set(0, room_speed*60*2)
+}else{
+  alarm_set(0, 1)
+}
 </string>
           </argument>
         </arguments>
@@ -195,17 +253,63 @@ for (var i = 0; i &lt; instance_number(obj_player); i++){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Saving
-
+            <string>/// /* Saving
+/*
+//if ds_exists(async_load, ds_type_map){
 if (async_load[? "status"] = 1) {
-  var buff = ds_priority_find_priority(global.chunk_handler.saving_async, async_load[? "id"])
+  
+  var buff = ds_priority_find_priority(global.chunk_handler.saving_async, async_load[? "id"]);
+  
+  show_debug_message('async_load[? "id"] = '+string(async_load[? "id"]))
+  show_debug_message('buff = '+string(buff))
+  
   if (buff != undefined) {
     ds_priority_delete_value(global.chunk_handler.saving_async, async_load[? "id"])
     buffer_delete(buff)
+    show_debug_message("buffer deleted")
+    // just to help make sure memory leaks dont happen, though this shouldnt be needed
+    //if ds_priority_empty(global.chunk_handler.saving_async){
+    //  ds_priority_destroy(global.chunk_handler.saving_async)
+    //  global.chunk_handler.saving_async = ds_priority_create()
+    //}
+    
+    
+//    ds_map_destroy(async_load)
+  }else{
+//    ds_map_destroy(async_load)
   }
 }
+//}
+show_debug_message("prior size = "+string(ds_priority_size(global.chunk_handler.saving_async)))
+show_debug_message("===============")
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="3">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>with (obj_chunk){
+  chunk_uncall_forced()
+}
 
-
+var _filename = "Worlds\"+string(world_name)+".map"
+file_save_map(_filename, world_map)
 
 
 

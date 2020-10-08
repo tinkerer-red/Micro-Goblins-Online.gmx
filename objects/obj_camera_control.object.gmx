@@ -527,7 +527,7 @@ if (global.numberOfLocalPlayers = 1)
     
     //player_zoom[0] = clamp(player_zoom[0], 0.125, 8)
     if (global.debug = false){
-      player_zoom[0] = clamp(player_zoom[0], 0.25, 4)
+      player_zoom[0] = clamp(player_zoom[0], 0.5, 2)
     }else{
       player_zoom[0] = clamp(player_zoom[0], 0.125, 8)
     }

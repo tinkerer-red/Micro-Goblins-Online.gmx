@@ -194,6 +194,9 @@
       <script>scripts\mean_vectors.gml</script>
       <script>scripts\sec_to_frames.gml</script>
       <script>scripts\lag.gml</script>
+      <script>scripts\wave.gml</script>
+      <script>scripts\jump_in_direction.gml</script>
+      <script>scripts\wrap.gml</script>
     </scripts>
     <scripts name="Drawing">
       <script>scripts\draw_cone.gml</script>
@@ -481,12 +484,18 @@
         <script>scripts\chunk_uncall.gml</script>
         <script>scripts\chunk_call_region.gml</script>
         <script>scripts\chunk_uncall_region.gml</script>
-        <script>scripts\chunk_save_to_disk.gml</script>
+        <script>scripts\chunk_save_to_map.gml</script>
+        <script>scripts\chunk_uncall_forced.gml</script>
         <scripts name="Buffers">
           <script>scripts\file_save_map_async.gml</script>
         </scripts>
+        <scripts name="files">
+          <script>scripts\file_save_map.gml</script>
+          <script>scripts\file_load_map.gml</script>
+        </scripts>
       </scripts>
       <script>scripts\show_debug_player.gml</script>
+      <script>scripts\show_debug_map.gml</script>
       <script>scripts\scr_view_visble_handler.gml</script>
       <script>scripts\src_restart.gml</script>
       <script>scripts\src_end.gml</script>

@@ -16,9 +16,12 @@ chunk_saved_this_frame = false
 chunk_loaded_this_frame = false
 chunk_gen_this_frame = false
 
-saving_async = ds_priority_create()
-loading_async = ds_priority_create()
-
+var _filename = "Worlds\"+string(world_name)+".map"
+if (file_exists(_filename)){
+  world_map = file_load_map(_filename)
+}else{
+  world_map = ds_map_create()
+}
 
 
 

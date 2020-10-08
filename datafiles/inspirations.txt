@@ -69,8 +69,9 @@ halo 3's grenade types, equipment, and weapons
 [Weapon] Divine Hammer - - (melee + aoe + Aerial Strike) (drops hammers from the sky)
 
 
+[Weapon] Shell Gun - Enter the gungeon (ranged + ...) (It's a shotgun's Shell, which shoots shotguns, which shoot shots)  https://youtu.be/JkqO6YygHhw
 [Weapon] Scarab Gun - Halo 2 (ranged + laser + explosion/aoe)
-[Weapon] mr toots - red faction armageddon (ranged + laser)
+[Weapon] mr toots - red faction armageddon (ranged + laser + repeater)
 [Weapon] Sparton Laser - Halo 3 (ranged + charged + piercing + stream/laser?)
 [Weapon] Taser gun - IRL (ranged + stun)
 [Weapon] Buzz blade - Ratchet and Clank [this weapon shoots saw blades which bounce between targets] (ranged + piercing + ricochet)

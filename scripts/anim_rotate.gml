@@ -19,10 +19,12 @@ returned = false
 
 if !variable_instance_exists(self.id, "anim_rotate_start") {anim_rotate_start = true}
 
-
+show_debug_player(0, "anim_timer = "+string(anim_timer))
 //set the animation variables
 if (anim_rotate_start)
 {
+  show_debug_player(0, "anim start")
+  
   anim_time = floor(room_speed*0.25)
   anim_timer = anim_time
   anim_flip_frame = floor(anim_time*0.5)
@@ -103,6 +105,7 @@ if (anim_timer <= 0)
   anim_rotate_start = 1
   anim_damage_start = 1
 }
+
 //this will keep track of the view ports we've iterated through, that way we never count down the anim timer more then once each frame
 if (view_current < view_loop) || (global.numberOfLocalPlayers = 1){
   view_loop = view_current

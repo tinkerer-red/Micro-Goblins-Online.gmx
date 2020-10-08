@@ -518,7 +518,7 @@ if (spd = 0){
 
 
 if (self.player_anim_state &lt;= e_player_anim.walk){
-  if spd &gt; 0{// if damaged activte damaged step
+  if spd &gt; 0{// if damaged activate damaged step
     if self.player_anim_state = e_player_anim.idle{
       anim_time = 0
       anim_timer = 0
@@ -536,17 +536,24 @@ if (self.player_anim_state &lt;= e_player_anim.walk){
   
     
 if (self.player_anim_state &lt;= e_player_anim.rot){
+  //incase we're moving directly vertical, and we're still turning this check will fix the bug
+  if (anim_rot_active = true) self.player_anim_state = e_player_anim.rot;
+  
+  //if moving right
   if (abs(angle_difference(direction, 0)) &lt; 70){
     if (facing = -1) || (image_xscale &lt; 0){
-      facing = 1
+      //this check is to make sure we dunt update the facing direction while we're rotating
+      if (anim_rot_active = false) facing = 1;
       anim_rot_active = true
       self.player_anim_state = e_player_anim.rot
     }
   }
-    
+  
+  //if moving left
   if (abs(angle_difference(direction, 180)) &lt; 70){
     if (facing = 1) || (image_xscale &gt; 0){
-      facing = -1
+      //this check is to make sure we dunt update the facing direction while we're rotating
+      if (anim_rot_active = false) facing = -1;
       anim_rot_active = true
       self.player_anim_state = e_player_anim.rot
     }
@@ -1272,9 +1279,6 @@ scr_player_state_move(self.player_id_global, 1)
             <string>///draw self and name
 //scr_view_visble_handler()
 
-//show_debug_player(0, "e_player_anim.rot = "+string(e_player_anim.rot))
-//show_debug_player(0, "e_player_anim.walk = "+string(e_player_anim.walk))
-//show_debug_player(0, "e_player_anim.idle = "+string(e_player_anim.idle))
 if (visible = true)
 {
   //damage
@@ -1288,7 +1292,7 @@ if (visible = true)
     if (self.player_anim_state = e_player_anim.rot) {
       if anim_rotate(){
         anim_rot_active = false
-        //image_xscale = -image_xscale
+        image_xscale = -image_xscale
         //x = x - (2*image_xscale)
         self.player_anim_state = e_player_anim.idle
       }
