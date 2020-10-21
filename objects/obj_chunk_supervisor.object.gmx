@@ -50,7 +50,7 @@ world_name = "World1"
           <argument>
             <kind>1</kind>
             <string>///Init Chunks
-chunk_init(256, 2)
+chunk_init(256, 3)
 </string>
           </argument>
         </arguments>
@@ -119,8 +119,8 @@ show_chunks = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Save every 2 minutes.
-
+            <string>/// /* Save every 2 minutes.
+/*
 if (global.chunk_handler.chunk_saved_this_frame = false){
   global.chunk_handler.chunk_saved_this_frame = true
   
@@ -304,7 +304,8 @@ show_debug_message("===============")
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>with (obj_chunk){
+            <string>/*
+with (obj_chunk){
   chunk_uncall_forced()
 }
 

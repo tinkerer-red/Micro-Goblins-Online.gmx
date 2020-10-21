@@ -61,7 +61,6 @@
     <extension index="1">extensions\WinDev</extension>
     <extension index="2">extensions\HOA gGUI - Graphical Interface</extension>
     <extension index="3">extensions\DSPrint</extension>
-    <extension index="4">extensions\TMC SGS Fast Collision System</extension>
   </NewExtensions>
   <sounds name="sound"/>
   <sprites name="sprites">
@@ -96,7 +95,14 @@
       <sprite>sprites\spr_yellow</sprite>
       <sprite>sprites\spr_black</sprite>
       <sprite>sprites\sprite6</sprite>
+      <sprite>sprites\tile_water</sprite>
+      <sprite>sprites\tile_sand</sprite>
+      <sprite>sprites\tile_grass</sprite>
+      <sprite>sprites\tile_dirt</sprite>
+      <sprite>sprites\tile_rock</sprite>
+      <sprite>sprites\tile_snow</sprite>
       <sprite>sprites\spr_ball</sprite>
+      <sprite>sprites\sprite19</sprite>
     </sprites>
   </sprites>
   <backgrounds name="background">
@@ -126,6 +132,7 @@
               <script>scripts\scr_mod_swiftness.gml</script>
               <script>scripts\scr_mod_slowness.gml</script>
               <script>scripts\scr_mod_backStab.gml</script>
+              <script>scripts\scr_mod_chained.gml</script>
             </scripts>
             <scripts name="Range Mods">
               <script>scripts\scr_mod_bonusShot.gml</script>
@@ -188,6 +195,14 @@
       </scripts>
     </scripts>
     <scripts name="Maths">
+      <scripts name="Conversions">
+        <script>scripts\hex_to_bytes.gml</script>
+        <script>scripts\bytes_to_hex.gml</script>
+        <script>scripts\bytes_to_b64.gml</script>
+        <script>scripts\b64_to_bytes.gml</script>
+        <script>scripts\b64_to_hex.gml</script>
+        <script>scripts\hex_to_b64.gml</script>
+      </scripts>
       <script>scripts\normalize.gml</script>
       <script>scripts\collision_normal.gml</script>
       <script>scripts\add_vectors.gml</script>
@@ -486,6 +501,21 @@
         <script>scripts\chunk_uncall_region.gml</script>
         <script>scripts\chunk_save_to_map.gml</script>
         <script>scripts\chunk_uncall_forced.gml</script>
+        <scripts name="perlin gen">
+          <script>scripts\scr_init_2dig.gml</script>
+          <script>scripts\scr_gen_2dig.gml</script>
+          <scripts name="valueNoise">
+            <script>scripts\scr_noise_2dig.gml</script>
+            <script>scripts\scr_interpolated_2dig.gml</script>
+            <script>scripts\scr_value_2dig.gml</script>
+          </scripts>
+          <script>scripts\elliptical_gradient.gml</script>
+          <script>scripts\scr_zcolor_2dig.gml</script>
+          <script>scripts\scr_draw_2dig.gml</script>
+          <scripts name="misc">
+            <script>scripts\scr_restart_2dig.gml</script>
+          </scripts>
+        </scripts>
         <scripts name="Buffers">
           <script>scripts\file_save_map_async.gml</script>
         </scripts>
@@ -494,17 +524,28 @@
           <script>scripts\file_load_map.gml</script>
         </scripts>
       </scripts>
-      <script>scripts\show_debug_player.gml</script>
-      <script>scripts\show_debug_map.gml</script>
+      <scripts name="debug">
+        <scripts name="debug commands">
+          <scripts name="debug menu scripts">
+            <script>scripts\teleport_to_shore.gml</script>
+            <script>scripts\src_restart.gml</script>
+          </scripts>
+          <script>scripts\teleport.gml</script>
+        </scripts>
+        <script>scripts\show_debug_player.gml</script>
+        <script>scripts\show_debug_map.gml</script>
+        <script>scripts\src_end.gml</script>
+      </scripts>
       <script>scripts\scr_view_visble_handler.gml</script>
-      <script>scripts\src_restart.gml</script>
-      <script>scripts\src_end.gml</script>
     </scripts>
     <script>scripts\scr_collision_test.gml</script>
     <script>scripts\scr_draw_circle.gml</script>
     <script>scripts\string_split_to_array.gml</script>
     <script>scripts\breadth_first_search_create.gml</script>
     <script>scripts\sgs_place_free.gml</script>
+    <script>scripts\getPerlinNoise.gml</script>
+    <script>scripts\randomSeed.gml</script>
+    <script>scripts\section_percent.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fontGGUI</font>

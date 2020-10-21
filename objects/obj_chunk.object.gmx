@@ -25,14 +25,19 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>tile_layer_bottom_list = -1
-tile_layer_middle_list = -1
-tile_layer_top_list = -1
-tile_layer_decor_list = -1
-tile_layer_bottom_background_list = -1
-tile_layer_middle_background_list = -1
-tile_layer_top_background_list = -1
-tile_layer_decor_background_list = -1
+            <string>
+tile_layer_bottom_grid = -1
+tile_layer_middle_grid = -1
+tile_layer_top_grid = -1
+tile_layer_decor_grid = -1
+tile_layer_bottom_background_grid = -1
+tile_layer_middle_background_grid = -1
+tile_layer_top_background_grid = -1
+tile_layer_decor_background_grid = -1
+
+chunk_data = -1
+
+heightmap_grid = -1
 
 generated = false;
 </string>
@@ -62,11 +67,11 @@ generated = false;
 
 
 should_exist = true
-var margin = 0
+var margin = 2
 //is the player with in distance of you?
 var player = instance_nearest(x+sprite_width/2, y+sprite_height/2, obj_player)
 
-if !point_in_rectangle(player.x, player.y, bbox_left-(sprite_width*chunk_dist)-margin, bbox_top-(sprite_height*chunk_dist)-margin, bbox_right+(sprite_width*chunk_dist)+margin, bbox_bottom+(sprite_height*chunk_dist)+margin){
+if !point_in_rectangle(player.x, player.y, bbox_left-(sprite_width*(chunk_dist+margin)), bbox_top-(sprite_height*(chunk_dist+margin)), bbox_right+(sprite_width*(chunk_dist+margin)), bbox_bottom+(sprite_height*(chunk_dist+margin))){
   should_exist = false
   //show_debug_message("Chunk: ("+string(chunk_x)+","+string(chunk_y)+") Should NOT exists")
 }//else{
@@ -201,7 +206,7 @@ if (global.chunk_handler.chunk_gen_this_frame = false){
 
 if (global.chunk_handler.chunk_saved_this_frame = false){
   global.chunk_handler.chunk_saved_this_frame = true
-  chunk_save_to_map()
+  //chunk_save_to_map()
   //show_debug_message("Chunk: ("+string(chunk_x)+","+string(chunk_y)+") Saved")
   
   alarm_set(0, room_speed*60*2)
@@ -302,7 +307,7 @@ if (async_load[? "id"] == loadid) {
 
 if ds_exists(global.chunk_handler.world_map, ds_type_map){
   //load the chunk data here
-  
+/*  
   ///Loading
   if ds_map_exists(global.chunk_handler.world_map, string(chunk_x)+","+string(chunk_y)){
     
@@ -329,7 +334,8 @@ if ds_exists(global.chunk_handler.world_map, ds_type_map){
     show_debug_message("[Chunk][Load]: Chunk Key ("+string(chunk_x)+","+string(chunk_y)+") was missing.")
     chunk_data = chunk_generate()
   }
-  
+*/  
+chunk_data = chunk_generate()
   alarm_set(1,1)
     
 }else{
@@ -415,7 +421,7 @@ if ds_exists(chunk_data, ds_type_map) {
     // DECOR
     var d_layer = TileLayerDecor
     
-    
+    /*
     // do a single cycle through the chunk
     for (var i = 0; i &lt; chunk_width; i++){
       for (var j = 0; j &lt; chunk_height; j++){
@@ -493,7 +499,7 @@ if ds_exists(chunk_data, ds_type_map) {
 
 if should_exist = false{
   if ds_exists(chunk_data, ds_type_map) {
-    chunk_save_to_map()
+//    chunk_save_to_map()
   }
 }
 </string>
@@ -536,16 +542,23 @@ if should_exist = false{
     // DECOR
     var d_layer = TileLayerDecor
     
-    // Full Cycle
-    for (var i = 0; i &lt; chunk_width; i++){
-      for (var j = 0; j &lt; chunk_height; j++){
-        var xx = x+i*tile_size
-        var yy = y+j*tile_size
-        
-        if (tile_layer_bottom_grid[# i, j] != -1) tile_layer_delete_at(b_layer, xx, yy);
-        if (tile_layer_middle_grid[# i, j] != -1) tile_layer_delete_at(m_layer, xx, yy);
-        if (tile_layer_top_grid[# i, j] != -1) tile_layer_delete_at(t_layer, xx, yy);
-        if (tile_layer_decor_grid[# i, j] != -1) tile_layer_delete_at(d_layer, xx, yy);
+    //Make sure the grids exist before we try to read from them
+    if ds_exists(tile_layer_bottom_grid, ds_type_grid) 
+    &amp;&amp; ds_exists(tile_layer_middle_grid, ds_type_grid) 
+    &amp;&amp; ds_exists(tile_layer_top_grid, ds_type_grid) 
+    &amp;&amp; ds_exists(tile_layer_decor_grid, ds_type_grid) 
+    {
+      // Full Cycle
+      for (var i = 0; i &lt; chunk_width; i++){
+        for (var j = 0; j &lt; chunk_height; j++){
+          var xx = x+i*tile_size
+          var yy = y+j*tile_size
+          
+          if (tile_layer_bottom_grid[# i, j] != -1) tile_layer_delete_at(b_layer, xx, yy);
+          if (tile_layer_middle_grid[# i, j] != -1) tile_layer_delete_at(m_layer, xx, yy);
+          if (tile_layer_top_grid[# i, j] != -1) tile_layer_delete_at(t_layer, xx, yy);
+          if (tile_layer_decor_grid[# i, j] != -1) tile_layer_delete_at(d_layer, xx, yy);
+        }
       }
     }
     
@@ -588,14 +601,22 @@ if should_exist = false{
   if ds_exists(chunk_data, ds_type_map) {
     ds_map_destroy(chunk_data);
     
-    ds_grid_destroy(tile_layer_bottom_grid)
-    ds_grid_destroy(tile_layer_middle_grid)
-    ds_grid_destroy(tile_layer_top_grid)
-    ds_grid_destroy(tile_layer_decor_grid)
-    ds_grid_destroy(tile_layer_bottom_background_grid)
-    ds_grid_destroy(tile_layer_middle_background_grid)
-    ds_grid_destroy(tile_layer_top_background_grid)
-    ds_grid_destroy(tile_layer_decor_background_grid)
+    if ds_exists(tile_layer_bottom_grid, ds_type_grid) ds_grid_destroy(tile_layer_bottom_grid)
+    if ds_exists(tile_layer_middle_grid, ds_type_grid) ds_grid_destroy(tile_layer_middle_grid)
+    if ds_exists(tile_layer_top_grid, ds_type_grid) ds_grid_destroy(tile_layer_top_grid)
+    if ds_exists(tile_layer_decor_grid, ds_type_grid) ds_grid_destroy(tile_layer_decor_grid)
+    if ds_exists(tile_layer_bottom_background_grid, ds_type_grid) ds_grid_destroy(tile_layer_bottom_background_grid)
+    if ds_exists(tile_layer_middle_background_grid, ds_type_grid) ds_grid_destroy(tile_layer_middle_background_grid)
+    if ds_exists(tile_layer_top_background_grid, ds_type_grid) ds_grid_destroy(tile_layer_top_background_grid)
+    if ds_exists(tile_layer_decor_background_grid, ds_type_grid) ds_grid_destroy(tile_layer_decor_background_grid)
+  }
+  
+  if ds_exists(heightmap_grid, ds_type_grid){
+    ds_grid_destroy(heightmap_grid)
+  }
+  
+  if variable_instance_exists(id, "terrain_surface"){
+    surface_free(terrain_surface)
   }
   
   instance_destroy()
@@ -657,6 +678,28 @@ if (objects_in_chunk = false){
       </action>
     </event>
     <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>
+if ds_exists(heightmap_grid, ds_type_grid) scr_draw_2dig()
+</string>
+          </argument>
+        </arguments>
+      </action>
       <action>
         <libid>1</libid>
         <id>603</id>

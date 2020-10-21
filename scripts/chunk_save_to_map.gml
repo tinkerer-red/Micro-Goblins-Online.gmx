@@ -151,6 +151,7 @@ var grid_write = ds_grid_write(tile_layer_decor_background_grid);
 ///Update world ds_map
 if (update_world_map = true) || (generated = true){
     var map_write = ds_map_write(chunk_data);
+    //var map_base64 = hex_to_b64(map_write)
     global.chunk_handler.world_map[? string(chunk_x)+","+string(chunk_y)] = map_write;
 }
 

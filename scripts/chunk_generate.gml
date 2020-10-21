@@ -21,6 +21,11 @@ tile_layer_top_background_grid = ds_grid_create(grid_size_x, grid_size_y);
 tile_layer_decor_background_grid = ds_grid_create(grid_size_x, grid_size_y);
 
 ///replace this with perlin noise later
+heightmap_grid = scr_gen_2dig(2, 0.5, 0.125, 2.1042, 1, 0, 0.6); // Octaves, Persistence, Wavelength Modifier, Lacunarity, Is island, Refined and AutoTiled, elliptical gradient percent
+structures_grid = scr_gen_2dig(4, 0.5, 3, 2.1042, 1, 0, 0.8); // Octaves, Persistence, Wavelength Modifier, Lacunarity, Is island, Refined and AutoTiled, elliptical gradient percent
+//humidity_grid = scr_gen_2dig(1, 0.6, 0.0625, 2.1042, 0, 0, 0.6); // Octaves, Persistence, Wavelength Modifier, Lacunarity, Is island, Refined and AutoTiled, elliptical gradient percent
+//temperature_grid = scr_gen_2dig(1, 0.4, 0.03125, 2.1042, 0, 0, 0.6); // Octaves, Persistence, Wavelength Modifier, Lacunarity, Is island, Refined and AutoTiled, elliptical gradient percent
+/*
       ds_grid_clear(tile_layer_bottom_grid, -1)
       ds_grid_clear(tile_layer_middle_grid, -1)
       ds_grid_clear(tile_layer_top_grid, -1)
@@ -29,6 +34,7 @@ tile_layer_decor_background_grid = ds_grid_create(grid_size_x, grid_size_y);
       ds_grid_clear(tile_layer_middle_background_grid, -1)
       ds_grid_clear(tile_layer_top_background_grid, -1)
       ds_grid_clear(tile_layer_decor_background_grid, -1)
+*/
 ///////////////////////////////////////
 
 ds_map_add(_map, "TileLayerBottom", ds_grid_write(tile_layer_bottom_grid));

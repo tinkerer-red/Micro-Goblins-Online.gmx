@@ -89,7 +89,7 @@ gui_create_watcher(guid, "FPS", fps, c_green);
 //gui_create_watcher(guid, "FPS_real", fps_real, c_yellow);
 gui_create_watcher(guid, "FPS_mean", fps_real, c_orange);
 
-gui_create_menu(guid, "Modifiers", false, 21, c_black);
+gui_create_menu(guid, "Modifiers", false, 22, c_black);
   
   gui_create_menu(guid, "Global", false, 6, c_black);
     gui_create_slider(guid, "Charge", 0, 0, 5, c_aqua)
@@ -99,11 +99,12 @@ gui_create_menu(guid, "Modifiers", false, 21, c_black);
     gui_create_slider(guid, "Enlarge", 0, 0, 5, c_aqua)
     gui_create_slider(guid, "Shrink", 0, 0, 5, c_aqua)
   
-  gui_create_menu(guid, "Melee", false, 4, c_black);
+  gui_create_menu(guid, "Melee", false, 5, c_black);
     gui_create_checkbox(guid, "Melee Ranged", false);
     gui_create_slider(guid, "Swiftness", 0, 0, 5, c_aqua)
     gui_create_slider(guid, "Slowness", 0, 0, 5, c_aqua)
-   gui_create_checkbox(guid, "Back Stab", false, c_aqua)
+    gui_create_checkbox(guid, "Back Stab", false, c_aqua)
+   gui_create_slider(guid, "Chained", 0, 0, 5, c_aqua)
    
   gui_create_menu(guid, "Ranged", false, 8, c_black);
     gui_create_slider(guid, "Bonus Shot", 0, 0, 5, c_aqua)
@@ -117,13 +118,14 @@ gui_create_menu(guid, "Modifiers", false, 21, c_black);
     
     
 
-gui_create_menu(guid, "Graphics", false, 2, c_black);
-gui_create_checkbox(guid, "Smooth Camera", obj_camera_control.smooth_camera);
-gui_create_button(guid, "Show Chunks", chunk_debug_toggle, c_yellow);
+gui_create_menu(guid, "Graphics", false, 2, c_lime);
+  gui_create_checkbox(guid, "Smooth Camera", obj_camera_control.smooth_camera, c_lime);
+  gui_create_button(guid, "Show Chunks", chunk_debug_toggle, c_yellow);
 
 
 gui_create_button(guid, "Restart", src_restart, $0202a4);
 gui_create_button(guid, "Discord", src_url, $b6599b);
+gui_create_button(guid, "warp to shore", teleport_to_shore, $b6599b);
 
 
 time = 0;
@@ -204,6 +206,7 @@ if (global.debug = true){
           last_swift = gui_get_value(guid, "Swiftness");
           last_slow = gui_get_value(guid, "Slowness");
           last_backStab = gui_get_value(guid, "Back Stab");
+          last_chained = gui_get_value(guid, "Chained");
           
         //if gui_get_value(guid, 'Ranged'){
           last_bonusShot = gui_get_value(guid, "Bonus Shot");
@@ -308,6 +311,7 @@ if (global.debug = true){
           //gui_set_value(guid, "Melee Ranged", floor(0.5+gui_get_value(guid, "Swiftness")) div 1);
           gui_set_value(guid, "Swiftness", floor(0.5+gui_get_value(guid, "Swiftness")) div 1);
           gui_set_value(guid, "Slowness", floor(0.5+gui_get_value(guid, "Slowness")) div 1);
+          gui_set_value(guid, "Chained", floor(0.5+gui_get_value(guid, "Chained")) div 1);
           //gui_set_value(guid, "Back Stab", floor(0.5+gui_get_value(guid, "Back Stab")) div 1);
           
         }
@@ -417,8 +421,8 @@ if (global.debug = true){
             if last_repeater != gui_get_value(guid, "Repeater") scr_modifier_adjust(queue_button_mods, scr_mod_repeater, 2, gui_get_value(guid, "Repeater")); 
             if last_dash != gui_get_value(guid, "Dash") scr_modifier_adjust(queue_pre_weap_mods, scr_mod_dash, 1, gui_get_value(guid, "Dash"));
             if last_evade != gui_get_value(guid, "Evade") scr_modifier_adjust(queue_post_attack_mods, scr_mod_evade, 1, gui_get_value(guid, "Evade"));
-            if last_enlarge != gui_get_value(guid, "Enlarge") scr_modifier_adjust(queue_weap_spawn_mods, scr_mod_enlarge, 3, gui_get_value(guid, "Enlarge"));
-            if last_shrink != gui_get_value(guid, "Shrink") scr_modifier_adjust(queue_weap_spawn_mods, scr_mod_shrink, 4, gui_get_value(guid, "Shrink"));
+            if last_enlarge != gui_get_value(guid, "Enlarge") scr_modifier_adjust(queue_weap_spawn_mods, scr_mod_enlarge, 6, gui_get_value(guid, "Enlarge"));
+            if last_shrink != gui_get_value(guid, "Shrink") scr_modifier_adjust(queue_weap_spawn_mods, scr_mod_shrink, 7, gui_get_value(guid, "Shrink"));
           }
           
           //Melee
@@ -427,6 +431,8 @@ if (global.debug = true){
             if last_swift != gui_get_value(guid, "Swiftness") scr_modifier_adjust(queue_weap_spawn_mods, scr_mod_swiftness, 1, gui_get_value(guid, "Swiftness"));
             if last_slow != gui_get_value(guid, "Slowness") scr_modifier_adjust(queue_weap_spawn_mods, scr_mod_slowness, 2, gui_get_value(guid, "Slowness"));
             if last_backStab != gui_get_value(guid, "Back Stab") scr_modifier_adjust(queue_weap_spawn_mods, scr_mod_backStab, 1, gui_get_value(guid, "Back Stab"));
+            if last_chained != gui_get_value(guid, "Chained") scr_modifier_adjust(queue_weap_spawn_mods, scr_mod_chained, 5, gui_get_value(guid, "Chained"));
+            
           }
           
           //Ranged

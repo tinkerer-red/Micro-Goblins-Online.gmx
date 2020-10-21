@@ -64,6 +64,7 @@ stabbing = false //for the multi stab modifier
 swiftness = 0
 slowness  = 0
 ranged = 0
+is_chained = false
 
 //ranged mods
 
@@ -231,7 +232,7 @@ self.y = self.owner_id.y + lengthdir_y(dis, image_angle+45);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//animate object
+            <string>///animate object
 
 
 if (w_type = weapon_type_melee) &amp;&amp; !stabbing
@@ -487,6 +488,13 @@ for (var i = 1; i &lt;= flicks; i++)
   draw_sprite_ext(sprite_index,image_index,xx[i],yy[i],image_xscale,image_yscale,image_angle+(flicker_rot*i),image_blend, (image_alpha/flicks)*(flicks-i)); 
 }
 
+
+// if the weapon in chained, draw the chain
+if (is_chained){
+  //for now we're just going to draw a line to player center
+  draw_line_colour(x, y, owner_id.x, owner_id.y, c_black, c_black)
+  
+}
 
 draw_self()
 </string>

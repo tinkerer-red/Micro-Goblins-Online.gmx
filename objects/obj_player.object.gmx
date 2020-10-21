@@ -356,9 +356,10 @@ for (var i = 0; i &lt; 3; i++)
   repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_backStab, 1);
   repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_swiftness, 2);
   repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_slowness, 3);
-  repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_enlarge, 4);
-  //repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_shrink, 5);
-  repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_knockback, 6);
+  repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_knockback, 4);
+  repeat( 1 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_chained, 5);
+  repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_enlarge, 6);
+  //repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_shrink, 7);
   repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_3, 1);
   ///////////////////////////////////////////////////////////////////////////
   repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_bonusShot, 1);
