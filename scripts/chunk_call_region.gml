@@ -12,11 +12,16 @@ var cell_y = (yy div chunk_height) + y_sign
 //call center chunk
 //chunk_call(cell_x, cell_y)
 //call the rest of the chunks
+var timeStart = get_timer();
+
 for (var i = -chunk_dist; i <= chunk_dist; i++){
   for (var j = -chunk_dist; j <= chunk_dist; j++){
     chunk_call(cell_x+i, cell_y+j)
   }
 }
+var timeEnd = get_timer();
+var time= timeEnd - timeStart;
+show_debug_message("loops = "+string(time))
 
 
 

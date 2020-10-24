@@ -529,7 +529,7 @@ if (global.numberOfLocalPlayers = 1)
     if (global.debug = false){
       player_zoom[0] = clamp(player_zoom[0], 0.5, 2)
     }else{
-      player_zoom[0] = clamp(player_zoom[0], 0.125, 8)
+      player_zoom[0] = clamp(player_zoom[0], 0.0078125, 32)
     }
     
     view_hview[0] = view_hport[0]/(player_zoom[0]*res_scale[0])
@@ -549,7 +549,6 @@ else
   var top_split    = floor(global.numberOfLocalPlayers/2)
   var bottom_split = ceil(global.numberOfLocalPlayers/2)
   
-  //some how this works for single player
   var view_port_height = hh/2
   
   for (var i = 0; i &lt; global.numberOfLocalPlayers; i++)
@@ -563,7 +562,7 @@ else
     if (global.debug = false){
       player_zoom[i] = clamp(player_zoom[i], 0.5, 2)
     }else{
-      player_zoom[i] = clamp(player_zoom[i], 0.25, 4)
+      player_zoom[i] = clamp(player_zoom[i], 0.0078125, 8)
     }
     
     if (obj_controller.zoom_in_pressed[0]) || (obj_controller.zoom_out_pressed[0]){

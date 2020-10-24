@@ -61,6 +61,7 @@
     <extension index="1">extensions\WinDev</extension>
     <extension index="2">extensions\HOA gGUI - Graphical Interface</extension>
     <extension index="3">extensions\DSPrint</extension>
+    <extension index="4">extensions\NoisePack GPU</extension>
   </NewExtensions>
   <sounds name="sound"/>
   <sprites name="sprites">
@@ -214,6 +215,7 @@
       <script>scripts\wrap.gml</script>
     </scripts>
     <scripts name="Drawing">
+      <script>scripts\is_visible.gml</script>
       <script>scripts\draw_cone.gml</script>
       <script>scripts\anim_idle.gml</script>
       <script>scripts\anim_walk.gml</script>
@@ -515,6 +517,24 @@
           <scripts name="misc">
             <script>scripts\scr_restart_2dig.gml</script>
           </scripts>
+          <scripts name="GPUToolkit">
+            <scripts name="GPU Noise">
+              <scripts name="public">
+                <script>scripts\gpu_noise_create.gml</script>
+                <script>scripts\gpu_noise_create_ext.gml</script>
+                <script>scripts\gpu_noise_1d.gml</script>
+                <script>scripts\gpu_noise_2d.gml</script>
+                <script>scripts\gpu_noise_3d.gml</script>
+                <script>scripts\gpu_noise_offset.gml</script>
+                <script>scripts\gpu_noise_to_surface.gml</script>
+                <script>scripts\gpu_noise_free.gml</script>
+                <script>scripts\README_gpu_noise.gml</script>
+              </scripts>
+              <scripts name="private">
+                <script>scripts\_gpu_noise_calculate.gml</script>
+              </scripts>
+            </scripts>
+          </scripts>
         </scripts>
         <scripts name="Buffers">
           <script>scripts\file_save_map_async.gml</script>
@@ -536,6 +556,7 @@
         <script>scripts\show_debug_map.gml</script>
         <script>scripts\src_end.gml</script>
       </scripts>
+      <script>scripts\time_script.gml</script>
       <script>scripts\scr_view_visble_handler.gml</script>
     </scripts>
     <script>scripts\scr_collision_test.gml</script>
@@ -547,6 +568,35 @@
     <script>scripts\randomSeed.gml</script>
     <script>scripts\section_percent.gml</script>
   </scripts>
+  <shaders name="shaders">
+    <shaders name="Noise">
+      <shaders name="simplex noise glsles">
+        <shader type="GLSLES">shaders\sha_noise_simplex_2d.shader</shader>
+        <shader type="GLSLES">shaders\sha_noise_simplex_3d.shader</shader>
+        <shader type="GLSLES">shaders\sha_noise_simplex_4d.shader</shader>
+      </shaders>
+      <shaders name="perlin noise glsles">
+        <shader type="GLSLES">shaders\sha_noise_perlin_2d.shader</shader>
+        <shader type="GLSLES">shaders\sha_noise_perlin_3d.shader</shader>
+        <shader type="GLSLES">shaders\sha_noise_perlin_4d.shader</shader>
+      </shaders>
+      <shaders name="value noise glsles">
+        <shader type="GLSLES">shaders\sha_noise_value_1d.shader</shader>
+        <shader type="GLSLES">shaders\sha_noise_value_2d.shader</shader>
+        <shader type="GLSLES">shaders\sha_noise_value_3d.shader</shader>
+        <shader type="GLSLES">shaders\sha_noise_value_fractal.shader</shader>
+      </shaders>
+      <shaders name="flow noise glsles">
+        <shader type="GLSLES">shaders\sha_noise_flow_2d_fractal.shader</shader>
+        <shader type="GLSLES">shaders\sha_noise_flow_2d_fire.shader</shader>
+      </shaders>
+      <shaders name="demos">
+        <shader type="GLSLES">shaders\_p_demo.shader</shader>
+        <shader type="GLSLES">shaders\_s_demo.shader</shader>
+        <shader type="GLSLES">shaders\_v_demo.shader</shader>
+      </shaders>
+    </shaders>
+  </shaders>
   <fonts name="fonts">
     <font>fonts\fontGGUI</font>
     <font>fonts\font_debug</font>

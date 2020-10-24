@@ -68,9 +68,9 @@ summoner's buff (increase minion strength and health)
 force push when damage is taken
 chance to force pull when damage is dealt
 replace your activate buttom with another weapon slot (not stackable)
--
--
--
+Ring attack (https://www.youtube.com/watch?v=ruo0kWYFILE&t=1446s)
+flame trail, or some trail left behind you
+sprint? (double tap movement key to activate)
 -
 -
 -

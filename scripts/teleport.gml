@@ -2,7 +2,7 @@
 
 
 with (obj_player){
-  if (player_id_global = argument2){
+  if (player_id_local = argument2){
     x = argument0
     y = argument1
   }

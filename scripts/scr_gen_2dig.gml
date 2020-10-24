@@ -39,20 +39,27 @@ var grid_size_y = (sprite_height/tile_size);
 var world_width  = global.chunk_handler.world_width  /tile_size
 var world_height = global.chunk_handler.world_height /tile_size
 
+//var world_heightmap = global.chunk_handler.world_heightmap
+//var landmass = gpu_noise_offset(world_heightmap, x*2, y*2);
+
 var x_off = bbox_left/tile_size
 var y_off = bbox_top/tile_size
 
-seed = global.chunk_handler.world_seed
+//seed = global.chunk_handler.world_seed
+//var array = gpu_noise_2d(world_heightmap, x, y)
+//show_debug_message(array)
 var grid = ds_grid_create(grid_size_x, grid_size_y)
 
 for(var i = bbox_left/tile_size; i < bbox_right/tile_size; i++){
     for(var j = bbox_top/tile_size; j < bbox_bottom/tile_size; j++){
-    
+            
             if(isIsland == 1){ // Generate island by subtracting elliptical gradient from main noise.
             
                 if(refined == 0){ // If autotiling isn't needed, continue normally.
                 
                     var zz = clamp((scr_value_2dig(i, j, oc, pers, wm, lac, grid) - elliptical_gradient(i, j, world_width, world_height, perc)),0,1);
+                    //var zz = clamp((gpu_noise_2d(landmass, i, j) - elliptical_gradient(i, j, world_width, world_height, perc)),0,1);
+                    //var zz = clamp((0.8 - elliptical_gradient(i, j, world_width, world_height, perc)),0,1);
                     grid[# i-x_off, j-y_off] = zz;
                     /*
                     Due to nature of the elliptical gradient equation, it could be something like: 
@@ -66,7 +73,7 @@ for(var i = bbox_left/tile_size; i < bbox_right/tile_size; i++){
             
                 if(refined == 0){ // If autotiling isn't needed, continue normally.
                 
-                    var zz = scr_value_2dig(i, j, oc, pers, wm, lac, grid);
+                    var zz = gpu_noise_2d(landmass, i, j);
                     grid[# i-x_off, j-y_off] = zz;
                     
                }
@@ -74,6 +81,8 @@ for(var i = bbox_left/tile_size; i < bbox_right/tile_size; i++){
             
     }
 }
+
+//    gpu_noise_free(landmass)
 
 //===
 return grid;

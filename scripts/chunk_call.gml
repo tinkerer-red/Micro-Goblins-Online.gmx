@@ -1,5 +1,5 @@
 ///chunk_call(cell_x,cell_y)
-
+var timeStart = get_timer();
 
 var cell_x = argument0;
 var cell_y = argument1;
@@ -29,6 +29,9 @@ with (chunk) {
   alarm_set(0, room_speed*60); //set the initial alarm to 1 minute to evenly space out the supervisor saving from the initial cell's saving
   //alarm_set(0, room_speed*60*2);
 }
+var timeEnd = get_timer();
+var time= timeEnd - timeStart;
+show_debug_message("spawn = "+string(time))
 
 return true;
 

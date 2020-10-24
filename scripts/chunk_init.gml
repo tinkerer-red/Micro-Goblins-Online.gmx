@@ -38,6 +38,9 @@ if ds_map_exists(world_map, "Seed"){
   world_map[? "Seed"] = world_seed;
 }
 
+world_heightmap = gpu_noise_create_ext(0, world_seed, 16, 16, 0.0000001, 0.0625, 2.0)//0.001)
+
+
 
 
 

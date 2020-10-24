@@ -90,6 +90,8 @@ self.speed = 0
 self.hspeed = 0
 self.vspeed = 0
 self.friction = 0.0
+xpreviousframe = x
+ypreviousframe = y
 
 //animation stuff
 anim_rot_active = false
@@ -350,7 +352,7 @@ for (var i = 0; i &lt; 3; i++)
   repeat( 0 ) ds_priority_add(queue_button_mods, scr_mod_repeater, 2);
   repeat( 0 ) ds_priority_add(queue_button_mods, scr_1, 3);
   ///////////////////////////////////////////////////////////////////////////
-  repeat( 0 ) ds_priority_add(queue_pre_weap_mods, scr_mod_dash, 1);
+  repeat( 2 ) ds_priority_add(queue_pre_weap_mods, scr_mod_dash, 1);
   repeat( 0 ) ds_priority_add(queue_pre_weap_mods, scr_2, 2);
   ///////////////////////////////////////////////////////////////////////////
   repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_backStab, 1);
@@ -569,6 +571,28 @@ if self.player_anim_state &lt;= e_player_anim.dmg{
   }
 }
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>xpreviousframe = x
+ypreviousframe = y
 </string>
           </argument>
         </arguments>

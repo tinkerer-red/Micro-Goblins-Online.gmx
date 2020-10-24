@@ -2,7 +2,7 @@
 <object>
   <spriteName>spr_chunk_supervisor</spriteName>
   <solid>0</solid>
-  <visible>0</visible>
+  <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
@@ -50,7 +50,7 @@ world_name = "World1"
           <argument>
             <kind>1</kind>
             <string>///Init Chunks
-chunk_init(256, 3)
+chunk_init(256, 5)
 </string>
           </argument>
         </arguments>
@@ -71,9 +71,9 @@ chunk_init(256, 3)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Init Auto Save
+            <string>/// /* Init Auto Save
 
-alarm_set(0, room_speed*60*2)
+//alarm_set(0, room_speed*60*2)
 </string>
           </argument>
         </arguments>
@@ -167,12 +167,56 @@ for (var i = 0; i &lt; instance_number(obj_player); i++){
     || sign(player.x) != sign(player.xprevious)
     || sign(player.y) != sign(player.yprevious) {
       chunk_uncall_region(player.xprevious, player.yprevious)
+      chunk_call_region(player.x, player.y)
     }
   }
 }
     
-    
 
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///load cells near local players
+/*
+
+for (var i = 0; i &lt; instance_number(obj_player); i++){
+  var player = instance_find(obj_player,i);
+  
+  if (player.player_id_local != -1){
+    var new_x = player.xprevious  //x+lengthdir_x(player.spd, player.dir)
+    var new_y = player.yprevious  //y+lengthdir_y(player.spd, player.dir)
+    
+    if (player.x div chunk_width) != (new_x div chunk_width)
+    || (player.y div chunk_height) != (new_y div chunk_height)
+    || sign(player.x) != sign(new_x)
+    || sign(player.y) != sign(new_y)
+    {
+      
+    }
+  }
+}
+    
+//*/    
+
+    
 
 </string>
           </argument>
@@ -201,36 +245,6 @@ for (var i = 0; i &lt; instance_number(obj_player); i++){
 chunk_loaded_this_frame = false;
 chunk_gen_this_frame = false;
 chunk_saved_this_frame = false
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///load cells near local players
-
-
-for (var i = 0; i &lt; instance_number(obj_player); i++){
-  var player = instance_find(obj_player,i);
-  if (player.player_id_local != -1) chunk_call_region(player.x, player.y)
-}
-    
-    
-
 </string>
           </argument>
         </arguments>
@@ -304,7 +318,8 @@ show_debug_message("===============")
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/*
+            <string>/// /* Save at game end
+/*
 with (obj_chunk){
   chunk_uncall_forced()
 }
@@ -314,6 +329,31 @@ file_save_map(_filename, world_map)
 
 
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (world_heightmap[11] != undefined) &amp;&amp; (world_heightmap[11] != 0){
+  if surface_exists(world_heightmap[11]) draw_surface(world_heightmap[11], 0,0);
+}
 </string>
           </argument>
         </arguments>
