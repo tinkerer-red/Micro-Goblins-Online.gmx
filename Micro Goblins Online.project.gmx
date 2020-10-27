@@ -503,6 +503,9 @@
         <script>scripts\chunk_uncall_region.gml</script>
         <script>scripts\chunk_save_to_map.gml</script>
         <script>scripts\chunk_uncall_forced.gml</script>
+        <script>scripts\chunk_remember.gml</script>
+        <script>scripts\chunk_forget.gml</script>
+        <script>scripts\chunk_string.gml</script>
         <scripts name="perlin gen">
           <script>scripts\scr_init_2dig.gml</script>
           <script>scripts\scr_gen_2dig.gml</script>

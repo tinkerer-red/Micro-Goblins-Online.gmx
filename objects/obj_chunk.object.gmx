@@ -36,6 +36,7 @@ tile_layer_top_background_grid = -1
 tile_layer_decor_background_grid = -1
 
 chunk_data = -1
+should_exist = true
 
 heightmap_grid = -1
 structures_grid = -1
@@ -70,8 +71,7 @@ generated = false;
 //find out if you should even exist
 
 
-should_exist = true
-var margin = 1
+var margin = 0
 var chunk_dist = global.chunk_handler.chunk_dist
 
 //is the player with in distance of you?
@@ -83,14 +83,12 @@ var closest_y = player.y div sprite_height
 x_diff = closest_x - chunk_x
 y_diff = closest_y - chunk_y
 
-
 //if !point_in_rectangle(player.x, player.y, bbox_left-(sprite_width*(chunk_dist+margin)), bbox_top-(sprite_height*(chunk_dist+margin)), bbox_right+(sprite_width*(chunk_dist+margin)), bbox_bottom+(sprite_height*(chunk_dist+margin))){
 if not ((abs(x_diff) &lt; chunk_dist+margin) &amp;&amp; (abs(y_diff) &lt; chunk_dist+margin)){
   should_exist = false
   //show_debug_message("Chunk: ("+string(chunk_x)+","+string(chunk_y)+") Should NOT exists")
-}//else{
-  //show_debug_message("Chunk: ("+string(chunk_x)+","+string(chunk_y)+") Should exists")
-//}
+}
+
 
 
 </string>
@@ -116,7 +114,7 @@ if not ((abs(x_diff) &lt; chunk_dist+margin) &amp;&amp; (abs(y_diff) &lt; chunk_
             <string>/// /* Stagger the chunk Saving
 
 if should_exist = false {
-  if (global.chunk_handler.chunk_saved_this_frame = false){
+  if (global.chunk_handler.chunk_saved_this_frame = false) || (generated = false) || (heightmap_grid = -1){
     global.chunk_handler.chunk_saved_this_frame = true
     //show_debug_message("global.chunk_handler.chunk_saved_this_frame = false")
     event_user(1);
@@ -321,6 +319,11 @@ if (async_load[? "id"] == loadid) {
 
 //_filename = "default\"+"Worlds\"+string(world_name)+"\"+string(chunk_x)+","+string(chunk_y)+".chnk"
 //_filename = "Worlds\"+string(world_name)+"\"+string(chunk_x)+","+string(chunk_y)+".chnk"
+if (should_exist = false){
+  event_user(1)
+  exit;
+}
+
 
 if ds_exists(global.chunk_handler.world_map, ds_type_map){
   //load the chunk data here
@@ -570,12 +573,12 @@ var tiles_y = sprite_height/tile_size;
   if (show_chunks) {
 
   //draw chunk boarders
-    var chunk_string = "("+string(chunk_x)+","+string(chunk_y)+")";
+    var chunk_str = "("+string(chunk_x)+","+string(chunk_y)+")";
     var scale = 1//obj_camera_control.upscale_val/2;
     draw_set_colour(c_yellow)
     draw_rectangle(0, 0, sprite_width, sprite_height, true)
     draw_set_font(font_debug)
-    draw_text_transformed(x,y,chunk_string,1*scale, 1*scale, 0)
+    draw_text_transformed(x,y,chunk_str,1*scale, 1*scale, 0)
   }
   
   
@@ -750,6 +753,8 @@ if should_exist = false{
   if variable_instance_exists(id, "terrain_surface"){
     surface_free(terrain_surface)
   }
+  
+  chunk_forget(chunk_x, chunk_y)
   
   instance_destroy()
 }
