@@ -26,13 +26,18 @@ Blind (when mixed with aoe and continuous, this becomes the fog of war)
 +++Slow (swings slower)
 +++Ranged (unlocks ranged mods for the melee weapon, assigns a random projectile sprite perminately)
 +++Back Stab (swings behind you; also?)
+
+Chained (Similar to yoyo's and Flail maces, good for rope darts and what not)
 Thrust (Chun Li kick annimation for weapons) (multiple will act as a combo attack from a single button press)
+slash
+whip
+
 Flail (changes the attacking method into a flail attack, adds attack range but makes it a bit slower.) (multiples will give it a further reach)
+
 double strike (attacks a second time)
 Reflect (reflects bullets back at their owner)
 AimBot (always attacks in the direction of the closest enemy) (this is a melee modifier for balancing purposes) (Stack [90, 180, 360] degree assistance)
 Aerial Strike (every time you hit it spawn a copies of itself, which slams into the ground)
-??Chained (Similar to yoyo's and Flail maces, good for rope darts and what not)
 ??AutoSwing (This is NOT rapid fire! As long as it's actively equipped it will automatically swing at enemies, if reflect is also on the weapon it wil swing at projectiles too)
 ??punching glove (doesnt matter what weapon you're using, it launches a punching glove out aswell)
 ??move faster when you're swinging it?

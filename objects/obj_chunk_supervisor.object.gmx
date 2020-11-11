@@ -50,7 +50,7 @@ world_name = "World1"
           <argument>
             <kind>1</kind>
             <string>///Init Chunks
-chunk_init(256, 5)
+chunk_init(256, 4)
 </string>
           </argument>
         </arguments>
@@ -422,7 +422,8 @@ event_user(15)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (world_heightmap[11] != undefined) &amp;&amp; (world_heightmap[11] != 0){
+            <string>
+if (world_heightmap[11] != undefined) &amp;&amp; (world_heightmap[11] != 0){
   if surface_exists(world_heightmap[11]) draw_surface(world_heightmap[11], 0,0);
 }
 </string>

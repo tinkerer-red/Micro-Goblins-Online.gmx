@@ -8,15 +8,22 @@ chunk_height = argument0;
 tile_size = 16;
 
 chunk_dist = argument1;
+margin = 2;
 
 chunk_center_x = chunk_width/2
 chunk_center_y = chunk_height/2
 
 world_name = "World"
 
-world_width  = 131072   //tileSize * chunkSize * number of chunks
-world_height = 131072
+world_width  = 16*16*128  //131072 16*16*512   //tileSize * chunkSize * number of chunks
+world_height = 16*16*128  //131072 16*16*512
 
+/* World Sizes
+small = 16*16*128 (1 minute to cross at max speed)
+med = 16*16*256 (2 minutes)
+large = 16*16*512
+extra large
+*/
 chunk_saved_this_frame = false
 chunk_loaded_this_frame = false
 chunk_gen_this_frame = false

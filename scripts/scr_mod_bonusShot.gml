@@ -2,7 +2,7 @@
 
 
 
-if (w_type = weapon_type_range) || (ranged = true){
+if (w_type = weapon_type_range) || (melee_ranged > 0){
   var _dir = htme_random_range(0, 360)
   var _acc = htme_random_range(-22.5, 22.5)
   

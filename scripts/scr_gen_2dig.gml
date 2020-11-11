@@ -73,7 +73,7 @@ for(var i = bbox_left/tile_size; i < bbox_right/tile_size; i++){
             
                 if(refined == 0){ // If autotiling isn't needed, continue normally.
                 
-                    var zz = gpu_noise_2d(landmass, i, j);
+                    var zz = scr_value_2dig(i, j, oc, pers, wm, lac, grid);
                     grid[# i-x_off, j-y_off] = zz;
                     
                }

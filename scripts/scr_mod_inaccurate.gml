@@ -4,7 +4,7 @@
 
 //show_debug_message("scr_mod_inaccurate()")
 
-if (w_type = weapon_type_range) || (ranged = true)
+if (w_type = weapon_type_range) || (melee_ranged > 0)
 {
   var self.temp_queue = ds_queue_create()
   ds_queue_copy(self.temp_queue, self.proj_queue)

@@ -71,7 +71,7 @@ generated = false;
 //find out if you should even exist
 
 
-var margin = 0
+var margin = global.chunk_handler.margin
 var chunk_dist = global.chunk_handler.chunk_dist
 
 //is the player with in distance of you?
@@ -835,7 +835,7 @@ if (objects_in_chunk = false){
 
 if is_visible(){
   if ds_exists(heightmap_grid, ds_type_grid){
-    draw_set_alpha(0.25)
+    draw_set_alpha(1)
     scr_draw_2dig()
     draw_set_alpha(1)
     //draw_self()
@@ -867,14 +867,14 @@ if is_visible(){
           <argument>
             <kind>1</kind>
             <string>/// /* [Debug] Show Chunks
-/*
+
 if (show_chunks) {
-  var chunk_string = "("+string(chunk_x)+","+string(chunk_y)+")";
+  var chunk_debug_string = "("+string(chunk_x)+","+string(chunk_y)+")";
   var scale = obj_camera_control.upscale_val/2;
   draw_set_colour(c_yellow)
-  draw_rectangle(bbox_left-1, bbox_top-1, bbox_right, bbox_bottom, true)
+//  draw_rectangle(bbox_left-1, bbox_top-1, bbox_right, bbox_bottom, true)
   draw_set_font(font_debug)
-  draw_text_transformed(x,y,chunk_string,1*scale, 1*scale, 0)
+  draw_text_transformed(x,y,chunk_debug_string,1*scale, 1*scale, 0)
 }
 </string>
           </argument>

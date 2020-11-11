@@ -34,9 +34,6 @@ if (anim_damage_start)
   // anim_flip_frame is used to move the wave over, of course if you want to move it over exactly by half then you can just use sin() instead of cos()
   anim_flip_frame = floor(anim_time*0.5)
   
-  //anim_ideal_delta_time = 1/room_speed * 1000000; //typically 33333 or 16666
-  anim_travel_dis = sprite_width/anim_time
-  
   // pi_time is just a method to make the wave it's self. multiplying pi_time will dictate how many times to wave peaks/vallies before it finishes the timer
   pi_time = pi / anim_time
   
@@ -152,7 +149,6 @@ if (anim_timer <= 0)
   anim_time = 0
   anim_timer = 0
   anim_flip_frame = 0
-  anim_travel_dis = 0
   pi_time = 0
   view_loop = 9
   max_y_multiplier = 0

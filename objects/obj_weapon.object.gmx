@@ -52,6 +52,7 @@ owner_id = -1
 attack = true
 //attacking = false
 distance_traveled = 0
+dis = 16
 pre_collide = false
 collide = false
 
@@ -63,7 +64,7 @@ weapon_event_queues = -1
 stabbing = false //for the multi stab modifier
 swiftness = 0
 slowness  = 0
-ranged = 0
+melee_ranged = 0
 is_chained = false
 
 //ranged mods
@@ -92,6 +93,33 @@ is_chained = false
 recent_proj_queue = -1
 proj_queue = -1
 
+self.step_event_queues = -1
+self.step_event_queues_temp = -1
+
+self.pre_col_queues = -1
+self.pre_col_queues_temp = -1
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>trav_dis_dir = 0
 </string>
           </argument>
         </arguments>
@@ -206,7 +234,7 @@ self.echo_inst.w_start_dir = self.w_start_dir
             <string>///center weapon
 
 //for use with armor size mods
-
+/*
 self.x = self.owner_id.x + lengthdir_x(dis, image_angle+45);
 self.y = self.owner_id.y + lengthdir_y(dis, image_angle+45);
 
@@ -232,70 +260,7 @@ self.y = self.owner_id.y + lengthdir_y(dis, image_angle+45);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///animate object
-
-
-if (w_type = weapon_type_melee) &amp;&amp; !stabbing
-{
-  //we put this at the top to ensure an exta frame of animation for the extremely fast melee weapons.
-  if rot &gt;= 180
-  {
-    self.owner_id.attack = false
-    self.owner_id.post_attack = true
-    
-    if ds_exists(weapon_event_queues, ds_type_priority)
-    {
-      //show_debug_message("weapon finished")
-      ds_priority_destroy(weapon_event_queues)
-      weapon_event_queues = -1
-    }
-    
-    instance_destroy()
-  }
-  
-  attack_speed = (w_speed * (1+swiftness)) /(1+slowness)
-  rot += attack_speed
-  image_angle -= attack_speed
-  if (rot &gt;= 180) {image_angle = w_end_dir}
-  if (image_angle &gt;= 360) {image_angle -= 360}
-  
-  //gms 1.4.9999 fixed sprite rotating breaking collision masks aligning
-  //sprite_collision_mask(sprite_index, image_index, 1, 0, 0, 0, 0, 0, 128);
-
-}  
-
-
-
-if (w_type = weapon_type_range) &amp;&amp; (self.attack = false)
-{
-  range_weap_timer += 1
-  if (range_weap_timer &gt;= room_speed/4)
-  {
-    instance_destroy()
-  }
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Run Modifiers
-
+            <string>///Projectile spawn modifiers
 ////////////////////////////////////////////////////////////////////
 //Projectile spawn modifiers
 ////////////////////////////////////////////////////////////////////
@@ -303,7 +268,7 @@ if self.attack  //if spawning projectiles
 {
   //show_debug_message("weap - Projectile spawn modifiers")
   
-  if (w_type = weapon_type_range) || (ranged = true)
+  if (w_type = weapon_type_range) || (melee_ranged &gt; 0)
   {
     var self.distance = ((self.sprite_width*self.image_xscale)/2 + (self.sprite_height*self.image_yscale)/2) /2 +1
     var self.xx = x+lengthdir_x(self.distance, self.direction);
@@ -322,12 +287,12 @@ if self.attack  //if spawning projectiles
     //copy the OG bullet into the queue because mod scripts will handle their spawned projetiles on their own
     ds_queue_copy(self.proj_queue, self.recent_proj_queue)
     
-  }  
+  }
   
   var self.result = scr_run_modifiers() //projectile spawn modifiers
   if self.result = true
   {
-    if (w_type = weapon_type_range) || (ranged = true)
+    if (w_type = weapon_type_range) || (melee_ranged &gt; 0)
     {
       ds_queue_destroy(self.recent_proj_queue)
       recent_proj_queue = -1
@@ -364,7 +329,7 @@ if self.attack  //if spawning projectiles
       ds_queue_destroy(self.proj_queue)
       proj_queue = -1
       
-      if (w_type = weapon_type_range) //|| ranged
+      if (w_type = weapon_type_range) //|| melee_ranged
       {
         self.owner_id.attack = false
         self.owner_id.post_attack = true
@@ -379,12 +344,159 @@ if self.attack  //if spawning projectiles
 
 
 
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///animate object
+
+
+if (w_type = weapon_type_melee)
+{
+  //if no animation modifiers, then run defult slash
+  
+  //we put this at the top to ensure an exta frame of animation for the extremely fast melee weapons.
+  
+  if !variable_instance_exists(self.id, "anim_attack_start") {anim_attack_start = true}
+  
+  //set the animation variables
+  if (anim_attack_start)
+  {
+    // anim_time is used to equate exactly how many frames the animation needs to take
+    anim_attack_time = floor(room_speed*1)
+    
+    // anim_timer is used to equate where the sin/cos wave currently is
+    anim_attack_timer = anim_attack_time
+    
+    // lastly max_-_multiplier is the maximum distance we want the axis to move, the cos/sin function would move it a parcent of the max
+    anim_attack_max_direction_multiplier = 180
+    
+    // this variable is only used to make sure we only calculate the animation's variables once
+    anim_attack_start = false
+  }
+  
+  // reset values for ideal location (so modifiers can calculate new locations on their own)
+  x = self.owner_id.x + lengthdir_x(dis, w_start_dir);
+  y = self.owner_id.y + lengthdir_y(dis, w_start_dir);
+  direction = w_start_dir;
+  image_angle = direction-45;
+  
+  ///if attack is finished
+  if (anim_attack_timer &lt;= 0)
+  {
+    self.owner_id.attack = false
+    self.owner_id.post_attack = true
+    
+    if ds_exists(weapon_event_queues, ds_type_priority)
+    {
+      //show_debug_message("weapon finished")
+      ds_priority_destroy(weapon_event_queues)
+      weapon_event_queues = -1
+    }
+    
+    instance_destroy()
+  }
+  
+  anim_attack_timer -= 1*lag()
+  
+  //
+  //
+  //
+  //
+  //
+  /*
+  attack_speed = (w_speed * (1+swiftness)) /(1+slowness)
+  rot += attack_speed
+  image_angle -= attack_speed
+  if (rot &gt;= 180) {image_angle = w_end_dir}
+  if (image_angle &gt;= 360) {image_angle -= 360}
+  */
+}  
+
+
+
+if (w_type = weapon_type_range) &amp;&amp; (self.attack = false)
+{
+  range_weap_timer += 1
+  if (range_weap_timer &gt;= room_speed/4)
+  {
+    instance_destroy()
+  }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Attack step event
+
 ////////////////////////////////////////////////////////////////////
 //Attack step event
 ////////////////////////////////////////////////////////////////////
 if !self.attack &amp;&amp; !self.collide &amp;&amp; !self.pre_collide  //if spawning projectiles
 {
   //show_debug_message("weap - Attack step event")
+  
+  if !ds_exists(self.step_event_queues, ds_type_priority)
+  {
+    self.step_event_queues = ds_priority_create()
+    ds_priority_copy(self.step_event_queues, ds_priority_delete_min(self.weapon_event_queues))
+  }
+  
+  //dont delete the queue untill the collision actually happens
+  //so instead we make a copy to deal with
+  if !ds_exists(self.step_event_queues_temp, ds_type_priority)
+  {
+    self.step_event_queues_temp = ds_priority_create()
+    ds_priority_copy(self.step_event_queues_temp, self.step_event_queues)
+  }
+  
+  //check to see if there is even anything in the step queue
+  if !ds_priority_empty(self.step_event_queues){
+    
+    while !ds_priority_empty(self.step_event_queues_temp)
+    {
+      scr = script_execute(ds_priority_delete_min(self.step_event_queues_temp))
+    }
+    
+    if ds_priority_empty(self.step_event_queues_temp)
+    {
+      ds_priority_copy(self.step_event_queues_temp, self.step_event_queues)
+    }
+  }
+  
   //ds_priority_delete_min(weapon_event_queues)
   //dont delete the queue untill the collision actually happens
   
@@ -413,6 +525,29 @@ if !self.attack &amp;&amp; !self.collide &amp;&amp; !self.pre_collide  //if spaw
 }
 
 
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Pre collision modifiers
+
 ////////////////////////////////////////////////////////////////////
 //Pre collision modifiers
 ////////////////////////////////////////////////////////////////////
@@ -428,6 +563,29 @@ if !self.attack &amp;&amp; !self.collide &amp;&amp; self.pre_collide //if collis
 }
 
 
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///collision modifiers
 
 ////////////////////////////////////////////////////////////////////
 //collision modifiers
@@ -475,7 +633,8 @@ else
 if (flicks != 0)
 {var flicker_rot = attack_speed/(flicks+1)}
 else
-{var flicker_rot = 0}
+{
+var flicker_rot = 0}
 
 var xx, yy;
 
@@ -497,6 +656,8 @@ if (is_chained){
 }
 
 draw_self()
+
+draw_circle(owner_id.x+lengthdir_x(dis, trav_dis_dir), owner_id.y+lengthdir_y(dis, trav_dis_dir), 1, false)
 </string>
           </argument>
         </arguments>

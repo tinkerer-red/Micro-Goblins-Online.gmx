@@ -371,6 +371,8 @@ for (var i = 0; i &lt; 3; i++)
   repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_4, 1);
   ///////////////////////////////////////////////////////////////////////////
   repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_cluster, 1);
+  repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_slash, 1);
+  //repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_thrust, 1);
   repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_5, 1);
   ///////////////////////////////////////////////////////////////////////////
   repeat( 0 ) ds_priority_add(queue_pre_col_mods, scr_mod_ricochet, 1);

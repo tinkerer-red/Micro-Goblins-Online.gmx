@@ -2,7 +2,7 @@
 
 
 
-if (w_type = weapon_type_range) || (ranged = true){
+if (w_type = weapon_type_range) || (melee_ranged > 0){
   var _dir = direction-180
   
   var distance = ((self.sprite_width*self.image_xscale)/2 + (self.sprite_height*self.image_yscale)/2) /2 +1

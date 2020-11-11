@@ -134,6 +134,7 @@
               <script>scripts\scr_mod_slowness.gml</script>
               <script>scripts\scr_mod_backStab.gml</script>
               <script>scripts\scr_mod_chained.gml</script>
+              <script>scripts\scr_mod_slash.gml</script>
             </scripts>
             <scripts name="Range Mods">
               <script>scripts\scr_mod_bonusShot.gml</script>

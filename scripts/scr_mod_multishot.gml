@@ -1,6 +1,6 @@
 /// scr_mod_multishot()
 
-if (w_type = weapon_type_range) || (ranged = true){
+if (w_type = weapon_type_range) || (melee_ranged > 0){
   while ds_queue_size(self.recent_proj_queue) != 0{
     var _proj = ds_queue_dequeue(self.recent_proj_queue)
     
