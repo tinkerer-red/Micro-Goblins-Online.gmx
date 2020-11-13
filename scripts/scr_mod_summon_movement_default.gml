@@ -32,3 +32,5 @@ if (event_type = eMovement_event) {
   mp_ygoal    = instance_nearest(x,y,obj_player).y  //The target y position.
 }
 
+
+

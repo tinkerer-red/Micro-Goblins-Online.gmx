@@ -85,6 +85,7 @@ var trav_dis_y = (-cos(anim_time*pi_time*(anim_timer/anim_flip_frame)*1.25) * (a
 //var trav_dis_y_head = ((-cos(anim_timer *pi_time *(anim_timer/anim_time) *2))/2+0.5)  * max_y_multiplier
 //var trav_dis_y_head = sin((anim_timer+anim_flip_frame*0.5) * pi_time*2) * max_y_multiplier
 
+draw_set_color(image_blend)
 
 draw_sprite_pos(body,
                 image_index, 
@@ -159,7 +160,7 @@ if (anim_timer <= 0)
   anim_damage_start = 1
 }
 
-
+draw_set_color(c_white)
 
 return returned
 

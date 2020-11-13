@@ -214,35 +214,6 @@ self.echo_inst.w_start_dir = self.w_start_dir
         </arguments>
       </action>
     </event>
-    <event eventtype="3" enumb="2">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///center weapon
-
-//for use with armor size mods
-/*
-self.x = self.owner_id.x + lengthdir_x(dis, image_angle+45);
-self.y = self.owner_id.y + lengthdir_y(dis, image_angle+45);
-
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
@@ -334,7 +305,7 @@ if self.attack  //if spawning projectiles
         self.owner_id.attack = false
         self.owner_id.post_attack = true
         draw_self()
-        instance_destroy()
+        //instance_destroy()
       }
     }
     self.attack = false
@@ -365,8 +336,7 @@ if self.attack  //if spawning projectiles
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///animate object
-
+            <string>///annimate weapon
 
 if (w_type = weapon_type_melee)
 {
@@ -425,8 +395,8 @@ if (w_type = weapon_type_melee)
   attack_speed = (w_speed * (1+swiftness)) /(1+slowness)
   rot += attack_speed
   image_angle -= attack_speed
-  if (rot &gt;= 180) {image_angle = w_end_dir}
-  if (image_angle &gt;= 360) {image_angle -= 360}
+  if (rot &amp;gt;= 180) {image_angle = w_end_dir}
+  if (image_angle &amp;gt;= 360) {image_angle -= 360}
   */
 }  
 

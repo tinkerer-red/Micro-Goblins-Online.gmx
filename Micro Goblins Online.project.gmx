@@ -135,6 +135,7 @@
               <script>scripts\scr_mod_backStab.gml</script>
               <script>scripts\scr_mod_chained.gml</script>
               <script>scripts\scr_mod_slash.gml</script>
+              <script>scripts\scr_mod_thrust.gml</script>
             </scripts>
             <scripts name="Range Mods">
               <script>scripts\scr_mod_bonusShot.gml</script>
@@ -194,6 +195,8 @@
           <script>scripts\tile_collision_normal.gml</script>
           <script>scripts\tile_point_precise.gml</script>
         </scripts>
+        <script>scripts\col_with_player.gml</script>
+        <script>scripts\deal_damage.gml</script>
       </scripts>
     </scripts>
     <scripts name="Maths">

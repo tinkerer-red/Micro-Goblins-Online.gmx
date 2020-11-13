@@ -72,6 +72,7 @@ var trav_dis_y = sin((anim_timer) * pi_time*2) * max_y_multiplier
 // how much we skew the y for either the front of back of the player
 var trav_dis_y_head = sin((anim_timer+anim_flip_frame*0.5) * pi_time*2) * max_y_multiplier
 
+draw_set_color(image_blend)
 
 draw_sprite_pos(body,
                 image_index, 
@@ -146,7 +147,7 @@ if (anim_timer <= 0)
   anim_damage_start = 1
 }
 
-
+draw_set_color(c_white)
 
 return returned
 

@@ -27,9 +27,9 @@ Blind (when mixed with aoe and continuous, this becomes the fog of war)
 +++Ranged (unlocks ranged mods for the melee weapon, assigns a random projectile sprite perminately)
 +++Back Stab (swings behind you; also?)
 
-Chained (Similar to yoyo's and Flail maces, good for rope darts and what not)
-Thrust (Chun Li kick annimation for weapons) (multiple will act as a combo attack from a single button press)
-slash
++++Chained (Similar to yoyo's and Flail maces, good for rope darts and what not)
++++Thrust (Chun Li kick annimation for weapons) (multiple will act as a combo attack from a single button press)
++++slash
 whip
 
 Flail (changes the attacking method into a flail attack, adds attack range but makes it a bit slower.) (multiples will give it a further reach)
@@ -48,7 +48,7 @@ Aerial Strike (every time you hit it spawn a copies of itself, which slams into 
 
 ===Ranged===
 Piercing (attacks through multiple enemies)
-Ricochet (projectiles will bounce 1 time if coliding at a 45 degree angle or less, if piercing is present they will bounce at any angle but only 5 times)
++++Ricochet (projectiles will bounce 1 time if coliding at a 45 degree angle or less, if piercing is present they will bounce at any angle but only 5 times)
 ethernal (attacks through walls)
 +++boomerang (returning projectiles, 1 floor collision prevention)
 +++nega-rang? (return TO the projectile) //get a better name for this. its a bit like a hook shot, but probably instant? maybe add the vectors?
@@ -82,7 +82,7 @@ Laser/Beam (10 shots in a row, every frame)
 [Health] sectioned (basically snake like creatures which have sections, a single one would be like siamese twins) (doubles each time)
 [Health] Reflective (causes the reflect modifier for ranged shots) (for use with bubble shield style summons, also a massive damper on ranged weapons)
 [Health] Minion (half default health, but summons 3) (useful for Zerge rushes)
-[Health] Timed (has 9999 health but will die on it's own after a specific amount of time)
+[Health] Timed (has 9999 health but will die on it's own after a specific amount of time, likely based on health prior to this)
 
 --attack styles (default is walking into the player)
 [Attack] Sef Destruct (explodes, dealing half it's remaining health with a max of ___) (if this modifier is mixed with timer, just make it explode at the end of the timer)
@@ -93,17 +93,18 @@ Laser/Beam (10 shots in a row, every frame)
 [Attack] Childish (no attack, instead any damage multiplier is given to movement)
 [Attack] Drain (constant AOE damage, very slow rate though) (halo 3's power drain equipment)
 [Attack] Healing (constant AOE healing, very slow rate though) (halo 3's regen equipment)
+[Attack] Pulling (constant AOE force pull)
 
 --movement (the default is directly walking at the nearest player)
 [Move] Bouncy (spawns in the direction the player was facing, will continue to move and bounce off walls untill dead)
 [Move] Spastic (bee like movement, very random, much wow)
 [Move] Jumpy (only moves in bursts, similar to terarria's slimes)
-[Move] Rotational (rotates around the player)
+[Move] Rotational (rotates around the player, maybe like purple flies in tboi, where they rotate as a team)
 [Move] Chained (massive increase to damage but cant move from it's location region)
-[Move] Momentum (moves quickly but had a hard time turning) (like a wheel or ball, similar to terarria's demon eyes)
+[Move] Momentum (moves quickly but has a hard time turning) (like a wheel or ball, similar to terarria's demon eyes)
 [Move] Stationary (massive health increase, with no movement)
 [Move] Hover (pit falls, and floor damage wont hurt)
-[Move] Remote controlled (player controls it, and the player can not move when doing so)
+??[Move] Remote controlled (player controls it, and the player can not move when doing so)
 
 
 

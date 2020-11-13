@@ -20,6 +20,7 @@ self.spawn_x = x+lengthdir_x(distance, self.direction);
 self.spawn_y = y+lengthdir_y(distance, self.direction);
 
 
+
 self.weap = instance_create(spawn_x, spawn_y, obj_weapon)
 
 
@@ -44,7 +45,7 @@ if (self.weap.w_type != weapon_type_range)
   //might need to flip image aswell?
 }
 
-self.weap.image_angle = self.weap.w_start_dir
+self.weap.image_angle = self.weap.w_start_dir-45
 self.weap.direction = self.direction
 self.weap.dis = distance
 self.weap.proj_speed += spd

@@ -63,6 +63,7 @@ var trav_dis_x = cos(anim_timer * pi_time) * (sprite_width/2) - abs(sprite_width
 // how much we skew the y for either the front of back of the player
 var y_miltiplier = cos((anim_timer-anim_flip_frame)  * pi_time)*max_y_multiplier
 
+draw_set_color(image_blend)
 
 draw_sprite_pos(sprite_index,
                 image_index, 
@@ -114,7 +115,7 @@ if (view_current < view_loop) || (global.numberOfLocalPlayers = 1){
   view_loop = view_current
 }
 
-
+draw_set_color(c_white)
 
 return returned
 
