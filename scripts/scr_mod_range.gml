@@ -3,6 +3,9 @@
 //melee
 //weap spawn modifier
 
+//use this varible to handle spawn times
+///anim_attack_time
+
 while !ds_priority_empty(self.recent_weap_queue){
   self.weap_inst = ds_priority_delete_min(self.recent_weap_queue)
     

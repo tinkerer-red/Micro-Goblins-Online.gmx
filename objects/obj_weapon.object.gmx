@@ -300,7 +300,7 @@ if self.attack  //if spawning projectiles
       ds_queue_destroy(self.proj_queue)
       proj_queue = -1
       
-      if (w_type = weapon_type_range) //|| melee_ranged
+      if (w_type = weapon_type_range)                     //|| melee_ranged
       {
         self.owner_id.attack = false
         self.owner_id.post_attack = true
@@ -350,8 +350,9 @@ if (w_type = weapon_type_melee)
   if (anim_attack_start)
   {
     // anim_time is used to equate exactly how many frames the animation needs to take
-    anim_attack_time = floor(room_speed*1)
-    
+    var speed_mods = slowness - swiftness
+    anim_attack_time = ceil(room_speed * ((0.01*power(speed_mods,2)) + (0.15*speed_mods) + 1))
+    show_debug_message("anim_attack_time = "+string(anim_attack_time))
     // anim_timer is used to equate where the sin/cos wave currently is
     anim_attack_timer = anim_attack_time
     
@@ -407,7 +408,7 @@ if (w_type = weapon_type_range) &amp;&amp; (self.attack = false)
   range_weap_timer += 1
   if (range_weap_timer &gt;= room_speed/4)
   {
-    instance_destroy()
+    //instance_destroy()
   }
 }
 </string>
@@ -437,7 +438,7 @@ if (w_type = weapon_type_range) &amp;&amp; (self.attack = false)
 ////////////////////////////////////////////////////////////////////
 if !self.attack &amp;&amp; !self.collide &amp;&amp; !self.pre_collide  //if spawning projectiles
 {
-  //show_debug_message("weap - Attack step event")
+  show_debug_message("weap - Attack step event")
   
   if !ds_exists(self.step_event_queues, ds_type_priority)
   {
