@@ -131,6 +131,7 @@
             <scripts name="Melee">
               <script>scripts\scr_mod_range.gml</script>
               <script>scripts\scr_mod_swiftness.gml</script>
+              <script>scripts\scr_mod_flail.gml</script>
               <script>scripts\scr_mod_slowness.gml</script>
               <script>scripts\scr_mod_backStab.gml</script>
               <script>scripts\scr_mod_chained.gml</script>
@@ -143,9 +144,24 @@
               <script>scripts\scr_mod_multishot.gml</script>
               <script>scripts\scr_mod_inaccurate.gml</script>
               <script>scripts\scr_mod_cluster.gml</script>
+              <script>scripts\scr_mod_seeking.gml</script>
               <script>scripts\scr_mod_ricochet.gml</script>
               <script>scripts\scr_mod_boomerang.gml</script>
               <script>scripts\scr_mod_negarang.gml</script>
+              <script>scripts\scr_mod_guiding.gml</script>
+              <script>scripts\___________scr_mod_targeting.gml</script>
+              <script>scripts\scr_mod_laser.gml</script>
+            </scripts>
+            <scripts name="Summons">
+              <scripts name="Movement">
+                <script>scripts\scr_mod_summon_movement_default.gml</script>
+              </scripts>
+              <scripts name="Attack">
+                <script>scripts\scr_mod_summon_attack_default.gml</script>
+              </scripts>
+              <scripts name="Health">
+                <script>scripts\scr_mod_summon_health_default.gml</script>
+              </scripts>
             </scripts>
             <scripts name="Test mods">
               <script>scripts\scr_test.gml</script>
@@ -159,17 +175,6 @@
               <script>scripts\scr_8.gml</script>
             </scripts>
             <script>scripts\scr_spawn_weapon.gml</script>
-          </scripts>
-          <scripts name="Summons">
-            <scripts name="Movement">
-              <script>scripts\scr_mod_summon_movement_default.gml</script>
-            </scripts>
-            <scripts name="Attack">
-              <script>scripts\scr_mod_summon_attack_default.gml</script>
-            </scripts>
-            <scripts name="Health">
-              <script>scripts\scr_mod_summon_health_default.gml</script>
-            </scripts>
           </scripts>
           <script>scripts\scr_run_modifiers.gml</script>
           <script>scripts\scr_clear_modifiers.gml</script>
@@ -197,7 +202,12 @@
         </scripts>
         <script>scripts\col_with_player.gml</script>
         <script>scripts\deal_damage.gml</script>
+        <script>scripts\collision_circle_list.gml</script>
       </scripts>
+      <script>scripts\nearest_enemy.gml</script>
+      <script>scripts\is_enemy.gml</script>
+      <script>scripts\update_enemy.gml</script>
+      <script>scripts\is_hoarded.gml</script>
     </scripts>
     <scripts name="Maths">
       <scripts name="Conversions">
@@ -575,35 +585,6 @@
     <script>scripts\randomSeed.gml</script>
     <script>scripts\section_percent.gml</script>
   </scripts>
-  <shaders name="shaders">
-    <shaders name="Noise">
-      <shaders name="simplex noise glsles">
-        <shader type="GLSLES">shaders\sha_noise_simplex_2d.shader</shader>
-        <shader type="GLSLES">shaders\sha_noise_simplex_3d.shader</shader>
-        <shader type="GLSLES">shaders\sha_noise_simplex_4d.shader</shader>
-      </shaders>
-      <shaders name="perlin noise glsles">
-        <shader type="GLSLES">shaders\sha_noise_perlin_2d.shader</shader>
-        <shader type="GLSLES">shaders\sha_noise_perlin_3d.shader</shader>
-        <shader type="GLSLES">shaders\sha_noise_perlin_4d.shader</shader>
-      </shaders>
-      <shaders name="value noise glsles">
-        <shader type="GLSLES">shaders\sha_noise_value_1d.shader</shader>
-        <shader type="GLSLES">shaders\sha_noise_value_2d.shader</shader>
-        <shader type="GLSLES">shaders\sha_noise_value_3d.shader</shader>
-        <shader type="GLSLES">shaders\sha_noise_value_fractal.shader</shader>
-      </shaders>
-      <shaders name="flow noise glsles">
-        <shader type="GLSLES">shaders\sha_noise_flow_2d_fractal.shader</shader>
-        <shader type="GLSLES">shaders\sha_noise_flow_2d_fire.shader</shader>
-      </shaders>
-      <shaders name="demos">
-        <shader type="GLSLES">shaders\_p_demo.shader</shader>
-        <shader type="GLSLES">shaders\_s_demo.shader</shader>
-        <shader type="GLSLES">shaders\_v_demo.shader</shader>
-      </shaders>
-    </shaders>
-  </shaders>
   <fonts name="fonts">
     <font>fonts\fontGGUI</font>
     <font>fonts\font_debug</font>
@@ -614,6 +595,7 @@
       <object>objects\obj_player</object>
       <object>objects\obj_weapon</object>
       <object>objects\obj_weap_proj</object>
+      <object>objects\obj_summon</object>
       <object>objects\obj_enemy</object>
     </objects>
     <objects name="Universal">
@@ -659,7 +641,7 @@
     <room>rooms\room_lvl_one_bk</room>
     <room>rooms\room0</room>
   </rooms>
-  <constants number="7">
+  <constants number="14">
     <constant name="weapon_type_melee">0</constant>
     <constant name="weapon_type_range">1</constant>
     <constant name="weapon_type_summon">2</constant>
@@ -667,6 +649,13 @@
     <constant name="weapon_type">1</constant>
     <constant name="weapon_sprite">2</constant>
     <constant name="weapon_proj_sprite">3</constant>
+    <constant name="team_none">0</constant>
+    <constant name="team_white">1</constant>
+    <constant name="team_red">2</constant>
+    <constant name="team_blue">3</constant>
+    <constant name="team_green">4</constant>
+    <constant name="team_yellow">5</constant>
+    <constant name="team_black">6</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

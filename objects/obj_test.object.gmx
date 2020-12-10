@@ -50,7 +50,7 @@ array = 0
           <argument>
             <kind>1</kind>
             <string>
-show_debug_player(0, "tile_free = "+string(tile_free(mouse_x, mouse_y, TileLayerBottom)))
+//show_debug_player(0, "tile_free = "+string(tile_free(mouse_x, mouse_y, TileLayerBottom)))
 
 /*
 for (var i = 1600*8; i &gt; 0; i--){

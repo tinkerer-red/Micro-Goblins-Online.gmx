@@ -30,7 +30,6 @@ do_not_collide = false
 collide_ground = false
 collide_enemy  = false
 collide_solid  = false
-queue_hold = -1
 
 w_range = 16*10
 self.collide = false
@@ -78,15 +77,6 @@ if variable_instance_exists(id, "active_queue"){
     if ds_exists(active_queue, ds_type_priority){
       ds_priority_destroy(active_queue)
       active_queue = -1
-    }
-  }
-}
-
-if variable_instance_exists(id, "queue_hold"){
-  if queue_hold != -1{
-    if ds_exists(queue_hold, ds_type_priority){
-      ds_priority_destroy(queue_hold)
-      queue_hold = -1
     }
   }
 }
@@ -348,60 +338,10 @@ if !self.collide &amp;&amp; self.pre_collide //if collision is detected, before 
     self.pre_collide = false
   
   }
+}  
   
   
   
-  
-  
-  
-  
-  
-  /*
-  if !ds_exists(self.queue_hold, ds_type_priority)
-  {
-    self.queue_hold = ds_priority_create()
-    self.queue_hold = ds_priority_find_min(self.weapon_event_queues) 
-  }
-  
-  self.do_not_collide = false
-  
-  var self.result = scr_run_modifiers() //pre collision modifiers like boomerange
-  if self.result = true &amp;&amp; !self.do_not_collide
-  {
-    ////if collision is final destroy the step events
-    if ds_exists(self.step_event_queues, ds_type_priority)
-    {
-      ds_priority_destroy(self.step_event_queues)
-      self.step_event_queues = -1
-    }
-    //if collision is final destroy the hold queue
-    //if ds_exists(self.queue_hold, ds_type_priority)
-    //{
-    //  ds_priority_destroy(self.queue_hold)
-    //  self.queue_hold = -1
-    //}
-    self.collide = true
-    self.pre_collide = false
-  
-  }else //if self.do_not_collide
-  {
-    /*
-    //show_debug_message("ds_priority_size(self.queue_hold) = "+string(ds_priority_size(self.queue_hold)))
-    
-    if self.do_not_collide
-    {ds_priority_add(self.weapon_event_queues, self.queue_hold, 6);}
-    self.queue_hold = -1
-    self.do_not_collide = false
-    */
-  //}
-}
-
-//if ds_exists(self.queue_hold, ds_type_priority)
-//{show_debug_message("ds_priority_size(self.queue_hold) = "+string(ds_priority_size(self.queue_hold)))}
-
-//show_debug_message("ds_priority_size(self.weapon_event_queues) = "+string(ds_priority_size(self.weapon_event_queues)))
-    
-
 ////////////////////////////////////////////////////////////////////
 //collision modifiers
 ////////////////////////////////////////////////////////////////////

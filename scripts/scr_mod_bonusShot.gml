@@ -17,6 +17,7 @@ if (w_type = weapon_type_range) || (melee_ranged > 0){
   ds_queue_enqueue(self.proj_queue, new_proj)
   ///set variables for new projectile
         
+  new_proj.owner_weap = id
   new_proj.direction = direction+_acc
         
 }

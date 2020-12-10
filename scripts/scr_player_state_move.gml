@@ -8,25 +8,29 @@ if (spd != 0)
   ///apply friction
   if (!ceil(right) && !ceil(left) && !ceil(down) && !ceil(up)) || 
   (right == left && up == down) ||
-  (abs(spd) > max_speed * (60/room_speed)) || 
+  (abs(spd) > min(point_distance(0, 0, (right-left), (down-up)), 1) * max_speed * (60/room_speed)) || 
   (self.player_state != e_player_state.move)
   {
-    var desired_spd = abs(spd)
-    
     var spd_multiplier = sign(spd);
+    var desired_spd = abs(spd);
+    
     spd -= acceleration * spd_multiplier * (60/room_speed)
+    
     var spd_multiplier_new  = sign(spd);
     
-    //if we are close enough to the max speed and got dropped under it, then brind out speed to equal it.
-    if (desired_spd > max_speed * 60/room_speed) && (spd < max_speed * (60/room_speed))
-    {spd = max_speed * (60/room_speed) * spd_multiplier}
+    //if we are close enough to the max speed and got dropped under it, then bring speed to equal it.
+    if (desired_spd > max_speed * 60/room_speed)
+    && (abs(spd) < max_speed * (60/room_speed))
+      {spd = (max_speed * (60/room_speed)) * spd_multiplier}
     
     //if we have crossed over 0, set spd to 0
-    if spd_multiplier_new != spd_multiplier
+    if (spd_multiplier_new != spd_multiplier)
+      && (spd_multiplier_new != 0)
+      && (spd_multiplier != 0)
     {spd = 0}
     
     if (!ceil(right) && !ceil(left) && !ceil(down) && !ceil(up))
-    {dir = direction}
+      {dir = direction}
   }
   
   
@@ -39,7 +43,14 @@ if (spd != 0)
     {
       x = xx
       y = yy
-      direction = dir
+      var spd_multiplier = sign(spd);
+      if (spd_multiplier = 1){
+        direction = dir
+      }else{
+        if (spd_multiplier = -1){
+          direction = dir
+        }
+      }
     }
     else
     {  

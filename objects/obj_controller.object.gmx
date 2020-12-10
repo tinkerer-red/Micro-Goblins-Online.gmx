@@ -379,7 +379,10 @@ if (window_has_focus()) &amp;&amp; (htme_isLocal())
     {
       
       //up
-      if (keyboard_check(keyboardUp) &amp;&amp; i = keyboard_player) || (keyboard_check(keyboardUp2) &amp;&amp; i = keyboard_player) || gamepad_button_check(i, gamepadUp) || gamepad_button_check(i, gamepadUp2)
+      if (keyboard_check(keyboardUp) &amp;&amp; i = keyboard_player)
+      || (keyboard_check(keyboardUp2) &amp;&amp; i = keyboard_player)
+      || gamepad_button_check(i, gamepadUp)
+      || gamepad_button_check(i, gamepadUp2)
       {
           self.gpUp[i] = true
       }else{
@@ -387,7 +390,10 @@ if (window_has_focus()) &amp;&amp; (htme_isLocal())
       }
       
       //down
-      if (keyboard_check(keyboardDown) &amp;&amp; i = keyboard_player) || (keyboard_check(keyboardDown2) &amp;&amp; i = keyboard_player) || gamepad_button_check(i, gamepadDown) || gamepad_button_check(i, gamepadDown2)
+      if (keyboard_check(keyboardDown) &amp;&amp; i = keyboard_player)
+      || (keyboard_check(keyboardDown2) &amp;&amp; i = keyboard_player)
+      || gamepad_button_check(i, gamepadDown)
+      || gamepad_button_check(i, gamepadDown2)
       {
           self.gpDown[i] = true
       }else{
@@ -395,7 +401,10 @@ if (window_has_focus()) &amp;&amp; (htme_isLocal())
       }
       
       //left
-      if (keyboard_check(keyboardLeft) &amp;&amp; i = keyboard_player) || (keyboard_check(keyboardLeft2) &amp;&amp; i = keyboard_player) || gamepad_button_check(i, gamepadLeft) || gamepad_button_check(i, gamepadLeft2)
+      if (keyboard_check(keyboardLeft) &amp;&amp; i = keyboard_player)
+      || (keyboard_check(keyboardLeft2) &amp;&amp; i = keyboard_player)
+      || gamepad_button_check(i, gamepadLeft)
+      || gamepad_button_check(i, gamepadLeft2)
       {
           self.gpLeft[i] = true
       }else{
@@ -403,7 +412,10 @@ if (window_has_focus()) &amp;&amp; (htme_isLocal())
       }
       
       //right
-      if (keyboard_check(keyboardRight) &amp;&amp; i = keyboard_player) || (keyboard_check(keyboardRight2) &amp;&amp; i = keyboard_player) || gamepad_button_check(i, gamepadRight) || gamepad_button_check(i, gamepadRight2)
+      if (keyboard_check(keyboardRight) &amp;&amp; i = keyboard_player)
+      || (keyboard_check(keyboardRight2) &amp;&amp; i = keyboard_player)
+      || gamepad_button_check(i, gamepadRight)
+      || gamepad_button_check(i, gamepadRight2)
       {
           self.gpRight[i] = true
       }else{
@@ -411,7 +423,10 @@ if (window_has_focus()) &amp;&amp; (htme_isLocal())
       }
       
       //action
-      if (keyboard_check(keyboardAction &amp;&amp; i = keyboard_player)) || (keyboard_check(keyboardAction2) &amp;&amp; i = keyboard_player) || gamepad_button_check(i, gamepadAction) || gamepad_button_check(i, gamepadAction2)
+      if (keyboard_check(keyboardAction &amp;&amp; i = keyboard_player))
+      || (keyboard_check(keyboardAction2) &amp;&amp; i = keyboard_player)
+      || gamepad_button_check(i, gamepadAction)
+      || gamepad_button_check(i, gamepadAction2)
       {
           self.gpAction[i] = true
       }else{
@@ -419,7 +434,10 @@ if (window_has_focus()) &amp;&amp; (htme_isLocal())
       }
       
       //item a
-      if (keyboard_check(keyboardItemA) &amp;&amp; i = keyboard_player) || (keyboard_check(keyboardItemA2) &amp;&amp; i = keyboard_player) || gamepad_button_check(i, gamepadItemA) || gamepad_button_check(i, gamepadItemA2)
+      if (keyboard_check(keyboardItemA) &amp;&amp; i = keyboard_player)
+      || (keyboard_check(keyboardItemA2) &amp;&amp; i = keyboard_player)
+      || gamepad_button_check(i, gamepadItemA)
+      || gamepad_button_check(i, gamepadItemA2)
       {
           self.gpItemA[i] = true
       }else{
@@ -427,7 +445,10 @@ if (window_has_focus()) &amp;&amp; (htme_isLocal())
       }
       
       //item b
-      if (keyboard_check(keyboardItemB) &amp;&amp; i = keyboard_player) || (keyboard_check(keyboardItemB2) &amp;&amp; i = keyboard_player) || gamepad_button_check(i, gamepadItemB) || gamepad_button_check(i, gamepadItemB2)
+      if (keyboard_check(keyboardItemB) &amp;&amp; i = keyboard_player)
+      || (keyboard_check(keyboardItemB2) &amp;&amp; i = keyboard_player)
+      || gamepad_button_check(i, gamepadItemB)
+      || gamepad_button_check(i, gamepadItemB2)
       {
           self.gpItemB[i] = true
       }else{
@@ -435,7 +456,10 @@ if (window_has_focus()) &amp;&amp; (htme_isLocal())
       }
       
       //item c
-      if (keyboard_check(keyboardItemC) &amp;&amp; i = keyboard_player) || (keyboard_check(keyboardItemC2) &amp;&amp; i = keyboard_player) || gamepad_button_check(i, gamepadItemC) || gamepad_button_check(i, gamepadItemC2)
+      if (keyboard_check(keyboardItemC) &amp;&amp; i = keyboard_player)
+      || (keyboard_check(keyboardItemC2) &amp;&amp; i = keyboard_player)
+      || gamepad_button_check(i, gamepadItemC)
+      || gamepad_button_check(i, gamepadItemC2)
       {
           self.gpItemC[i] = true
       }else{
@@ -443,7 +467,9 @@ if (window_has_focus()) &amp;&amp; (htme_isLocal())
       }
       
       //zoom_in
-      if (keyboard_check(keyboardZoomIn) &amp;&amp; i = keyboard_player) || (keyboard_check(keyboardZoomIn2) &amp;&amp; i = keyboard_player) || (gamepad_axis_value(i, gp_axisrv) &gt; 0)
+      if (keyboard_check(keyboardZoomIn) &amp;&amp; i = keyboard_player)
+      || (keyboard_check(keyboardZoomIn2) &amp;&amp; i = keyboard_player)
+      || (gamepad_is_connected(i) &amp;&amp; (gamepad_axis_value(i, gp_axisrv) &gt; 0.175))
       {
           self.gpZoomIn[i] = true
       }else{
@@ -451,7 +477,9 @@ if (window_has_focus()) &amp;&amp; (htme_isLocal())
       }
       
       //zoom out
-      if (keyboard_check(keyboardZoomOut) &amp;&amp; i = keyboard_player) || (keyboard_check(keyboardZoomOut2) &amp;&amp; i = keyboard_player) || (gamepad_axis_value(i, gp_axisrv) &lt; 0)
+      if (keyboard_check(keyboardZoomOut) &amp;&amp; i = keyboard_player)
+      || (keyboard_check(keyboardZoomOut2) &amp;&amp; i = keyboard_player)
+      || (gamepad_is_connected(i) &amp;&amp; (gamepad_axis_value(i, gp_axisrv) &lt; 0.175))
       {
           self.gpZoomOut[i] = true
       }else{

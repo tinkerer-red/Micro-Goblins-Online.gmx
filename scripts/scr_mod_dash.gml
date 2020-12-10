@@ -10,7 +10,7 @@ returned = false
 //when finished
 if (self.mod_dash_frame >= ceil(room_speed/15))
 {
-  if (scr_queue_has_mod_count(active_queue, scr_mod_dash) = 0){
+  if (scr_queue_has_mod_count(active_queue, scr_mod_dash) = 1){
     spd = 0
   }
   self.mod_dash_frame = 0

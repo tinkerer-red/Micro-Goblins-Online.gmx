@@ -4,13 +4,13 @@
 //weap spawn modifier
 
 
-while !ds_priority_empty(self.recent_weap_queue){
-  self.weap_inst = ds_priority_delete_min(self.recent_weap_queue)
+while !ds_queue_empty(self.recent_weap_queue){
+  var _weap = ds_queue_dequeue(self.recent_weap_queue);
   
-  self.weap_inst.slowness += 1
-  self.weap_inst.w_damage = ceil((self.weap_inst.w_damage*1.5)*1.1)
+  _weap.slowness += 1
+  _weap.w_damage = ceil((_weap.w_damage*1.5)*1.1)
 }
 
-ds_priority_copy(self.recent_weap_queue, self.weap_queue)
+ds_queue_copy(self.recent_weap_queue, self.weap_queue)
 
 return true

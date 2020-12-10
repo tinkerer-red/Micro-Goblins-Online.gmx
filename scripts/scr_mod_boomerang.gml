@@ -15,7 +15,7 @@ if collide_ground && (self.do_not_collide = false)
     default_speed = speed
     dis_traveled = 0
   }else{
-    dis_traveled = 0
+    //dis_traveled = 0
   }
   
   if backward

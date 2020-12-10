@@ -25,35 +25,134 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Define Default Values
+            <string>dis_traveled = 0
+do_not_collide = false
+collide_ground = false
+collide_enemy  = false
+collide_solid  = false
+
+w_range = 16*10
+self.collide = false
+self.pre_collide = false
+
+self.active_queue = -1
+self.weapon_event_queues = -1
+
+self.step_event_queues = -1
+self.step_event_queues_temp = -1
+
+self.pre_col_queues = -1
+self.pre_col_queues_temp = -1
+
+self.constant_timer = 0
+
+self.is_summoned = false
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Define Default Stats
+
+self.team = team_none
+update_enemy_time = 0
+enemy = noone //nearest_enemy(x,y, 16*50)
+
+e_health = 10
+e_damage = 1
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Clean up left over queues
 
 
-//predefine the event steps each modifier will activate on
-//self.eMovement_event = ev_create;
-//self.eAttack_event   = ev_create;
-//self.eHealth_event   = ev_create;
+if variable_instance_exists(id, "active_queue"){
+  if active_queue != -1{
+    if ds_exists(active_queue, ds_type_priority){
+      ds_priority_destroy(active_queue)
+      active_queue = -1
+    }
+  }
+}
 
+if variable_instance_exists(id, "step_event_queues"){
+  if step_event_queues != -1{
+    if ds_exists(step_event_queues, ds_type_priority){
+      ds_priority_destroy(step_event_queues)
+      step_event_queues = -1
+    }
+  }
+}
 
-//define the modifiers we will be using
-self.eMovement = scr_mod_summon_movement_default;
-self.eAttack   = scr_mod_summon_attack_default;
-self.eHealth   = scr_mod_summon_health_default;
+if variable_instance_exists(id, "step_event_queues_temp"){
+  if step_event_queues_temp != -1{
+    if ds_exists(step_event_queues_temp, ds_type_priority){
+      ds_priority_destroy(step_event_queues_temp)
+      step_event_queues_temp = -1
+    }
+  }
+}
+//*/
+if variable_instance_exists(id, "pre_col_queues"){
+  if pre_col_queues != -1{
+    if ds_exists(pre_col_queues, ds_type_priority){
+      ds_priority_destroy(pre_col_queues)
+      pre_col_queues = -1
+    }
+  }
+}
 
+if variable_instance_exists(id, "pre_col_queues_temp"){
+  if pre_col_queues_temp != -1{
+    if ds_exists(pre_col_queues_temp, ds_type_priority){
+      ds_priority_destroy(pre_col_queues_temp)
+      pre_col_queues_temp = -1
+    }
+  }
+}
 
-self.mods_init = false
-
-
-
-//Init mods
-script_execute(self.eMovement)
-script_execute(self.eAttack)
-script_execute(self.eHealth)
-
-
-//re-define the event steps each modifier will activate on, incase they were not set for some reason
-if !variable_instance_exists(self.id, "eMovement_event")  eMovement_event = ev_create;
-if !variable_instance_exists(self.id, "eAttack_event")  eAttack_event = ev_create;
-if !variable_instance_exists(self.id, "eHealth_event")  eHealth_event = ev_create;
+if variable_instance_exists(id, "weapon_event_queues"){
+  if weapon_event_queues != -1{
+    if ds_exists(weapon_event_queues, ds_type_priority){
+      ds_priority_destroy(weapon_event_queues)
+      weapon_event_queues = -1
+    }
+  }
+}
 
 </string>
           </argument>
@@ -77,16 +176,58 @@ if !variable_instance_exists(self.id, "eHealth_event")  eHealth_event = ev_creat
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Initialize modifiers, and run them if they're create event mods
+            <string>///Update Target Enemy every 3 seconds
+
+update_enemy(room_speed*3)
 
 
-if (self.mods_init = false) {
-  script_execute(self.eMovement)
-  script_execute(self.eAttack)
-  script_execute(self.eHealth)
   
-  self.mods_init = true
-}  
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Apply default values if not summon
+
+if !variable_instance_exists(self, "enemy_mods_init") || (enemy_mods_init = false){
+  //if is_enemy
+  if (object_index = obj_enemy){
+    enemy_mods_init = true
+    weapon_event_queues = ds_priority_create()
+    
+    var queue_attack_step_mods = ds_priority_create()
+    var queue_pre_col_mods = ds_priority_create()
+    var queue_col_mods = ds_priority_create()
+    
+    
+    //summon mods
+    ds_priority_add(weapon_event_queues, queue_attack_step_mods, 5);
+//    ds_priority_add(weapon_event_queues, queue_pre_col_mods, 6);
+//    ds_priority_add(weapon_event_queues, queue_col_mods, 7);
+    
+    //replace this in the future with dungeon genoration type of code
+    repeat( 1 ) ds_priority_add(queue_attack_step_mods, scr_mod_summon_movement_default, 1);
+    repeat( 1 ) ds_priority_add(queue_attack_step_mods, scr_mod_summon_attack_default, 2);
+    repeat( 1 ) ds_priority_add(queue_attack_step_mods, scr_mod_summon_health_default, 3);
+    
+    
+  }
+}
 </string>
           </argument>
         </arguments>
@@ -148,22 +289,166 @@ if (dis &gt; view_distance_max)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Run modifiers for the step event
+            <string>///Run Modifiers
 
-if (self.eMovement_event = ev_step) {
-  script_execute(self.eMovement)
+////////////////////////////////////////////////////////////////////
+//Attack step event
+////////////////////////////////////////////////////////////////////
+if !self.collide &amp;&amp; !self.pre_collide
+{
+  //show_debug_message("summon - Attack step event")
+  
+  if !ds_exists(self.step_event_queues, ds_type_priority)
+  {
+    self.step_event_queues = ds_priority_create()
+    ds_priority_copy(self.step_event_queues, ds_priority_delete_min(self.weapon_event_queues))
+  }
+  
+  //dont delete the queue untill the collision actually happens
+  //so instead we make a copy to deal with
+  if !ds_exists(self.step_event_queues_temp, ds_type_priority)
+  {
+    self.step_event_queues_temp = ds_priority_create()
+    ds_priority_copy(self.step_event_queues_temp, self.step_event_queues)
+  }
+  
+  //check to see if there is even anything in the step queue
+  if !ds_priority_empty(self.step_event_queues){
+    
+    if ds_exists(self.step_event_queues_temp, ds_type_priority){
+      while !ds_priority_empty(self.step_event_queues_temp)
+      {
+        scr = script_execute(ds_priority_delete_min(self.step_event_queues_temp))
+        if (scr = true) exit;
+      }
+      
+      if ds_priority_empty(self.step_event_queues_temp)
+      {
+        ds_priority_copy(self.step_event_queues_temp, self.step_event_queues)
+      }
+    }
+  }
+  
 }
 
-if (self.eAttack_event   = ev_step) {
-  script_execute(self.eAttack)
+
+/* This is all left over code from copying the projectile's code, this probably wont be used in the future but it might be so we'll leave it in here anyways.
+
+////////////////////////////////////////////////////////////////////
+//Pre collision modifiers
+////////////////////////////////////////////////////////////////////
+if !self.collide &amp;&amp; self.pre_collide //if collision is detected, before collision is for sure
+{
+  show_debug_message("summon - Pre collision modifiers")
+  
+  self.do_not_collide = false
+  
+  if !ds_exists(self.pre_col_queues, ds_type_priority)
+  {
+    self.pre_col_queues = ds_priority_create()
+    ds_priority_copy(self.pre_col_queues, ds_priority_delete_min(self.weapon_event_queues))
+  }
+  //dont delete the queue untill the collision actually happens
+  //so instead we make a copy to deal with
+  if !ds_exists(self.pre_col_queues_temp, ds_type_priority){
+    self.pre_col_queues_temp = ds_priority_create()
+    ds_priority_copy(self.pre_col_queues_temp, self.pre_col_queues)
+  }
+  
+  //cycle through all pre collision modifiers, when the modifier is finished it'll return true
+  while !ds_priority_empty(self.pre_col_queues_temp){
+    var scr = ds_priority_delete_min(self.pre_col_queues_temp)
+    var returned = script_execute(scr)
+    if (returned = true) {ds_priority_delete_value(self.pre_col_queues, scr)}
+  }
+  
+  //refill the temp list
+  if ds_priority_empty(self.pre_col_queues_temp){
+    ds_priority_copy(self.pre_col_queues_temp, self.pre_col_queues)
+  }
+  
+  
+  //if pre coliisions are empty then we must have collided
+  if (ds_priority_empty(self.pre_col_queues) || !do_not_collide) &amp;&amp; self.collide = false &amp;&amp; self.pre_collide = true{
+        ////if collision is final destroy the left over queues
+        if ds_exists(self.pre_col_queues_temp, ds_type_priority){
+          ds_priority_destroy(self.pre_col_queues_temp)
+          self.pre_col_queues_temp = -1
+        }
+        if ds_exists(self.pre_col_queues, ds_type_priority){
+          ds_priority_destroy(self.pre_col_queues)
+          self.pre_col_queues = -1
+        }
+        if ds_exists(self.step_event_queues_temp, ds_type_priority){
+          ds_priority_destroy(self.step_event_queues_temp)
+          self.step_event_queues_temp = -1
+        }
+        if ds_exists(self.step_event_queues, ds_type_priority){
+          ds_priority_destroy(self.step_event_queues)
+          self.step_event_queues = -1
+        }
+        ///////////////////////////////////////////////////////
+    self.collide = true
+    self.pre_collide = false
+  
+  }
+}  
+  
+  
+////////////////////////////////////////////////////////////////////
+//collision modifiers
+////////////////////////////////////////////////////////////////////
+if self.collide &amp;&amp; !self.pre_collide  //if officially collided
+{
+  
+  show_debug_message("summon - collision modifiers")
+  
+  var self.result = scr_run_modifiers() //collision modifiers
+  if self.result = true
+  {
+    
+    if ds_exists(self.weapon_event_queues, ds_type_priority)
+    {
+      ds_priority_destroy(self.weapon_event_queues)
+      self.weapon_event_queues = -1
+    }
+    speed = 0
+    ///if aeo change sprite
+    ///if aoe AND constant change sprite to rune
+    ///if constant have colliders run on the player (or an object?)
+    //either do your damage, or turn into an AOE effect
+    self.constant_timer--
+    if (self.constant_timer &lt;= 0){
+      self.collide = false;
+      self.pre_collide = false;
+      
+    }
+  }
 }
 
-if (self.eHealth_event   = ev_step) {
-  script_execute(self.eHealth)
-}
+*/
 
-
-
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>show_debug_player(0, "enemy_id("+string(id)+") e_health = "+string(e_health))
 </string>
           </argument>
         </arguments>

@@ -104,11 +104,14 @@ Light ()
 Superstition (does absolutely nothing)
 broken modem (Online only!)
 Soulbound (can not drop the bound object)
+Cursed (can not un equip)
 Breaking (has a damage meter and breaks after a while)
 banish/sunder (despells summoned objects)
 bow-wow (a pet chain chomp)
-Demi-Plane (creates a trap door which leads to a small 30x30 room, objects placed in this room never go away)
+Demi-Plane (creates a trap door which leads to a small 30x30 room, objects placed in this room never go away) Similar to tents although not related to a single charactor
 Aim Bot (will always face you in the direction of the closest entity)
+Revert/retreat (Over Watch Tracers rewind time ability)
+
 
 
 =================================================================
@@ -169,4 +172,4 @@ bouncy (1 floor collision prevention)
 [Weapon] Gnome Sword - Starbound [A gnome which shoots out rainbows] ()
 [Weapon] Golden Fleece - Mytholigy (Armor? + healing)
 [Weapon] key blade - kingdom hearts (melee + lock + open)
-[Weapon] 
+[Summon] Theif - sonic style enemy, where when you take damage you loose money

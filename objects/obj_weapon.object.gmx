@@ -35,11 +35,17 @@ w_size = 1
 w_speed = 180/(room_speed * 0.5)  //6 degrees at 60fps
 proj_speed = 8
 w_range = 16 * 20
+w_hype = sqrt( power(sprite_height,2) + power(sprite_width,2))
+w_spawn_time_out = room_speed / 4
 
 
 //sprite_index = sprite_index
 sprite_proj = sprite_index
-range_weap_timer = 0  //used to stop drawing the weapon after attack since the two arent connected; otherwise the gun/box would only appear for a single frame
+sprite_summon_head = sprite_index
+sprite_summon_body = sprite_index
+anim_attack_timer = 0
+//range_weap_timer = 0  //used to stop drawing the weapon after attack since the two arent connected; otherwise the gun would only appear for a single frame
+//summon_weap_timer = 0  //used to stop drawing the weapon after attack since the two arent connected; otherwise the gun would only appear for a single frame
 
 start_x = x
 start_y = y
@@ -47,12 +53,13 @@ w_start_dir = 0
 rot = 0
 attack_speed = 0 //this is used in the future to calculate
 
+
 owner_id = -1
 
 attack = true
 //attacking = false
 distance_traveled = 0
-dis = 16
+dis = 9
 pre_collide = false
 collide = false
 
@@ -231,25 +238,30 @@ self.echo_inst.w_start_dir = self.w_start_dir
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Projectile spawn modifiers
+            <string>///Projectile/Summon spawn modifiers
 ////////////////////////////////////////////////////////////////////
-//Projectile spawn modifiers
+//Projectile/Summon spawn modifiers
 ////////////////////////////////////////////////////////////////////
 if self.attack  //if spawning projectiles
 {
   //show_debug_message("weap - Projectile spawn modifiers")
   
+  ////////////////////
+  ///// Ranged
+  ////////////////////
   if (w_type = weapon_type_range) || (melee_ranged &gt; 0)
   {
-    var self.distance = ((self.sprite_width*self.image_xscale)/2 + (self.sprite_height*self.image_yscale)/2) /2 +1
-    var self.xx = x+lengthdir_x(self.distance, self.direction);
-    var self.yy = y+lengthdir_y(self.distance, self.direction);
+    var distance = ((self.sprite_width*self.image_xscale)/2 + (self.sprite_height*self.image_yscale)/2) /2 +1
+    var xx = x+lengthdir_x(distance, self.direction);
+    var yy = y+lengthdir_y(distance, self.direction);
     
     //we store them in a queue so all modifiers can deal with all bullets
     self.recent_proj_queue = ds_queue_create()
     
     var self.proj = instance_create(xx, yy, obj_weap_proj)
+    
     self.proj.direction = direction
+    self.proj.owner_weap = id
     
     ds_queue_enqueue(self.recent_proj_queue, self.proj)
     //we also create a full queue to give these projectiles their step events in the next code block
@@ -260,9 +272,37 @@ if self.attack  //if spawning projectiles
     
   }
   
+  ////////////////////
+  ///// Summon
+  ////////////////////
+  if (w_type = weapon_type_summon)
+  {
+    var distance = ((self.sprite_width*self.image_xscale)/2 + (self.sprite_height*self.image_yscale)/2) /2 +1
+    var xx = x+lengthdir_x(distance, self.direction);
+    var yy = y+lengthdir_y(distance, self.direction);
+    
+    //we store them in a queue so all modifiers can deal with all summons
+    self.recent_summon_queue = ds_queue_create()
+    
+    var self.summon = instance_create(xx, yy, obj_summon)
+    self.summon.direction = direction
+    
+    ds_queue_enqueue(self.recent_summon_queue, self.summon)
+    //we also create a full queue to give these summons their step events in the next code block
+    self.summon_queue = ds_queue_create()
+    
+    //copy the OG summon into the queue because mod scripts will handle their spawned summons on their own
+    ds_queue_copy(self.summon_queue, self.recent_summon_queue)
+  }
+  
+  
+  
   var self.result = scr_run_modifiers() //projectile spawn modifiers
   if self.result = true
   {
+    ////////////////////
+    ///// Ranged
+    ////////////////////
     if (w_type = weapon_type_range) || (melee_ranged &gt; 0)
     {
       ds_queue_destroy(self.recent_proj_queue)
@@ -302,12 +342,67 @@ if self.attack  //if spawning projectiles
       
       if (w_type = weapon_type_range)                     //|| melee_ranged
       {
-        self.owner_id.attack = false
-        self.owner_id.post_attack = true
-        draw_self()
+        //self.owner_id.attack = false
+        //self.owner_id.post_attack = true
+        //draw_self()
         //instance_destroy()
       }
+      
     }
+    
+    
+    
+    ////////////////////
+    ///// Summon
+    ////////////////////
+    if (w_type = weapon_type_summon)
+    {
+      ds_queue_destroy(self.recent_summon_queue)
+      recent_summon_queue = -1
+      
+      while !ds_queue_empty(self.summon_queue)
+      {
+        var summon = ds_queue_dequeue(self.summon_queue);
+        
+        //copy the last of the queues to the summon
+        summon.weapon_event_queues = ds_priority_create()
+        ds_priority_copy(summon.weapon_event_queues, self.weapon_event_queues)
+        
+        summon.is_summoned = true;
+        summon.owner_id = owner_id
+        summon.enemy = nearest_enemy(x, y, 16*20)
+        
+        //summon.direction = direction
+        summon.image_angle = summon.direction-45
+        
+        summon.sprite_summon_head = sprite_summon_head
+        summon.sprite_summon_body = sprite_summon_body
+        
+        summon.sprite_index = spr_green
+        //if (summon.sprite_index = sprite_index) {summon.image_angle -= 45}
+        
+        summon.image_xscale = w_size
+        summon.image_yscale = w_size
+        
+        
+        summon.start_x = summon.x
+        summon.start_y = summon.y
+        
+        summon.w_damage = w_damage
+        summon.w_range = w_range
+        summon.w_knockback = w_knockback
+      }
+      ds_queue_destroy(self.summon_queue)
+      summon_queue = -1
+      
+      //if (w_type = weapon_type_summon){
+        //self.owner_id.attack = false
+        //self.owner_id.post_attack = true
+        //draw_self()
+        //instance_destroy()
+      //}
+    }
+    
     self.attack = false
     
   }
@@ -336,32 +431,37 @@ if self.attack  //if spawning projectiles
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///annimate weapon
+            <string>///annimate weapon / spawn melee proj
+
+
+
+//we put this at the top to ensure an exta frame of animation for the extremely fast melee weapons.
+if !variable_instance_exists(self.id, "anim_attack_start") {anim_attack_start = true}
+//set the animation variables
+if (anim_attack_start){
+  anim_attack_start = false;
+  
+  var speed_mods = slowness - swiftness
+  
+  // anim_time is used to equate exactly how many frames the animation needs to take
+  anim_attack_time = ceil(room_speed * ((0.01*power(speed_mods,2)) + (0.15*speed_mods) + 1))
+  anim_attack_timer = anim_attack_time
+  
+  // lastly max_-_multiplier is the maximum distance we want the axis to move, the cos/sin function would move it a parcent of the max
+  anim_attack_max_direction_multiplier = 180
+  
+  // this variable is only used to make sure we only calculate the animation's variables once
+  anim_attack_start = false
+  
+  //show_debug_message("dis = "+string(dis))
+}
+
+
+
 
 if (w_type = weapon_type_melee)
 {
   //if no animation modifiers, then run defult slash
-  
-  //we put this at the top to ensure an exta frame of animation for the extremely fast melee weapons.
-  
-  if !variable_instance_exists(self.id, "anim_attack_start") {anim_attack_start = true}
-  
-  //set the animation variables
-  if (anim_attack_start)
-  {
-    // anim_time is used to equate exactly how many frames the animation needs to take
-    var speed_mods = slowness - swiftness
-    anim_attack_time = ceil(room_speed * ((0.01*power(speed_mods,2)) + (0.15*speed_mods) + 1))
-    show_debug_message("anim_attack_time = "+string(anim_attack_time))
-    // anim_timer is used to equate where the sin/cos wave currently is
-    anim_attack_timer = anim_attack_time
-    
-    // lastly max_-_multiplier is the maximum distance we want the axis to move, the cos/sin function would move it a parcent of the max
-    anim_attack_max_direction_multiplier = 180
-    
-    // this variable is only used to make sure we only calculate the animation's variables once
-    anim_attack_start = false
-  }
   
   // reset values for ideal location (so modifiers can calculate new locations on their own)
   x = self.owner_id.x + lengthdir_x(dis, w_start_dir);
@@ -382,6 +482,7 @@ if (w_type = weapon_type_melee)
       weapon_event_queues = -1
     }
     
+    //self.pre_collide = true
     instance_destroy()
   }
   
@@ -399,16 +500,38 @@ if (w_type = weapon_type_melee)
   if (rot &amp;gt;= 180) {image_angle = w_end_dir}
   if (image_angle &amp;gt;= 360) {image_angle -= 360}
   */
-}  
+}
+
+
 
 
 
 if (w_type = weapon_type_range) &amp;&amp; (self.attack = false)
 {
-  range_weap_timer += 1
-  if (range_weap_timer &gt;= room_speed/4)
+  show_debug_player(0 , "anim_attack_timer = "+string(anim_attack_timer))
+  anim_attack_timer -= 1*lag()
+  if (anim_attack_timer &lt;= 0)
   {
+    self.owner_id.attack = false
+    self.owner_id.post_attack = true
+    
+    //show_debug_message("==========fucked up==========")
     //instance_destroy()
+    //self.pre_collide = true
+  }
+}
+
+
+
+if (w_type = weapon_type_summon) &amp;&amp; (self.attack = false)
+{
+  anim_attack_timer -= 1*lag()
+  if (anim_attack_timer &lt;= 0)
+  {
+    self.owner_id.attack = false
+    self.owner_id.post_attack = true
+    //instance_destroy()
+    //self.pre_collide = true
   }
 }
 </string>
@@ -438,7 +561,7 @@ if (w_type = weapon_type_range) &amp;&amp; (self.attack = false)
 ////////////////////////////////////////////////////////////////////
 if !self.attack &amp;&amp; !self.collide &amp;&amp; !self.pre_collide  //if spawning projectiles
 {
-  show_debug_message("weap - Attack step event")
+  //show_debug_message("weap - Attack step event")
   
   if !ds_exists(self.step_event_queues, ds_type_priority)
   {
@@ -488,6 +611,7 @@ if !self.attack &amp;&amp; !self.collide &amp;&amp; !self.pre_collide  //if spaw
       var enemy;
       enemy = instance_nearest(x, y, obj_enemy)
       enemy.sprite_index = spr_yellow
+      enemy.e_health -= w_damage
       
       enemy.spd = self.w_knockback
       enemy.direction = direction //point_direction(x, y, enemy.x, enemy.y)
@@ -595,7 +719,7 @@ if !self.attack &amp;&amp; self.collide  //if officially collided
           <argument>
             <kind>1</kind>
             <string>//draw sword movement
-
+/*
 if (attack_speed !=0)
 {var flicks = clamp((swiftness+3)-slowness, 0, 8)}
 else
@@ -617,7 +741,7 @@ for (var i = 1; i &lt;= flicks; i++)
 
   draw_sprite_ext(sprite_index,image_index,xx[i],yy[i],image_xscale,image_yscale,image_angle+(flicker_rot*i),image_blend, (image_alpha/flicks)*(flicks-i)); 
 }
-
+*/
 
 // if the weapon in chained, draw the chain
 if (is_chained){
@@ -628,7 +752,7 @@ if (is_chained){
 
 draw_self()
 
-draw_circle(owner_id.x+lengthdir_x(dis, trav_dis_dir), owner_id.y+lengthdir_y(dis, trav_dis_dir), 1, false)
+//draw_circle(owner_id.x+lengthdir_x(dis, trav_dis_dir), owner_id.y+lengthdir_y(dis, trav_dis_dir), 1, false)
 </string>
           </argument>
         </arguments>

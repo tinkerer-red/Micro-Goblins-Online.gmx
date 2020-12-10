@@ -50,12 +50,22 @@ Play some (three - means you've played enough)
 https://www.curseforge.com/minecraft/mc-mods/so-many-enchantments
 https://www.curseforge.com/minecraft/mc-mods/not-enough-enchantments
 ---soul knight, (looked through every buff and melee weapon on the wiki)
--enter the gungeon, 
---binding of isaac,
+--enter the gungeon, 
+---binding of isaac,
 path of exile,
 tyrian? or some other mechanic based top down shooter
 phantom dust
 halo 3's grenade types, equipment, and weapons
+-Perfect Dark
+Zombie Estate 2
+
+[Weapon] Air Pump - Dig Dug - ()
+[Weapon] Concrete Donkey - Worms - ()
+[Weapon] Blow Torch - Worms - (melee + 5x repeater)
+[Weapon] Magsec3 - Perfect Dark - (range + burst + tiny)
+[Weapon] Fin's Sword - "What if adventure time was an anime" (It's a sword that summons duplicates who attack the target from a long range in quick succession)
+
+
 
 
 [Weapon] Long Sword - - (melee + enlarge)
@@ -72,6 +82,7 @@ halo 3's grenade types, equipment, and weapons
 [Weapon] Master Sword/Excalibur - Zelda/Mytholigy [Each map genorates ONLY 1 either in a lake for excalibur or in a stone for master sword] (melee (completely empty mods but has one more mod slot then anything else in the game))
 
 
+[Weapon] HookShot - zelda (ranged + negarang + chained)
 [Weapon] Shell Gun - Enter the gungeon (ranged + ...) (It's a shotgun's Shell, which shoots shotguns, which shoot shots)  https://youtu.be/JkqO6YygHhw
 [Weapon] Scarab Gun - Halo 2 (ranged + laser + explosion/aoe)
 ///[Weapon] mr toots - red faction armageddon (ranged + laser + repeater)

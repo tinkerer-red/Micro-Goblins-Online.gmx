@@ -8,7 +8,7 @@ chunk_height = argument0;
 tile_size = 16;
 
 chunk_dist = argument1;
-margin = 2;
+margin = 4;
 
 chunk_center_x = chunk_width/2
 chunk_center_y = chunk_height/2
@@ -29,12 +29,14 @@ chunk_loaded_this_frame = false
 chunk_gen_this_frame = false
 
 //load world file
+
 var _filename = "Worlds\"+string(world_name)+".map"
 if (file_exists(_filename)){
   world_map = file_load_map(_filename)
 }else{
   world_map = ds_map_create()
 }
+
 
 //Set seed
 if ds_map_exists(world_map, "Seed"){
@@ -45,7 +47,7 @@ if ds_map_exists(world_map, "Seed"){
   world_map[? "Seed"] = world_seed;
 }
 
-world_heightmap = gpu_noise_create_ext(0, world_seed, 16, 16, 0.0000001, 0.0625, 2.0)//0.001)
+//world_heightmap = gpu_noise_create_ext(0, world_seed, 16, 16, 0.0000001, 0.0625, 2.0)//0.001)
 
 active_chunks = ds_map_create()
 

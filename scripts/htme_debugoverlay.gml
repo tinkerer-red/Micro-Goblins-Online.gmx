@@ -61,7 +61,7 @@ if (!self.debugoverlay) exit;
 
 self.dbgcolor = c_white;
 self.dbgcolor_a = c_red;
-draw_set_font(-1);
+//draw_set_font(-1);
 
 if (self.dbgstate != vk_f12) {
     //Draw transparent overlay

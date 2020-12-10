@@ -10,13 +10,13 @@ self.right = obj_controller.right[pid]
 
 
 if (gamepad_is_connected(pid)){
-  if (obj_controller.lv_axis[pid] < -0.1) && ( up = 0)
+  if (obj_controller.lv_axis[pid] < -0.175) && ( up = 0)
     {self.up    = abs(obj_controller.lv_axis[pid])}
-  if (obj_controller.lv_axis[pid] > 0.1) && ( down = 0)
+  if (obj_controller.lv_axis[pid] > 0.175) && ( down = 0)
     {self.down  = abs(obj_controller.lv_axis[pid])}
-  if (obj_controller.lh_axis[pid] < -0.1) && ( left = 0)
+  if (obj_controller.lh_axis[pid] < -0.175) && ( left = 0)
     {self.left  = abs(obj_controller.lh_axis[pid])}
-  if (obj_controller.lh_axis[pid] > 0.1) && ( right = 0)
+  if (obj_controller.lh_axis[pid] > 0.175) && ( right = 0)
     {self.right = abs(obj_controller.lh_axis[pid])}
 }
   

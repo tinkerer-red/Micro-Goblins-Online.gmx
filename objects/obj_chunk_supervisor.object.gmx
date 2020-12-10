@@ -422,10 +422,12 @@ event_user(15)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
+            <string>/// /* gpu draw heightmap
+/*
 if (world_heightmap[11] != undefined) &amp;&amp; (world_heightmap[11] != 0){
   if surface_exists(world_heightmap[11]) draw_surface(world_heightmap[11], 0,0);
 }
+*/
 </string>
           </argument>
         </arguments>

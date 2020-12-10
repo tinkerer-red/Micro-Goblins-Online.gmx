@@ -5,13 +5,14 @@
 Accelerate (Increase attack speed for each consecutive shot. Resets one second after the attack)
 +++Repeater (Full Auto attacks)
 +++Charge (you must charge up the weapon first)
+Dynamic Charge
 ++Dash
 ++Evade
 explosive (this gives AOE, multiples cause larger AOE size)
 continuous (this will make an AOE continuous, or cause bleeding, mutliples cause longer time)
-+++knockback
++knockback
 +++Enlarge (double the size of the weapon and projectiles)
-shrink (half size)
++++shrink (half size)
 Force Push
 Force Pull (basically grapple) (happens before melee weapon spawns, happens at collision for ranged)
 Chain Lightning (hits each enemy in a certain distance)
@@ -32,7 +33,7 @@ Blind (when mixed with aoe and continuous, this becomes the fog of war)
 +++slash
 whip
 
-Flail (changes the attacking method into a flail attack, adds attack range but makes it a bit slower.) (multiples will give it a further reach)
++++Flail (changes the attacking method into a flail attack, adds attack range but makes it a bit slower.) (multiples will give it a further reach)
 
 double strike (attacks a second time)
 Reflect (reflects bullets back at their owner)
@@ -56,13 +57,15 @@ ethernal (attacks through walls)
 Scoped/Snipe (Extra range)
 Quick shot (projectiles move at double speed)
 Drag (projectiles move at half speed)
-magic misile (heat seeking projectiles)
++++seeking (heat seeking projectiles)
++++guided
 Burst (3 shots in a row, with a 2-3 frame delay between them, input direction can be chnged but not movement?)
-Laser/Beam (10 shots in a row, every frame)
+Laser/Beam (10 shots in a row, every frame) Drops the damage and cooldown time by a ton.
 +++Cluster (it's like buck shot but happens after the projectile was sent out)
 +++Multishot (3 projectile)
 +++Bonus Shot (1 projectile in a random angle)
 +++Mirror Shot (Shoots a projectile behind you)
+Targeting
 
 
 
@@ -83,6 +86,8 @@ Laser/Beam (10 shots in a row, every frame)
 [Health] Reflective (causes the reflect modifier for ranged shots) (for use with bubble shield style summons, also a massive damper on ranged weapons)
 [Health] Minion (half default health, but summons 3) (useful for Zerge rushes)
 [Health] Timed (has 9999 health but will die on it's own after a specific amount of time, likely based on health prior to this)
+
+[Health] Spectral (ony takes damage from continuous, aoe, air strike, or any other devine style magic mod)
 
 --attack styles (default is walking into the player)
 [Attack] Sef Destruct (explodes, dealing half it's remaining health with a max of ___) (if this modifier is mixed with timer, just make it explode at the end of the timer)
@@ -106,6 +111,8 @@ Laser/Beam (10 shots in a row, every frame)
 [Move] Hover (pit falls, and floor damage wont hurt)
 ??[Move] Remote controlled (player controls it, and the player can not move when doing so)
 
-
-
+--toy summon mods (not really specific to any particular mod section, like the weapon's toy mods)
+[toy] blood shot (shoots out 6 or 8 projectiles apawn death)
+[toy] blood trail (slightly less health, but leaves a trail of damaging floor tiles)
+[]
 

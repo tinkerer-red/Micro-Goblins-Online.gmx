@@ -19,11 +19,11 @@ returned = false
 
 if !variable_instance_exists(self.id, "anim_rotate_start") {anim_rotate_start = true}
 
-show_debug_player(0, "anim_timer = "+string(anim_timer))
+//show_debug_player(0, "anim_timer = "+string(anim_timer))
 //set the animation variables
 if (anim_rotate_start)
 {
-  show_debug_player(0, "anim start")
+  //show_debug_player(0, "anim start")
   
   anim_time = floor(room_speed*0.25)
   anim_timer = anim_time
