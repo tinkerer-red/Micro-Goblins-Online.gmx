@@ -150,7 +150,7 @@
               <script>scripts\scr_mod_negarang.gml</script>
               <script>scripts\scr_mod_guiding.gml</script>
               <script>scripts\___________scr_mod_targeting.gml</script>
-              <script>scripts\scr_mod_laser.gml</script>
+              <script>scripts\scr_mod_burst.gml</script>
             </scripts>
             <scripts name="Summons">
               <scripts name="Movement">

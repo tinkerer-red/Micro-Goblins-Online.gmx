@@ -8,17 +8,19 @@
 //init
 if !variable_instance_exists(self, "mod_seeking_start"){
   mod_seeking_start = true;
+  
+  
+  //only define the nearest enemy once because the code is not very optimized
+  var xx = x+lengthdir_x(speed*3, direction);
+  var yy = y+lengthdir_y(speed*3, direction);
+  nearest_obj = nearest_enemy(xx, yy, w_range*2);
 }
 
-var mod_count = scr_queue_has_mod_count(step_event_queues_temp, scr_mod_seeking)
+mod_count = scr_queue_has_mod_count(step_event_queues_temp, scr_mod_seeking)
 
 if (mod_seeking_start = true){
   mod_seeking_start = false
   if (object_index = obj_weap_proj){
-    var xx = x+lengthdir_x(speed*3, direction);
-    var yy = y+lengthdir_y(speed*3, direction);
-    
-    var nearest_obj = nearest_enemy(xx, yy, w_range*2);
     
     if (nearest_obj != noone){
       var seeking_angle_change = (180/room_speed)*(mod_count+1);

@@ -374,7 +374,7 @@ for (var i = 0; i &lt; 3; i++)
   repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_mirrorShot, 2);
   repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_multishot, 3);
   repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_inaccurate, 4);
-  repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_laser, 99);
+  repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_burst, 99);
   repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_4, 1);
   ///////////////////////////////////////////////////////////////////////////
   repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_cluster, 1);
@@ -1153,7 +1153,7 @@ if self.player_state = e_player_state.attack &amp;&amp; !self.attack &amp;&amp; 
             ds_priority_destroy(weap_inst.weapon_event_queues)
             weap_inst.weapon_event_queues = -1
             
-            show_debug_message("destroyed weapon with post attack queue")
+            //show_debug_message("destroyed weapon with post attack queue")
             instance_destroy(weap_inst)
           }
             weap_inst = -1

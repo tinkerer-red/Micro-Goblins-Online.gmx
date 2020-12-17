@@ -109,7 +109,7 @@ gui_create_menu(guid, "Modifiers", false, 28, c_black);
     gui_create_slider(guid, "Bonus Shot", 0, 0, 5, c_red)
     gui_create_slider(guid, "Mirror Shot", 0, 0, 5, c_orange)
     gui_create_slider(guid, "Multi Shot", 0, 0, 5, c_yellow)
-    gui_create_slider(guid, "Laser", 0, 0, 5, c_green)
+    gui_create_slider(guid, "Burst", 0, 0, 5, c_green)
     gui_create_slider(guid, "Inaccurate", 0, 0, 5, c_teal)
     gui_create_slider(guid, "Cluster", 0, 0, 5, c_blue)
     gui_create_slider(guid, "Boomerang", 0, 0, 5, c_purple)
@@ -220,7 +220,7 @@ if (global.debug = true){
           last_bonusShot = gui_get_value(guid, "Bonus Shot");
           last_mirrorShot = gui_get_value(guid, "Mirror Shot");
           last_multiShot = gui_get_value(guid, "Multi Shot");
-          last_laser = gui_get_value(guid, "Laser");
+          last_burst = gui_get_value(guid, "Burst");
           last_inaccurate = gui_get_value(guid, "Inaccurate");
           last_cluster = gui_get_value(guid, "Cluster");
           last_boomerang = gui_get_value(guid, "Boomerang");
@@ -335,7 +335,7 @@ if (global.debug = true){
           gui_set_value(guid, "Bonus Shot", floor(0.5+gui_get_value(guid, "Bonus Shot")) div 1);
           gui_set_value(guid, "Mirror Shot", floor(0.5+gui_get_value(guid, "Mirror Shot")) div 1);
           gui_set_value(guid, "Multi Shot", floor(0.5+gui_get_value(guid, "Multi Shot")) div 1);
-          gui_set_value(guid, "Laser", floor(0.5+gui_get_value(guid, "Laser"))div 1);
+          gui_set_value(guid, "Burst", floor(0.5+gui_get_value(guid, "Burst"))div 1);
           gui_set_value(guid, "Inaccurate", floor(0.5+gui_get_value(guid, "Inaccurate"))div 1);
           gui_set_value(guid, "Cluster", floor(0.5+gui_get_value(guid, "Cluster")) div 1);
           gui_set_value(guid, "Boomerang", floor(0.5+gui_get_value(guid, "Boomerang")) div 1);
@@ -463,7 +463,7 @@ if (global.debug = true){
               if last_mirrorShot != gui_get_value(guid, "Mirror Shot") scr_modifier_adjust(queue_proj_spawn_mods, scr_mod_mirrorShot, 2, gui_get_value(guid, "Mirror Shot"));
               if last_multiShot != gui_get_value(guid, "Multi Shot") scr_modifier_adjust(queue_proj_spawn_mods, scr_mod_multishot, 3, gui_get_value(guid, "Multi Shot"));
               if last_inaccurate != gui_get_value(guid, "Inaccurate") scr_modifier_adjust(queue_proj_spawn_mods, scr_mod_inaccurate, 4, gui_get_value(guid, "Inaccurate"));
-              if last_laser != gui_get_value(guid, "Laser") scr_modifier_adjust(queue_proj_spawn_mods, scr_mod_laser, 99, gui_get_value(guid, "Laser"));
+              if last_burst != gui_get_value(guid, "Burst") scr_modifier_adjust(queue_proj_spawn_mods, scr_mod_burst, 99, gui_get_value(guid, "Burst"));
               if last_cluster != gui_get_value(guid, "Cluster") scr_modifier_adjust(queue_attack_step_mods, scr_mod_cluster, 1, gui_get_value(guid, "Cluster"));
               if last_boomerang != gui_get_value(guid, "Boomerang") scr_modifier_adjust(queue_pre_col_mods, scr_mod_boomerang, 2, gui_get_value(guid, "Boomerang"));
               if last_negarang != gui_get_value(guid, "Nega-Rang") scr_modifier_adjust(queue_col_mods, scr_mod_negarang, 1, gui_get_value(guid, "Nega-Rang"));
