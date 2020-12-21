@@ -69,6 +69,11 @@
     <sprites name="Player">
       <sprites name="Weapons">
         <sprite>sprites\spr_weap_test</sprite>
+        <sprites name="Modifiers">
+          <sprite>sprites\spr_laser</sprite>
+          <sprite>sprites\spr_target</sprite>
+          <sprite>sprites\spr_chain</sprite>
+        </sprites>
       </sprites>
       <sprites name="Outfits">
         <sprites name="Bodies">
@@ -78,6 +83,9 @@
           <sprite>sprites\spr_head_template</sprite>
         </sprites>
       </sprites>
+    </sprites>
+    <sprites name="Particles">
+      <sprite>sprites\prt_sparkle</sprite>
     </sprites>
     <sprites name="Utility Sprite">
       <sprite>sprites\spr_dualbooting</sprite>
@@ -151,6 +159,7 @@
               <script>scripts\scr_mod_guiding.gml</script>
               <script>scripts\___________scr_mod_targeting.gml</script>
               <script>scripts\scr_mod_burst.gml</script>
+              <script>scripts\scr_mod_laser.gml</script>
             </scripts>
             <scripts name="Summons">
               <scripts name="Movement">
@@ -229,12 +238,18 @@
       <script>scripts\wrap.gml</script>
     </scripts>
     <scripts name="Drawing">
+      <scripts name="Modifiers">
+        <script>scripts\draw_laser.gml</script>
+      </scripts>
       <script>scripts\is_visible.gml</script>
       <script>scripts\draw_cone.gml</script>
       <script>scripts\anim_idle.gml</script>
       <script>scripts\anim_walk.gml</script>
       <script>scripts\anim_rotate.gml</script>
       <script>scripts\anim_damage.gml</script>
+      <script>scripts\draw_sprite_line.gml</script>
+      <script>scripts\draw_sprite_pathed.gml</script>
+      <script>scripts\draw_sprite_line_shader.gml</script>
     </scripts>
     <scripts name="Utillity">
       <scripts name="Network">
@@ -585,6 +600,9 @@
     <script>scripts\randomSeed.gml</script>
     <script>scripts\section_percent.gml</script>
   </scripts>
+  <shaders name="shaders">
+    <shader type="GLSLES">shaders\shStretch.shader</shader>
+  </shaders>
   <fonts name="fonts">
     <font>fonts\fontGGUI</font>
     <font>fonts\font_debug</font>

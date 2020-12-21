@@ -743,12 +743,17 @@ for (var i = 1; i &lt;= flicks; i++)
 }
 */
 
+
+
 // if the weapon in chained, draw the chain
 if (is_chained){
   //for now we're just going to draw a line to player center
-  draw_line_colour(x, y, owner_id.x, owner_id.y, c_black, c_black)
-  
+    //draw_line_colour(x, y, owner_id.x, owner_id.y, c_black, c_black)
+  //not any more bitch!
+  draw_sprite_line_shader(spr_chain, x, y, owner_id.x, owner_id.y)
 }
+
+
 
 draw_self()
 

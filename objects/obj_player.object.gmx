@@ -383,6 +383,9 @@ for (var i = 0; i &lt; 3; i++)
   repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_seeking, 4);
   repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_guiding, 5);
   repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_flail, 4);
+  
+  repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_summon_movement_default, 4);
+  
   repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_5, 1);
   ///////////////////////////////////////////////////////////////////////////
   repeat( 0 ) ds_priority_add(queue_pre_col_mods, scr_mod_ricochet, 1);

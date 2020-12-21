@@ -85,27 +85,27 @@ guid = gui_create_gui();
 
 gui_create_string(guid, "text", "Debug Controller", c_white);
 
-gui_create_menu(guid, "Modifiers", false, 28, c_black);
+gui_create_menu(guid, "Modifiers", false, 36, c_black);
   
-  gui_create_menu(guid, "Global", false, 6, c_black);
-    gui_create_slider(guid, "Charge", 0, 0, 5, c_aqua)
-    gui_create_slider(guid, "Repeater", 0, 0, 5, c_aqua)
-    gui_create_slider(guid, "Dash", 0, 0, 5, c_aqua)
-    gui_create_slider(guid, "Evade", 0, 0, 5, c_aqua)
-    gui_create_slider(guid, "Enlarge", 0, 0, 5, c_aqua)
+  gui_create_menu(guid, "Global", false, 6, c_aqua);
+    gui_create_slider(guid, "Charge", 0, 0, 5, c_red)
+    gui_create_slider(guid, "Repeater", 0, 0, 5, c_orange)
+    gui_create_slider(guid, "Dash", 0, 0, 5, c_yellow)
+    gui_create_slider(guid, "Evade", 0, 0, 5, c_green)
+    gui_create_slider(guid, "Enlarge", 0, 0, 5, c_blue)
     gui_create_slider(guid, "Shrink", 0, 0, 5, c_aqua)
     
-  gui_create_menu(guid, "Melee", false, 8, c_black);
-    gui_create_slider(guid, "Slash", 0, 0, 5, c_aqua);
-    gui_create_slider(guid, "Thrust", 0, 0, 5, c_aqua);
-    gui_create_slider(guid, "Chained", 0, 0, 5, c_aqua);
-    gui_create_slider(guid, "Melee Ranged", 0, 0, 5, c_aqua);
-    gui_create_slider(guid, "Swiftness", 0, 0, 5, c_aqua);
+  gui_create_menu(guid, "Melee", false, 8, c_green);
+    gui_create_slider(guid, "Slash", 0, 0, 5, c_red);
+    gui_create_slider(guid, "Thrust", 0, 0, 5, c_orange);
+    gui_create_slider(guid, "Chained", 0, 0, 5, c_yellow);
+    gui_create_slider(guid, "Melee Ranged", 0, 0, 5, c_green);
+    gui_create_slider(guid, "Swiftness", 0, 0, 5, c_blue);
     gui_create_slider(guid, "Slowness", 0, 0, 5, c_aqua);
-    gui_create_slider(guid, "Back Stab", 0, 0, 5, c_aqua);
-    gui_create_slider(guid, "Flail", 0, 0, 5, c_aqua);
+    gui_create_slider(guid, "Back Stab", 0, 0, 5, c_purple);
+    gui_create_slider(guid, "Flail", 0, 0, 5, c_red);
     
-  gui_create_menu(guid, "Ranged", false, 11, c_orange);
+  gui_create_menu(guid, "Ranged", false, 12, c_orange);
     gui_create_slider(guid, "Bonus Shot", 0, 0, 5, c_red)
     gui_create_slider(guid, "Mirror Shot", 0, 0, 5, c_orange)
     gui_create_slider(guid, "Multi Shot", 0, 0, 5, c_yellow)
@@ -117,6 +117,18 @@ gui_create_menu(guid, "Modifiers", false, 28, c_black);
     gui_create_slider(guid, "Ricochet", 0, 0, 5, c_orange)
     gui_create_slider(guid, "Seeking", 0, 0, 5, c_yellow)
     gui_create_slider(guid, "Guiding", 0, 0, 5, c_green)
+    gui_create_slider(guid, "Laser", 0, 0, 5, c_blue)
+    
+  gui_create_menu(guid, "Summon", false, 6, c_green);
+    ////////////////////////////////////////////////////////
+    gui_create_menu(guid, "Movement", false, 1, c_blue);
+        gui_create_slider(guid, "Default Movement", 0, 0, 5, c_red)
+    ////////////////////////////////////////////////////////
+    gui_create_menu(guid, "Attack", false, 1, c_red);
+        gui_create_slider(guid, "Default Attack", 0, 0, 5, c_orange)
+    ////////////////////////////////////////////////////////
+    gui_create_menu(guid, "Health", false, 1, c_green);
+        gui_create_slider(guid, "Default Health", 0, 0, 5, c_yellow)
     
     
 
@@ -207,6 +219,7 @@ if (global.debug = true){
           last_shrink = gui_get_value(guid, "Shrink");
         //}
         
+        //if gui_get_value(guid, 'Melee'){
           last_slash = gui_get_value(guid, "Slash");
           last_thrust = gui_get_value(guid, "Thrust");
           last_chained = gui_get_value(guid, "Chained");
@@ -215,6 +228,7 @@ if (global.debug = true){
           last_slow = gui_get_value(guid, "Slowness");
           last_backStab = gui_get_value(guid, "Back Stab");
           last_flail = gui_get_value(guid, "Flail");
+        //}
           
         //if gui_get_value(guid, 'Ranged'){
           last_bonusShot = gui_get_value(guid, "Bonus Shot");
@@ -228,10 +242,14 @@ if (global.debug = true){
           last_ricochet = gui_get_value(guid, "Ricochet");
           last_seeking = gui_get_value(guid, "Seeking");
           last_guiding = gui_get_value(guid, "Guiding");
-          
+          last_laser = gui_get_value(guid, "Laser");
         //}
         
-        
+        //if gui_get_value(guid, 'Summon'){
+          last_defaultMovement = gui_get_value(guid, "Default Movement");
+          last_defaultAttack = gui_get_value(guid, "Default Attack");
+          last_defaultHealth = gui_get_value(guid, "Default Health");
+        //}
         
       }
     }
@@ -343,7 +361,22 @@ if (global.debug = true){
           gui_set_value(guid, "Ricochet", floor(0.5+gui_get_value(guid, "Ricochet")) div 1);
           gui_set_value(guid, "Seeking", floor(0.5+gui_get_value(guid, "Seeking")) div 1);
           gui_set_value(guid, "Guiding", floor(0.5+gui_get_value(guid, "Guiding")) div 1);
+          gui_set_value(guid, "Laser", floor(0.5+gui_get_value(guid, "Laser")) div 1);
         }
+      //Summon
+        if gui_get_value(guid, 'Summon'){
+          if gui_get_value(guid, 'Movement'){
+           gui_set_value(guid, "Default Movement", floor(0.5+gui_get_value(guid, "Default Movement")) div 1); 
+          }
+          if gui_get_value(guid, 'Attack'){
+           gui_set_value(guid, "Default Attack", floor(0.5+gui_get_value(guid, "Default Attack")) div 1); 
+          }
+          if gui_get_value(guid, 'Health'){
+            gui_set_value(guid, "Default Health", floor(0.5+gui_get_value(guid, "Default Health")) div 1);
+          }
+          
+        }
+      
       }
     }
   
@@ -421,7 +454,7 @@ if (global.debug = true){
   //if (mouse_check_button_released(mb_left)){
     if (device_mouse_x_to_gui(0) &gt; (display_get_gui_width()-243)*(1+obj_camera_control.smooth_camera)){
       
-      if gui_get_value(guid, 'Modifiers') &amp;&amp; (gui_get_value(guid, 'Global') || gui_get_value(guid, 'Ranged') || gui_get_value(guid, 'Melee')){
+      if gui_get_value(guid, 'Modifiers') &amp;&amp; (gui_get_value(guid, 'Global') || gui_get_value(guid, 'Ranged') || gui_get_value(guid, 'Melee') || gui_get_value(guid, 'Summon')){
         for (var i = 0; i &lt; 3; i++){  //for all three weapons
           
           var queue_button_mods = ds_priority_delete_min(obj_player.item_queues[i]);
@@ -470,9 +503,27 @@ if (global.debug = true){
               if last_ricochet != gui_get_value(guid, "Ricochet") scr_modifier_adjust(queue_pre_col_mods, scr_mod_ricochet, 1, gui_get_value(guid, "Ricochet"));
               if last_seeking != gui_get_value(guid, "Seeking") scr_modifier_adjust(queue_attack_step_mods, scr_mod_seeking, 4, gui_get_value(guid, "Seeking"));
               if last_guiding != gui_get_value(guid, "Guiding") scr_modifier_adjust(queue_attack_step_mods, scr_mod_guiding, 5, gui_get_value(guid, "Guiding"));
+              if last_laser != gui_get_value(guid, "Laser") scr_modifier_adjust(queue_attack_step_mods, scr_mod_laser, 5, gui_get_value(guid, "Laser"));
               
             }
           }
+          
+          //Summon
+          if gui_get_value(guid, 'Summon'){
+            //Movement
+            if gui_get_value(guid, 'Movement'){
+             if last_defaultMovement != gui_get_value(guid, "Default Movement") scr_modifier_adjust(queue_attack_step_mods, scr_mod_summon_movement_default, 1, gui_get_value(guid, "Default Movement"));
+            }
+            //Attack
+            if gui_get_value(guid, 'Attack'){
+             if last_defaultAttack != gui_get_value(guid, "Default Attack") scr_modifier_adjust(queue_attack_step_mods, scr_mod_summon_attack_default, 1, gui_get_value(guid, "Default Attack"));
+            }
+            //Health
+            if gui_get_value(guid, 'Health'){
+              if last_defaultHealth != gui_get_value(guid, "Default Health") scr_modifier_adjust(queue_attack_step_mods, scr_mod_summon_health_default, 1, gui_get_value(guid, "Default Health"));
+            }
+          }
+          
           
           ds_priority_add(obj_player.item_queues[i], queue_button_mods, 1);
           ds_priority_add(obj_player.item_queues[i], queue_pre_weap_mods, 2);

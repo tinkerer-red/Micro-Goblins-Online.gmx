@@ -227,6 +227,9 @@ if !variable_instance_exists(self, "enemy_mods_init") || (enemy_mods_init = fals
     
     
   }
+  
+  ///if is summon
+  
 }
 </string>
           </argument>
@@ -302,6 +305,7 @@ if !self.collide &amp;&amp; !self.pre_collide
   {
     self.step_event_queues = ds_priority_create()
     ds_priority_copy(self.step_event_queues, ds_priority_delete_min(self.weapon_event_queues))
+    //show_debug_message("ds_priority_size(self.step_event_queues) = "+string(ds_priority_size(self.step_event_queues)))
   }
   
   //dont delete the queue untill the collision actually happens
