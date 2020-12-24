@@ -9,7 +9,7 @@ Dynamic Charge
 ++Dash
 ++Evade
 explosive (this gives AOE, multiples cause larger AOE size)
-continuous (this will make an AOE continuous, or cause bleeding, mutliples cause longer time)
+continuous (this will make an AOE continuous, or cause tick based damage, mutliples cause longer time for aoe)
 +knockback
 +++Enlarge (double the size of the weapon and projectiles)
 +++shrink (half size)
@@ -35,6 +35,7 @@ whip
 
 +++Flail (changes the attacking method into a flail attack, adds attack range but makes it a bit slower.) (multiples will give it a further reach)
 
+Keen (slightly increases damage, greatly inreases decapitation chance)
 double strike (attacks a second time)
 Reflect (reflects bullets back at their owner)
 AimBot (always attacks in the direction of the closest enemy) (this is a melee modifier for balancing purposes) (Stack [90, 180, 360] degree assistance)
@@ -48,6 +49,7 @@ Aerial Strike (every time you hit it spawn a copies of itself, which slams into 
 
 
 ===Ranged===
+Sticky (projectiles exclusive continuous mod)
 Piercing (attacks through multiple enemies)
 +++Ricochet (projectiles will bounce 1 time if coliding at a 45 degree angle or less, if piercing is present they will bounce at any angle but only 5 times)
 ethernal (attacks through walls)
@@ -77,8 +79,10 @@ Targeting
 
 
 ===Summon===
+Ranged mod, allows for use of pokeball style summons
+
 --health styles (default is normal health)
-[Health] duplicate (when killed spawn 2 smaller ones with half health, this will increase size)
+[Health] Multiply (on death split into 1+modcount more of it's self at half the size and health)
 [Health] boss (makes spawn larger with more health)
 [Health] twins (makes 2 of the same spawn with 75% damage)
 [Health] masked (can only be hit from behind, this also gives it an ice like effect locking it's direction)
@@ -94,25 +98,31 @@ Targeting
 [Attack] ranged (will shoot projectiles)
 [Attack] bumper (doesnt actually hurt the player but gives a high knockback)
 [Attack] Leaper (lunges twords the player)
+[Attack] Kamikaze (similar to leaper, but will explode on collision)
 [Attack] Passive (no attack, instead any damage multiplier is given to health)
 [Attack] Childish (no attack, instead any damage multiplier is given to movement)
 [Attack] Drain (constant AOE damage, very slow rate though) (halo 3's power drain equipment)
 [Attack] Healing (constant AOE healing, very slow rate though) (halo 3's regen equipment)
 [Attack] Pulling (constant AOE force pull)
+[Attack] Psychic (shoots homing shots (better homing for modcount))
+[Attack] Rotational (rotates and shoots at the player, if the summon is a minion/group they could rotate around each other)
 
 --movement (the default is directly walking at the nearest player)
 [Move] Bouncy (spawns in the direction the player was facing, will continue to move and bounce off walls untill dead)
 [Move] Spastic (bee like movement, very random, much wow)
 [Move] Jumpy (only moves in bursts, similar to terarria's slimes)
-[Move] Rotational (rotates around the player, maybe like purple flies in tboi, where they rotate as a team)
-[Move] Chained (massive increase to damage but cant move from it's location region)
+[Move] Orbital (obits around the player, modcount = distance from player)
+[Move] Chained (spawns in chained to a stake in the ground, after a while it can break free of the chain and moves much faster, modcount = extra damage, 3 or more makes it not able to leave the chain)
 [Move] Momentum (moves quickly but has a hard time turning) (like a wheel or ball, similar to terarria's demon eyes)
 [Move] Stationary (massive health increase, with no movement)
 [Move] Hover (pit falls, and floor damage wont hurt)
+[Move] Wall Hugger (follows the path of the nearest wall (clockwise), modcount = speed)
+[Move] Burrow (allows the enemy to burrow underground, modcount = higher resurface distance (can not pop out ontop of a player, but can an other enemy))
+[Move] Ghostly, (same thing as burrow, but it fades in and out)
 ??[Move] Remote controlled (player controls it, and the player can not move when doing so)
 
---toy summon mods (not really specific to any particular mod section, like the weapon's toy mods)
+--passive/toy summon mods (not really specific to any particular mod section, like the weapon's toy mods)
 [toy] blood shot (shoots out 6 or 8 projectiles apawn death)
 [toy] blood trail (slightly less health, but leaves a trail of damaging floor tiles)
-[]
+[passive] Spawner ( every 3.5-(0.5*modcount) seconds it spawns a minion version of it's self, with a max of 3)
 

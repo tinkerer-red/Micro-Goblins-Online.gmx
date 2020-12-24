@@ -96,6 +96,7 @@
       <sprite>sprites\spr_collision</sprite>
       <sprite>sprites\spr_tile_checker</sprite>
       <sprite>sprites\spr_chunk_supervisor</sprite>
+      <sprite>sprites\spr_particle_controller</sprite>
       <sprite>sprites\spr_chunk</sprite>
     </sprites>
     <sprites name="Test Sprites">
@@ -172,6 +173,9 @@
                 <script>scripts\scr_mod_summon_health_default.gml</script>
               </scripts>
             </scripts>
+            <scripts name="Toy">
+              <script>scripts\scr_mod_paint.gml</script>
+            </scripts>
             <scripts name="Test mods">
               <script>scripts\scr_test.gml</script>
               <script>scripts\scr_1.gml</script>
@@ -240,6 +244,9 @@
     <scripts name="Drawing">
       <scripts name="Modifiers">
         <script>scripts\draw_laser.gml</script>
+      </scripts>
+      <scripts name="Partical Handler">
+        <script>scripts\draw_particle_line.gml</script>
       </scripts>
       <script>scripts\is_visible.gml</script>
       <script>scripts\draw_cone.gml</script>
@@ -621,6 +628,7 @@
       <object>objects\obj_controller</object>
       <objects name="Visuals">
         <object>objects\obj_camera_control</object>
+        <object>objects\obj_particle_controller</object>
         <object>objects\obj_dualbooting</object>
       </objects>
       <objects name="Network">

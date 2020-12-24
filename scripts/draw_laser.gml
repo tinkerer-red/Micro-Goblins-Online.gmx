@@ -1,16 +1,18 @@
-///draw_laser(sprite, path, [width])
+///draw_laser(path, [width])
 
 var sprite = spr_laser
 var particle = prt_sparkle
-var pathIndex = argument[1]
+var pathIndex = argument[0]
 
+
+//////////primitive
 texture_set_repeat(true)
 draw_set_color(c_white)
 quality =  path_get_number(pathIndex)*4
 q = 1 / quality
 
-if (argument_count >= 3){
-  width = argument[2]/2
+if (argument_count >= 2){
+  width = argument[1]/2
 }else{
   width = sprite_get_width(sprite)/2
 }
@@ -41,6 +43,42 @@ for (i = q; i <= 1; i += q)
     //[dx, dy] is parallell to the path. This means that [dy, -dx] is perpendicular to the path
     draw_vertex_texture(oldX + dy * width, oldY - dx * width, i * length / width, 0)
     draw_vertex_texture(oldX - dy * width, oldY + dx * width, i * length / width, 1)
-    
+    /*
+    draw_particle_line(particle,
+                   oldX+dx, //x1
+                   oldY+dy, //y1
+                   newX, //x1
+                   newY) //y1
+    */
 }
 draw_primitive_end()
+//////////
+
+
+//////////draw last line
+var last_point = path_get_number(pathIndex)-1
+draw_sprite_line_shader(sprite, 
+                    path_get_point_x(pathIndex, last_point), //x1
+                    path_get_point_y(pathIndex, last_point), //y1
+                    x, //x2
+                    y) //y2
+//////////
+
+
+//////////draw particles
+/*
+for (var i = 0; i < last_point; i++){
+  draw_particle_line(particle,
+                     path_get_point_x(pathIndex, i), //x1
+                     path_get_point_y(pathIndex, i), //y1
+                     path_get_point_x(pathIndex, i+1), //x1
+                     path_get_point_y(pathIndex, i+1)) //y1
+}
+
+draw_particle_line(particle,
+                   path_get_point_x(pathIndex, last_point), //x1
+                   path_get_point_y(pathIndex, last_point), //y1
+                   x, //x2
+                   y) //y2
+/*
+//////////

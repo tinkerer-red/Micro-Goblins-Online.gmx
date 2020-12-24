@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>1</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -85,62 +85,28 @@ is_lasered = false
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Clean up left over queues
+            <string>///draw particles
 
-
-if variable_instance_exists(id, "active_queue"){
-  if active_queue != -1{
-    if ds_exists(active_queue, ds_type_priority){
-      ds_priority_destroy(active_queue)
-      active_queue = -1
-    }
-  }
+if (is_lasered){
+  draw_laser(previous_locations_path)
+  /*
+  draw_sprite_pathed(spr_laser, previous_locations_path)
+  
+  
+  var last_point = path_get_number(previous_locations_path)-1
+  draw_sprite_line_shader(spr_laser, 
+                    path_get_point_x(previous_locations_path, last_point), //x1
+                    path_get_point_y(previous_locations_path, last_point), //y1
+                    x, //x2
+                    y) //y2
+  
+  draw_particle_line()
+  */
 }
 
-if variable_instance_exists(id, "step_event_queues"){
-  if step_event_queues != -1{
-    if ds_exists(step_event_queues, ds_type_priority){
-      ds_priority_destroy(step_event_queues)
-      step_event_queues = -1
-    }
-  }
-}
 
-if variable_instance_exists(id, "step_event_queues_temp"){
-  if step_event_queues_temp != -1{
-    if ds_exists(step_event_queues_temp, ds_type_priority){
-      ds_priority_destroy(step_event_queues_temp)
-      step_event_queues_temp = -1
-    }
-  }
-}
-//*/
-if variable_instance_exists(id, "pre_col_queues"){
-  if pre_col_queues != -1{
-    if ds_exists(pre_col_queues, ds_type_priority){
-      ds_priority_destroy(pre_col_queues)
-      pre_col_queues = -1
-    }
-  }
-}
 
-if variable_instance_exists(id, "pre_col_queues_temp"){
-  if pre_col_queues_temp != -1{
-    if ds_exists(pre_col_queues_temp, ds_type_priority){
-      ds_priority_destroy(pre_col_queues_temp)
-      pre_col_queues_temp = -1
-    }
-  }
-}
 
-if variable_instance_exists(id, "weapon_event_queues"){
-  if weapon_event_queues != -1{
-    if ds_exists(weapon_event_queues, ds_type_priority){
-      ds_priority_destroy(weapon_event_queues)
-      weapon_event_queues = -1
-    }
-  }
-}
 
 </string>
           </argument>
@@ -478,7 +444,8 @@ if self.collide &amp;&amp; !self.pre_collide  //if officially collided
             <string>///draw particles
 
 if (is_lasered){
-  
+  draw_laser(previous_locations_path)
+  /*
   draw_sprite_pathed(spr_laser, previous_locations_path)
   
   
@@ -488,7 +455,9 @@ if (is_lasered){
                     path_get_point_y(previous_locations_path, last_point), //y1
                     x, //x2
                     y) //y2
-                    
+  
+  draw_particle_line()
+  */
 }
 
 
