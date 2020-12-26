@@ -31,7 +31,7 @@ while !ds_list_empty(list) {
     
     //if the distance is less then the previous distance (or infinate)
     var _dist = point_distance(xx, yy, list[| 0].x, list[| 0].y)
-    if (_dist < nearest_dist){
+    if (_dist < nearest_dist) && (_dist < radius){
       var returned_target = list[| 0];
       nearest_dist = _dist
     }

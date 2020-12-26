@@ -59,8 +59,9 @@ path_set_closed(previous_locations_path, false);
 path_add_point(previous_locations_path, x, y, speed);
 
 
+///modifier variables
 is_lasered = false
-
+is_clustered = false
 
 
 </string>
@@ -154,9 +155,10 @@ path_delete(previous_locations_path)
           <argument>
             <kind>1</kind>
             <string>///[MOD] Cluster Shot
-
-ds_priority_delete_value(self.step_event_queues, scr_mod_cluster)
-
+/*
+//ds_priority_delete_value(self.step_event_queues, scr_mod_cluster)
+//is_clustered--
+//show_debug_message("cluster alarm")
 repeat(2){ //ideally 3
 //  if (irandom(2) &gt; 0){ //this helps cut down on the massive entities when 5 cluster mods are active
     var proj = instance_copy(false);
@@ -361,7 +363,6 @@ if !self.collide &amp;&amp; self.pre_collide //if collision is detected, before 
   
   //if pre coliisions are empty then we must have collided
   if (ds_priority_empty(self.pre_col_queues) || !do_not_collide) &amp;&amp; self.collide = false &amp;&amp; self.pre_collide = true{
-    
         ////if collision is final destroy the left over queues
         if ds_exists(self.pre_col_queues_temp, ds_type_priority){
           ds_priority_destroy(self.pre_col_queues_temp)
@@ -395,7 +396,7 @@ if !self.collide &amp;&amp; self.pre_collide //if collision is detected, before 
 if self.collide &amp;&amp; !self.pre_collide  //if officially collided
 {
   
-    
+  //show_debug_message("proj - Collision event")
   
   var self.result = scr_run_modifiers() //collision modifiers
   if self.result = true
@@ -407,6 +408,19 @@ if self.collide &amp;&amp; !self.pre_collide  //if officially collided
       self.weapon_event_queues = -1
     }
     speed = 0
+    
+    if place_meeting(x,y, obj_entity){
+      var enemy = nearest_enemy(x, y, w_hype)
+      if (enemy != noone)
+      {
+          enemy.e_health -= w_damage
+          show_debug_message("fucked up")
+          draw_particle_blood(enemy.x, enemy.y)
+          
+          enemy.spd = self.w_knockback
+          enemy.direction = direction //point_direction(x, y, enemy.x, enemy.y)
+        }
+    }
     ///if aeo change sprite
     ///if aoe AND constant change sprite to rune
     ///if constant have colliders run on the player (or an object?)

@@ -85,7 +85,22 @@
       </sprites>
     </sprites>
     <sprites name="Particles">
+      <sprites name="Modifiers">
+        <sprite>sprites\prt_aoe_runic</sprite>
+        <sprite>sprites\prt_aoe_alchamy</sprite>
+        <sprite>sprites\prt_aoe_satanic</sprite>
+      </sprites>
+      <sprite>sprites\prt_void</sprite>
+      <sprite>sprites\prt_star</sprite>
+      <sprite>sprites\prt_bubbles</sprite>
+      <sprite>sprites\prt_liquidball</sprite>
+      <sprite>sprites\prt_paint</sprite>
+      <sprite>sprites\prt_shockWave</sprite>
+      <sprite>sprites\prt_smoke</sprite>
+      <sprite>sprites\prt_spark</sprite>
       <sprite>sprites\prt_sparkle</sprite>
+      <sprite>sprites\prt_runes</sprite>
+      <sprite>sprites\prt_sparkleSmall</sprite>
     </sprites>
     <sprites name="Utility Sprite">
       <sprite>sprites\spr_dualbooting</sprite>
@@ -244,9 +259,13 @@
     <scripts name="Drawing">
       <scripts name="Modifiers">
         <script>scripts\draw_laser.gml</script>
+        <script>scripts\draw_particle_aoe_circle.gml</script>
+        <script>scripts\draw_particle_aoe_particles.gml</script>
       </scripts>
       <scripts name="Partical Handler">
         <script>scripts\draw_particle_line.gml</script>
+        <script>scripts\draw_particle_circle.gml</script>
+        <script>scripts\draw_particle_blood.gml</script>
       </scripts>
       <script>scripts\is_visible.gml</script>
       <script>scripts\draw_cone.gml</script>

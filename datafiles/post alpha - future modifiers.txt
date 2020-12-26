@@ -24,7 +24,7 @@ Incorporeal (walk through walls, attacks go through you (can still hit ppl behin
 Switch Places
 natures gift (chance to spawn unique apples which cant be picked up but will heal)
 natures curse (summons allied snakes, or rats?)
-Absorb life
+Absorb life / vampirism
 
 
 ===================================================================================================
@@ -35,6 +35,7 @@ Absorb life
 
 =====Armor Mods=====
 Ward/Shield (Takes a hit then recharges and repeats)
+Smooth skin (prevents any sticky projectiles)
 "Lightweight" [not usable with heavyweight] (Move faster but knockback effects send you back 5x further)
 "Heavyweight" [not usable with lightweight] (move slower but ignores any knockback (including lightweights knockback aplifier))
 Haste
@@ -82,12 +83,11 @@ sprint? (double tap movement key to activate)
 
 
 =====Toy Mods=====
-X launcher (Replaces the projectile with the random sprite it genorated with)
 Breakable (will break after X number of hits, but deals 10x damage on the final hit)
 Stinky (green outline of their sprite, and green smell lines, effects are visible in the fog of war)
 Polymorph
-Portal
-spray paint
+Portal/teleport (a single of this mod will randomly teleport the collided to a random nearby location, 2 will make portal's portals, 3+ will make 3+ one way portals)
+paint (leaves long lasting particle effects)
 confeti (like cluster, but ya know..)
 Grapple
 grappling hook

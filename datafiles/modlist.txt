@@ -8,14 +8,15 @@ Accelerate (Increase attack speed for each consecutive shot. Resets one second a
 Dynamic Charge
 ++Dash
 ++Evade
-explosive (this gives AOE, multiples cause larger AOE size)
-continuous (this will make an AOE continuous, or cause tick based damage, mutliples cause longer time for aoe)
+AOE (this gives AOE, multiples cause larger AOE size) (radius = 16+(16*modcount))
+continuous (modcount = dmge tick increased, this will make an AOE continuous, or cause tick based damage, mutliples cause longer time for aoe)
 +knockback
 +++Enlarge (double the size of the weapon and projectiles)
 +++shrink (half size)
-Force Push
+Force Push (wouldnt this be the same thing as knockback?)
 Force Pull (basically grapple) (happens before melee weapon spawns, happens at collision for ranged)
-Chain Lightning (hits each enemy in a certain distance)
+tractor beam ^^^
+Chain Lightning (hits each enemy in a certain distance, 1*modcount = arcs)
 Teleport (teleports the colided to a random open position)
 Frosty (slows the target)
 Blind (when mixed with aoe and continuous, this becomes the fog of war)
@@ -68,7 +69,7 @@ Laser/Beam (10 shots in a row, every frame) Drops the damage and cooldown time b
 +++Bonus Shot (1 projectile in a random angle)
 +++Mirror Shot (Shoots a projectile behind you)
 Targeting
-
+Lightning (lightning arcs between your projectiles and your self, similar to laser but more dynamic, 3*modcount lightning arcs)
 
 
 
@@ -90,6 +91,7 @@ Ranged mod, allows for use of pokeball style summons
 [Health] Reflective (causes the reflect modifier for ranged shots) (for use with bubble shield style summons, also a massive damper on ranged weapons)
 [Health] Minion (half default health, but summons 3) (useful for Zerge rushes)
 [Health] Timed (has 9999 health but will die on it's own after a specific amount of time, likely based on health prior to this)
+[Health] Stout (size and damage decreases over time, also relative to health)
 
 [Health] Spectral (ony takes damage from continuous, aoe, air strike, or any other devine style magic mod)
 

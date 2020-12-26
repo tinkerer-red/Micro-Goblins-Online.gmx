@@ -322,6 +322,7 @@ if self.attack  //if spawning projectiles
         proj.image_angle = proj.direction-45
         
         proj.sprite_index = sprite_proj
+        proj.w_hype = sqrt( power(proj.sprite_height,2) + power(proj.sprite_width,2))
         //if (proj.sprite_index = sprite_index) {proj.image_angle -= 45}
         
         proj.image_xscale = w_size
@@ -444,7 +445,7 @@ if (anim_attack_start){
   var speed_mods = slowness - swiftness
   
   // anim_time is used to equate exactly how many frames the animation needs to take
-  anim_attack_time = ceil(room_speed * ((0.01*power(speed_mods,2)) + (0.15*speed_mods) + 1))
+  anim_attack_time = ceil(owner_id.active_w_spawn_time_out * ((0.01*power(speed_mods,2)) + (0.15*speed_mods) + 1))
   anim_attack_timer = anim_attack_time
   
   // lastly max_-_multiplier is the maximum distance we want the axis to move, the cos/sin function would move it a parcent of the max
@@ -604,14 +605,13 @@ if !self.attack &amp;&amp; !self.collide &amp;&amp; !self.pre_collide  //if spaw
   //{
   //  self.pre_collide = true
   //}
-  if place_meeting(x, y, obj_entity)
-  {
-    if place_meeting(x, y, obj_enemy)
+  if place_meeting(x,y, obj_entity){
+    var enemy = nearest_enemy(x, y, w_hype)
+    if (enemy != noone)
     {
-      var enemy;
-      enemy = instance_nearest(x, y, obj_enemy)
-      enemy.sprite_index = spr_yellow
       enemy.e_health -= w_damage
+      
+      draw_particle_blood(enemy.x, enemy.y)
       
       enemy.spd = self.w_knockback
       enemy.direction = direction //point_direction(x, y, enemy.x, enemy.y)

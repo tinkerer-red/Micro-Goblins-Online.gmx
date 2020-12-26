@@ -9,8 +9,8 @@
   <bboxmode>0</bboxmode>
   <bbox_left>0</bbox_left>
   <bbox_right>7</bbox_right>
-  <bbox_top>0</bbox_top>
-  <bbox_bottom>7</bbox_bottom>
+  <bbox_top>2</bbox_top>
+  <bbox_bottom>5</bbox_bottom>
   <HTile>0</HTile>
   <VTile>0</VTile>
   <TextureGroups>
@@ -20,6 +20,6 @@
   <width>8</width>
   <height>8</height>
   <frames>
-    <frame index="0">images\prt_sparkle_0.png</frame>
+    <frame index="0">images\prt_spark_0.png</frame>
   </frames>
 </sprite>

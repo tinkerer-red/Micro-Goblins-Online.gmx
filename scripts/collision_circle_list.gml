@@ -16,10 +16,12 @@ with (obj) {
   if (!notme || id != other.id){
     if (prec = -1){
       if (point_distance(x1, y1, x, y) < radius){
-        i = id
+        var i = id
+      }else{
+        var i = noone
       }
     }else{
-      i = collision_circle(x1, y1, radius, id, prec, false)
+      var i = collision_circle(x1, y1, radius, id, prec, false)
     }
     if (i != noone) ds_list_add(dsid, i);
   }

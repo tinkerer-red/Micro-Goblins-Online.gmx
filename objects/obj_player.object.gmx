@@ -377,7 +377,6 @@ for (var i = 0; i &lt; 3; i++)
   repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_burst, 99);
   repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_4, 1);
   ///////////////////////////////////////////////////////////////////////////
-  repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_cluster, 1);
   repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_slash, 2);
   repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_thrust, 3);
   repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_seeking, 4);
@@ -390,6 +389,7 @@ for (var i = 0; i &lt; 3; i++)
   ///////////////////////////////////////////////////////////////////////////
   repeat( 0 ) ds_priority_add(queue_pre_col_mods, scr_mod_ricochet, 1);
   repeat( 0 ) ds_priority_add(queue_pre_col_mods, scr_mod_boomerang, 2);
+  repeat( 1 ) ds_priority_add(queue_pre_col_mods, scr_mod_cluster, 3);
   repeat( 0 ) ds_priority_add(queue_pre_col_mods, scr_6, 3);
   ///////////////////////////////////////////////////////////////////////////
   repeat( 0 ) ds_priority_add(queue_col_mods, scr_mod_negarang, 1);
@@ -679,6 +679,40 @@ mp_map_syncIn("item_c_pressed",self.item_c_pressed)
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>///player state handler
+
+
+if (self.player_state = e_player_state.move)
+{
+  scr_player_state_move_input(self.player_id_global, 1)
+  
+}
+
+scr_player_state_move(self.player_id_global, 1)
+show_debug_player(player_id_local, "spd = "+string(spd))
+
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>///Cooldown timers
 
 for (var i = 0; i &lt; 3; i++)
@@ -781,7 +815,7 @@ if (self.item_a_pressed || self.item_b_pressed || self.item_c_pressed)
 
 if (self.player_state = e_player_state.move)
 {
-  if (self.item_a || self.item_b || self.item_c)
+  if (self.item_a || self.item_b || self.item_c) || (self.mod_charge_timer &gt;= room_speed)
   {
     self.weap_num_old = self.weap_num
     
@@ -1176,63 +1210,6 @@ if self.player_state = e_player_state.attack &amp;&amp; !self.attack &amp;&amp; 
 
 
 
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///player state handler
-
-
-if (self.player_state = e_player_state.move)
-{
-  scr_player_state_move_input(self.player_id_global, 1)
-  
-}
-
-scr_player_state_move(self.player_id_global, 1)
-show_debug_player(player_id_local, "spd = "+string(spd))
-
-
-
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="5" enumb="18">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>draw_particle_line(prt_sparkle, x, y, mouse_x, mouse_y)
 </string>
           </argument>
         </arguments>
