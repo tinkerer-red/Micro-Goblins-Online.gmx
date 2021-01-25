@@ -1,9 +1,13 @@
 ///draw_laser(path, [width])
 
-var sprite = spr_laser
-var particle = prt_sparkle
-var pathIndex = argument[0]
+var sprite = spr_laser;
+var particle = prt_sparkle;
+var pathIndex = argument[0];
 
+laser_frame++;
+if laser_frame >= sprite_get_number(laser_frame){
+  laser_frame = 0
+}
 
 //////////primitive
 texture_set_repeat(true)
@@ -25,7 +29,7 @@ oldY = path_get_point_y(pathIndex, 0)
 newX = path_get_x(pathIndex, 0)
 newY = path_get_y(pathIndex, 0)
 
-draw_primitive_begin_texture(pr_trianglestrip, sprite_get_texture(sprite, 0))
+draw_primitive_begin_texture(pr_trianglestrip, sprite_get_texture(sprite, laser_frame))
 for (i = q; i <= 1; i += q)
 {
     nextX = path_get_x(pathIndex, min(i + q, 1))
@@ -54,14 +58,15 @@ for (i = q; i <= 1; i += q)
 draw_primitive_end()
 //////////
 
-
 //////////draw last line
 var last_point = path_get_number(pathIndex)-1
-draw_sprite_line_shader(sprite, 
+draw_sprite_line_shader(sprite,
+                    laser_frame,
                     path_get_point_x(pathIndex, last_point), //x1
                     path_get_point_y(pathIndex, last_point), //y1
                     x, //x2
                     y) //y2
+laser_frame++
 //////////
 
 

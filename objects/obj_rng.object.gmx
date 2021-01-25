@@ -123,8 +123,7 @@ if htme_isServer(){
 
 if(variable_global_exists("htme_object")){
       mp_sync()
-//      htme_globalSet("num",global.num,buffer_f32);
-      
+      htme_globalSet("num",global.num,buffer_f32);
       htme_globalSet("rng",string(global.rng),buffer_string);
 }
 </string>
@@ -151,8 +150,11 @@ if(variable_global_exists("htme_object")){
             <kind>1</kind>
             <string>
 if(variable_global_exists("htme_object")){
-  if !htme_isServer(){
+//  if !htme_isServer(){
+  if (global.num &lt; temp_num){
     global.num = temp_num
+    
+    htme_globalSet("num", global.num mod 1000,buffer_f32)
   }
 }
 </string>
@@ -177,21 +179,18 @@ if(variable_global_exists("htme_object")){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Sync num pointer FROM map
-if(variable_global_exists("htme_object")){
-  
-  if !htme_isServer(){
-  if !is_undefined(htme_globalGet("num")) {
-//    if htme_globalGet("num") &lt; global.num{
-//      htme_globalSetFast("num",global.num mod 1000,buffer_f32);
-//    }else{
-    if htme_globalGet("num") != global.num{
-      temp_num = (htme_globalGet("num") mod 1000)
-    }
-  }
-  }
-  }
+            <string>///Sync num pointer TO map
 
+if(variable_global_exists("htme_object")){
+//  if htme_isServer(){
+  if (htme_globalGet("num") &lt; global.num){
+//    if !is_undefined(htme_globalGet("num")) {
+//      if htme_globalGet("num") &lt; global.num{
+        htme_globalSet("num",global.num mod 1000,buffer_f32);
+//      }
+//    }
+  }
+}
 </string>
           </argument>
         </arguments>
@@ -212,17 +211,22 @@ if(variable_global_exists("htme_object")){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Sync num pointer TO map
-
+            <string>///Sync num pointer FROM map
 if(variable_global_exists("htme_object")){
-  if htme_isServer(){
-//    if !is_undefined(htme_globalGet("num")) {
-//      if htme_globalGet("num") &lt; global.num{
-        htme_globalSet("num",global.num mod 1000,buffer_f32);
-//      }
-//    }
+  
+//  if !htme_isServer(){
+  if (htme_globalGet("num") &gt; global.num){
+  if !is_undefined(htme_globalGet("num")) {
+//    if htme_globalGet("num") &lt; global.num{
+//      htme_globalSetFast("num",global.num mod 1000,buffer_f32);
+//    }else{
+    if htme_globalGet("num") != global.num{
+      temp_num = (htme_globalGet("num") mod 1000)
+    }
+  }
   }
 }
+
 </string>
           </argument>
         </arguments>

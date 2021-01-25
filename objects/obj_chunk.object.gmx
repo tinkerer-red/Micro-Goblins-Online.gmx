@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
+            <string>/*
 tile_layer_bottom_grid = -1
 tile_layer_middle_grid = -1
 tile_layer_top_grid = -1
@@ -34,12 +34,22 @@ tile_layer_bottom_background_grid = -1
 tile_layer_middle_background_grid = -1
 tile_layer_top_background_grid = -1
 tile_layer_decor_background_grid = -1
+*/
 
 chunk_data = -1
 should_exist = true
 
+//exterior chunk data
 heightmap_grid = -1
 structures_grid = -1
+
+//interior chunk data
+interior_grid_x = -1
+interior_grid_y = -1
+interior_map = -1
+
+
+terrain_surface = -1
 
 generated = false;
 
@@ -70,7 +80,6 @@ generated = false;
             <string>///Have Existential Crisis
 //find out if you should even exist
 
-
 var margin = global.chunk_handler.margin
 var chunk_dist = global.chunk_handler.chunk_dist
 
@@ -85,6 +94,7 @@ y_diff = closest_y - chunk_y
 
 //if !point_in_rectangle(player.x, player.y, bbox_left-(sprite_width*(chunk_dist+margin)), bbox_top-(sprite_height*(chunk_dist+margin)), bbox_right+(sprite_width*(chunk_dist+margin)), bbox_bottom+(sprite_height*(chunk_dist+margin))){
 if not ((abs(x_diff) &lt; chunk_dist+margin) &amp;&amp; (abs(y_diff) &lt; chunk_dist+margin)){
+  show_debug_message("never had a chance 3")
   should_exist = false
   //show_debug_message("Chunk: ("+string(chunk_x)+","+string(chunk_y)+") Should NOT exists")
 }
@@ -324,45 +334,19 @@ if (should_exist = false){
   exit;
 }
 
-
+//if the cell is an exterior cell
 if ds_exists(global.chunk_handler.world_map, ds_type_map){
   //load the chunk data here
-/*  
-  ///Loading
-  if ds_map_exists(global.chunk_handler.world_map, string(chunk_x)+","+string(chunk_y)){
-    
-    chunk_data = ds_map_create()
-    ds_map_read(chunk_data, global.chunk_handler.world_map[? string(chunk_x)+","+string(chunk_y)])
-    
-    
-    ///make sure to check the chunk to know it saved/loaded properly
-      if !ds_exists(chunk_data, ds_type_map)
-      || chunk_data[? "TileLayerBottom"] = undefined
-      || chunk_data[? "TileLayerMiddle"] = undefined
-      || chunk_data[? "TileLayerTop"] = undefined
-      || chunk_data[? "TileLayerDecor"] = undefined
-      || chunk_data[? "TileLayerBottomBackground"] = undefined
-      || chunk_data[? "TileLayerMiddleBackground"] = undefined
-      || chunk_data[? "TileLayerTopBackground"] = undefined
-      || chunk_data[? "TileLayerDecorBackground"] = undefined
-      {
-        if ds_exists(chunk_data, ds_type_map) ds_map_destroy(chunk_data);
-        show_debug_message("[Chunk][Load]: Chunk Data ("+string(chunk_x)+","+string(chunk_y)+") was currupted, regenerating")
-        chunk_data = chunk_generate()
-      }
+  if !is_interior(x,y){
+    chunk_generate()
   }else{
-    show_debug_message("[Chunk][Load]: Chunk Key ("+string(chunk_x)+","+string(chunk_y)+") was missing.")
-    chunk_data = chunk_generate()
+    chunk_generate_interior_room()
   }
-*/  
-  chunk_generate()
+  
   alarm_set(1,1)
-    
+  
 }else{
-  chunk_data = -1
-  chunk_generate()
-  //event_user(2)
-  //show_debug_message(_filename+" does NOT exists!")
+  
 }
 
 
@@ -389,130 +373,6 @@ if ds_exists(global.chunk_handler.world_map, ds_type_map){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// /* Place Chunk Data
-
-/*
-if ds_exists(chunk_data, ds_type_map) {
-    
-    ///variables
-    var tile_size = 16;
-    var chunk_width = sprite_width/tile_size;
-    var chunk_height = sprite_height/tile_size;
-    
-    if (generated = false){
-        // Decompile Map
-        tile_layer_bottom_grid = ds_grid_create(chunk_width, chunk_height);
-        tile_layer_middle_grid = ds_grid_create(chunk_width, chunk_height);
-        tile_layer_top_grid = ds_grid_create(chunk_width, chunk_height);
-        tile_layer_decor_grid = ds_grid_create(chunk_width, chunk_height);
-        
-        tile_layer_bottom_background_grid = ds_grid_create(chunk_width, chunk_height);
-        tile_layer_middle_background_grid = ds_grid_create(chunk_width, chunk_height);
-        tile_layer_top_background_grid = ds_grid_create(chunk_width, chunk_height);
-        tile_layer_decor_background_grid = ds_grid_create(chunk_width, chunk_height);
-        /*
-              ds_grid_clear(tile_layer_bottom_grid, -1)
-              ds_grid_clear(tile_layer_middle_grid, -1)
-              ds_grid_clear(tile_layer_top_grid, -1)
-              ds_grid_clear(tile_layer_decor_grid, -1)
-              ds_grid_clear(tile_layer_bottom_background_grid, -1)
-              ds_grid_clear(tile_layer_middle_background_grid, -1)
-              ds_grid_clear(tile_layer_top_background_grid, -1)
-              ds_grid_clear(tile_layer_decor_background_grid, -1)
-        */
-/*        
-        ds_grid_read(tile_layer_bottom_grid, chunk_data[? "TileLayerBottom"]);
-        ds_grid_read(tile_layer_middle_grid, chunk_data[? "TileLayerMiddle"]);
-        ds_grid_read(tile_layer_top_grid, chunk_data[? "TileLayerTop"]);
-        ds_grid_read(tile_layer_decor_grid, chunk_data[? "TileLayerDecor"]);
-        
-        ds_grid_read(tile_layer_bottom_background_grid, chunk_data[? "TileLayerBottomBackground"]);
-        ds_grid_read(tile_layer_middle_background_grid, chunk_data[? "TileLayerMiddleBackground"]);
-        ds_grid_read(tile_layer_top_background_grid, chunk_data[? "TileLayerTopBackground"]);
-        ds_grid_read(tile_layer_decor_background_grid, chunk_data[? "TileLayerDecorBackground"]);
-    }
-    
-    // Bottom
-    var b_layer = TileLayerBottom
-    // MIDDLE
-    var m_layer = TileLayerMiddle
-    // TOP
-    var t_layer = TileLayerTop
-    // DECOR
-    var d_layer = TileLayerDecor
-    
-    /*
-    // do a single cycle through the chunk
-    for (var i = 0; i &lt; chunk_width; i++){
-      for (var j = 0; j &lt; chunk_height; j++){
-        //bottom
-        var pos = tile_layer_bottom_grid[# i, j]
-        var bg = tile_layer_bottom_background_grid[# i, j]
-        if (pos != -1) &amp;&amp; (bg != -1) {
-          var ww = background_get_width(bg) div tile_size,
-              xx = pos mod ww,
-              yy = pos div ww;
-          
-          tile_add(bg, xx*tile_size, yy*tile_size, tile_size, tile_size, x+i*tile_size, y+j*tile_size, b_layer);
-        }
-        
-        //middle
-        var pos = tile_layer_middle_grid[# i, j]
-        var bg = tile_layer_middle_background_grid[# i, j]
-        if (pos != -1) &amp;&amp; (bg != -1) {
-          var ww = background_get_width(bg) div tile_size,
-              xx = pos mod ww,
-              yy = pos div ww;
-          
-          tile_add(bg, xx*tile_size, yy*tile_size, tile_size, tile_size, x+i*tile_size, y+j*tile_size, m_layer);
-        }
-        
-        //top
-        var pos = tile_layer_top_grid[# i, j]
-        var bg = tile_layer_top_background_grid[# i, j]
-        if (pos != -1) &amp;&amp; (bg != -1) {
-          var ww = background_get_width(bg) div tile_size,
-              xx = pos mod ww,
-              yy = pos div ww;
-          
-          tile_add(bg, xx*tile_size, yy*tile_size, tile_size, tile_size, x+i*tile_size, y+j*tile_size, t_layer);
-        }
-        
-        //decor
-        var pos = tile_layer_decor_grid[# i, j]
-        var bg = tile_layer_decor_background_grid[# i, j]
-        if (pos != -1) &amp;&amp; (bg != -1) {
-          var ww = background_get_width(bg) div tile_size,
-              xx = pos mod ww,
-              yy = pos div ww;
-          
-          tile_add(bg, xx*tile_size, yy*tile_size, tile_size, tile_size, x+i*tile_size, y+j*tile_size, d_layer);
-        }
-        
-      }
-    }//end of for loops
-    //*/
-//}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>/// Create Chunk Surface  
   var tile_size = global.chunk_handler.tile_size
   var width  = global.chunk_handler.world_width
@@ -523,68 +383,89 @@ if ds_exists(chunk_data, ds_type_map) {
   
   terrain_surface = surface_create(sprite_width, sprite_height)
   
-  if(ds_grid_get_max(heightmap_grid, 0,0,width,height) &lt;=1){ // If max value of our grid is less or equal 1, then poceed without autotiling.
-  
   surface_set_target(terrain_surface)
   //*
-var tiles_x = sprite_width/tile_size;
-var tiles_y = sprite_height/tile_size;
-
-  for(var i = 0; i &lt; tiles_x; i++){
+  var tiles_x = sprite_width/tile_size;
+  var tiles_y = sprite_height/tile_size;
+  
+  
+if !is_interior(x,y){ //exterior cells
+  if(ds_grid_get_max(heightmap_grid, 0,0,width,height) &lt;=1){ // If max value of our grid is less or equal 1, then poceed without autotiling.
+    
+    
+    for(var i = 0; i &lt; tiles_x; i++){
       for(var j = 0; j &lt; tiles_y; j++){
-          
-//              if (show_chunks) {
-//                var col = c_white
-                //humidity and temp
-//                  var col = c_white
-//                  var col_red  = section_percent(temperature_grid[#i, j], 4)*63 *4
-//                  var col_blue = section_percent(humidity_grid[#i, j], 4)*63 *4
-//                  var col = make_colour_rgb(col_red, 255, col_blue)
-//                  draw_set_color(col);
-                
-                //structures
-//                var col = c_white
-//                  var c_value = section_percent(structures_grid[#i, j], 255)*63 *4
-//                  var c_value = section_percent(heightmap_grid[#i, j], 32)*255
-//                  col = make_colour_rgb(c_value,c_value,c_value)
-//                    draw_set_color(col);
-                
-//                if(heightmap_grid[#i, j] &lt;= 0.15){draw_sprite_ext(tile_water, 0, (i*tile_size), (j*tile_size), 1, 1, 0, col, 1);}
-//                else if(heightmap_grid[#i, j] &gt; 0.15 &amp;&amp; heightmap_grid[#i, j] &lt; 0.25){draw_sprite_ext(tile_sand, 0, i*tile_size, j*tile_size, 1, 1, 0, col, 1);}
-//                else if(heightmap_grid[#i, j] &gt;= 0.25 &amp;&amp; heightmap_grid[#i, j] &lt;= 0.6){draw_sprite_ext(tile_grass, 0, i*tile_size, j*tile_size, 1, 1, 0, col, 1);}
-//                else if(heightmap_grid[#i, j] &gt; 0.6 &amp;&amp; heightmap_grid[#i, j] &lt;= 0.7){draw_sprite_ext(tile_dirt, 0, i*tile_size, j*tile_size, 1, 1, 0, col, 1);}
-//                else if(heightmap_grid[#i, j] &gt; 0.7 &amp;&amp; heightmap_grid[#i, j] &lt;= 0.8){draw_sprite_ext(tile_rock, 0, i*tile_size, j*tile_size, 1, 1, 0, col, 1);}
-//                else if(heightmap_grid[#i, j] &gt; 0.8){draw_sprite_ext(tile_snow, 0, i*tile_size, j*tile_size, 1, 1, 0, col, 1);}
-                
-//              }else{ //if debug is off
-                
-                if(heightmap_grid[#i, j] &lt;= 0.15){draw_sprite(tile_water, 0, (i*tile_size), (j*tile_size));}
-                else if(heightmap_grid[#i, j] &gt; 0.15 &amp;&amp; heightmap_grid[#i, j] &lt; 0.25){draw_sprite(tile_sand, 0, i*tile_size, j*tile_size);}
-                else if(heightmap_grid[#i, j] &gt;= 0.25 &amp;&amp; heightmap_grid[#i, j] &lt;= 0.6){draw_sprite(tile_grass, 0, i*tile_size, j*tile_size);}
-                else if(heightmap_grid[#i, j] &gt; 0.6 &amp;&amp; heightmap_grid[#i, j] &lt;= 0.7){draw_sprite(tile_dirt, 0, i*tile_size, j*tile_size);}
-                else if(heightmap_grid[#i, j] &gt; 0.7 &amp;&amp; heightmap_grid[#i, j] &lt;= 0.8){draw_sprite(tile_rock, 0, i*tile_size, j*tile_size);}
-                else if(heightmap_grid[#i, j] &gt; 0.8){draw_sprite(tile_snow, 0, i*tile_size, j*tile_size);}//*/
-//              }
-              
-          }
-      
+    
+        //heightmap tiles
+        if(heightmap_grid[#i, j] &lt;= 0.15){draw_sprite(tile_water, 0, (i*tile_size), (j*tile_size));}
+        else if(heightmap_grid[#i, j] &gt; 0.15 &amp;&amp; heightmap_grid[#i, j] &lt; 0.25){draw_sprite(tile_sand, 0, i*tile_size, j*tile_size);}
+        else if(heightmap_grid[#i, j] &gt;= 0.25 &amp;&amp; heightmap_grid[#i, j] &lt;= 0.6){draw_sprite(tile_grass, 0, i*tile_size, j*tile_size);}
+        else if(heightmap_grid[#i, j] &gt; 0.6 &amp;&amp; heightmap_grid[#i, j] &lt;= 0.7){draw_sprite(tile_dirt, 0, i*tile_size, j*tile_size);}
+        else if(heightmap_grid[#i, j] &gt; 0.7 &amp;&amp; heightmap_grid[#i, j] &lt;= 0.8){draw_sprite(tile_rock, 0, i*tile_size, j*tile_size);}
+        else if(heightmap_grid[#i, j] &gt; 0.8){draw_sprite(tile_snow, 0, i*tile_size, j*tile_size);}//
+        
+        //dungeon tiles
+        if (structure_grid[#i, j] = 1){ draw_sprite(spr_black, 0, i*tile_size, j*tile_size); }
+        if (structure_grid[#i, j] = 2){ draw_sprite(spr_black, 0, i*tile_size, j*tile_size); }
+        if (structure_grid[#i, j] = 3){ draw_sprite(spr_black, 0, i*tile_size, j*tile_size); }
+        if (structure_grid[#i, j] = 4){ draw_sprite(spr_red, 0, i*tile_size, j*tile_size); }
       }
-  
-  if (show_chunks) {
-
-  //draw chunk boarders
-    var chunk_str = "("+string(chunk_x)+","+string(chunk_y)+")";
-    var scale = 1//obj_camera_control.upscale_val/2;
-    draw_set_colour(c_yellow)
-    draw_rectangle(0, 0, sprite_width, sprite_height, true)
-    draw_set_font(font_debug)
-    draw_text_transformed(x,y,chunk_str,1*scale, 1*scale, 0)
-  }
-  
-  
-  surface_reset_target()                
+    }
   }
 
+
+
+}else{ //if it's an interior cell
+  show_debug_message("interior")
+  /*
+  if ds_exists(interior_map, ds_type_map){
+    //first grab the cells
+    var chunk_id_grid  = interior_map[? "chunk_id_grid"]
+    var room_grid = interior_map[? "room_grid"]
+    var grid_x = interior_grid_x
+    var grid_y = interior_grid_y
+    
+    if (id = chunk_id_grid[# grid_x, grid_y]){
+      interior_string = room_grid[# grid_x, grid_y]
+    }
+    
+    */
+  if variable_instance_exists(id, "interior_string") &amp;&amp; (interior_string != undefined){
+    
+    show_debug_message("interior string exists")
+    var str = interior_string
+    
+    show_debug_message("interior_string = "+string(interior_string))
+    show_debug_message("str = "+string(str))
+    
+    for(var i = 0; i &lt; tiles_x; i++){
+      for(var j = 0; j &lt; tiles_y; j++){
+        //map all hex values to a sprite and switch
+        var tile_str = string_copy(str, 1, 2)
+        var switch_str = string_copy(str, 2, 2)
+        str = string_delete(str, 1, 4)
+        show_debug_message("drawing tile now")
+        var value = hex_to_dec(tile_str)
+        draw_sprite(spr_dungeon_tiles, value, i*tile_size, j*tile_size)
+      }
+    }
+  
+  }
+}
+
+
+if (show_chunks) {
+    //draw chunk boarders
+      var chunk_str = "("+string(chunk_x)+","+string(chunk_y)+")";
+      var scale = 1//obj_camera_control.upscale_val/2;
+      draw_set_colour(c_yellow)
+      draw_rectangle(0, 0, sprite_width, sprite_height, true)
+      draw_set_font(font_debug)
+      draw_text_transformed(x,y,chunk_str,1*scale, 1*scale, 0)
+    }
+    
+    
+    surface_reset_target()                
 </string>
           </argument>
         </arguments>
@@ -607,7 +488,9 @@ var tiles_y = sprite_height/tile_size;
             <kind>1</kind>
             <string>///clean up the left over noise
 
-//gpu_noise_free(landmass)
+if variable_instance_exists(id, "landmass"){
+  gpu_noise_free(landmass)
+}
 </string>
           </argument>
         </arguments>
@@ -834,14 +717,23 @@ if (objects_in_chunk = false){
             <string>/// Draw Chunk
 
 if is_visible(){
-  if ds_exists(heightmap_grid, ds_type_grid){
+  if (terrain_surface != -1) || surface_exists(terrain_surface){   ///if ds_exists(heightmap_grid, ds_type_grid){
     draw_set_alpha(1)
     scr_draw_2dig()
     draw_set_alpha(1)
     //draw_self()
   }else{
-    //draw_self()
+    draw_self()
   }
+  
+    if (show_chunks) {
+    var chunk_debug_string = "("+string(chunk_x)+","+string(chunk_y)+")";
+    var scale = obj_camera_control.upscale_val/2;
+    draw_set_colour(c_yellow)
+    draw_set_font(font_debug)
+    draw_text_transformed(x,y,chunk_debug_string,1*scale, 1*scale, 0)
+  }
+
 }
 
 
@@ -866,17 +758,7 @@ if is_visible(){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// /* [Debug] Show Chunks
-
-if (show_chunks) {
-  var chunk_debug_string = "("+string(chunk_x)+","+string(chunk_y)+")";
-  var scale = obj_camera_control.upscale_val/2;
-  draw_set_colour(c_yellow)
-//  draw_rectangle(bbox_left-1, bbox_top-1, bbox_right, bbox_bottom, true)
-  draw_set_font(font_debug)
-  draw_text_transformed(x,y,chunk_debug_string,1*scale, 1*scale, 0)
-}
-</string>
+            <string></string>
           </argument>
         </arguments>
       </action>

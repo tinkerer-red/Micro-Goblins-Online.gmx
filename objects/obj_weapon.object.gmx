@@ -33,7 +33,7 @@ w_damage = 1
 w_knockback = 8
 w_size = 1
 w_speed = 180/(room_speed * 0.5)  //6 degrees at 60fps
-proj_speed = 8
+proj_speed = (15*16)/room_speed //4 pixels per frames at 60 fps = 15 tiles per second
 w_range = 16 * 20
 w_hype = sqrt( power(sprite_height,2) + power(sprite_width,2))
 w_spawn_time_out = room_speed / 4
@@ -57,6 +57,7 @@ attack_speed = 0 //this is used in the future to calculate
 owner_id = -1
 
 attack = true
+proj_spawned = 0
 //attacking = false
 distance_traveled = 0
 dis = 9
@@ -75,7 +76,7 @@ melee_ranged = 0
 is_chained = false
 
 //ranged mods
-
+is_targeting = false
 </string>
           </argument>
         </arguments>
@@ -96,7 +97,7 @@ is_chained = false
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///init variables
+            <string>///init queue variables
 recent_proj_queue = -1
 proj_queue = -1
 
@@ -249,8 +250,10 @@ if self.attack  //if spawning projectiles
   ////////////////////
   ///// Ranged
   ////////////////////
-  if (w_type = weapon_type_range) || (melee_ranged &gt; 0)
+  if ((w_type = weapon_type_range) &amp;&amp; (proj_spawned = 0)) || (melee_ranged &gt; 0)
   {
+    proj_spawned += 1
+    
     var distance = ((self.sprite_width*self.image_xscale)/2 + (self.sprite_height*self.image_yscale)/2) /2 +1
     var xx = x+lengthdir_x(distance, self.direction);
     var yy = y+lengthdir_y(distance, self.direction);
@@ -258,12 +261,12 @@ if self.attack  //if spawning projectiles
     //we store them in a queue so all modifiers can deal with all bullets
     self.recent_proj_queue = ds_queue_create()
     
-    var self.proj = instance_create(xx, yy, obj_weap_proj)
+    var proj = instance_create(xx, yy, obj_weap_proj);
     
-    self.proj.direction = direction
-    self.proj.owner_weap = id
+    proj.direction = direction
+    proj.owner_weap = id
     
-    ds_queue_enqueue(self.recent_proj_queue, self.proj)
+    ds_queue_enqueue(self.recent_proj_queue, proj)
     //we also create a full queue to give these projectiles their step events in the next code block
     self.proj_queue = ds_queue_create()
     
@@ -296,8 +299,9 @@ if self.attack  //if spawning projectiles
   }
   
   
-  
+  ///////////////
   var self.result = scr_run_modifiers() //projectile spawn modifiers
+  ///////////////
   if self.result = true
   {
     ////////////////////
@@ -308,36 +312,12 @@ if self.attack  //if spawning projectiles
       ds_queue_destroy(self.recent_proj_queue)
       recent_proj_queue = -1
       
-      while !ds_queue_empty(self.proj_queue)
-      {
+      //init projectiles
+      while !ds_queue_empty(self.proj_queue){
         var proj = ds_queue_dequeue(self.proj_queue);
-        
-        //copy the last of the queues to the projectile
-        proj.weapon_event_queues = ds_priority_create()
-        ds_priority_copy(proj.weapon_event_queues, self.weapon_event_queues)
-        
-        proj.owner_id = owner_id
-        
-        //proj.direction = direction
-        proj.image_angle = proj.direction-45
-        
-        proj.sprite_index = sprite_proj
-        proj.w_hype = sqrt( power(proj.sprite_height,2) + power(proj.sprite_width,2))
-        //if (proj.sprite_index = sprite_index) {proj.image_angle -= 45}
-        
-        proj.image_xscale = w_size
-        proj.image_yscale = w_size
-        
-        
-        proj.start_x = proj.x
-        proj.start_y = proj.y
-        
-        proj.w_damage = w_damage
-        proj.w_range = w_range
-        proj.w_knockback = w_knockback
-        proj.speed = self.proj_speed //w_speed
-        
+        init_projectile(proj)
       }
+      
       ds_queue_destroy(self.proj_queue)
       proj_queue = -1
       
@@ -718,46 +698,46 @@ if !self.attack &amp;&amp; self.collide  //if officially collided
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//draw sword movement
-/*
-if (attack_speed !=0)
-{var flicks = clamp((swiftness+3)-slowness, 0, 8)}
-else
-{var flicks = 0}
-
-if (flicks != 0)
-{var flicker_rot = attack_speed/(flicks+1)}
-else
-{
-var flicker_rot = 0}
-
-var xx, yy;
-
-
-for (var i = 1; i &lt;= flicks; i++)
-{
-  xx[i]  = self.owner_id.x + lengthdir_x(dis, image_angle+45+flicker_rot*i);
-  yy[i]  = self.owner_id.y + lengthdir_y(dis, image_angle+45+flicker_rot*i);
-
-  draw_sprite_ext(sprite_index,image_index,xx[i],yy[i],image_xscale,image_yscale,image_angle+(flicker_rot*i),image_blend, (image_alpha/flicks)*(flicks-i)); 
-}
-*/
-
-
+            <string>///draw modifiers
 
 // if the weapon in chained, draw the chain
 if (is_chained){
   //for now we're just going to draw a line to player center
     //draw_line_colour(x, y, owner_id.x, owner_id.y, c_black, c_black)
   //not any more bitch!
-  draw_sprite_line_shader(spr_chain, x, y, owner_id.x, owner_id.y)
+  draw_sprite_line_shader(spr_chain, 0, x, y, owner_id.x, owner_id.y)
 }
 
+// if the weapon is targeting draw the target
+if is_targeting{
+  draw_sprite(spr_target, 0, mod_targeting_target_x, mod_targeting_target_y)
+}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///draw self
 
 
 draw_self()
 
-//draw_circle(owner_id.x+lengthdir_x(dis, trav_dis_dir), owner_id.y+lengthdir_y(dis, trav_dis_dir), 1, false)
 </string>
           </argument>
         </arguments>

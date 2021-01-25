@@ -8,7 +8,7 @@ var returned = false
 
 if collide_solid && (self.do_not_collide = false)
 {
-  var hype = sqrt( power(sprite_height,2) + power(sprite_width,2))
+  var hype = fast_hype(sprite_height, sprite_width)
   var xx = x+lengthdir_x(hype/2,direction)
   var yy = y+lengthdir_y(hype/2,direction)
   

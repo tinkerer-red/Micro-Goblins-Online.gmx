@@ -61,7 +61,7 @@
     
     // or 
     // use create_ext script if you need more options
-    landmass = gpu_noise_create(noisetype, seed, width, height, persistence, frequency, scale);
+    landmass = gpu_noise_create_ext(noisetype, seed, width, height, persistence, frequency, scale);
     
     // STEP or DRAW EVENT
     var value = gpu_noise_3d(landmass, x, y, z);

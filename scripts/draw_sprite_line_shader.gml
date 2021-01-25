@@ -1,14 +1,15 @@
-///draw_sprite_line_shader(sprite, x1, y1, x2, y2, [width])
+///draw_sprite_line_shader(sprite, subimg x1, y1, x2, y2, [width])
 
 var sprite = argument[0]
-var x1 = argument[1]
-var y1 = argument[2]
-var x2 = argument[3]
-var y2 = argument[4]
+var subimg = argument[1]
+var x1 = argument[2]
+var y1 = argument[3]
+var x2 = argument[4]
+var y2 = argument[5]
 
 //find out what the ideal width is
-  if (argument_count = 6){
-    ideal_width = argument[5]
+  if (argument_count = 7){
+    ideal_width = argument[6]
   }else{
     ideal_width = sprite_get_height(sprite);
   }
@@ -36,5 +37,5 @@ var y2 = argument[4]
 texture_set_repeat(true);
 shader_set(shStretch);
 shader_set_uniform_f(shader_get_uniform(shStretch, "stretch"), scl);
-draw_sprite_ext(sprite, 0, xx, yy, scl, scale, _dir, c_white, 1);
+draw_sprite_ext(sprite, subimg, xx, yy, scl, scale, _dir, draw_get_color(), 1);
 shader_reset();

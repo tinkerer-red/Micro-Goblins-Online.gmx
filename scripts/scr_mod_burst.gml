@@ -18,22 +18,24 @@ owner_id.active_w_damage = (owner_id.active_w_damage*0.5)//*1.1
 if (w_type = weapon_type_range) || (melee_ranged > 0){
   
   var mod_count = scr_queue_has_mod_count(active_queue, scr_mod_burst)
-  var hype = sqrt( power(sprite_height,2) + power(sprite_width,2))
+  var hype = fast_hype(sprite_height, sprite_width)
   
   var burst_mod_number = mod_count
   var burst_length = 1 + burst_mod_number
-  //we only do 2 for a mod count of one, because we ar only adding 2 bullets to the initial one, so that way we have 3
+  //we only do 2 for a mod count of one, because we are only adding 2 bullets to the initial one, so that way we have 3
   
   while ds_queue_size(self.recent_proj_queue) != 0{
     var _proj = ds_queue_dequeue(self.recent_proj_queue)
     
+    //ds_queue_enqueue(self.proj_queue, _proj)
+    //ds_queue_enqueue(self.recent_proj_queue, _proj)
     
     //make bursts
-    
     for (var i = 1; i <= burst_length; i++){
       var new_proj = instance_create(x, y, obj_weap_proj)
       
       ds_queue_enqueue(self.proj_queue, new_proj)
+      //ds_queue_enqueue(self.recent_proj_queue, new_proj)
       
       var distance = (hype*(2 + burst_mod_number-i));
       new_proj.direction = _proj.direction
@@ -45,17 +47,24 @@ if (w_type = weapon_type_range) || (melee_ranged > 0){
       new_proj.dis_traveled = distance
       
       new_proj.owner_weap = id
-      
     }
   }
+  
+  
+  show_debug_message("ds_queue_size(self.proj_queue) = "+string(ds_queue_size(self.proj_queue)))
+  show_debug_message("ds_queue_size(self.recent_proj_queue) = "+string(ds_queue_size(self.recent_proj_queue)))
+  
+  
 }
 
 
 
 //reload the new projectiles into the original queue
 if (mod_count = 1){
+  show_debug_message("(mod_count = 1)")
   if ds_queue_size(self.recent_proj_queue) = 0{
     ds_queue_copy(self.recent_proj_queue, self.proj_queue)
+    show_debug_message("coppied!")
   }
 }
 

@@ -34,12 +34,13 @@ if (spd != 0)
   }
   
   
-  if place_free(x, y) && !tile_meeting_precise(x, y, TileLayerBottom)
+  if place_free(x, y) && !chunk_tile_meeting_precise(x, y)
   {
     var xx = x+lengthdir_x(spd*lag(), dir)
     var yy = y+lengthdir_y(spd*lag(), dir)
     
-    if place_free(xx, yy) && !tile_meeting_precise(xx, yy, TileLayerBottom)
+    //add speed
+    if place_free(xx, yy) && !chunk_tile_meeting_precise(xx, yy)
     {
       x = xx
       y = yy
@@ -51,11 +52,21 @@ if (spd != 0)
           direction = dir
         }
       }
+      
+      if !(is_interior(x, y)){ //if we're outside
+        if !chunk_tile_free(x, y, "layer_structures"){ //if we're collided with a structure
+            //activate structure activate script
+            //var _struct = chunk_tile_find(x, y, "layer_structures")
+            
+            //this script will find the structure type aswell as all other needed data
+            chunk_interior_create(x, y)
+        }
+      }
     }
-    else
+    else  //if we have collided with something
     {  
       //flat wall check
-      hype = sqrt(power(sprite_width,2)+power(sprite_height,2))
+      hype = fast_hype(sprite_width, sprite_height)
       
       //Check for solid objects aswell as solid tiles
       wall_dir = scr_draw_circle(x,y,hype*0.5*1.25,hype*1.25/21,false);
@@ -68,7 +79,7 @@ if (spd != 0)
           var xx = x+lengthdir_x(dis, dir)
           var yy = y+lengthdir_y(dis, dir)
           
-          if (place_free(xx, yy)) && !tile_meeting_precise(xx, yy, TileLayerBottom){
+          if (place_free(xx, yy)) && !chunk_tile_meeting_precise(xx, yy){
             x=xx
             y=yy
             spd -= dis
@@ -84,8 +95,8 @@ if (spd != 0)
         direction = dir
         exit;
         }else{ //if it's not a solid object check if we're dealing with a tiled object (only saves a few collision calls)
-          if tile_meeting_precise(x+lengthdir_x(spd*lag(),dir-80), y+lengthdir_y(spd*lag(),dir-80), TileLayerBottom)
-            && tile_meeting_precise(x+lengthdir_x(spd*lag(),dir+80), y+lengthdir_y(spd*lag(),dir+80), TileLayerBottom)
+          if chunk_tile_meeting_precise(x+lengthdir_x(spd*lag(),dir-80), y+lengthdir_y(spd*lag(),dir-80))
+            && chunk_tile_meeting_precise(x+lengthdir_x(spd*lag(),dir+80), y+lengthdir_y(spd*lag(),dir+80))
           {
           spd = 0
           direction = dir
@@ -120,7 +131,7 @@ if (spd != 0)
             //show_debug_player(0,"angle = "+string(angle))
             //show_debug_player(0,"angle_to_check = "+string(angle_to_check))
             
-            if place_free(xx, yy) && !tile_meeting_precise(xx, yy, TileLayerBottom){
+            if place_free(xx, yy) && !chunk_tile_meeting_precise(xx, yy){
               x = x+lengthdir_x(spd*speed_multiplier, angle_to_check)
               y = y+lengthdir_y(spd*speed_multiplier, angle_to_check)
                 

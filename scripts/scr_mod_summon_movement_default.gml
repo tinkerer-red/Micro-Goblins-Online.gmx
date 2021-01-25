@@ -10,10 +10,10 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
     
     //init
     if !variable_instance_exists(self, "mod_summon_movement_default_start"){
-      mp_maxrot   = 45   //The number of degrees either side of the current direction that the instance can rotate in a step 
-      mp_rotstep  = 22.5  //The number of degrees either side of the current direction that the instance can check for a collision
-      mp_ahead    = 0  //The number of steps ahead that the instance can check for a collision. Larger values are slower than lower ones.
-      mp_onspot   = true  //Use this to allow the instance to rotate on the spot when no path is found (true) or not (false)
+//      mp_maxrot   = 45   //The number of degrees either side of the current direction that the instance can rotate in a step 
+//      mp_rotstep  = 22.5  //The number of degrees either side of the current direction that the instance can check for a collision
+//      mp_ahead    = 0  //The number of steps ahead that the instance can check for a collision. Larger values are slower than lower ones.
+//      mp_onspot   = true  //Use this to allow the instance to rotate on the spot when no path is found (true) or not (false)
       
       if (enemy != noone){
         mp_xgoal    = enemy.x  //The target x position.
@@ -22,9 +22,15 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
         mp_xgoal    = x  //The target x position.
         mp_ygoal    = y  //The target y position.
       }
-      var max_step_size = 2.2
-      mp_stepsize = max_step_size*0.2  //The speed the instance moves in pixels per step.
-      mp_checkall = false  //Whether to check all instances (true) or just solid ones (false).
+      
+      dir = point_direction(x, y, mp_xgoal, mp_ygoal )
+      spd = 0
+      mod_summon_movement_default_mod_count = scr_queue_has_mod_count(step_event_queues, scr_mod_summon_movement_default)
+      max_step_size = mod_summon_movement_default_mod_count * 0.75 * (60/room_speed) //1 = 0.75, 5 = 3.75
+      wander_min = 16*8
+      wander_max = 16*12
+//      mp_stepsize = max_step_size*0.2  //The speed the instance moves in pixels per step.
+//      mp_checkall = false  //Whether to check all instances (true) or just solid ones (false).
       
       mod_summon_movement_default_start = true
     }
@@ -33,16 +39,83 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
     
     
     
-    var mod_count = scr_queue_has_mod_count(step_event_queues_temp, scr_mod_summon_movement_default)+1
+//    var mod_count = scr_queue_has_mod_count(step_event_queues_temp, scr_mod_summon_movement_default)+1
     
     
     if (mod_summon_movement_default_start = true){
-      mod_summon_movement_default_start = false
+//      mod_summon_movement_default_start = false
       
       if (enemy != noone){
         //tile_layer_find(depth, x, y);
-        mp_potential_settings(mp_maxrot, mp_rotstep, mp_ahead, mp_onspot)
-        mp_potential_step(mp_xgoal, mp_ygoal, mp_stepsize*mod_count, mp_checkall)
+//        mp_potential_settings(mp_maxrot, mp_rotstep, mp_ahead, mp_onspot)
+//        mp_potential_step(mp_xgoal, mp_ygoal, mp_stepsize*mod_count, mp_checkall)
+        if instance_exists(enemy){
+          
+          // move to enemy
+          var goal_direction = point_direction(x, y, enemy.x, enemy.y)
+//          var vector = mean_vectors(spd, dir, max_step_size, goal_direction)
+//          spd = vector[0]
+          dir = goal_direction
+          
+          
+        }
+      }else{
+//          //wander
+//          var vector = mean_vectors(spd, dir, max_step_size, dir+htme_random_range(-2, 2))
+//          spd = vector[0]
+//          dir = vector[1]
+//          var start_dist = point_distance(x, y, start_x, start_y)
+//          if (start_dist > wander_min){
+//            var start_dir = point_direction(x, y, start_x, start_y)
+//            var normalized_speed = normalize(start_dist, wander_min, wander_max)
+//            var vector = mean_vectors(spd, dir, normalized_speed*max_step_size, start_dir)
+//            spd = vector[0]
+//            dir = vector[1]
+//          }
+      }
+        
+        //avoid non-enemy entities 
+        var near_obj = instance_nearest_notme(x, y, obj_entity)
+        if (near_obj = self){show_debug_player(0, "self is near_obj")}
+        
+        //if the nearest obj isnt the enemy move slightly away from it
+        if (near_obj != enemy){
+          var near_obj_dist = point_distance(near_obj.x, near_obj.y, x, y)
+          if (near_obj_dist < sprite_width){
+            var normalized_speed = 1-normalize(near_obj_dist, 0, sprite_width)
+            var inverse_entity_direction = point_direction(near_obj.x, near_obj.y, x, y)
+            var vector = add_vectors(1, dir, 1.5, inverse_entity_direction)
+            //spd = vector[0]
+            dir = vector[1]
+          }
+        }else{
+        //if the nearest obj is the player, circle around it.
+          var near_obj_dist = point_distance(near_obj.x, near_obj.y, x, y)
+          if (near_obj_dist < sprite_width){
+            var a_diff = angle_difference(dir, direction)
+            var normalized_dist = 1-normalize(near_obj_dist, 0, sprite_width)
+            var _sign = sign(a_diff);
+            dir += _sign*(180*normalized_dist)
+          }
+        }
+        
+        
+        //avoid walls
+//        var tile_direction = tile_collision_normal(x, y, max_step_size*1.4, 2, false)
+//        if (tile_direction != -1){
+//          var vector = mean_vectors(spd, dir, max_step_size, tile_direction)
+//          spd = vector[0]
+//          dir = vector[1]
+//        }
+        
+        //actually apply the movement
+        direction = mean(dir, direction) //move half the direction change
+        speed = mean(max_step_size, speed, speed, speed) //only increase 1/4 the speed
+        
+        x += lengthdir_x(max_step_size, direction)
+        y += lengthdir_y(max_step_size, direction)
+        
+        speed = 0
         
         
         ///only update once every 3 seconds
@@ -53,19 +126,19 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
           update_enemy_time += 1*lag()
         }
         
-        if instance_exists(enemy){
-            mp_xgoal    = enemy.x  //The target x position.
-            mp_ygoal    = enemy.y  //The target y position.
-        }else{
-            mp_potential_settings(mp_maxrot, mp_rotstep, mp_ahead, mp_onspot)
-            mp_potential_step(x+1, y+1, mp_stepsize/3, mp_checkall)
-        }
-        
-      }else{ //if no enemy is defined wander
-        //wander code goes here
-        mp_potential_settings(mp_maxrot, mp_rotstep, mp_ahead, mp_onspot)
-        mp_potential_step(x+1, y+1, mp_stepsize/3, mp_checkall)
+//            mp_xgoal    = enemy.x  //The target x position.
+//            mp_ygoal    = enemy.y  //The target y position.
+//        }else{
+//            mp_potential_settings(mp_maxrot, mp_rotstep, mp_ahead, mp_onspot)
+//            mp_potential_step(x+1, y+1, mp_stepsize/3, mp_checkall)
+
       }
+        
+//      }else{ //if no enemy is defined wander
+        //wander code goes here
+//        mp_potential_settings(mp_maxrot, mp_rotstep, mp_ahead, mp_onspot)
+//        mp_potential_step(x+1, y+1, mp_stepsize/3, mp_checkall)
+//      }
       
     }
     
@@ -74,10 +147,10 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
     //reload the modifier
     //  this section is only here so we dont have to run the same mod 5 times but just
     //  once with the same calculations and just multiply the result by 5.
-    if (mod_count = 1){
-      mod_summon_movement_default_start = true;
-    }
-}
+//    if (mod_count = 1){
+//      mod_summon_movement_default_start = true;
+//    }
+
 return false;
 
 

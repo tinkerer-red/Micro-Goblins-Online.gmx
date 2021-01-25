@@ -22,9 +22,20 @@ if (object_index = obj_weap_proj){
     self.pre_collide = false
     
     do_not_collide = true
-
+    
+    if variable_instance_exists(id, "clustered_count"){
+      clustered_count += 1
+    }else{
+      clustered_count = 1
+    }
+    
+    if (clustered_count >= 3){
+      mask_index = -1
+    }
+    
     //////////////////////////Do cluster stuff here
-      repeat(2){ //ideally 3
+    var repeated = ceil(2.25-0.25*clustered_count)
+      repeat(repeated){ //ideally 3
         var proj = instance_copy(false);
         
         //create new queues

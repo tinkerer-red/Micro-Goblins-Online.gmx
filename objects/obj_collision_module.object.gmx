@@ -65,12 +65,7 @@ if(sgs_collision_event_emu_c(global.entity_sgs_field, &lt;collision script&gt; )
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>sgs_step(global.solid_sgs_field,(1000000/room_speed) * 120);
-sgs_step(global.entity_sgs_field,(1000000/room_speed) * 30);
-
-
-
-</string>
+            <string></string>
           </argument>
         </arguments>
       </action>
@@ -92,12 +87,7 @@ sgs_step(global.entity_sgs_field,(1000000/room_speed) * 30);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>global.solid_sgs_field = sgs_field_create(obj_solid,256*3);
-global.entity_sgs_field = sgs_field_create(obj_entity,256*3);
-
-
-
-</string>
+            <string></string>
           </argument>
         </arguments>
       </action>

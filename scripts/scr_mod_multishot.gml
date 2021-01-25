@@ -1,5 +1,7 @@
 /// scr_mod_multishot()
 
+//show_debug_message("scr_mod_multishot")
+
 if (w_type = weapon_type_range) || (melee_ranged > 0){
   
   var mod_count = scr_queue_has_mod_count(active_queue, scr_mod_multishot)
@@ -25,8 +27,6 @@ if (w_type = weapon_type_range) || (melee_ranged > 0){
         new_proj.y = y+lengthdir_y(self.distance, _proj.direction+ (_dir*(i+1) * j) );
         new_proj.direction = point_direction(x,y,new_proj.x,new_proj.y)
         new_proj.owner_weap = id
-
-        
       }
     }
   }

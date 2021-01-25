@@ -93,7 +93,7 @@ while !ds_queue_empty(queue) {
     world_y = (yy - yy mod tile_width) + (_yy * tile_height)
     //*
     //if the tile is ocupied
-    if !tile_free(world_x, world_y, TileLayerBottom){
+    if !chunk_tile_free(world_x, world_y, "layer_obsticals"){
       array[_xx, _yy] = infinity;
       continue;
       // we wont add the next cells because we might pass through the wall

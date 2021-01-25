@@ -1,3 +1,4 @@
+///scr_noise_2dig(x,y)
 // Seeded random number generator. Final seed is based on the init seed.
 
 var xx = argument0;

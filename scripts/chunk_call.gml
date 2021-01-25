@@ -3,10 +3,21 @@
 var cell_x = argument0;
 var cell_y = argument1;
 
+var xx = cell_x*global.chunk_handler.chunk_width
+var yy = cell_y*global.chunk_handler.chunk_height
+
+
 //if the cell already exists, dont try to make a new one
-//with (obj_chunk){
-//  if (chunk_x = cell_x) && (chunk_y = cell_y) return false;
 if ds_map_exists(global.chunk_handler.active_chunks, chunk_string(cell_x, cell_y)){
+  return false;
+}
+
+if chunk_interior_exists(cell_x, cell_y){
+  return false;
+}
+
+///this check might be to laggy remove it later if it causes issues
+if collision_point( xx, yy, obj_chunk, false, false){
   return false;
 }
 

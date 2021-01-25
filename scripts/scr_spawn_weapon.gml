@@ -48,7 +48,7 @@ if (weap.w_type != weapon_type_range)
 weap.image_angle = weap.w_start_dir-45
 weap.direction = self.direction
 weap.dis = distance
-weap.proj_speed += spd
+//weap.proj_speed += spd
 
 weap.active_w_cooldown = self.active_w_spawn_time_out
 

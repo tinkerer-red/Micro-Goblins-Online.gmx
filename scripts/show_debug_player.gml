@@ -2,8 +2,11 @@
 
 if instance_exists(obj_debug)
 {
-  var pid = argument[0]
-  if variable_instance_exists(obj_debug, "debug_string"){
-    obj_debug.debug_string[pid] = obj_debug.debug_string[pid]+string(argument[1])+"#"
+  if htme_isLocal()
+  {
+    var pid = argument[0]
+    if variable_instance_exists(obj_debug, "debug_string"){
+      obj_debug.debug_string[pid] = obj_debug.debug_string[pid]+string(argument[1])+"#"
+    }
   }
 }

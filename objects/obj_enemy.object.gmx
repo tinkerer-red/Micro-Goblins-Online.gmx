@@ -75,6 +75,9 @@ enemy = noone //nearest_enemy(x,y, 16*50)
 
 e_health = 10
 e_damage = 1
+
+start_x = x
+start_y = y
 </string>
           </argument>
         </arguments>

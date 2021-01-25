@@ -5,25 +5,31 @@
 
 if (object_index = obj_weap_proj){
   
+  ///synergies
+  if collide_ground || collide_solid || collide_enemy {
+    //if boomerang proced cancle control
+    return true;
+  }
+  
   var mod_count = scr_queue_has_mod_count(step_event_queues_temp, scr_mod_guiding)
   
   if !variable_instance_exists(self, "mod_guiding_start"){
     mod_guiding_start = true;
     mod_guiding_end = false;
-    mod_guiding_timer = room_speed*(mod_count+1)
+    w_range += 16*8 + (16*8*(mod_count+1)) //16 tiles + 8 tiles per mod count
   }
   
   //show_debug_message("guiding")
   
   if (owner_id.item_a || owner_id.item_b || owner_id.item_c)
-  && (mod_guiding_timer > 0)
+  //&& (mod_guiding_timer > 0)
   && (mod_guiding_end = false){
     
     
     if (mod_guiding_start = true){
       mod_guiding_start = false;
       
-      mod_guiding_timer -= 1*lag()
+//      mod_guiding_timer -= 1*lag()
       
     //prevent the timer from counting down past 0
       if instance_exists(owner_weap){
@@ -31,7 +37,7 @@ if (object_index = obj_weap_proj){
           owner_weap.anim_attack_timer += 1*lag()
         }
       }
-      dis_traveled = (abs(mod_guiding_timer - (room_speed*(mod_count+1))) / (room_speed*(mod_count+1))) * w_range
+//      dis_traveled = (abs(mod_guiding_timer - (room_speed*(mod_count+1))) / (room_speed*(mod_count+1))) * w_range
       
       
       //move the attack into the direction the player is currently pressing

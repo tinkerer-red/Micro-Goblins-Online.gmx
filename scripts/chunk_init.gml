@@ -13,10 +13,15 @@ margin = 4;
 chunk_center_x = chunk_width/2
 chunk_center_y = chunk_height/2
 
+interior_zone_size = 16
+
 world_name = "World"
 
-world_width  = 16*16*128  //131072 16*16*512   //tileSize * chunkSize * number of chunks
-world_height = 16*16*128  //131072 16*16*512
+world_width  = chunk_width*128  //131072 16*16*512   //tileSize * chunkSize * number of chunks
+world_height = chunk_height*128  //131072 16*16*512
+
+world_chunk_width = global.chunk_handler.world_width div global.chunk_handler.chunk_width
+world_chunk_height = global.chunk_handler.world_height div global.chunk_handler.chunk_height
 
 /* World Sizes
 small = 16*16*128 (1 minute to cross at max speed)
@@ -47,9 +52,11 @@ if ds_map_exists(world_map, "Seed"){
   world_map[? "Seed"] = world_seed;
 }
 
-//world_heightmap = gpu_noise_create_ext(0, world_seed, 16, 16, 0.0000001, 0.0625, 2.0)//0.001)
+//world_heightmap = gpu_noise_create_ext(2, world_seed, 16, 16, 0.5, 0.5, 0.5)//0.001)
 
 active_chunks = ds_map_create()
+active_interior_chunks = ds_map_create()
+
 
 
 

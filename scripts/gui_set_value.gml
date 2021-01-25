@@ -12,4 +12,4 @@ for (i = 1; i < n; ++i) {
     }
 }
 
-show_message("gui_get_value: name " + string(argument1) + " don't exist!");
+show_message("gui_set_value: name " + string(argument1) + " don't exist!");

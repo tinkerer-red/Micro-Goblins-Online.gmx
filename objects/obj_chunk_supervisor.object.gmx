@@ -2,7 +2,7 @@
 <object>
   <spriteName>spr_chunk_supervisor</spriteName>
   <solid>0</solid>
-  <visible>-1</visible>
+  <visible>0</visible>
   <depth>0</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
@@ -154,10 +154,10 @@ if (global.chunk_handler.chunk_saved_this_frame = false){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Unload unused cells
+            <string>///Unload/Load cells
 
-
-for (var i = 0; i &lt; instance_number(obj_player); i++){
+var player_count = instance_number(obj_player)
+for (var i = 0; i &lt; player_count; i++){
   var player = instance_find(obj_player,i);
   
   if (player.player_id_local != -1){
@@ -194,30 +194,22 @@ for (var i = 0; i &lt; instance_number(obj_player); i++){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///load cells near local players
-/*
+            <string>///Interior Cells
 
-for (var i = 0; i &lt; instance_number(obj_player); i++){
-  var player = instance_find(obj_player,i);
-  
-  if (player.player_id_local != -1){
-    var new_x = player.xprevious  //x+lengthdir_x(player.spd, player.dir)
-    var new_y = player.yprevious  //y+lengthdir_y(player.spd, player.dir)
-    
-    if (player.x div chunk_width) != (new_x div chunk_width)
-    || (player.y div chunk_height) != (new_y div chunk_height)
-    || sign(player.x) != sign(new_x)
-    || sign(player.y) != sign(new_y)
-    {
-      
+for (var i = 0; i &lt; global.numberOfLocalPlayers; i++){
+  with (obj_player){
+    if (player_id_local = i){ //with the current player
+        show_debug_player(i, "trying to find free tiles")
+        if !chunk_tile_free(x, y, "layer_structures"){
+          //init generation process
+//          show_debug_player(i, "collided with structure")
+        }else{
+//          show_debug_player(i, "free tiles T.T")
+        }
+        
     }
   }
 }
-    
-//*/    
-
-    
-
 </string>
           </argument>
         </arguments>
@@ -400,34 +392,6 @@ file_save_map(_filename, world_map)
             <string>/// Destroy Memory
 
 event_user(15)
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="64">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// /* gpu draw heightmap
-/*
-if (world_heightmap[11] != undefined) &amp;&amp; (world_heightmap[11] != 0){
-  if surface_exists(world_heightmap[11]) draw_surface(world_heightmap[11], 0,0);
-}
-*/
 </string>
           </argument>
         </arguments>

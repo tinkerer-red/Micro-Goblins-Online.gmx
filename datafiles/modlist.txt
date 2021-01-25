@@ -4,7 +4,7 @@
 ===Global===
 Accelerate (Increase attack speed for each consecutive shot. Resets one second after the attack)
 +++Repeater (Full Auto attacks)
-+++Charge (you must charge up the weapon first)
++++Charge (you must charge up the weapon first, massive damage increase)
 Dynamic Charge
 ++Dash
 ++Evade
@@ -13,14 +13,22 @@ continuous (modcount = dmge tick increased, this will make an AOE continuous, or
 +knockback
 +++Enlarge (double the size of the weapon and projectiles)
 +++shrink (half size)
-Force Push (wouldnt this be the same thing as knockback?)
-Force Pull (basically grapple) (happens before melee weapon spawns, happens at collision for ranged)
-tractor beam ^^^
+
+Force Push (at weapon spawn (just after it spawns) force push shit away)
+Force Pull (happens before melee weapon spawns)
+grapple (force pull at collision)    /    lode stone (continuous force pull on hit enemy)
+knockback (force push at collision)
+
+
 Chain Lightning (hits each enemy in a certain distance, 1*modcount = arcs)
 Teleport (teleports the colided to a random open position)
 Frosty (slows the target)
 Blind (when mixed with aoe and continuous, this becomes the fog of war)
 
+==general damage and death effects==
+	Keen (general damage increase, and decapitation increased chance {basicaly just a filler mod for any weapon you have with the mods you already want})
+	Gibbing (general damage increase, and greatly increase gibbing chance by removing the chance for decap {basicaly just a filler mod for any weapon you have with the mods you already want})
+	Incinoration (need shader but make a magma texture slowly consume the players model, then replace with ask which drops to a pile, look around for insperations)
 
 
 ===Melee===
@@ -62,14 +70,15 @@ Quick shot (projectiles move at double speed)
 Drag (projectiles move at half speed)
 +++seeking (heat seeking projectiles)
 +++guided
-Burst (3 shots in a row, with a 2-3 frame delay between them, input direction can be chnged but not movement?)
-Laser/Beam (10 shots in a row, every frame) Drops the damage and cooldown time by a ton.
++++Burst (3 shots in a row, with a 2-3 frame delay between them, input direction can be chnged but not movement?)
++++Laser/Beam (10 shots in a row, every frame) Drops the damage and cooldown time by a ton.
 +++Cluster (it's like buck shot but happens after the projectile was sent out)
 +++Multishot (3 projectile)
 +++Bonus Shot (1 projectile in a random angle)
 +++Mirror Shot (Shoots a projectile behind you)
-Targeting
-Lightning (lightning arcs between your projectiles and your self, similar to laser but more dynamic, 3*modcount lightning arcs)
++++Targeting
++++Air Strike
+Arc Lightning (lightning arcs between your projectiles and your self, similar to laser but more dynamic, 3*modcount lightning arcs)
 
 
 
@@ -92,6 +101,8 @@ Ranged mod, allows for use of pokeball style summons
 [Health] Minion (half default health, but summons 3) (useful for Zerge rushes)
 [Health] Timed (has 9999 health but will die on it's own after a specific amount of time, likely based on health prior to this)
 [Health] Stout (size and damage decreases over time, also relative to health)
+[Health] Dopple Heart (shares player health)
+
 
 [Health] Spectral (ony takes damage from continuous, aoe, air strike, or any other devine style magic mod)
 
@@ -108,6 +119,8 @@ Ranged mod, allows for use of pokeball style summons
 [Attack] Pulling (constant AOE force pull)
 [Attack] Psychic (shoots homing shots (better homing for modcount))
 [Attack] Rotational (rotates and shoots at the player, if the summon is a minion/group they could rotate around each other)
+[Attack] Dopple Strike (shares player attack system)
+[Attack] Looting (less damage, but if it kills an AI enemy (non summon) then when it dies it will drop an item)
 
 --movement (the default is directly walking at the nearest player)
 [Move] Bouncy (spawns in the direction the player was facing, will continue to move and bounce off walls untill dead)
@@ -121,7 +134,10 @@ Ranged mod, allows for use of pokeball style summons
 [Move] Wall Hugger (follows the path of the nearest wall (clockwise), modcount = speed)
 [Move] Burrow (allows the enemy to burrow underground, modcount = higher resurface distance (can not pop out ontop of a player, but can an other enemy))
 [Move] Ghostly, (same thing as burrow, but it fades in and out)
+[Move] Aerial (similar to moms foot in binding of isaac,  a lot like burrow, or ghostly, but drops in from the sky)
 ??[Move] Remote controlled (player controls it, and the player can not move when doing so)
+[Move] Dopple Legs (shares player movement)
+[Move] Greedy (will steal things off the ground, slowing him down and increasing damage, although will prioritize stealing over attacking, drops the last three items it stole on death)
 
 --passive/toy summon mods (not really specific to any particular mod section, like the weapon's toy mods)
 [toy] blood shot (shoots out 6 or 8 projectiles apawn death)

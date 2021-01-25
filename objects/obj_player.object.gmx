@@ -92,6 +92,7 @@ self.vspeed = 0
 self.friction = 0.0
 xpreviousframe = x
 ypreviousframe = y
+in_interior = false
 
 //animation stuff
 anim_rot_active = false
@@ -107,7 +108,7 @@ attacking = false
 post_attack = false
 
 ///Modifier variables
-for (var i = 0; i &lt; 6; i++){
+for (var i = 0; i &lt;= 6; i++){
   item_mods[i] = -1
 }
 for (var i = 0; i &lt; 3; i++){
@@ -370,11 +371,13 @@ for (var i = 0; i &lt; 3; i++)
   repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_range, 8);
   repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_3, 1);
   ///////////////////////////////////////////////////////////////////////////
-  repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_bonusShot, 1);
-  repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_mirrorShot, 2);
-  repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_multishot, 3);
-  repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_inaccurate, 4);
-  repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_burst, 99);
+  repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_targeting, 1);
+  repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_bonusShot, 2);
+  repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_mirrorShot, 3);
+  repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_multishot, 4);
+  repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_inaccurate, 5);
+  repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_burst, 6);
+  repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_airStrike, 99);
   repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_4, 1);
   ///////////////////////////////////////////////////////////////////////////
   repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_slash, 2);
@@ -389,7 +392,7 @@ for (var i = 0; i &lt; 3; i++)
   ///////////////////////////////////////////////////////////////////////////
   repeat( 0 ) ds_priority_add(queue_pre_col_mods, scr_mod_ricochet, 1);
   repeat( 0 ) ds_priority_add(queue_pre_col_mods, scr_mod_boomerang, 2);
-  repeat( 1 ) ds_priority_add(queue_pre_col_mods, scr_mod_cluster, 3);
+  repeat( 0 ) ds_priority_add(queue_pre_col_mods, scr_mod_cluster, 3);
   repeat( 0 ) ds_priority_add(queue_pre_col_mods, scr_6, 3);
   ///////////////////////////////////////////////////////////////////////////
   repeat( 0 ) ds_priority_add(queue_col_mods, scr_mod_negarang, 1);
@@ -606,7 +609,9 @@ if self.player_anim_state &lt;= e_player_anim.dmg{
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>xpreviousframe = x
+            <string>///previous frame x,y
+
+xpreviousframe = x
 ypreviousframe = y
 
 
@@ -689,7 +694,7 @@ if (self.player_state = e_player_state.move)
 }
 
 scr_player_state_move(self.player_id_global, 1)
-show_debug_player(player_id_local, "spd = "+string(spd))
+//show_debug_player(self.player_id_local, "spd = "+string(spd))
 
 
 
@@ -1104,66 +1109,6 @@ if self.player_state = e_player_state.attack &amp;&amp; !self.attack &amp;&amp; 
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///[Modifier] Weapon Spawn Queue
-////////////////////////////////////////////////////////////////////
-//Weapon Spawn Queue
-////////////////////////////////////////////////////////////////////
-if self.player_state = e_player_state.attack &amp;&amp; self.attack &amp;&amp; !self.post_attack//if attacking and spawning the attack
-{
-  //show_debug_message("Weapon Spawn")
-  
-  var self.result = scr_run_modifiers()  //weapon spawn mods //like enlarging the sprite and what not
-    
-  if self.result = true
-  {
-    //ds_queue_copy(weap_queue, recent_weap_queue)
-    
-    var queue_proj_spawn_mods = ds_priority_delete_min(self.weapon_event_queues)
-    var queue_attack_step_mods = ds_priority_delete_min(self.weapon_event_queues)
-    var queue_pre_col_mods = ds_priority_delete_min(self.weapon_event_queues)
-    var queue_col_mods = ds_priority_delete_min(self.weapon_event_queues)
-    
-    while !ds_queue_empty(self.recent_weap_queue){
-        var weap_inst = ds_queue_dequeue(self.recent_weap_queue);
-        weap_inst.weapon_event_queues = ds_priority_create()
-        
-        ds_priority_add(weap_inst.weapon_event_queues, queue_proj_spawn_mods, 1) //projectile spawn mods
-        ds_priority_add(weap_inst.weapon_event_queues, queue_attack_step_mods, 2) //attack step event mods
-        ds_priority_add(weap_inst.weapon_event_queues, queue_pre_col_mods, 3) //pre collision Mods
-        ds_priority_add(weap_inst.weapon_event_queues, queue_col_mods, 4) //collision mods
-        
-        weap_inst.owner_id = self.id
-        weap_inst.w_start_dir = weap_inst.direction
-        
-    }
-    ds_queue_destroy(recent_weap_queue)
-    recent_weap_queue = -1
-    
-    self.attack = true
-    self.post_attack = true
-  }
-}
-
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>///[Modifier] Post Attack Queue
 ////////////////////////////////////////////////////////////////////
 //Post Attack Queue
@@ -1209,6 +1154,66 @@ if self.player_state = e_player_state.attack &amp;&amp; !self.attack &amp;&amp; 
 
 
 
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///[Modifier] Weapon Spawn Queue
+////////////////////////////////////////////////////////////////////
+//Weapon Spawn Queue
+////////////////////////////////////////////////////////////////////
+if self.player_state = e_player_state.attack &amp;&amp; self.attack &amp;&amp; !self.post_attack//if attacking and spawning the attack
+{
+  //show_debug_message("Weapon Spawn")
+  
+  var self.result = scr_run_modifiers()  //weapon spawn mods //like enlarging the sprite and what not
+    
+  if self.result = true
+  {
+    //ds_queue_copy(weap_queue, recent_weap_queue)
+    
+    var queue_proj_spawn_mods = ds_priority_delete_min(self.weapon_event_queues)
+    var queue_attack_step_mods = ds_priority_delete_min(self.weapon_event_queues)
+    var queue_pre_col_mods = ds_priority_delete_min(self.weapon_event_queues)
+    var queue_col_mods = ds_priority_delete_min(self.weapon_event_queues)
+    
+    while !ds_queue_empty(self.recent_weap_queue){
+        var weap_inst = ds_queue_dequeue(self.recent_weap_queue);
+        weap_inst.weapon_event_queues = ds_priority_create()
+        
+        ds_priority_add(weap_inst.weapon_event_queues, queue_proj_spawn_mods, 1) //projectile spawn mods
+        ds_priority_add(weap_inst.weapon_event_queues, queue_attack_step_mods, 2) //attack step event mods
+        ds_priority_add(weap_inst.weapon_event_queues, queue_pre_col_mods, 3) //pre collision Mods
+        ds_priority_add(weap_inst.weapon_event_queues, queue_col_mods, 4) //collision mods
+        
+        weap_inst.owner_id = self.id
+        weap_inst.w_start_dir = weap_inst.direction
+        
+    }
+    ds_queue_destroy(recent_weap_queue)
+    recent_weap_queue = -1
+    
+    self.attack = true
+    self.post_attack = true
+  }
+}
 
 </string>
           </argument>

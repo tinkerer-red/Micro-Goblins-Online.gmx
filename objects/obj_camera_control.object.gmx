@@ -28,8 +28,8 @@
             <string>///allow use of views, and set zooms
 
 //set the ideal resolution
-var ideal_h = 180;
-var ideal_w = 320;
+var ideal_h = 288;
+var ideal_w = 512;
 ideal_volume = ideal_h+ideal_w;
     
 split_boarder = 2

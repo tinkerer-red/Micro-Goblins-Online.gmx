@@ -2,7 +2,7 @@
 
 var o = argument0;
 var ret = false;
-show_debug_message(o)
+//show_debug_message(o)
 // free surface and the buffer
 if (surface_exists(o[@11])) {
     surface_free(o[@11]);

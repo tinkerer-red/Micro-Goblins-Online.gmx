@@ -17,6 +17,7 @@
 //probably more with creative players making use of the (melee + 3x ranged + mutishot + laser)
 if (object_index = obj_weap_proj){
   is_lasered = true
+  laser_frame = 0
   
   //var mod_count = scr_queue_has_mod_count(active_queue, scr_mod_laser)
   //var hype = sqrt( power(sprite_height,2) + power(sprite_width,2))
