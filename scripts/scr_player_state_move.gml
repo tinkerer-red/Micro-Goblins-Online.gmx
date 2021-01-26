@@ -33,7 +33,7 @@ if (spd != 0)
       {dir = direction}
   }
   
-  
+  show_debug_message("about to check for tile collisions")
   if place_free(x, y) && !chunk_tile_meeting_precise(x, y)
   {
     var xx = x+lengthdir_x(spd*lag(), dir)

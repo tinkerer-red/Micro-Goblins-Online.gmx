@@ -94,7 +94,6 @@ y_diff = closest_y - chunk_y
 
 //if !point_in_rectangle(player.x, player.y, bbox_left-(sprite_width*(chunk_dist+margin)), bbox_top-(sprite_height*(chunk_dist+margin)), bbox_right+(sprite_width*(chunk_dist+margin)), bbox_bottom+(sprite_height*(chunk_dist+margin))){
 if not ((abs(x_diff) &lt; chunk_dist+margin) &amp;&amp; (abs(y_diff) &lt; chunk_dist+margin)){
-  show_debug_message("never had a chance 3")
   should_exist = false
   //show_debug_message("Chunk: ("+string(chunk_x)+","+string(chunk_y)+") Should NOT exists")
 }
@@ -416,7 +415,7 @@ if !is_interior(x,y){ //exterior cells
 
 
 }else{ //if it's an interior cell
-  show_debug_message("interior")
+  //show_debug_message("interior")
   /*
   if ds_exists(interior_map, ds_type_map){
     //first grab the cells
@@ -432,11 +431,11 @@ if !is_interior(x,y){ //exterior cells
     */
   if variable_instance_exists(id, "interior_string") &amp;&amp; (interior_string != undefined){
     
-    show_debug_message("interior string exists")
+    //show_debug_message("interior string exists")
     var str = interior_string
     
-    show_debug_message("interior_string = "+string(interior_string))
-    show_debug_message("str = "+string(str))
+    //show_debug_message("interior_string = "+string(interior_string))
+    //show_debug_message("str = "+string(str))
     
     for(var i = 0; i &lt; tiles_x; i++){
       for(var j = 0; j &lt; tiles_y; j++){
@@ -444,7 +443,6 @@ if !is_interior(x,y){ //exterior cells
         var tile_str = string_copy(str, 1, 2)
         var switch_str = string_copy(str, 2, 2)
         str = string_delete(str, 1, 4)
-        show_debug_message("drawing tile now")
         var value = hex_to_dec(tile_str)
         draw_sprite(spr_dungeon_tiles, value, i*tile_size, j*tile_size)
       }
@@ -739,26 +737,6 @@ if is_visible(){
 
 
 </string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string></string>
           </argument>
         </arguments>
       </action>

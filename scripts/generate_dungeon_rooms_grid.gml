@@ -16,12 +16,12 @@ var yy = 1+size
 var xx =  left_border+floor(scr_noise_2dig(chunk_x*743207, chunk_y*743207) * (right_border - left_border))
 //xx = the left center block of size
 
-var str = dungeon_room_get_str(chunk_x+xx*blazeIt, chunk_y+yy*blazeIt, "treasure", size)
+//var str = dungeon_room_get_str(chunk_x+xx*blazeIt, chunk_y+yy*blazeIt, "treasure", size)
 
 var x1 = xx-left_border
 var y1 = height-yy
 
-var str = dungeon_room_get_str(chunk_x+x1*blazeIt, chunk_y+y1*blazeIt, "treasure", size)
+var str = dungeon_room_get_str(chunk_x+x1*blazeIt, chunk_y+y1*blazeIt, "center", size)
 
 //once we have the string run it through a function to be able to split the string up into the chunks we tell the function what the top left most corner is,
 // and it will iterate through out the string cutting it down to size for each chunk. 
@@ -38,7 +38,7 @@ var y1 = height-1
 var str = dungeon_room_get_str(chunk_x+x1*blazeIt, chunk_y+y1*blazeIt, "spawn")
 chunkify_interior_string(x1, y1, str, map)
 
-
+/*
 ///Place the Boss Room
 var i = 0;
 var finalized = false

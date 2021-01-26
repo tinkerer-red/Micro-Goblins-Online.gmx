@@ -62,7 +62,7 @@
     <extension index="2">extensions\HOA gGUI - Graphical Interface</extension>
     <extension index="3">extensions\DSPrint</extension>
     <extension index="4">extensions\NoisePack GPU</extension>
-    <extension index="6">extensions\NoisePack CPU</extension>
+    <extension index="5">extensions\NoisePack CPU</extension>
   </NewExtensions>
   <sounds name="sound"/>
   <sprites name="sprites">

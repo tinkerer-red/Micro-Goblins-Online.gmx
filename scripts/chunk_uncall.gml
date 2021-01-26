@@ -30,8 +30,8 @@ if (chunk = noone){
       //show_debug_message("map = "+string(map))
       
       var chunk_id_grid = map[? "chunk_id_grid"]
-      var chunk = chunk_id_grid[# grid_x, grid_y]
-      show_debug_message("chunk = "+string(chunk))
+      var chunk = chunk_id_grid[# abs(grid_x), abs(grid_y)]
+      
     }
   }
 }
@@ -57,7 +57,6 @@ if (chunk >= 0){ //if the chunk isnt in the negative values
         var player = instance_nearest(x+sprite_width/2, y+sprite_height/2, obj_player)
         if !point_in_rectangle(player.x, player.y, bbox_left-(sprite_width*(chunk_dist)), bbox_top-(sprite_height*(chunk_dist)), bbox_right+(sprite_width*(chunk_dist)), bbox_bottom+(sprite_height*(chunk_dist))){
           should_exist = false;
-          show_debug_message("never had a chance 1")
           event_user(1)
           //alarm_set(3,1);
           continue;

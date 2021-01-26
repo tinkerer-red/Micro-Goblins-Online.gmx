@@ -43,7 +43,7 @@ while not (key = undefined){
 var interior_map = ds_map_create()
 var room_grid = ds_grid_create(16, 16) //all interiors will be 16x16 rooms large a room is 3x3 chunks
 var room_connections_grid = ds_grid_create(16, 16) //all interiors will be 16x16 rooms large a room is 3x3 chunks
-var chunk_id_grid = ds_grid_create(48,48)
+var chunk_id_grid = ds_grid_create(16,16)
 ds_grid_clear(room_grid, "")
 ds_grid_clear(chunk_id_grid, noone)
 
@@ -65,7 +65,8 @@ var _struct = chunk_tile_find(xx, yy, "layer_structures")
 
 
 
-
+show_debug_message("chunk_interior_create switch start")
+show_debug_message("_struct = "+string(_struct))
 //generate the interior based on what structure it was
 switch(_struct)
 {

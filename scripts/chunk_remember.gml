@@ -21,6 +21,7 @@ if is_interior(xx, yy){
     var chunk_id_grid = map[? "chunk_id_grid"]
     if (chunk_id_grid[# grid_x, grid_y] = noone){
         //add it to the slot
+        show_debug_message("writing to the chunk_id_grid next")
         chunk_id_grid[# grid_x, grid_y] = chunk_id
         
         chunk_id.image_blend = c_lime

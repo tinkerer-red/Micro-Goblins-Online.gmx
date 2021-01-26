@@ -58,10 +58,16 @@ if (chunk_id.chunk_y*height) != 0 {
     
     
 //get the tile
+
+show_debug_message("chunk_id = "+string(chunk_id))
+show_debug_message("_layer = "+string(_layer))
+show_debug_message("_chunk_x = "+string(_chunk_x))
+show_debug_message("_chunk_y = "+string(_chunk_y))
+
 var _tile = chunk_tile_layer_find(chunk_id, _layer, _chunk_x, _chunk_y);
 
 
-if (_tile = 0) return _tile;
+if (_tile != 0) return _tile;
 
 return false;
 

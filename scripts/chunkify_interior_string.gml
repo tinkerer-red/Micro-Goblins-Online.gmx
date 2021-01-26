@@ -1,11 +1,20 @@
 ///chunkify_interior_string(x1, y1, string, interior_map)
 
+//show_debug_message("==================================================")
+//show_debug_message("==================================================")
+//show_debug_message("==================================================")
+//show_debug_message("chunkifying string")
+//show_debug_message("==================================================")
+//show_debug_message("==================================================")
+//show_debug_message("==================================================")
+
+
 var _x = argument0;
 var _y = argument1;
 var room_string = argument2;
 var map = argument3;
 
-var room_cells = 16
+var room_cells = global.chunk_handler.chunk_width div global.chunk_handler.tile_size
 
 
 var width  = string_copy(room_string, 1, 2)
@@ -15,16 +24,25 @@ var height = string_copy(room_string, 1, 2)
 room_string = string_delete(room_string, 1, 2)
 
 
-var width  = hex_to_dec(width)-1;
-var height = hex_to_dec(width)-1;
+var width  = hex_to_dec(width);
+var height = hex_to_dec(width);
+
+show_debug_message("width = "+string(width))
+show_debug_message("height = "+string(height))
 
 //CHECK TO MAKE SURE ALL ROOMS WILL BE EMPTY BEFORE WE WRITE
 var room_grid = map[? "room_grid"]
 for(var chunk_x = 0; chunk_x <= width; chunk_x++){
     for(var chunk_y = 0; chunk_y <= height; chunk_y++){
-        if (_x+chunk_x < 0) || (_x+chunk_x > width) return false;
-        if (_y+chunk_y < 0) || (_y+chunk_y > height) return false;
-        if (room_grid[_x+chunk_x, _y+chunk_y] != "") return false;
+        if (_x+chunk_x < 0) || (_x+chunk_x > global.chunk_handler.interior_zone_size){
+          //show_debug_message("failed number one")
+          return false;}
+        if (_y+chunk_y < 0) || (_y+chunk_y > global.chunk_handler.interior_zone_size){
+          //show_debug_message("failed number two")
+          return false;}
+        if (room_grid[# _x+chunk_x, _y+chunk_y] != ""){
+          //show_debug_message("failed number three")
+          return false;}
     }
 }
 
@@ -35,12 +53,15 @@ room_string = string_delete(room_string, 1, 4)
 
 //get the string grid
 var room_grid = map[? "room_grid"]
-
+//show_debug_message("about to for loop 1")
+//show_debug_message("height = "+string(height))
 //scroll across the top line of the top chunks
-for(var chunk_y = 0; chunk_y <= height; chunk_y++){
+for(var chunk_y = 0; chunk_y < height; chunk_y++){
     for(var row = 0; row < room_cells; row++){
-        for(var chunk_x = 0; chunk_x <= width; chunk_x++){
+        for(var chunk_x = 0; chunk_x < width; chunk_x++){
+            
             room_grid[# _x+chunk_x, _y+chunk_y] += string_copy(room_string, 1, room_cells*4)
+            show_debug_message("room_grid[# "+string(_x+chunk_x)+", "+string(_y+chunk_y)+"] = "+room_grid[# _x+chunk_x, _y+chunk_y])
             room_string = string_delete(room_string, 1, room_cells*4)
         }
     }
@@ -59,13 +80,13 @@ var room_connections_grid = map[? "room_connections_grid"]
 for(var chunk_x = 0; chunk_x <= width; chunk_x++){
     for(var chunk_y = 0; chunk_y <= height; chunk_y++){
         //up
-        if (chunk_y > 0) room_connections_grid[_x+chunk_x, _y+chunk_y] += up
+        if (chunk_y > 0) room_connections_grid[# _x+chunk_x, _y+chunk_y] += up
         //right
-        if (chunk_x < width) room_connections_grid[_x+chunk_x, _y+chunk_y] += right
+        if (chunk_x < width) room_connections_grid[# _x+chunk_x, _y+chunk_y] += right
         //down
-        if (chunk_y < height) room_connections_grid[_x+chunk_x, _y+chunk_y] += down
+        if (chunk_y < height) room_connections_grid[# _x+chunk_x, _y+chunk_y] += down
         //left
-        if (chunk_x > 0) room_connections_grid[_x+chunk_x, _y+chunk_y] += left
+        if (chunk_x > 0) room_connections_grid[# _x+chunk_x, _y+chunk_y] += left
     }
 }
 

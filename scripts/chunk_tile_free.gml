@@ -49,11 +49,15 @@ if (chunk_id.chunk_x*width) != 0 {
   var _chunk_x = xx mod (chunk_id.chunk_x*width)
 }else{
   var _chunk_x = xx
+  //these checks are just here to prevent negative number errors, with negative chunks
+  if (sign(_chunk_x) = -1){  _chunk_x += width}
 }
 if (chunk_id.chunk_y*height) != 0 {
   var _chunk_y = yy mod (chunk_id.chunk_y*height)
 }else{
   var _chunk_y = yy
+  //these checks are just here to prevent negative number errors, with negative chunks
+  if (sign(_chunk_y) = -1){  _chunk_y += height}
 }
     
     

@@ -88,8 +88,13 @@ if (map[? "zone_pos"] != zone_pos){
 }
 
 //if we have found our map, grab the grid
-var grid_x = ext_chunk_x - zone_x;
-var grid_y = ext_chunk_y - zone_y;
+var grid_x = ext_chunk_x - zone_x*global.chunk_handler.interior_zone_size;
+var grid_y = ext_chunk_y - zone_y*global.chunk_handler.interior_zone_size;
+
+//negative value check
+if (sign(grid_x) = -1){  grid_x += global.chunk_handler.interior_zone_size}
+if (sign(grid_y) = -1){  grid_y += global.chunk_handler.interior_zone_size}
+
 
 array[0] = grid_x;
 array[1] = grid_y;
