@@ -1,14 +1,29 @@
 ///interior_chunk_find_grid_pos(chunk_x, chunk_y[, map [, zone]])
+
+
 /*
 array[0] = grid_x;
 array[1] = grid_y;
 array[2] = map;
 */
 
+
+
+
 //init
 var array;
 var chunk_x = argument[0];
 var chunk_y = argument[1];
+
+if (object_index = obj_chunk){
+  if variable_instance_exists(self, "interior_map")
+  && variable_instance_exists(self, "interior_grid_x")
+  && variable_instance_exists(self, "interior_grid_y"){
+    array[0] = interior_grid_x;
+    array[1] = interior_grid_y;
+    array[2] = interior_map;
+  }
+}
 
 var ext_chunk_x = chunk_x - global.chunk_handler.world_chunk_width
 var ext_chunk_y = chunk_y
@@ -52,7 +67,6 @@ if (argument_count < 3){
 
 
 //find out if the zone is inside the list of active interiors map
-
 if (argument_count < 3){
   var found_map = false
   

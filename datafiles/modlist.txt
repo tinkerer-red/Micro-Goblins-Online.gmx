@@ -2,6 +2,7 @@
 
 
 ===Global===
+Latent (delays the weapon spawn)
 Accelerate (Increase attack speed for each consecutive shot. Resets one second after the attack)
 +++Repeater (Full Auto attacks)
 +++Charge (you must charge up the weapon first, massive damage increase)

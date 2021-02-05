@@ -32,11 +32,27 @@ var xx = argument[0] div tile_size;
 var yy = argument[1] div tile_size;
 
 //find the chunk id
-var chunk_str = "("+string(xx div width)+","+string(yy div height)+")";
-if ds_map_exists(active_chunks, chunk_str){
-  var chunk_id = active_chunks[? chunk_str]
+if is_interior(argument[0], argument[1]){
+    var array = interior_chunk_find_grid_pos(xx div width , yy div height)
+    if (array = undefined){
+      return false;
+    }
+    var grid_x = array[0]
+    var grid_y = array[1]
+    var map = array[2]
+    
+    var grid = map[? "chunk_id_grid"]
+    var chunk_id = grid[# grid_x, grid_y]
+    if (chunk_id = noone){
+      return false;
+    }
 }else{
-  return false
+    var chunk_str = "("+string(xx div width)+","+string(yy div height)+")";
+    if ds_map_exists(active_chunks, chunk_str){
+      var chunk_id = active_chunks[? chunk_str]
+    }else{
+      return false
+    }
 }
     
 //grab the chunk's requested grid

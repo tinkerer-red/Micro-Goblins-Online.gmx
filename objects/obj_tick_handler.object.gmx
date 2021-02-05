@@ -26,9 +26,11 @@
           <argument>
             <kind>1</kind>
             <string>tick_timer = 0
-tps = 15
-tick_step = 15/room_speed
+tps = 10
+tick_step = room_speed/tps
 ticked_over = false
+
+audio_charge = -1
 </string>
           </argument>
         </arguments>
@@ -53,13 +55,14 @@ ticked_over = false
             <kind>1</kind>
             <string>///keep track of ticks
 
-tick_step = 15/room_speed
+tick_step = room_speed/tps
 
-tick_timer += tick_step
+tick_timer += 1*lag()
 
-if (tick_timer div tps){
-  tick_timer -= tps
+if (tick_timer div tick_step){
+  tick_timer -= tick_step
   ticked_over = true
+  //audio_charge = audio_play_sound(snd_mod_charge, 1,false)
 }else{
   if (ticked_over){
     ticked_over = false

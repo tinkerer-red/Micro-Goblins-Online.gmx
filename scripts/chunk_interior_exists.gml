@@ -2,7 +2,7 @@
 
 var array = interior_chunk_find_grid_pos(argument0, argument1)
 if (array = undefined){
-  chunk_uncall_forced()
+  //chunk_uncall_forced()
   return false;
 }
 var grid_x = array[0]

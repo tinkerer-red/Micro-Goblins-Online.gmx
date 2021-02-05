@@ -59,6 +59,27 @@ generated = false;
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>image_alpha = 0.25
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="2" enumb="3">
       <action>
@@ -429,7 +450,7 @@ if !is_interior(x,y){ //exterior cells
     }
     
     */
-  if variable_instance_exists(id, "interior_string") &amp;&amp; (interior_string != undefined){
+  if variable_instance_exists(id, "interior_string") &amp;&amp; (interior_string != ""){
     
     //show_debug_message("interior string exists")
     var str = interior_string
@@ -439,11 +460,7 @@ if !is_interior(x,y){ //exterior cells
     
     for(var i = 0; i &lt; tiles_x; i++){
       for(var j = 0; j &lt; tiles_y; j++){
-        //map all hex values to a sprite and switch
-        var tile_str = string_copy(str, 1, 2)
-        var switch_str = string_copy(str, 2, 2)
-        str = string_delete(str, 1, 4)
-        var value = hex_to_dec(tile_str)
+        var value = obsticals_grid[# i, j]
         draw_sprite(spr_dungeon_tiles, value, i*tile_size, j*tile_size)
       }
     }
@@ -725,7 +742,7 @@ if is_visible(){
   }
   
     if (show_chunks) {
-    var chunk_debug_string = "("+string(chunk_x)+","+string(chunk_y)+")";
+    var chunk_debug_string = "("+string(chunk_x)+","+string(chunk_y)+")"+"#x = "+string(x)+"#y = "+string(y);
     var scale = obj_camera_control.upscale_val/2;
     draw_set_colour(c_yellow)
     draw_set_font(font_debug)

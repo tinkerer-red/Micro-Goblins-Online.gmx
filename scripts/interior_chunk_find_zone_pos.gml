@@ -4,6 +4,13 @@ var array;
 var chunk_x = argument0;
 var chunk_y = argument1;
 
+if (object_index = obj_chunk){
+  if variable_instance_exists(self, "interior_map"){
+    zone_pos = interior_map[? "zone_pos"];
+    return zone_pos;
+  }
+}
+
 var world_chunk_width = global.chunk_handler.world_width div global.chunk_handler.chunk_width
 var world_chunk_height = global.chunk_handler.world_height div global.chunk_handler.chunk_height
 

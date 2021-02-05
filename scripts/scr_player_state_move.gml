@@ -33,7 +33,7 @@ if (spd != 0)
       {dir = direction}
   }
   
-  show_debug_message("about to check for tile collisions")
+  //show_debug_message("about to check for tile collisions")
   if place_free(x, y) && !chunk_tile_meeting_precise(x, y)
   {
     var xx = x+lengthdir_x(spd*lag(), dir)
@@ -53,6 +53,8 @@ if (spd != 0)
         }
       }
       
+      
+      ///check to see if we collided with a interior cell structure
       if !(is_interior(x, y)){ //if we're outside
         if !chunk_tile_free(x, y, "layer_structures"){ //if we're collided with a structure
             //activate structure activate script
@@ -62,6 +64,8 @@ if (spd != 0)
             chunk_interior_create(x, y)
         }
       }
+      
+      
     }
     else  //if we have collided with something
     {  

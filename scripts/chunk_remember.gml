@@ -21,7 +21,7 @@ if is_interior(xx, yy){
     var chunk_id_grid = map[? "chunk_id_grid"]
     if (chunk_id_grid[# grid_x, grid_y] = noone){
         //add it to the slot
-        show_debug_message("writing to the chunk_id_grid next")
+        //show_debug_message("writing to the chunk_id_grid next")
         chunk_id_grid[# grid_x, grid_y] = chunk_id
         
         chunk_id.image_blend = c_lime
@@ -29,10 +29,14 @@ if is_interior(xx, yy){
         chunk_id.interior_grid_y = grid_y
         chunk_id.interior_map = map
     }else{
-        chunk_uncall_forced()
+        //chunk_uncall_forced()
     }
     
     
 }else{
     ds_map_add(active_chunks, "("+string(argument0)+","+string(argument1)+")", argument2)
 }
+/*
+show_debug_message("remember")
+var _j = json_encode(active_chunks)
+show_debug_message(_j)

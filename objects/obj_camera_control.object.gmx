@@ -624,40 +624,83 @@ else
 
 for (var i = 0; i &lt; global.numberOfLocalPlayers; i++){
   
-  //view_center_x = view_xview[i]+view_wview[i]/2
-  //view_center_y = view_yview[i]+view_hview[i]/2
-  /*
-  show_debug_message("view_current = "+string(i))
-  if (i = 0){
-    show_debug_message("view_center_x = "+string(view_center_x))
-    show_debug_message("view_center_y = "+string(view_center_y))
-  }//*/
   with view_object[i]{
-    ideal_x = self.x //+ clamp(lengthdir_x((view_wview[i]*0.25)*(self.spd/2), self.dir),-(view_wview[i]*0.25),view_wview[i]*0.25)
-    ideal_y = self.y //+ clamp(lengthdir_y((view_hview[i]*0.25)*(self.spd/2), self.dir),-(view_hview[i]*0.25),view_hview[i]*0.25)
-    
-    //draw_set_color(c_red)
-    //draw_arrow(x,y,other.view_center_x,other.view_center_y,5)
-    
-    //draw_set_color(c_green)
-    //draw_arrow(x,y,ideal_x,ideal_y,5)
-    
-    //final_x = other.view_center_x+dis_x
-    //final_y = other.view_center_y+dis_y
-    
-    //draw_set_color(c_yellow)
-    //draw_arrow(x,y,final_x,final_y,5)
-    //draw_set_color(c_white)
-    view_xview[i] = ideal_x-view_wview[i]/2
-    view_yview[i] = ideal_y-view_hview[i]/2
-    /*
-    if (i = 0){
-      view_center_x = view_xview[i]+view_wview[i]/2
-      view_center_y = view_yview[i]+view_hview[i]/2
+    if !is_interior(x,y)
+    {
+      ideal_x = x //+ clamp(lengthdir_x((view_wview[i]*0.25)*(self.spd/2), self.dir),-(view_wview[i]*0.25),view_wview[i]*0.25)
+      ideal_y = y //+ clamp(lengthdir_y((view_hview[i]*0.25)*(self.spd/2), self.dir),-(view_hview[i]*0.25),view_hview[i]*0.25)
       
-      show_debug_message("view_center_x = "+string(view_center_x))
-      show_debug_message("view_center_y = "+string(view_center_y))
-    }//*/
+      view_xview[i] = ideal_x-view_wview[i]/2
+      view_yview[i] = ideal_y-view_hview[i]/2
+      
+      if (!global.debug) &amp;&amp; (variable_global_exists("chunk_handler"))
+      {
+        view_xview[i] = clamp(view_xview[i], 0,  global.chunk_handler.world_width-view_wview[i])
+        view_yview[i] = clamp(view_yview[i], 0,  global.chunk_handler.world_height-view_hview[i])
+      }
+    
+    
+    }else{//if the player is inside an interior cell
+      ideal_x = x //+ clamp(lengthdir_x((view_wview[i]*0.25)*(self.spd/2), self.dir),-(view_wview[i]*0.25),view_wview[i]*0.25)
+      ideal_y = y //+ clamp(lengthdir_y((view_hview[i]*0.25)*(self.spd/2), self.dir),-(view_hview[i]*0.25),view_hview[i]*0.25)
+      
+      view_xview[i] = ideal_x-view_wview[i]/2
+      view_yview[i] = ideal_y-view_hview[i]/2
+      
+      if (global.debug)
+      {
+        //find the chunks
+        var array = xy_to_chunk(x,y);
+        var chunk_x = array[0]
+        var chunk_y = array[1]
+        
+        //find the interior map and grid pos
+        var array = interior_chunk_find_grid_pos(chunk_x, chunk_y);
+        if (array = undefined){
+            continue;
+          }
+        grid_x = array[0];
+        grid_y = array[1];
+        map = array[2];
+        
+        //find the bounding limits
+        var array = interior_rooms_connected_to_bbox(map, grid_x, grid_y);
+        var tile_size = global.chunk_handler.tile_size
+        
+        bbox_view_up    = array[0]-tile_size
+        bbox_view_down  = array[1]+tile_size
+        bbox_view_left  = array[2]-tile_size
+        bbox_view_right = array[3]+tile_size
+        
+        show_debug_player(i, "x = "+string(x))
+        show_debug_player(i, "y = "+string(y))
+        show_debug_player(i, "bbox_view_up = "+string(bbox_view_up))
+        show_debug_player(i, "bbox_view_down = "+string(bbox_view_down))
+        show_debug_player(i, "bbox_view_left = "+string(bbox_view_left))
+        show_debug_player(i, "bbox_view_right = "+string(bbox_view_right))
+        
+        //possition x
+        if (view_wview[i] &gt; (bbox_view_right - bbox_view_left)){
+          var ideal_x = bbox_view_left + (bbox_view_right-bbox_view_left)/2;
+          view_xview[i] = ideal_x-view_wview[i]/2
+        }else{
+          ideal_x = x //+ clamp(lengthdir_x((view_wview[i]*0.25)*(self.spd/2), self.dir),-(view_wview[i]*0.25),view_wview[i]*0.25)
+          view_xview[i] = ideal_x-view_wview[i]/2
+          view_xview[i] = clamp(view_xview[i], bbox_view_left, bbox_view_right-view_wview[i])
+        }
+        
+        //possition y
+        if (view_hview[i] &gt; (bbox_view_down - bbox_view_up)){
+          var ideal_y = bbox_view_up + (bbox_view_down-bbox_view_up)/2;
+          view_yview[i] = ideal_y-view_hview[i]/2
+        }else{
+          ideal_y = y //+ clamp(lengthdir_x((view_wview[i]*0.25)*(self.spd/2), self.dir),-(view_wview[i]*0.25),view_wview[i]*0.25)
+          view_yview[i] = ideal_y-view_hview[i]/2
+          view_yview[i] = clamp(view_yview[i], bbox_view_up, bbox_view_down-view_hview[i])
+        }
+        
+      }
+    }
   }
 }
 
@@ -665,88 +708,37 @@ for (var i = 0; i &lt; global.numberOfLocalPlayers; i++){
 
 
 
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// //draw the views to the application surface
-/*
 
-if (global.numberOfLocalPlayers = 1)
-{
-  if view_visible[0]
-    {
-      view_xport[0] = 0
-      view_yport[0] = 0
-    }
-}
-else
-{
-  var top_split    = floor(global.numberOfLocalPlayers/2)
-  var bottom_split = ceil(global.numberOfLocalPlayers/2)
-  
-  var view_port_height = hh/2
-  
-  
-  
-  for (var i = 0; i &lt; global.numberOfLocalPlayers; i++)
-  {
-    xx = view_wport[i]*i
-    if (i &gt;= top_split)
-    {
-      if (i = top_split)
-      {xx = 0}
-      else
-      {xx = view_wport[i]*(i-top_split) }
-    }
-    
-    if (i &lt; top_split)
-      {yy = 0}
-    else
-      {yy = view_port_height}
-    
-    
-    if view_visible[i]
-    {
-      view_xport[i] = xx
-      view_yport[i] = yy
-      
-      /*
-      ///the following two if statements prevent weird black lines from appearing due to rounding errors with GM
-      //if the screen is on the bottom row
-      if (i &gt;= top_split){
-        view_hport[i] += (hh mod 2)
-      }else{
-        view_hport[i] += 1
-      }
-      
-      //if last one on the row
-      if (i = top_split-1) || (i = global.numberOfLocalPlayers-1){
-        if (i = top_split-1) view_wport[i] += (ww mod top_split);
-        if (i = global.numberOfLocalPlayers-1) view_wport[i] += (ww mod bottom_split);
-      }else{
-        view_wport[i] += 1
-      }
-      */
-//    }
-//  }
-//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </string>
           </argument>
         </arguments>
@@ -918,6 +910,35 @@ if (global.numberOfLocalPlayers != 1)
           <argument>
             <kind>1</kind>
             <string>///dont draw self
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///debug the bounding box
+
+if variable_instance_exists(id, "bbox_view_left"){
+  draw_set_color(c_yellow)
+  draw_rectangle(bbox_view_left, bbox_view_up, bbox_view_right, bbox_view_down, true)
+  draw_set_color(c_white)
+}
+
+
 </string>
           </argument>
         </arguments>
