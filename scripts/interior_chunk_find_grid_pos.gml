@@ -77,15 +77,24 @@ if (argument_count < 3){
     if (map[? "zone_pos"] = zone_pos){
       found_map = true;
     }else{ //if we didnt find it on our initial pass, then we can loop
+      ////////////////////show_debug_message("did not find zone on first pass")
+      
+      var _j = json_encode(global.chunk_handler.active_interior_chunks)
+      ////////////////////show_debug_message(_j)
+      
+      ////////////////////show_debug_message("first key = "+string(key))
       
       while (key != undefined) && (found_map = false){
-        key = ds_map_find_next(key, global.chunk_handler.active_interior_chunks)
+        key = ds_map_find_next(global.chunk_handler.active_interior_chunks, key)
+        ////////////////////show_debug_message("key = "+string(key))
         map = global.chunk_handler.active_interior_chunks[? key]
         if (map != undefined){
           if (map[? "zone_pos"] = zone_pos){
             found_map = true;
             break;
           }
+        }else{
+          ////////////////////show_debug_message("map = undefined")
         }
       }//end while
       

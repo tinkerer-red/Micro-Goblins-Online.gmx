@@ -27,14 +27,25 @@
             <kind>1</kind>
             <string>if place_meeting(x,y, obj_player)
 {
+  show_debug_message("//////////collided with player!!!!")
+  
   var tp_x = exit_x
   var tp_y = exit_y
   
   if ds_exists(map, ds_type_map){
-    if ds_map_exists(map, ""){
+    if ds_map_exists(map, "exit_x"){
       var tp_x = map[? "exit_x"]
       var tp_y = map[? "exit_y"]
+      var _j = json_encode(map)
+      show_debug_message("===================================================")
+      show_debug_message(_j)
+      show_debug_message("===================================================")
     }
+  }else{
+    show_debug_message("===================================================")
+    show_debug_message("There is no map")
+    show_debug_message("===================================================")
+   
   }
   
   with instance_nearest(x,y, obj_player){

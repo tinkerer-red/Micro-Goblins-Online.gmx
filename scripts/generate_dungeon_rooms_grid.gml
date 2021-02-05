@@ -28,6 +28,7 @@ while(returned = false){
   //once we have the string run it through a function to be able to split the string up into the chunks we tell the function what the top left most corner is,
   // and it will iterate through out the string cutting it down to size for each chunk. 
   returned = chunkify_interior_string(x1, y1, str, map)
+  show_debug_message("[CENTRAL ROOM] returned = "+string(returned))
   blazeIt++;
 }
 
@@ -40,7 +41,8 @@ var x1 = xx
 var y1 = height-1
 
 var str = dungeon_room_get_str(chunk_x+x1*blazeIt, chunk_y+y1*blazeIt, "spawn")
-chunkify_interior_string(x1, y1, str, map)
+returned = chunkify_interior_string(x1, y1, str, map)
+show_debug_message("[SPAWN ROOM] returned = "+string(returned))
 
 var zone_pos = map[? "zone_pos"];
 var array = interior_chunk_to_xy(zone_pos, x1, y1);

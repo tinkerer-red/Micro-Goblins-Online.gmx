@@ -33,15 +33,21 @@ if (map != undefined){
   show_debug_message("advanced open zone possition to "+string(open_zone))
 }
 
-while not (key = undefined){
-    //show_debug_message("repeat loop")
-    key = ds_map_find_next(key, global.chunk_handler.active_interior_chunks)
+while (key != undefined){
+    show_debug_message("zone while loop")
+    key = ds_map_find_next(global.chunk_handler.active_interior_chunks, key)
+    if (key = undefined) break;
+    show_debug_message("key = "+key)
     var map = global.chunk_handler.active_interior_chunks[? key]
     if (map != undefined){
       if (map[? "zone_pos"] >= open_zone){
         show_debug_message("if >=")
         open_zone = map[? "zone_pos"]+1
+      }else{
+        show_debug_message('map[? "zone_pos"] < open_zone')
       }
+    }else{
+      show_debug_message("map = undefined")
     }
 }
 
