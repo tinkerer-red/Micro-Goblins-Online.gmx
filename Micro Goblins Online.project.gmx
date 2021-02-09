@@ -99,6 +99,7 @@
       <sprite>sprites\prt_bubbles</sprite>
       <sprite>sprites\prt_liquidball</sprite>
       <sprite>sprites\prt_paint</sprite>
+      <sprite>sprites\prt_paint2</sprite>
       <sprite>sprites\prt_shockWave</sprite>
       <sprite>sprites\prt_smoke</sprite>
       <sprite>sprites\prt_spark</sprite>
@@ -149,9 +150,6 @@
       <scripts name="Player">
         <scripts name="Modifiers">
           <scripts name="Weapon">
-            <scripts name="SFX">
-              <script>scripts\mod_charge_audio.gml</script>
-            </scripts>
             <scripts name="Global Mods">
               <script>scripts\scr_mod_charged.gml</script>
               <script>scripts\scr_mod_repeater.gml</script>
@@ -164,11 +162,12 @@
             <scripts name="Melee">
               <script>scripts\scr_mod_range.gml</script>
               <script>scripts\scr_mod_swiftness.gml</script>
-              <script>scripts\scr_mod_flail.gml</script>
+              <script>scripts\scr_mod_flail_old.gml</script>
               <script>scripts\scr_mod_slowness.gml</script>
               <script>scripts\scr_mod_backStab.gml</script>
               <script>scripts\scr_mod_chained.gml</script>
               <script>scripts\scr_mod_slash.gml</script>
+              <script>scripts\scr_mod_flail.gml</script>
               <script>scripts\scr_mod_thrust.gml</script>
             </scripts>
             <scripts name="Range Mods">
@@ -270,6 +269,7 @@
         <script>scripts\jump_in_direction.gml</script>
         <script>scripts\wrap.gml</script>
         <script>scripts\fast_hype.gml</script>
+        <script>scripts\tanh.gml</script>
       </scripts>
       <script>scripts\instance_nearest_notme.gml</script>
     </scripts>
@@ -280,6 +280,7 @@
         <script>scripts\draw_particle_aoe_circle.gml</script>
         <script>scripts\draw_particle_aoe_particles.gml</script>
         <script>scripts\draw_airStrike.gml</script>
+        <script>scripts\draw_particle_paint.gml</script>
       </scripts>
       <scripts name="Partical Handler">
         <script>scripts\draw_particle_line.gml</script>
@@ -603,6 +604,7 @@
         <script>scripts\chunk_uncall_forced.gml</script>
         <script>scripts\chunk_remember.gml</script>
         <script>scripts\chunk_forget.gml</script>
+        <script>scripts\interior_forget.gml</script>
         <script>scripts\chunk_string.gml</script>
         <scripts name="perlin gen">
           <script>scripts\scr_init_2dig.gml</script>
@@ -620,22 +622,6 @@
             <script>scripts\scr_restart_2dig.gml</script>
           </scripts>
           <scripts name="GPUToolkit">
-            <scripts name="GPU Noise">
-              <scripts name="public">
-                <script>scripts\gpu_noise_create.gml</script>
-                <script>scripts\gpu_noise_create_ext.gml</script>
-                <script>scripts\gpu_noise_1d.gml</script>
-                <script>scripts\gpu_noise_2d.gml</script>
-                <script>scripts\gpu_noise_3d.gml</script>
-                <script>scripts\gpu_noise_offset.gml</script>
-                <script>scripts\gpu_noise_to_surface.gml</script>
-                <script>scripts\gpu_noise_free.gml</script>
-                <script>scripts\README_gpu_noise.gml</script>
-              </scripts>
-              <scripts name="private">
-                <script>scripts\_gpu_noise_calculate.gml</script>
-              </scripts>
-            </scripts>
             <scripts name="CPU Noise">
               <scripts name="value noise">
                 <script>scripts\scr_vn_init.gml</script>

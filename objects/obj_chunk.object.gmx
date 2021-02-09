@@ -503,9 +503,9 @@ if (show_chunks) {
             <kind>1</kind>
             <string>///clean up the left over noise
 
-if variable_instance_exists(id, "landmass"){
-  gpu_noise_free(landmass)
-}
+//if variable_instance_exists(id, "landmass"){
+//  gpu_noise_free(landmass)
+//}
 </string>
           </argument>
         </arguments>

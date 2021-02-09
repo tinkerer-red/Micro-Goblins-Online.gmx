@@ -29,7 +29,7 @@ if (object_index = obj_weapon) && (w_type = weapon_type_melee){
   {
     // anim_time is used to equate exactly how many frames the animation needs to take
     var speed_mods = slowness - swiftness
-    anim_slash_time = ceil(room_speed * ((0.01*power(speed_mods,2)) + (0.15*speed_mods) + 1))
+    anim_slash_time = anim_attack_time //ceil(room_speed * ((0.01*power(speed_mods,2)) + (0.15*speed_mods) + 1))
     
     // anim_timer is used to equate where the sin/cos wave currently is
     anim_slash_timer = anim_slash_time
@@ -62,8 +62,11 @@ if (object_index = obj_weapon) && (w_type = weapon_type_melee){
     //we invert this number just to make the player left handed
     var trav_dis_dir = w_start_dir+(trav_dis_dir * -1);
     
-    x += lengthdir_x(dis, trav_dis_dir);
-    y += lengthdir_y(dis, trav_dis_dir);
+    var x_off = owner_id.x - x;
+    var y_off = owner_id.y - y;
+    
+    x += x_off + lengthdir_x(dis, trav_dis_dir);
+    y += y_off + lengthdir_y(dis, trav_dis_dir);
     
     direction = point_direction(owner_id.x, owner_id.y, x, y)
     image_angle = direction-45

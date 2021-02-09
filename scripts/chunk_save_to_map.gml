@@ -25,7 +25,8 @@ var t_layer = TileLayerTop
 // DECOR
 //var tile_layer_decor_grid = ds_grid_create()
 //var tile_layer_decor_background_grid = ds_grid_create()
-var d_layer = TileLayerDecor
+/*
+var d_layer = TileLayerDecor;
 
 // do a single cycle through the chunk
 for (var i = 0; i < chunk_width; i++){
@@ -101,6 +102,7 @@ for (var i = 0; i < chunk_width; i++){
 }
 //*/
 
+/*
 var update_world_map = false;
 
 // Compile Map

@@ -57,34 +57,8 @@ var bottom = bbox_bottom/tile_size
 
 for(var i = left; i < right; i++){
     for(var j = top; j < bottom; j++){
-            
-//            if(isIsland == 1){ // Generate island by subtracting elliptical gradient from main noise.
-            
-//                if(refined == 0){ // If autotiling isn't needed, continue normally.
-                    //var zz = 1;
-                    //var zz = clamp((scr_value_2dig(i, j, oc, pers, wm, lac, grid) - elliptical_gradient(i, j, world_width, world_height, perc)),0,1);
                     var zz = clamp(scr_vn_noise(0, 1, oc, pers, 0.03125, i, j) - elliptical_gradient(i, j, world_width, world_height, perc),0,1);
-                    //var zz = clamp((gpu_noise_2d(landmass, i, j) - elliptical_gradient(i, j, world_width, world_height, perc)),0,1);
-                    //var zz = gpu_noise_2d(landmass, i, j);
-                    //var zz = clamp((0.8 - elliptical_gradient(i, j, world_width, world_height, perc)),0,1);
                     grid[# i-x_off, j-y_off] = zz;
-                    /*
-                    Due to nature of the elliptical gradient equation, it could be something like: 
-                    0.5 - 0.7 = -0.2, 
-                    so clamp the output within your range.
-                    */
-//                }
-                
-//            } else { // Generate full landmass.
-            
-//                if(refined == 0){ // If autotiling isn't needed, continue normally.
-                
-//                    var zz = scr_value_2dig(i, j, oc, pers, wm, lac, grid);
-//                    grid[# i-x_off, j-y_off] = zz;
-                    
-//               }
-//            }
-            
     }
 }
 

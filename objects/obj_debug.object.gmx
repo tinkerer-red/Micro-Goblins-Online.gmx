@@ -87,7 +87,7 @@ guid = gui_create_gui();
 
 gui_create_string(guid, "text", "Debug Controller", c_white);
 
-gui_create_menu(guid, "Modifiers", false, 44, c_black);
+gui_create_menu(guid, "Modifiers", false, 46, c_black);
   
   gui_create_menu(guid, "Global", false, 6, c_aqua);
     gui_create_slider(guid, "Charge", 0, 0, 5, c_red)
@@ -139,6 +139,8 @@ gui_create_menu(guid, "Modifiers", false, 44, c_black);
     gui_create_menu(guid, "Health", false, 1, c_green);
       gui_create_slider(guid, "Default Health", 0, 0, 5, c_yellow)
   
+  gui_create_menu(guid, "Toy Mods", false, 1, c_fuchsia);
+    gui_create_slider(guid, "Paint", 0, 0, 5, c_red)
   
   
   gui_create_menu(guid, "Random", false, 2, c_purple);
@@ -270,6 +272,10 @@ if update_debug || (global.debug = true){
           last_orbital = gui_get_value(guid, "Orbital");
           last_defaultAttack = gui_get_value(guid, "Default Attack");
           last_defaultHealth = gui_get_value(guid, "Default Health");
+        //}
+        
+        //if update_debug || gui_get_value(guid, 'Toy Mods'){
+          last_paint = gui_get_value(guid, "Paint");
         //}
         
       }
@@ -406,6 +412,10 @@ if (global.debug = true){
           
         }
       
+      //Toy Mods
+        if gui_get_value(guid, 'Toy Mods'){
+          gui_set_value(guid, "Paint", floor(0.5+gui_get_value(guid, "Paint")) div 1); 
+        }
       
       //Graphics
         if gui_get_value(guid, 'Graphics'){
@@ -496,7 +506,17 @@ if update_debug || (global.debug = true){
   //if (mouse_check_button_released(mb_left)){
     if (device_mouse_x_to_gui(0) &gt; (display_get_gui_width()-243)*(1+obj_camera_control.smooth_camera)) || (update_debug = true){
       
-      if (gui_get_value(guid, 'Modifiers') &amp;&amp; (gui_get_value(guid, 'Global') || gui_get_value(guid, 'Ranged') || gui_get_value(guid, 'Melee') || gui_get_value(guid, 'Summon')))  || (update_debug = true){
+      if (gui_get_value(guid, 'Modifiers')
+        &amp;&amp; (gui_get_value(guid, 'Global')
+          || gui_get_value(guid, 'Ranged')
+          || gui_get_value(guid, 'Melee')
+          || gui_get_value(guid, 'Summon')
+          || gui_get_value(guid, 'Toy Mods')
+         )
+      )
+      || (update_debug = true)
+      {
+      
         for (var i = 0; i &lt; 3; i++){  //for all three weapons
           
           var queue_button_mods = ds_priority_delete_min(obj_player.item_queues[i]);
@@ -571,6 +591,11 @@ if update_debug || (global.debug = true){
             }
           }
           
+          //Toy Mods
+          if gui_get_value(guid, 'Toy Mods') || (update_debug = true){
+            //if obj_player.item_data[i, weapon_type] = weapon_type_range{
+            if update_debug || last_paint != gui_get_value(guid, "Paint") scr_modifier_adjust(queue_col_mods, scr_mod_paint, 2, gui_get_value(guid, "Paint"));
+          }
           
           ds_priority_add(obj_player.item_queues[i], queue_button_mods, 1);
           ds_priority_add(obj_player.item_queues[i], queue_pre_weap_mods, 2);

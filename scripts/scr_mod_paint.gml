@@ -2,34 +2,30 @@
 //
 //collision modifier
 
-//show_debug_message("scr_mod_paint")
-
 var returned = false
 
 
 ///define variables on first launch
-if !variable_instance_exists(self.id, "paint_start"){
-  self.paint_start = true
-  
-  var paint_count = scr_queue_has_mod_count(active_queue, scr_mod_paint)
-  
-  if (paint_count >= 5){
-    mod_paint_dist = point_distance(x, y, owner_id.x, owner_id.y)
-  }else{
-    mod_paint_dist = (point_distance(x, y, owner_id.x, owner_id.y) / ((5/paint_count/5) * room_speed))
-//    show_debug_message("(5/paint_count/5) * room_speed) "+string((5/paint_count/5) * room_speed))
-  }
-//  show_debug_message("mod_paint_dist = "+string(mod_paint_dist))
-} 
 
+var mod_count = scr_queue_has_mod_count(active_queue, scr_mod_paint)
 
+if !variable_instance_exists(self, "mod_paint_start"){
+  mod_paint_start = true
+  paint_count = mod_count
+}
 
-if self.paint_start {
+//remove all but the last one
+if (mod_count != 1){
+  return true;
 }
 
 
+//make the color
+var color = make_colour_hsv(htme_random(255), 255, 255);
 
-self.timeout--
+//add the particle to the system
+draw_particle_paint(prt_paint2, x, y, color, 16)
+ 
 
-return returned
+return true;
 

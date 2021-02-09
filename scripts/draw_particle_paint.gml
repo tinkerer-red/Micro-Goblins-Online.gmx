@@ -1,17 +1,28 @@
-///draw_particle_blood(x, y)
+///draw_particle_paint(sprite, x1, y1, color, radius [time_min, time_max])
 
 if instance_exists(obj_particle_controller){
   
-  var sprite = prt_liquidball
-  var x1 = argument[0]
-  var y1 = argument[1]
+  if (argument_count = 7){
+    var time_min = argument[5]
+    var time_max = argument[6]
+  }else{
+    var time_min = room_speed*15
+    var time_max = room_speed*30
+  }
   
-  var time_min = room_speed/6
-  var time_max = room_speed/2
+  var sprite = argument[0]
+  var x1 = argument[1]
+  var y1 = argument[2]
+  var color = argument[3]
+  var radius = argument[4]
+  
+  var key = "part_paint_"+string(sprite)+string(x1)+string(y1)+string(color)
+  
+  var emit_time = 1
   
   //the particle type's string, used for key name, and checks
-  var part_string = "part_type_blood"
-  var emit_string = "part_emit_"+string(round(x1))+"_"+string(round(y1))
+  var part_string = "part_type_paint_"+string(sprite)+string(x1 div 64)+string(y1 div 64)
+  var emit_string = "part_emit_paint_"+string(x1 div 64)+"_"+string(y1 div 64)
   
   
   // if the map doesnt have the value add it to the map
@@ -27,15 +38,16 @@ if instance_exists(obj_particle_controller){
     ds_map_add_map(obj_particle_controller.particle_map, part_string, part_type_key)
     
     //define variables for the particle type
-    part_type_sprite(part_type, sprite, true, true, false)
-    part_type_size(part_type, 0.01, 1, 0, 0.00)
-    part_type_colour3(part_type, c_red, c_red, c_red)
+    part_type_sprite(part_type, sprite, false, false, true)
+    part_type_size(part_type, 0.9, 2.1, 0, 0.00)
+    part_type_colour1(part_type, color)
     part_type_blend(part_type, false)
-    part_type_alpha3(part_type, 1, 1, 0.75)
-    part_type_direction(part_type, 0, 180, 0, 0)
-    part_type_gravity(part_type, 0.1, 270)
-    part_type_speed(part_type, 0.5, 1.5, 0, 0)
+    part_type_alpha3(part_type, 1, 1, 0.0)
+    part_type_direction(part_type, 0, 360, 0, 0)
+    part_type_gravity(part_type, 0.0, 0)
+    part_type_speed(part_type, 0.0, 0.0, 0.0, 0.0)
     part_type_life(part_type, time_min, time_max)
+    part_type_orientation(part_type, 0, 360, 0.0, 0.0, false)
     
     
     
@@ -44,14 +56,13 @@ if instance_exists(obj_particle_controller){
     ///create and map the emitter
     var part_emit = part_emitter_create(obj_particle_controller.part_sys)
     var part_emit_key = ds_map_create()
-    
     ds_map_add(part_emit_key, "id", part_emit)
-    ds_map_add(part_emit_key, "time", 1) //we only use one so it bursts once
+    ds_map_add(part_emit_key, "time", emit_time) //we only use one so it bursts once
     ds_map_add_map(part_type_key, emit_string, part_emit_key)
     
     //define variables for the particle emitter
-    part_emitter_region(obj_particle_controller.part_sys, part_emit, x1, x1, y1, y1, ps_shape_rectangle, ps_distr_linear)
-    part_emitter_burst(obj_particle_controller.part_sys, part_emit, part_type, 8)
+    part_emitter_region(obj_particle_controller.part_sys, part_emit, x1-radius, x1+radius, y1-radius, y1+radius, ps_shape_rectangle, ps_distr_linear)
+    part_emitter_burst(obj_particle_controller.part_sys, part_emit, part_type, 1)
     
     
     
@@ -68,18 +79,18 @@ if instance_exists(obj_particle_controller){
       var part_emit = part_emitter_create(obj_particle_controller.part_sys)
       var part_emit_key = ds_map_create()
       ds_map_add(part_emit_key, "id", part_emit)
-      ds_map_add(part_emit_key, "time", 1) //we only use one so it bursts once
+      ds_map_add(part_emit_key, "time", emit_time) //we only use one so it bursts once
       ds_map_add_map(part_type_key, emit_string, part_emit_key)
       
       //define variables for the particle emitter
-      part_emitter_region(obj_particle_controller.part_sys, part_emit, x1, x1, y1, y1, ps_shape_rectangle, ps_distr_linear)
-      part_emitter_burst(obj_particle_controller.part_sys, part_emit, part_type_key[? "id"], 8)
-    
+      part_emitter_region(obj_particle_controller.part_sys, part_emit, x1-radius, x1+radius, y1-radius, y1+radius, ps_shape_rectangle, ps_distr_linear)
+      part_emitter_burst(obj_particle_controller.part_sys, part_emit, part_type_key[? "id"], 1)
+      
     }else{ //if the emitter is present in the particle type's map
       
       //add to the emitter's time
       var part_emit_key = part_type_key[? emit_string];
-      part_emit_key[? "time"] = max(part_emit_key[? "time"], time_max)
+      part_emit_key[? "time"] = max(part_emit_key[? "time"], emit_time)
     }
     
   }

@@ -12,7 +12,7 @@
   cx = the optimal location in the world
   cy = the optimal location in the world
 */
-
+/*
 var width = argument2,
     height = argument3,
     tile_width = argument4,
@@ -65,7 +65,7 @@ while !ds_queue_empty(queue) {
     array[_xx, _yy] = infinity
     continue;
   }
-  //*/
+  //* /
   
   // if it's our starting location set it to one
   if ((_xx = cx) && (_yy = cy)) {
@@ -106,7 +106,7 @@ while !ds_queue_empty(queue) {
       continue;
       // we wont add the next cells because we might pass through the wall
     }
-    //*/
+    //* /
     
     // if we're free of collisions we can add to the values
     

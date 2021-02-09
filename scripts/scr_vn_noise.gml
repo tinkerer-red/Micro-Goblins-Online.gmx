@@ -1,4 +1,4 @@
-///scr_vn_noise(min, max, octaves, persistence, scale, x, [y, z]);
+///scr_vn_noise(min, max, octaves, persistence, freq, x, [y, z]);
 
 var minVal = argument[0],
     maxVal = argument[1],
