@@ -1,0 +1,23 @@
+Keywords:
+if
+else
+for
+while
+break
+continue
+true
+false
+self
+other
+
+Math Operations:
++, ++, +=
+-, --, -=
+*, *=
+/, /=
+!
+>, >=
+<, <=
+&&, &
+||, |
+^^, ^

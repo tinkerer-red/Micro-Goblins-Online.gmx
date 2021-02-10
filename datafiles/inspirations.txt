@@ -69,6 +69,7 @@ Zombie Estate 2
 
 
 [Weapon] Long Sword - - (melee + enlarge)
+[Weapon] Warp Blade - Urealms - (melee + teleport)
 [Weapon] Longer Sword - - (melee + enlarge + enlarge)
 [Weapon] laser blade enemy - enter the gungeon (melee + ranged + change + multishotx3)
 [Weapon] Lancer (chain saw assault rifle) - gears of war (melee + ranged + Repeater)

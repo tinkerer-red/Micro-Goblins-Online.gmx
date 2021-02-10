@@ -74,6 +74,30 @@ is_arcLightning = false
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///init breakable object
+
+//initialize breakable object (typically in the create event)
+breaking = false
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="1" enumb="0">
       <action>
@@ -95,6 +119,7 @@ is_arcLightning = false
             <string>///destroy left over paths
 
 path_delete(previous_locations_path)
+draw_sprite_explode(sprite_index)
 </string>
           </argument>
         </arguments>
@@ -362,42 +387,66 @@ if projectile_active {
   {
     
     //show_debug_message("proj - Collision event")
-    
-    var self.result = scr_run_modifiers() //collision modifiers
-    if self.result = true
-    {
-      
-      if ds_exists(self.weapon_event_queues, ds_type_priority)
+      var self.result = scr_run_modifiers() //collision modifiers
+      if self.result = true
       {
-        ds_priority_destroy(self.weapon_event_queues)
-        self.weapon_event_queues = -1
-      }
-      speed = 0
-      
-      if place_meeting(x,y, obj_entity){
-        var enemy = nearest_enemy(x, y, w_hype)
-        if (enemy != noone)
+        
+        if ds_exists(self.weapon_event_queues, ds_type_priority)
         {
-            enemy.e_health -= w_damage
-            //show_debug_message("fucked up")
-            draw_particle_blood(enemy.x, enemy.y)
-            
-            enemy.spd = self.w_knockback
-            enemy.direction = direction //point_direction(x, y, enemy.x, enemy.y)
-          }
+          ds_priority_destroy(self.weapon_event_queues)
+          self.weapon_event_queues = -1
+        }
+        speed = 0
+        
+        if place_meeting(x,y, obj_entity){
+          var enemy = nearest_enemy(x, y, w_hype)
+          if (enemy != noone)
+          {
+              enemy.e_health -= w_damage
+              //show_debug_message("fucked up")
+              draw_particle_blood(enemy.x, enemy.y)
+              
+              enemy.spd = self.w_knockback
+              enemy.direction = direction //point_direction(x, y, enemy.x, enemy.y)
+            }
+        }
+        ///if aeo change sprite
+        ///if aoe AND constant change sprite to rune
+        ///if constant have colliders run on the player (or an object?)
+        //either do your damage, or turn into an AOE effect
+        self.constant_timer--
+        if (self.constant_timer &lt;= 0)
+        {instance_destroy()}
       }
-      ///if aeo change sprite
-      ///if aoe AND constant change sprite to rune
-      ///if constant have colliders run on the player (or an object?)
-      //either do your damage, or turn into an AOE effect
-      self.constant_timer--
-      if (self.constant_timer &lt;= 0)
-      {instance_destroy()}
-    }
   }
 
 }//end of if active
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// breaking animation
 
+if (breaking){
+  show_debug_message("breaking")
+
+}
 </string>
           </argument>
         </arguments>

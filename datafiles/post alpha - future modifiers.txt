@@ -34,6 +34,8 @@ Absorb life / vampirism
 
 
 =====Armor Mods=====
+blade turn (ignore the first X hits from each enemy)
+chivalry (teleports you infront of ally taking the damage for it, or just take the damage for an ally with in a radius relative to the mod count)
 Ward/Shield (Takes a hit then recharges and repeats)
 Smooth skin (prevents any sticky projectiles)
 "Lightweight" [not usable with heavyweight] (Move faster but knockback effects send you back 5x further)
@@ -117,6 +119,8 @@ Revert/retreat (Over Watch Tracers rewind time ability)
 =================================================================
 
 =====Consumables=====
+crystal catalist (summon ten gemlings)
+amulate of bones (prevent death x number of times)
 Flash (freezes everything in the room)
 Presents (combine with an item to wrap it in a present)
 Trapped present (combine with a consumable to wrap it in a present, the consumable will activate when the present is opened)

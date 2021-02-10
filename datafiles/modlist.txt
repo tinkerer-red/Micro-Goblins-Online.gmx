@@ -46,6 +46,7 @@ whip
 +++Flail (changes the attacking method into a flail attack, adds attack range but makes it a bit slower.) (multiples will give it a further reach)
 
 Keen (slightly increases damage, greatly inreases decapitation chance)
+Jaws (1 modcount = 2 melee weapons lerch out from the side clamping down infront of the player, mod5 = 10)
 double strike (attacks a second time)
 Reflect (reflects bullets back at their owner)
 AimBot (always attacks in the direction of the closest enemy) (this is a melee modifier for balancing purposes) (Stack [90, 180, 360] degree assistance)
@@ -59,6 +60,8 @@ Aerial Strike (every time you hit it spawn a copies of itself, which slams into 
 
 
 ===Ranged===
+Divine Spray "spray and pray" (inaccuracy + similar to rewpeater although used for use with card shuffler, flame thrower, cone of fire)
+Ray beam (turns the entire projectile into a ray, not really sure what this intails although the words, freeze ray made me think of this one.)
 Sticky (projectiles exclusive continuous mod)
 Piercing (attacks through multiple enemies)
 +++Ricochet (projectiles will bounce 1 time if coliding at a 45 degree angle or less, if piercing is present they will bounce at any angle but only 5 times)
@@ -80,6 +83,8 @@ Drag (projectiles move at half speed)
 +++Targeting
 +++Air Strike
 Arc Lightning (lightning arcs between your projectiles and your self, similar to laser but more dynamic, 3*modcount lightning arcs)
+air born (projectile floats in place for a bit before acvtually launching forward)
+scatter shot (similar to multishot although you get 3 times as many, size decrease, with a ton of inaccuracy, and 1/3 the range)
 
 
 

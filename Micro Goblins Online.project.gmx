@@ -63,6 +63,8 @@
     <extension index="3">extensions\DSPrint</extension>
     <extension index="4">extensions\NoisePack GPU</extension>
     <extension index="5">extensions\NoisePack CPU</extension>
+    <extension index="7">extensions\Sprite Exploder</extension>
+    <extension index="8">extensions\Essential Scripts</extension>
   </NewExtensions>
   <sounds name="sound">
     <sound>sound\snd_mod_charge</sound>
@@ -100,6 +102,7 @@
       <sprite>sprites\prt_liquidball</sprite>
       <sprite>sprites\prt_paint</sprite>
       <sprite>sprites\prt_paint2</sprite>
+      <sprite>sprites\prt_paint3</sprite>
       <sprite>sprites\prt_shockWave</sprite>
       <sprite>sprites\prt_smoke</sprite>
       <sprite>sprites\prt_spark</sprite>
@@ -136,6 +139,10 @@
     </sprites>
     <sprite>sprites\spr_dungeon_tiles</sprite>
     <sprite>sprites\spr_dungeon_exit</sprite>
+    <sprite>sprites\prt_dust</sprite>
+    <sprite>sprites\prt_dust2</sprite>
+    <sprite>sprites\prt_dash_lines</sprite>
+    <sprite>sprites\prt_dashDust</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
@@ -248,6 +255,44 @@
       <script>scripts\is_hoarded.gml</script>
     </scripts>
     <scripts name="functions">
+      <scripts name="Essential Scripts">
+        <scripts name="Drawing">
+          <script>scripts\draw_text_outlined.gml</script>
+          <script>scripts\draw_text_shadow.gml</script>
+          <script>scripts\draw_text_shadow_ext.gml</script>
+          <script>scripts\draw_sprite_outlined.gml</script>
+          <script>scripts\draw_sprite_shadow.gml</script>
+        </scripts>
+        <scripts name="String Manipulation">
+          <script>scripts\string_split.gml</script>
+        </scripts>
+        <scripts name="Approach Value">
+          <script>scripts\approach.gml</script>
+          <script>scripts\angle_approach.gml</script>
+          <script>scripts\smooth_approach.gml</script>
+        </scripts>
+        <scripts name="Chance Functions">
+          <script>scripts\percent_chance.gml</script>
+          <script>scripts\round_chance.gml</script>
+          <script>scripts\set_chance.gml</script>
+          <script>scripts\multi_chance.gml</script>
+        </scripts>
+        <scripts name="List Functions">
+          <script>scripts\ds_list_reverse.gml</script>
+          <script>scripts\ds_list_random.gml</script>
+          <script>scripts\ds_list_delete_all.gml</script>
+        </scripts>
+        <scripts name="Instance Functions">
+          <script>scripts\instance_list_random.gml</script>
+          <script>scripts\instance_nearest_list.gml</script>
+        </scripts>
+        <scripts name="Misc">
+          <script>scripts\mouse_over.gml</script>
+          <script>scripts\stick_to.gml</script>
+          <script>scripts\stick_to_angle.gml</script>
+          <script>scripts\within.gml</script>
+        </scripts>
+      </scripts>
       <scripts name="Maths">
         <scripts name="Conversions">
           <script>scripts\hex_to_bytes.gml</script>
@@ -258,6 +303,7 @@
           <script>scripts\hex_to_b64.gml</script>
           <script>scripts\hex_to_dec.gml</script>
           <script>scripts\timer_to_ticks.gml</script>
+          <script>scripts\dir_to_dir_and_flip.gml</script>
         </scripts>
         <script>scripts\normalize.gml</script>
         <script>scripts\collision_normal.gml</script>
@@ -277,15 +323,26 @@
       <scripts name="Modifiers">
         <script>scripts\draw_laser.gml</script>
         <script>scripts\draw_arcLightning.gml</script>
+        <script>scripts\draw_airStrike.gml</script>
         <script>scripts\draw_particle_aoe_circle.gml</script>
         <script>scripts\draw_particle_aoe_particles.gml</script>
-        <script>scripts\draw_airStrike.gml</script>
         <script>scripts\draw_particle_paint.gml</script>
+        <script>scripts\draw_particle_dashDust.gml</script>
       </scripts>
       <scripts name="Partical Handler">
+        <scripts name="Sprite Exploder">
+          <script>scripts\draw_sprite_explode.gml</script>
+          <scripts name="private">
+            <script>scripts\scr_sprite_explode.gml</script>
+            <script>scripts\scr_sprite_radial.gml</script>
+            <script>scripts\scr_sprite_dissolve.gml</script>
+            <script>scripts\scr_sprite_asymble.gml</script>
+          </scripts>
+        </scripts>
         <script>scripts\draw_particle_line.gml</script>
         <script>scripts\draw_particle_circle.gml</script>
         <script>scripts\draw_particle_blood.gml</script>
+        <script>scripts\draw_particle_dust.gml</script>
       </scripts>
       <script>scripts\is_visible.gml</script>
       <script>scripts\draw_cone.gml</script>
@@ -698,6 +755,20 @@
         <object>objects\obj_camera_control</object>
         <object>objects\obj_particle_controller</object>
         <object>objects\obj_dualbooting</object>
+        <objects name="Sprite Explode Particles">
+          <objects name="rm_explosion">
+            <object>objects\obj_explode_particle</object>
+          </objects>
+          <objects name="rm_dissolve">
+            <object>objects\obj_dissolve_particle</object>
+          </objects>
+          <objects name="rm_radial">
+            <object>objects\obj_radial_particle</object>
+          </objects>
+          <objects name="rm_asymble">
+            <object>objects\obj_asymble_particle</object>
+          </objects>
+        </objects>
       </objects>
       <objects name="Network">
         <object>objects\htme_obj_menu</object>

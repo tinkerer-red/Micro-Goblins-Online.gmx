@@ -2,9 +2,9 @@
 
 if instance_exists(obj_particle_controller){
   
-  if (argument_count = 7){
-    var time_min = argument[5]
-    var time_max = argument[6]
+  if (argument_count = 8){
+    var time_min = argument[6]
+    var time_max = argument[7]
   }else{
     var time_min = room_speed*15
     var time_max = room_speed*30
@@ -15,14 +15,16 @@ if instance_exists(obj_particle_controller){
   var y1 = argument[2]
   var color = argument[3]
   var radius = argument[4]
+  var size = 0.5625*argument[5] + 1.1875;
+  
   
   var key = "part_paint_"+string(sprite)+string(x1)+string(y1)+string(color)
   
   var emit_time = 1
   
   //the particle type's string, used for key name, and checks
-  var part_string = "part_type_paint_"+string(sprite)+string(x1 div 64)+string(y1 div 64)
-  var emit_string = "part_emit_paint_"+string(x1 div 64)+"_"+string(y1 div 64)
+  var part_string = "part_type_paint_"+string(sprite)+string(x1 div 128)+string(y1 div 128)
+  var emit_string = "part_emit_paint_"+string(x1 div 128)+"_"+string(y1 div 128)
   
   
   // if the map doesnt have the value add it to the map
@@ -39,7 +41,7 @@ if instance_exists(obj_particle_controller){
     
     //define variables for the particle type
     part_type_sprite(part_type, sprite, false, false, true)
-    part_type_size(part_type, 0.9, 2.1, 0, 0.00)
+    part_type_size(part_type, size-0.2, size+0.2, 0, 0.00)
     part_type_colour1(part_type, color)
     part_type_blend(part_type, false)
     part_type_alpha3(part_type, 1, 1, 0.0)

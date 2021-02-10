@@ -24,8 +24,8 @@ if (mod_count != 1){
 var color = make_colour_hsv(htme_random(255), 255, 255);
 
 //add the particle to the system
-draw_particle_paint(prt_paint2, x, y, color, 16)
- 
+draw_particle_paint(prt_paint, x, y, color, 16, paint_count)
+
 
 return true;
 
