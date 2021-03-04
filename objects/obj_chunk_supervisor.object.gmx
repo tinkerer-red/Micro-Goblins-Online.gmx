@@ -94,6 +94,62 @@ chunk_init(256, 4)
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>///Netcode //buffer_f16 isn't supported
+
+///destroy self if there is more then one
+
+if(variable_global_exists("htme_object")){
+  if htme_isServer(){
+    htme_globalSet("seed",self.world_seed,buffer_u32);
+    
+    //encode world data
+    var world_map_string = ds_map_write(world_map)
+    //var active_chunks_string = ds_map_write(active_chunks)
+    //var active_interior_chunks_string = ds_map_write(active_interior_chunks)
+    
+    htme_globalSet("world_map_string",world_map_string,buffer_string);
+    //htme_globalSet("seed",self.world_seed,buffer_u32);
+    //htme_globalSet("seed",self.world_seed,buffer_u32);
+    
+    
+  }else{ //if not the server
+    
+    self.world_seed = htme_globalGet("seed")
+    
+    //encode world data
+    var world_map_string = htme_globalGet("world_map_string");
+    
+    ds_map_read(world_map, world_map_string)
+    //var active_chunks_string = ds_map_write(active_chunks)
+    //var active_interior_chunks_string = ds_map_write(active_interior_chunks)
+    
+    
+    //htme_globalSet("seed",self.world_seed,buffer_u32);
+    //htme_globalSet("seed",self.world_seed,buffer_u32);
+    
+    
+  }    
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>///[Debug] Show Chunks init
 
 show_chunks = false;
@@ -237,6 +293,29 @@ for (var i = 0; i &lt; global.numberOfLocalPlayers; i++){
 chunk_loaded_this_frame = false;
 chunk_gen_this_frame = false;
 chunk_saved_this_frame = false
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///debug temp
+
+show_debug_player(0, "world_seed: "+string(world_seed))
 </string>
           </argument>
         </arguments>

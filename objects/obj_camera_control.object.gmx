@@ -27,6 +27,8 @@
             <kind>1</kind>
             <string>///allow use of views, and set zooms
 
+free_cam_mode = false
+
 //set the ideal resolution
 var ideal_h = 288;
 var ideal_w = 512;
@@ -633,7 +635,7 @@ for (var i = 0; i &lt; global.numberOfLocalPlayers; i++){
       view_xview[i] = ideal_x-view_wview[i]/2
       view_yview[i] = ideal_y-view_hview[i]/2
       
-      if (!global.debug) &amp;&amp; (variable_global_exists("chunk_handler"))
+      if (!obj_camera_control.free_cam_mode) &amp;&amp; (variable_global_exists("chunk_handler"))
       {
         view_xview[i] = clamp(view_xview[i], 0,  global.chunk_handler.world_width-view_wview[i])
         view_yview[i] = clamp(view_yview[i], 0,  global.chunk_handler.world_height-view_hview[i])
@@ -647,7 +649,7 @@ for (var i = 0; i &lt; global.numberOfLocalPlayers; i++){
       view_xview[i] = ideal_x-view_wview[i]/2
       view_yview[i] = ideal_y-view_hview[i]/2
       
-      if (global.debug)
+      if (!obj_camera_control.free_cam_mode)
       {
         //find the chunks
         var array = xy_to_chunk(x,y);

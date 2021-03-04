@@ -224,94 +224,6 @@ self.zoom_out_pressed = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Netcode //buffer_f16 isn't supported
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/***************************************************
-  buffer_f16 IS NOT SUPPORTED!
- ***************************************************/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-self.name = "Test-icle"
-
-if(variable_global_exists("htme_object"))
-{
-///Network Code
-
-//Update Server
-mp_sync()
-mp_addPosition("Pos", 5*room_speed)
-mp_setType("Pos", mp_type.SMART)
-mp_tolerance("Pos", 8)
-
-
-//add gamemaker stuff
-mp_addBuiltinBasic("basicDrawing", 15*room_speed)
-mp_setType("basicDrawing", mp_type.SMART)
-
-//add physics here if you need it in the future
-mp_addBuiltinPhysics("physics", 15*room_speed)
-mp_setType("physics", mp_type.SMART)
-
-
-//add variables
-mp_add("playerName", "name", buffer_string, 60*room_speed)
-mp_setType("playerName",mp_type.SMART)
-
-//buffer_f16 isn't supported
-//add controls
-mp_add("controls", "up,down,left,right,item_a,item_b,item_c,item_a_pressed,item_b_pressed,item_c_pressed", buffer_f32, 1) //buffer_f16 isn't supported
-mp_setType("controls",mp_type.FAST)
-
-
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>///[TEMP] Create the weapon queues for equiment
 
 ///when equiping
@@ -426,6 +338,111 @@ for (var i = 0; i &lt; 3; i++)
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>///Netcode //buffer_f16 isn't supported
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/***************************************************
+  buffer_f16 IS NOT SUPPORTED!
+ ***************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+self.name = "Test-icle"
+
+if(variable_global_exists("htme_object"))
+{
+///Network Code
+
+//Update Server
+mp_sync()
+mp_addPosition("Pos", 5*room_speed)
+mp_setType("Pos", mp_type.SMART)
+mp_tolerance("Pos", 8)
+
+
+//add gamemaker stuff
+mp_addBuiltinBasic("basicDrawing", 15*room_speed)
+mp_setType("basicDrawing", mp_type.SMART)
+
+//add physics here if you need it in the future
+mp_addBuiltinPhysics("physics", 15*room_speed)
+mp_setType("physics", mp_type.SMART)
+
+
+//add variables
+mp_add("playerName", "name", buffer_string, 60*room_speed)
+mp_setType("playerName",mp_type.SMART)
+
+//buffer_f16 isn't supported
+//add controls
+mp_add("controls", "up,down,left,right,item_a,item_b,item_c,item_a_pressed,item_b_pressed,item_c_pressed", buffer_f32, 1) //buffer_f16 isn't supported
+mp_setType("controls",mp_type.FAST)
+
+//add Item maps
+//mp_add("item_maps", "item_a_map,item_b_map,item_c_map", buffer_string, 1)
+//mp_add("item_maps", "item_a_map,item_b_map,item_c_map,item_a_prior,item_b_prior,item_c_prior", buffer_string, 1)
+//mp_add("item_maps", "item_a_map,item_b_map,item_c_map,armor_head_map,armor_body_map,armor_boggle_map", buffer_string, room_speed)
+
+//lets try un grouping the itmes
+mp_add("item_a", "item_a_map,item_a_prior", buffer_string, 1)
+mp_add("item_b", "item_b_map,item_b_prior", buffer_string, 1)
+mp_add("item_c", "item_c_map,item_c_prior", buffer_string, 1)
+
+
+//RE ADD THIS WHEN ARMOR EXISTS
+//mp_add("item_maps", "item_a_map,item_b_map,item_c_map,armor_head_map,armor_body_map,armor_boggle_map", buffer_string, 1)
+mp_setType("item_maps",mp_type.SMART)
+
+//store a dummy version of the map to prevent crashing
+last_encoded_equipment = encode_equipment();
+
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>///REMOVE THIS
 
 ani = false
@@ -494,22 +511,48 @@ body = spr_body_template
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Sync information to server
-if(variable_global_exists("htme_object"))
+            <string>///Sync information from the server
+if (!htme_isLocal())
 {
-self.name = mp_map_syncOut("name", name)
-self.up = mp_map_syncOut("up", up)
-self.down = mp_map_syncOut("down", down)
-self.left = mp_map_syncOut("left", left)
-self.right = mp_map_syncOut("right", right)
-self.item_a = mp_map_syncOut("item_a", item_a)
-self.item_b = mp_map_syncOut("item_b", item_b)
-self.item_c = mp_map_syncOut("item_c", item_c)
-self.item_a_pressed = mp_map_syncOut("item_a_pressed", item_a_pressed)
-self.item_b_pressed = mp_map_syncOut("item_b_pressed", item_b_pressed)
-self.item_c_pressed = mp_map_syncOut("item_c_pressed", item_c_pressed)
-
-//player_state = mp_map_syncOut("player_state", player_state)
+  if(variable_global_exists("htme_object"))
+  {
+    self.name = mp_map_syncOut("name", name)
+    self.up = mp_map_syncOut("up", up)
+    self.down = mp_map_syncOut("down", down)
+    self.left = mp_map_syncOut("left", left)
+    self.right = mp_map_syncOut("right", right)
+    self.item_a = mp_map_syncOut("item_a", item_a)
+    self.item_b = mp_map_syncOut("item_b", item_b)
+    self.item_c = mp_map_syncOut("item_c", item_c)
+    self.item_a_pressed = mp_map_syncOut("item_a_pressed", item_a_pressed)
+    self.item_b_pressed = mp_map_syncOut("item_b_pressed", item_b_pressed)
+    self.item_c_pressed = mp_map_syncOut("item_c_pressed", item_c_pressed)
+    //player_state = mp_map_syncOut("player_state", player_state)
+    
+    //sync equipment
+    //new_encoded_equipment;
+    /*
+    if (is_undefined(last_encoded_equipment)) {
+      last_encoded_equipment = encode_equipment()
+      show_debug_message("encoded in end step")
+    }
+    */
+    var array;
+    array[0] = mp_map_syncOut("item_a_map", last_encoded_equipment[0])
+    array[1] = mp_map_syncOut("item_b_map", last_encoded_equipment[1])
+    array[2] = mp_map_syncOut("item_c_map", last_encoded_equipment[2])
+    array[6] = mp_map_syncOut("item_a_prior", last_encoded_equipment[6])
+    array[7] = mp_map_syncOut("item_b_prior", last_encoded_equipment[7])
+    array[8] = mp_map_syncOut("item_c_prior", last_encoded_equipment[8])
+    //array[3] = mp_map_syncOut("armor_head_map", last_encoded_equipment[3])
+    //array[4] = mp_map_syncOut("armor_body_map", last_encoded_equipment[4])
+    //array[5] = mp_map_syncOut("armor_boggle_map", last_encoded_equipment[5])
+    //array[9] = mp_map_syncOut("armor_head_prior", last_encoded_equipment[9])
+    //array[10] = mp_map_syncOut("armor_body_prior", last_encoded_equipment[10])
+    //array[11] = mp_map_syncOut("armor_boggle_prior", last_encoded_equipment[11])
+    decode_equipment(array);
+    
+  }
 }
 </string>
           </argument>
@@ -637,30 +680,49 @@ ypreviousframe = y
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Sync information from server
+            <string>///Sync information to the server's map
+
+
 
 if (htme_isLocal())
 {
   ///this is where you store your variables that should be sent to server
   scr_control_handler(player_id_local)
-  
 }
-
-if(variable_global_exists("htme_object"))
-{
-mp_map_syncIn("name",self.name)
-mp_map_syncIn("up",self.up)
-mp_map_syncIn("down",self.down)
-mp_map_syncIn("left",self.left)
-mp_map_syncIn("right",self.right)
-mp_map_syncIn("item_a",self.item_a)
-mp_map_syncIn("item_b",self.item_b)
-mp_map_syncIn("item_c",self.item_c)
-mp_map_syncIn("item_a_pressed",self.item_a_pressed)
-mp_map_syncIn("item_b_pressed",self.item_b_pressed)
-mp_map_syncIn("item_c_pressed",self.item_c_pressed)
-//mp_map_syncIn("player_state",player_state)
-
+  
+  if(variable_global_exists("htme_object"))
+  {
+    mp_map_syncIn("name",self.name)
+    mp_map_syncIn("up",self.up)
+    mp_map_syncIn("down",self.down)
+    mp_map_syncIn("left",self.left)
+    mp_map_syncIn("right",self.right)
+    mp_map_syncIn("item_a",self.item_a)
+    mp_map_syncIn("item_b",self.item_b)
+    mp_map_syncIn("item_c",self.item_c)
+    mp_map_syncIn("item_a_pressed",self.item_a_pressed)
+    mp_map_syncIn("item_b_pressed",self.item_b_pressed)
+    mp_map_syncIn("item_c_pressed",self.item_c_pressed)
+    //mp_map_syncIn("player_state",player_state)
+    
+    //sync equipment
+    if (htme_isLocal()){
+      self.last_encoded_equipment = encode_equipment();
+      
+      mp_map_syncIn("item_a_map",self.last_encoded_equipment[0])
+      mp_map_syncIn("item_b_map",self.last_encoded_equipment[1])
+      mp_map_syncIn("item_c_map",self.last_encoded_equipment[2])
+      mp_map_syncIn("item_a_prior",self.last_encoded_equipment[6])
+      mp_map_syncIn("item_b_prior",self.last_encoded_equipment[7])
+      mp_map_syncIn("item_c_prior",self.last_encoded_equipment[8])
+      //mp_map_syncIn("armor_head_map",array[3])
+      //mp_map_syncIn("armor_body_map",array[4])
+      //mp_map_syncIn("armor_boggle_map",array[5])
+      //mp_map_syncIn("armor_head_prior",array[9])
+      //mp_map_syncIn("armor_body_prior",array[10])
+      //mp_map_syncIn("armor_boggle_prior",array[11])
+      
+  }
 }
 </string>
           </argument>
@@ -805,7 +867,10 @@ if (self.item_a_pressed || self.item_b_pressed || self.item_c_pressed)
       //show_debug_message("melee attack canceled")
       self.item_used_check = -1
       
+      ///reset player based variables which were applied by modifiers
       self.mod_charge_timer = 0
+      mod_dash_start = false
+      mod_evade_start = false
     }
   }
 }
@@ -915,7 +980,7 @@ if (self.player_state = e_player_state.move)
       
       /// Cool Downs
       self.active_w_cooldown = room_speed/3
-      self.active_w_spawn_time_out = room_speed/4
+      self.active_w_spawn_time_out = room_speed/2
       
       self.active_w_damage = 1
       
@@ -1237,7 +1302,12 @@ if self.player_state = e_player_state.attack &amp;&amp; self.attack &amp;&amp; !
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>anim_idle(dir)
+            <string>if mouse_check_button(mb_left){
+  test_array = encode_equipment()
+}
+if mouse_check_button(mb_right){
+  decode_equipment(test_array)
+}
 </string>
           </argument>
         </arguments>

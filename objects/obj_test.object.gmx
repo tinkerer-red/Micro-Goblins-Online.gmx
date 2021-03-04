@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if chunk_tile_free(mouse_x, mouse_y, "layer_structures") show_debug_player(0, "tile is free!!");
+            <string>//if chunk_tile_free(mouse_x, mouse_y, "layer_structures") show_debug_player(0, "tile is free!!");
 
 
 if (mouse_check_button(mb_left) &amp;&amp; mouse_check_button_pressed(mb_right))

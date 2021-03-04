@@ -14,7 +14,7 @@ if (spd != 0)
     var spd_multiplier = sign(spd);
     var desired_spd = abs(spd);
     
-    spd -= acceleration * spd_multiplier * (60/room_speed)
+    spd -= acceleration * spd_multiplier * (60/room_speed) * lag()
     
     var spd_multiplier_new  = sign(spd);
     

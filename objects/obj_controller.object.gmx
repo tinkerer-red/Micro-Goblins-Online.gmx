@@ -469,7 +469,8 @@ if (window_has_focus()) &amp;&amp; (htme_isLocal())
       //zoom_in
       if (keyboard_check(keyboardZoomIn) &amp;&amp; i = keyboard_player)
       || (keyboard_check(keyboardZoomIn2) &amp;&amp; i = keyboard_player)
-      || (gamepad_is_connected(i) &amp;&amp; (gamepad_axis_value(i, gp_axisrv) &gt; 0.175))
+      || (mouse_wheel_up() &amp;&amp; i = keyboard_player)
+      || (gamepad_is_connected(i) &amp;&amp; (gamepad_axis_value(i, gp_axisrv) &lt; -0.275))
       {
           self.gpZoomIn[i] = true
       }else{
@@ -479,7 +480,8 @@ if (window_has_focus()) &amp;&amp; (htme_isLocal())
       //zoom out
       if (keyboard_check(keyboardZoomOut) &amp;&amp; i = keyboard_player)
       || (keyboard_check(keyboardZoomOut2) &amp;&amp; i = keyboard_player)
-      || (gamepad_is_connected(i) &amp;&amp; (gamepad_axis_value(i, gp_axisrv) &lt; 0.175))
+      || (mouse_wheel_down() &amp;&amp; i = keyboard_player)
+      || (gamepad_is_connected(i) &amp;&amp; (gamepad_axis_value(i, gp_axisrv) &gt; 0.275))
       {
           self.gpZoomOut[i] = true
       }else{

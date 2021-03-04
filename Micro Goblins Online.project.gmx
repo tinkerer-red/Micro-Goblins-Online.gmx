@@ -63,8 +63,8 @@
     <extension index="3">extensions\DSPrint</extension>
     <extension index="4">extensions\NoisePack GPU</extension>
     <extension index="5">extensions\NoisePack CPU</extension>
-    <extension index="7">extensions\Sprite Exploder</extension>
-    <extension index="8">extensions\Essential Scripts</extension>
+    <extension index="6">extensions\Sprite Exploder</extension>
+    <extension index="7">extensions\Essential Scripts</extension>
   </NewExtensions>
   <sounds name="sound">
     <sound>sound\snd_mod_charge</sound>
@@ -95,6 +95,9 @@
         <sprite>sprites\prt_aoe_runic</sprite>
         <sprite>sprites\prt_aoe_alchamy</sprite>
         <sprite>sprites\prt_aoe_satanic</sprite>
+        <sprite>sprites\prt_dashDust</sprite>
+        <sprite>sprites\prt_dashLines</sprite>
+        <sprite>sprites\prt_airStrike_smash</sprite>
       </sprites>
       <sprite>sprites\prt_void</sprite>
       <sprite>sprites\prt_star</sprite>
@@ -109,6 +112,8 @@
       <sprite>sprites\prt_sparkle</sprite>
       <sprite>sprites\prt_runes</sprite>
       <sprite>sprites\prt_sparkleSmall</sprite>
+      <sprite>sprites\prt_dust2</sprite>
+      <sprite>sprites\prt_dust</sprite>
     </sprites>
     <sprites name="Utility Sprite">
       <sprite>sprites\spr_dualbooting</sprite>
@@ -139,10 +144,7 @@
     </sprites>
     <sprite>sprites\spr_dungeon_tiles</sprite>
     <sprite>sprites\spr_dungeon_exit</sprite>
-    <sprite>sprites\prt_dust</sprite>
-    <sprite>sprites\prt_dust2</sprite>
-    <sprite>sprites\prt_dash_lines</sprite>
-    <sprite>sprites\prt_dashDust</sprite>
+    <sprite>sprites\sprite54_test</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
@@ -202,9 +204,13 @@
               </scripts>
               <scripts name="Attack">
                 <script>scripts\scr_mod_summon_attack_default.gml</script>
+                <script>scripts\scr_mod_summon_attack_leap.gml</script>
               </scripts>
               <scripts name="Health">
                 <script>scripts\scr_mod_summon_health_default.gml</script>
+                <script>scripts\scr_mod_summon_health_stout.gml</script>
+                <script>scripts\scr_mod_summon_health_enlarged.gml</script>
+                <script>scripts\scr_mod_summon_health_timed.gml</script>
               </scripts>
             </scripts>
             <scripts name="Toy">
@@ -225,10 +231,13 @@
             <script>scripts\init_projectile.gml</script>
           </scripts>
           <script>scripts\scr_run_modifiers.gml</script>
+          <script>scripts\scr_run_modifiers_queue.gml</script>
           <script>scripts\scr_item_has_mod.gml</script>
           <script>scripts\scr_queue_has_mod.gml</script>
           <script>scripts\scr_queue_has_mod_count.gml</script>
           <script>scripts\scr_modifier_adjust.gml</script>
+          <script>scripts\encode_equipment.gml</script>
+          <script>scripts\decode_equipment.gml</script>
         </scripts>
         <script>scripts\scr_control_handler.gml</script>
         <script>scripts\scr_player_state_move_input.gml</script>
@@ -316,8 +325,10 @@
         <script>scripts\wrap.gml</script>
         <script>scripts\fast_hype.gml</script>
         <script>scripts\tanh.gml</script>
+        <script>scripts\ticks_to_seconds.gml</script>
       </scripts>
       <script>scripts\instance_nearest_notme.gml</script>
+      <script>scripts\ds_queue_delete.gml</script>
     </scripts>
     <scripts name="Drawing">
       <scripts name="Modifiers">
@@ -328,6 +339,7 @@
         <script>scripts\draw_particle_aoe_particles.gml</script>
         <script>scripts\draw_particle_paint.gml</script>
         <script>scripts\draw_particle_dashDust.gml</script>
+        <script>scripts\draw_particle_dashLines.gml</script>
       </scripts>
       <scripts name="Partical Handler">
         <scripts name="Sprite Exploder">

@@ -119,6 +119,7 @@ Revert/retreat (Over Watch Tracers rewind time ability)
 =================================================================
 
 =====Consumables=====
+Bewitching mirror (teleport target to the shadow realm, this will be a 3x3 interior cell which is saved to the map files, need to add it in the future)
 crystal catalist (summon ten gemlings)
 amulate of bones (prevent death x number of times)
 Flash (freezes everything in the room)

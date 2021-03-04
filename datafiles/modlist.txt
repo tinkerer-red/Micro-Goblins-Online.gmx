@@ -20,6 +20,7 @@ Force Pull (happens before melee weapon spawns)
 grapple (force pull at collision)    /    lode stone (continuous force pull on hit enemy)
 knockback (force push at collision)
 
+Stasis (esentially freeze / stun effect; mod count = stasis time)
 
 Chain Lightning (hits each enemy in a certain distance, 1*modcount = arcs)
 Teleport (teleports the colided to a random open position)
@@ -45,9 +46,10 @@ whip
 
 +++Flail (changes the attacking method into a flail attack, adds attack range but makes it a bit slower.) (multiples will give it a further reach)
 
+"deception"? (damages you when using it although greatly increased damge, slight increase to size, and adds a color effect to the sprite?)
 Keen (slightly increases damage, greatly inreases decapitation chance)
 Jaws (1 modcount = 2 melee weapons lerch out from the side clamping down infront of the player, mod5 = 10)
-double strike (attacks a second time)
+--double strike (attacks a second time)
 Reflect (reflects bullets back at their owner)
 AimBot (always attacks in the direction of the closest enemy) (this is a melee modifier for balancing purposes) (Stack [90, 180, 360] degree assistance)
 Aerial Strike (every time you hit it spawn a copies of itself, which slams into the ground)
@@ -82,6 +84,9 @@ Drag (projectiles move at half speed)
 +++Mirror Shot (Shoots a projectile behind you)
 +++Targeting
 +++Air Strike
+"Ray Casting", or "ray tracing", or just "tracer" (this has a very very small heat seeking adjustment, although it will skip the step events, and jump dirrectly to collision events, In practice this means that the projectiles will appear to spawn directly on their targets, usefull for a BFG or a cone of electricity type weapon [example: electro gun GTA2])
+Welder (similar to repeater although it keeps the weapon spawned, creating new projectiles, although will over heat depending on how many mods it has, although this also means more projectiles come out faster aswell)
+
 Arc Lightning (lightning arcs between your projectiles and your self, similar to laser but more dynamic, 3*modcount lightning arcs)
 air born (projectile floats in place for a bit before acvtually launching forward)
 scatter shot (similar to multishot although you get 3 times as many, size decrease, with a ton of inaccuracy, and 1/3 the range)
@@ -97,26 +102,25 @@ scatter shot (similar to multishot although you get 3 times as many, size decrea
 ===Summon===
 Ranged mod, allows for use of pokeball style summons
 
---health styles (default is normal health)
+-----health styles (default is normal health)
 [Health] Multiply (on death split into 1+modcount more of it's self at half the size and health)
-[Health] boss (makes spawn larger with more health)
++++++[Health] boss (makes spawn larger with more health)
 [Health] twins (makes 2 of the same spawn with 75% damage)
 [Health] masked (can only be hit from behind, this also gives it an ice like effect locking it's direction)
 [Health] sectioned (basically snake like creatures which have sections, a single one would be like siamese twins) (doubles each time)
 [Health] Reflective (causes the reflect modifier for ranged shots) (for use with bubble shield style summons, also a massive damper on ranged weapons)
 [Health] Minion (half default health, but summons 3) (useful for Zerge rushes)
-[Health] Timed (has 9999 health but will die on it's own after a specific amount of time, likely based on health prior to this)
-[Health] Stout (size and damage decreases over time, also relative to health)
++++++[Health] Timed (has 9999 health but will die on it's own after a specific amount of time, likely based on health prior to this)
++++++[Health] Stout (size and damage decreases over time, also relative to health)
 [Health] Dopple Heart (shares player health)
+[Health] Timid (will turn to stone unmoveable or attackable when an enemy is close) {Anti melee}
+??[Health] Spectral (ony takes damage from continuous, aoe, air strike, or any other devine style magic mod)
 
-
-[Health] Spectral (ony takes damage from continuous, aoe, air strike, or any other devine style magic mod)
-
---attack styles (default is walking into the player)
+-----attack styles (default is walking into the player)
 [Attack] Sef Destruct (explodes, dealing half it's remaining health with a max of ___) (if this modifier is mixed with timer, just make it explode at the end of the timer)
 [Attack] ranged (will shoot projectiles)
 [Attack] bumper (doesnt actually hurt the player but gives a high knockback)
-[Attack] Leaper (lunges twords the player)
++++++[Attack] Leaper (lunges twords the player)
 [Attack] Kamikaze (similar to leaper, but will explode on collision)
 [Attack] Passive (no attack, instead any damage multiplier is given to health)
 [Attack] Childish (no attack, instead any damage multiplier is given to movement)
@@ -128,25 +132,39 @@ Ranged mod, allows for use of pokeball style summons
 [Attack] Dopple Strike (shares player attack system)
 [Attack] Looting (less damage, but if it kills an AI enemy (non summon) then when it dies it will drop an item)
 
---movement (the default is directly walking at the nearest player)
+-----movement (the default is directly walking at the nearest player)
 [Move] Bouncy (spawns in the direction the player was facing, will continue to move and bounce off walls untill dead)
 [Move] Spastic (bee like movement, very random, much wow)
 [Move] Jumpy (only moves in bursts, similar to terarria's slimes)
-[Move] Orbital (obits around the player, modcount = distance from player)
+-----[Move] Orbital (obits around the player, modcount = distance from player)
 [Move] Chained (spawns in chained to a stake in the ground, after a while it can break free of the chain and moves much faster, modcount = extra damage, 3 or more makes it not able to leave the chain)
 [Move] Momentum (moves quickly but has a hard time turning) (like a wheel or ball, similar to terarria's demon eyes)
 [Move] Stationary (massive health increase, with no movement)
 [Move] Hover (pit falls, and floor damage wont hurt)
 [Move] Wall Hugger (follows the path of the nearest wall (clockwise), modcount = speed)
 [Move] Burrow (allows the enemy to burrow underground, modcount = higher resurface distance (can not pop out ontop of a player, but can an other enemy))
-[Move] Ghostly, (same thing as burrow, but it fades in and out)
+[Move] Ghostly, (Has the ability to move through walls although it will be able to be hit through walls by melee weapons)
 [Move] Aerial (similar to moms foot in binding of isaac,  a lot like burrow, or ghostly, but drops in from the sky)
 ??[Move] Remote controlled (player controls it, and the player can not move when doing so)
 [Move] Dopple Legs (shares player movement)
 [Move] Greedy (will steal things off the ground, slowing him down and increasing damage, although will prioritize stealing over attacking, drops the last three items it stole on death)
+[Move] Spector (move through walls although can also be hit through walls, modcount = number of walls to move through)
+[Move] Scaredy (will run away from players and enemies, movement greatly increases although its a shitty movement direction)
+[Move] Stealthy?? (Turns to stone when the player is far enough away and an enemy projectile exists with in range) {Anti melee}
 
 --passive/toy summon mods (not really specific to any particular mod section, like the weapon's toy mods)
 [toy] blood shot (shoots out 6 or 8 projectiles apawn death)
 [toy] blood trail (slightly less health, but leaves a trail of damaging floor tiles)
 [passive] Spawner ( every 3.5-(0.5*modcount) seconds it spawns a minion version of it's self, with a max of 3)
 
+
+
+
+
+
+
+
+
+Synergies
+
+Guiding + Airstrike should make the weapon laser guided? same code as targeting?

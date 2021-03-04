@@ -18,6 +18,7 @@ if !variable_instance_exists(self, "mod_charge_start") || ((mod_charge_start = f
   repeat(mod_count){
     self.active_w_damage = (self.active_w_damage*8)*1.1
   }
+  audio_play_sound(snd_mod_charge, 1,false)
   //increase knockback?
 }
 

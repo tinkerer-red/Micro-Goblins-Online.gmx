@@ -60,7 +60,7 @@ if (object_index = obj_weapon) && (w_type = weapon_type_melee){
     var trav_dis_dir = (anim_slash_time/2 - anim_slash_timer )/anim_slash_time * anim_slash_max_direction_multiplier;
     
     //we invert this number just to make the player left handed
-    var trav_dis_dir = w_start_dir+(trav_dis_dir * -1);
+    var trav_dis_dir = w_start_dir+(trav_dis_dir);
     
     var x_off = owner_id.x - x;
     var y_off = owner_id.y - y;

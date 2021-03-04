@@ -7,7 +7,8 @@
 
 
 returned = false
-var ideal_spd = 8*(60/room_speed)
+var ideal_spd = 960/room_speed //this comes out to be about 16 pixels per frame at 60fps
+
 
 var mod_count = scr_queue_has_mod_count(active_queue, scr_mod_dash)
 
@@ -24,6 +25,9 @@ if (self.mod_dash_frame < ceil(room_speed/15))  && (returned = false)
   */
   spd = ideal_spd//move_vector[0]
   self.mod_dash_frame++
+  var xx = x+lengthdir_x(1, direction)
+  var yy = y+lengthdir_y(1, direction)
+  draw_particle_dashLines(x, y, xx, yy)
 }
 
 //init the animation
@@ -32,6 +36,7 @@ if (!variable_instance_exists(self, "mod_dash_start")) || (mod_dash_start = fals
   var xx = x+lengthdir_x(1, direction)
   var yy = y+lengthdir_y(1, direction)
   draw_particle_dashDust(x, y, xx, yy)
+  draw_particle_dashLines(x, y, xx, yy)
 }
 
 //when finished

@@ -82,10 +82,17 @@ Zombie Estate 2
 [Weapon] Mjolnir - Thor (melee + lightning Strike + Chain Lightning)
 [Weapon] Master Sword/Excalibur - Zelda/Mytholigy [Each map genorates ONLY 1 either in a lake for excalibur or in a stone for master sword] (melee (completely empty mods but has one more mod slot then anything else in the game))
 
-
+[Weapon] Air Propultion Gun - Just Cause 2 (ranged + knockback + knockback + aoe?)
+[Weapon] Flak Cannon - Unreal series (ranged + multi Shot + bonus shot + richochet)
+[Weapon] Flame Wall Gun - Raise of the triad (ranged + cluster + continuous)
+[Weapon] Killer Wail (like a large megaphone) - Splatoon (ranged + ethernal + enlarge + piercing)
+[Weapon] electro gun - GTA2 (ranged + ray trace + arch lightning)
+[Weapon] plunger gun - Rayman Raving Rabids (ranged + continuous)
+[Weapon] MA22 (lazer guided multi rocket launcher) - darkest of days (ranged + burst + targeting + airstrike)
 [Weapon] HookShot - zelda (ranged + negarang + chained)
 [Weapon] Shell Gun - Enter the gungeon (ranged + ...) (It's a shotgun's Shell, which shoots shotguns, which shoot shots)  https://youtu.be/JkqO6YygHhw
 [Weapon] Scarab Gun - Halo 2 (ranged + laser + explosion/aoe)
+///[Weapon] Anal Probe Gun - Destroy all Humans! (ranged + Fear? + Explosion)? (the enemy runs away before their blain pops out of their body, similar to halo sticky grenades.)
 ///[Weapon] mr toots - red faction armageddon (ranged + laser + repeater)
 ///[Weapon] Sparton Laser - Halo 3 (ranged + charged + piercing + stream/laser?)
 ///[Weapon] Taser gun - IRL (ranged + stun)
@@ -94,6 +101,7 @@ Zombie Estate 2
 [Weapon] Experimental MIRV - Fallout (ranged + size increase + cluster + explosion)
 ///[Weapon] BFG - Doom (ranged + size increase + explosion + chain lightning)
 ///[Weapon] gravity gun - halflife (ranged + gravity + force push)
+///[Weapon] Kitty Cannon - Sunset Over Drive [This gun shoots a parfectly harmless cat, although a giant robo dog will kill everything in its way trying to get to the cat]
 ///[Weapon] fire flower - mario (ranged + fire)
 ///[Weapon] Blue shell - mario kart (ranged + heat seeking + aoe) ========== [Should only damage the highest health in the room?]
 ///[Weapon] banana grenade - Worms (ranged + cluster + explosive)

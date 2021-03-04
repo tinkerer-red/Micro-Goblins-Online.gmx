@@ -19,9 +19,6 @@ if (object_index = obj_weapon) && (w_type = weapon_type_range || melee_ranged > 
     
     is_airstrike = true;
     
-    //show_debug_message("BEFORE first loop")
-    //show_debug_message("ds_queue_size(self.proj_queue) = "+string(ds_queue_size(self.proj_queue)))
-    //show_debug_message("ds_queue_size(self.recent_proj_queue) = "+string(ds_queue_size(self.recent_proj_queue)))
     
     //center all projectiles above the player
     while ds_queue_size(self.recent_proj_queue) != 0{
@@ -37,21 +34,11 @@ if (object_index = obj_weapon) && (w_type = weapon_type_range || melee_ranged > 
     //add the projectiles back into the queue
     ds_queue_copy(self.recent_proj_queue, self.proj_queue)
   
-    //show_debug_message("after first loop")
-    //show_debug_message("ds_queue_size(self.proj_queue) = "+string(ds_queue_size(self.proj_queue)))
-    //show_debug_message("ds_queue_size(self.recent_proj_queue) = "+string(ds_queue_size(self.recent_proj_queue)))
   }
   
   ////////////effect////////////
   if (mod_airstrike_start = true){
     mod_airstrike_start = false;
-    
-    //decrement the timer
-    //mod_airstrike_timer -= 1*lag()
-    
-    //show_debug_message("BEFORE SECOND loop")
-    //show_debug_message("ds_queue_size(self.proj_queue) = "+string(ds_queue_size(self.proj_queue)))
-    //show_debug_message("ds_queue_size(self.recent_proj_queue) = "+string(ds_queue_size(self.recent_proj_queue)))
     
     //increment projectile travel distance for use as a timer
     repeat(ds_queue_size(self.recent_proj_queue)){
@@ -70,7 +57,8 @@ if (object_index = obj_weapon) && (w_type = weapon_type_range || melee_ranged > 
         _proj.y = _proj.mod_airstrike_end_point_y
         //_proj.projectile_active = true
         _proj.is_airstrike = false
-        //ds_queue_enqueue(self.proj_queue, _proj)
+        
+        
         init_projectile(_proj)
       }else{
         //add the projectiles back into the queue

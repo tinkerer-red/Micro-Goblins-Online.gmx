@@ -14,6 +14,7 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
     
     /*   ////This code is reserved here incase Red forgets to initialize create events on their first pass.
     // thanks past red!
+    //// thanks past red again! 2/10/21
     if (self.eAttack_event = ev_create) && (self.mods_init = false) {
     
     }

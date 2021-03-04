@@ -87,7 +87,7 @@ guid = gui_create_gui();
 
 gui_create_string(guid, "text", "Debug Controller", c_white);
 
-gui_create_menu(guid, "Modifiers", false, 46, c_black);
+gui_create_menu(guid, "Modifiers", false, 50, c_black);
   
   gui_create_menu(guid, "Global", false, 6, c_aqua);
     gui_create_slider(guid, "Charge", 0, 0, 5, c_red)
@@ -126,18 +126,23 @@ gui_create_menu(guid, "Modifiers", false, 46, c_black);
     gui_create_slider(guid, "Quick Scope", 0, 0, 5, c_orange)
     
     
-  gui_create_menu(guid, "Summon", false, 7, c_green);
+  gui_create_menu(guid, "Summon", false, 11, c_green);
     ////////////////////////////////////////////////////////
     gui_create_menu(guid, "Movement", false, 2, c_blue);
       gui_create_slider(guid, "Default Movement", 0, 0, 5, c_red)
       gui_create_slider(guid, "Orbital", 0, 0, 5, c_orange)
       
     ////////////////////////////////////////////////////////
-    gui_create_menu(guid, "Attack", false, 1, c_red);
+    gui_create_menu(guid, "Attack", false, 2, c_red);
       gui_create_slider(guid, "Default Attack", 0, 0, 5, c_orange)
+      gui_create_slider(guid, "Leap", 0, 0, 5, c_yellow)
+      
     ////////////////////////////////////////////////////////
-    gui_create_menu(guid, "Health", false, 1, c_green);
+    gui_create_menu(guid, "Health", false, 4, c_green);
       gui_create_slider(guid, "Default Health", 0, 0, 5, c_yellow)
+      gui_create_slider(guid, "Stout", 0, 0, 5, c_yellow)
+      gui_create_slider(guid, "Enlarged", 0, 0, 5, c_yellow)
+      gui_create_slider(guid, "Timed", 0, 0, 5, c_yellow)
   
   gui_create_menu(guid, "Toy Mods", false, 1, c_fuchsia);
     gui_create_slider(guid, "Paint", 0, 0, 5, c_red)
@@ -149,10 +154,11 @@ gui_create_menu(guid, "Modifiers", false, 46, c_black);
   
   
   
-  gui_create_menu(guid, "Graphics", false, 5, c_lime);
+  gui_create_menu(guid, "Graphics", false, 6, c_lime);
     gui_create_watcher(guid, "FPS", fps, c_green);
     gui_create_watcher(guid, "FPS_mean", fps_real, c_orange);
     gui_create_checkbox(guid, "Smooth Camera", obj_camera_control.smooth_camera, c_lime);
+    gui_create_checkbox(guid, "Free Cam", obj_camera_control.free_cam_mode, c_teal);
     gui_create_button(guid, "Show Chunks", chunk_debug_toggle, c_yellow);
     gui_create_slider(guid, "room_speed", 60, 10, 120, c_green)
     
@@ -271,7 +277,12 @@ if update_debug || (global.debug = true){
           last_defaultMovement = gui_get_value(guid, "Default Movement");
           last_orbital = gui_get_value(guid, "Orbital");
           last_defaultAttack = gui_get_value(guid, "Default Attack");
+          last_leap = gui_get_value(guid, "Leap");
           last_defaultHealth = gui_get_value(guid, "Default Health");
+          last_stoutHealth = gui_get_value(guid, "Stout");
+          last_enlargedHealth = gui_get_value(guid, "Enlarged");
+          last_timedHealth = gui_get_value(guid, "Timed");
+          
         //}
         
         //if update_debug || gui_get_value(guid, 'Toy Mods'){
@@ -405,9 +416,14 @@ if (global.debug = true){
           }
           if gui_get_value(guid, 'Attack'){
            gui_set_value(guid, "Default Attack", floor(0.5+gui_get_value(guid, "Default Attack")) div 1); 
+           gui_set_value(guid, "Leap", floor(0.5+gui_get_value(guid, "Leap")) div 1); 
+           
           }
           if gui_get_value(guid, 'Health'){
             gui_set_value(guid, "Default Health", floor(0.5+gui_get_value(guid, "Default Health")) div 1);
+            gui_set_value(guid, "Stout", floor(0.5+gui_get_value(guid, "Stout")) div 1);
+            gui_set_value(guid, "Enlarged", floor(0.5+gui_get_value(guid, "Enlarged")) div 1);
+            gui_set_value(guid, "Timed", floor(0.5+gui_get_value(guid, "Timed")) div 1);
           }
           
         }
@@ -460,6 +476,7 @@ if (global.debug = true){
       if gui_get_value(guid, 'Graphics') || (update_debug = true){
         //adjust camera draw settings///////////////////
         obj_camera_control.smooth_camera = gui_get_value(guid, 'Smooth Camera');
+        obj_camera_control.free_cam_mode = gui_get_value(guid, 'Free Cam');
               
         if obj_camera_control.smooth_camera != last_smooth {
           gui_set_gui(guid,
@@ -584,10 +601,16 @@ if update_debug || (global.debug = true){
             //Attack
             if gui_get_value(guid, 'Attack') || (update_debug = true){
              if update_debug || last_defaultAttack != gui_get_value(guid, "Default Attack") scr_modifier_adjust(queue_attack_step_mods, scr_mod_summon_attack_default, 1, gui_get_value(guid, "Default Attack"));
+             if update_debug || last_leap != gui_get_value(guid, "Leap") scr_modifier_adjust(queue_attack_step_mods, scr_mod_summon_attack_leap, 1, gui_get_value(guid, "Leap"));
+             
             }
             //Health
             if gui_get_value(guid, 'Health') || (update_debug = true){
               if update_debug || last_defaultHealth != gui_get_value(guid, "Default Health") scr_modifier_adjust(queue_attack_step_mods, scr_mod_summon_health_default, 1, gui_get_value(guid, "Default Health"));
+              if update_debug || last_stoutHealth != gui_get_value(guid, "Stout") scr_modifier_adjust(queue_attack_step_mods, scr_mod_summon_health_stout, 88, gui_get_value(guid, "Stout"));
+              if update_debug || last_enlargedHealth != gui_get_value(guid, "Enlarged") scr_modifier_adjust(queue_attack_step_mods, scr_mod_summon_health_enlarged, 2, gui_get_value(guid, "Enlarged"));
+              if update_debug || last_timedHealth != gui_get_value(guid, "Timed") scr_modifier_adjust(queue_attack_step_mods, scr_mod_summon_health_timed, 99, gui_get_value(guid, "Timed"));
+              
             }
           }
           

@@ -9,7 +9,7 @@
 
 var xx = argument0
 var yy = argument1
-var size = argument2
+var size = argument2  //1-4
 var type = argument3
 var map = argument4
 

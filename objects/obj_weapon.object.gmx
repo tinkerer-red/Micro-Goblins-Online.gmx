@@ -188,6 +188,12 @@ if variable_instance_exists(id, "weapon_event_queues"){
   }
 }
 
+if variable_instance_exists(id, "mod_ranged_start"){
+  if ds_exists(proj_weapon_event_queues, ds_type_priority){
+    ds_priority_destroy(proj_weapon_event_queues)
+    proj_weapon_event_queues = -1
+  }
+}
 
 </string>
           </argument>
@@ -223,179 +229,6 @@ self.echo_inst.w_start_dir = self.w_start_dir
       </action>
     </event>
     <event eventtype="3" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Projectile/Summon spawn modifiers
-////////////////////////////////////////////////////////////////////
-//Projectile/Summon spawn modifiers
-////////////////////////////////////////////////////////////////////
-if self.attack  //if spawning projectiles
-{
-  //show_debug_message("weap - Projectile spawn modifiers")
-  
-  ////////////////////
-  ///// Ranged
-  ////////////////////
-  if ((w_type = weapon_type_range) &amp;&amp; (proj_spawned = 0)) || (melee_ranged &gt; 0)
-  {
-    proj_spawned += 1
-    
-    var distance = ((self.sprite_width*self.image_xscale)/2 + (self.sprite_height*self.image_yscale)/2) /2 +1
-    var xx = x+lengthdir_x(distance, self.direction);
-    var yy = y+lengthdir_y(distance, self.direction);
-    
-    //we store them in a queue so all modifiers can deal with all bullets
-    self.recent_proj_queue = ds_queue_create()
-    
-    var proj = instance_create(xx, yy, obj_weap_proj);
-    
-    proj.direction = direction
-    proj.owner_weap = id
-    
-    ds_queue_enqueue(self.recent_proj_queue, proj)
-    //we also create a full queue to give these projectiles their step events in the next code block
-    self.proj_queue = ds_queue_create()
-    
-    //copy the OG bullet into the queue because mod scripts will handle their spawned projetiles on their own
-    ds_queue_copy(self.proj_queue, self.recent_proj_queue)
-    
-  }
-  
-  ////////////////////
-  ///// Summon
-  ////////////////////
-  if (w_type = weapon_type_summon)
-  {
-    var distance = ((self.sprite_width*self.image_xscale)/2 + (self.sprite_height*self.image_yscale)/2) /2 +1
-    var xx = x+lengthdir_x(distance, self.direction);
-    var yy = y+lengthdir_y(distance, self.direction);
-    
-    //we store them in a queue so all modifiers can deal with all summons
-    self.recent_summon_queue = ds_queue_create()
-    
-    var self.summon = instance_create(xx, yy, obj_summon)
-    self.summon.direction = direction
-    
-    ds_queue_enqueue(self.recent_summon_queue, self.summon)
-    //we also create a full queue to give these summons their step events in the next code block
-    self.summon_queue = ds_queue_create()
-    
-    //copy the OG summon into the queue because mod scripts will handle their spawned summons on their own
-    ds_queue_copy(self.summon_queue, self.recent_summon_queue)
-  }
-  
-  
-  ///////////////
-  var self.result = scr_run_modifiers() //projectile spawn modifiers
-  ///////////////
-  if self.result = true
-  {
-    ////////////////////
-    ///// Ranged
-    ////////////////////
-    if (w_type = weapon_type_range) || (melee_ranged &gt; 0)
-    {
-      ds_queue_destroy(self.recent_proj_queue)
-      recent_proj_queue = -1
-      
-      //init projectiles
-      while !ds_queue_empty(self.proj_queue){
-        var proj = ds_queue_dequeue(self.proj_queue);
-        init_projectile(proj)
-      }
-      
-      ds_queue_destroy(self.proj_queue)
-      proj_queue = -1
-      
-      if (w_type = weapon_type_range)                     //|| melee_ranged
-      {
-        //self.owner_id.attack = false
-        //self.owner_id.post_attack = true
-        //draw_self()
-        //instance_destroy()
-      }
-      
-    }
-    
-    
-    
-    ////////////////////
-    ///// Summon
-    ////////////////////
-    if (w_type = weapon_type_summon)
-    {
-      ds_queue_destroy(self.recent_summon_queue)
-      recent_summon_queue = -1
-      
-      while !ds_queue_empty(self.summon_queue)
-      {
-        var summon = ds_queue_dequeue(self.summon_queue);
-        
-        //copy the last of the queues to the summon
-        summon.weapon_event_queues = ds_priority_create()
-        ds_priority_copy(summon.weapon_event_queues, self.weapon_event_queues)
-        
-        summon.is_summoned = true;
-        summon.owner_id = owner_id
-        summon.enemy = nearest_enemy(x, y, 16*20)
-        
-        //summon.direction = direction
-        summon.image_angle = summon.direction-45
-        
-        summon.sprite_summon_head = sprite_summon_head
-        summon.sprite_summon_body = sprite_summon_body
-        
-        summon.sprite_index = spr_green
-        //if (summon.sprite_index = sprite_index) {summon.image_angle -= 45}
-        
-        summon.image_xscale = w_size
-        summon.image_yscale = w_size
-        
-        
-        summon.start_x = summon.x
-        summon.start_y = summon.y
-        
-        summon.w_damage = w_damage
-        summon.w_range = w_range
-        summon.w_knockback = w_knockback
-      }
-      ds_queue_destroy(self.summon_queue)
-      summon_queue = -1
-      
-      //if (w_type = weapon_type_summon){
-        //self.owner_id.attack = false
-        //self.owner_id.post_attack = true
-        //draw_self()
-        //instance_destroy()
-      //}
-    }
-    
-    self.attack = false
-    
-  }
-}
-
-
-
-
-</string>
-          </argument>
-        </arguments>
-      </action>
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -469,18 +302,6 @@ if (w_type = weapon_type_melee)
   
   anim_attack_timer -= 1*lag()
   
-  //
-  //
-  //
-  //
-  //
-  /*
-  attack_speed = (w_speed * (1+swiftness)) /(1+slowness)
-  rot += attack_speed
-  image_angle -= attack_speed
-  if (rot &amp;gt;= 180) {image_angle = w_end_dir}
-  if (image_angle &amp;gt;= 360) {image_angle -= 360}
-  */
 }
 
 
@@ -495,10 +316,6 @@ if (w_type = weapon_type_range) &amp;&amp; (self.attack = false)
   {
     self.owner_id.attack = false
     self.owner_id.post_attack = true
-    
-    //show_debug_message("==========fucked up==========")
-    //instance_destroy()
-    //self.pre_collide = true
   }
 }
 
@@ -511,8 +328,6 @@ if (w_type = weapon_type_summon) &amp;&amp; (self.attack = false)
   {
     self.owner_id.attack = false
     self.owner_id.post_attack = true
-    //instance_destroy()
-    //self.pre_collide = true
   }
 }
 </string>
@@ -598,6 +413,243 @@ if !self.attack &amp;&amp; !self.collide &amp;&amp; !self.pre_collide  //if spaw
     }
   }
 }
+
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Projectile/Summon spawn modifiers
+////////////////////////////////////////////////////////////////////
+//Projectile/Summon spawn modifiers
+////////////////////////////////////////////////////////////////////
+
+
+
+  ////////////////////
+  ///// Melee Ranged
+  ////////////////////
+  if (w_type = weapon_type_melee) &amp;&amp; ((melee_ranged &gt; 0) &amp;&amp; (proj_spawned &lt; melee_ranged))
+  {
+    var anim_timer_iterations = anim_attack_time / (melee_ranged+1)
+    
+    //if the timer is on a projectile iteration greater then the number of projectiles spawned then we can spawn the new projectile
+    if ((anim_attack_time-anim_attack_timer) div anim_timer_iterations &gt; proj_spawned)
+    {
+      proj_spawned += 1
+      
+      var distance = ((self.sprite_width*self.image_xscale)/2 + (self.sprite_height*self.image_yscale)/2) /2 +1
+      var xx = x+lengthdir_x(distance, self.direction);
+      var yy = y+lengthdir_y(distance, self.direction);
+      
+      //we store them in a queue so all modifiers can deal with all bullets
+      self.recent_proj_queue = ds_queue_create()
+      
+      var proj = instance_create(xx, yy, obj_weap_proj);
+      
+      proj.direction = direction
+      proj.owner_weap = id
+      
+      /// init the new projectile ignoring proj spawn modifiers since these shouldnt be on there at all
+      proj.weapon_event_queues = ds_priority_create()
+      ds_priority_copy(proj.weapon_event_queues, proj_weapon_event_queues)
+      
+      //the variable "proj_weapon_event_queues" was made by the ranged modifier at init
+      
+      proj.image_angle = proj.direction-45
+      
+      proj.sprite_index = sprite_proj
+      proj.w_hype = fast_hype(proj.sprite_height, proj.sprite_width)
+      //if (proj.sprite_index = sprite_index) {proj.image_angle -= 45}
+      
+      proj.image_xscale = w_size
+      proj.image_yscale = w_size
+      
+      proj.owner_id = owner_id
+      
+      proj.start_x = proj.x
+      proj.start_y = proj.y
+      
+      proj.w_damage = w_damage
+      //proj.w_range = w_range
+      proj.w_knockback = w_knockback
+      proj.speed = self.proj_speed //w_speed
+      
+      proj.projectile_active = true
+    }
+  }
+  
+  
+    
+      
+  
+  
+
+if self.attack  //if spawning projectiles
+{
+  //show_debug_message("weap - Projectile spawn modifiers")
+  ////////////////////
+  ///// Ranged
+  ////////////////////
+  if ((w_type = weapon_type_range) &amp;&amp; (proj_spawned = 0))
+  {
+    proj_spawned += 1
+    
+    var distance = ((self.sprite_width*self.image_xscale)/2 + (self.sprite_height*self.image_yscale)/2) /2 +1
+    var xx = x+lengthdir_x(distance, self.direction);
+    var yy = y+lengthdir_y(distance, self.direction);
+    
+    //we store them in a queue so all modifiers can deal with all bullets
+    self.recent_proj_queue = ds_queue_create()
+    
+    var proj = instance_create(xx, yy, obj_weap_proj);
+    
+    proj.direction = direction
+    proj.owner_weap = id
+    
+    ds_queue_enqueue(self.recent_proj_queue, proj)
+    //we also create a full queue to give these projectiles their step events in the next code block
+    self.proj_queue = ds_queue_create()
+    
+    //copy the OG bullet into the queue because mod scripts will handle their spawned projetiles on their own
+    ds_queue_copy(self.proj_queue, self.recent_proj_queue)
+    
+  }
+  
+  ////////////////////
+  ///// Summon
+  ////////////////////
+  if (w_type = weapon_type_summon)
+  {
+    var distance = ((self.sprite_width*self.image_xscale)/2 + (self.sprite_height*self.image_yscale)/2) /2 +1
+    var xx = x+lengthdir_x(distance, self.direction);
+    var yy = y+lengthdir_y(distance, self.direction);
+    
+    //we store them in a queue so all modifiers can deal with all summons
+    self.recent_summon_queue = ds_queue_create()
+    
+    var self.summon = instance_create(xx, yy, obj_summon)
+    self.summon.direction = direction
+    
+    ds_queue_enqueue(self.recent_summon_queue, self.summon)
+    //we also create a full queue to give these summons their step events in the next code block
+    self.summon_queue = ds_queue_create()
+    
+    //copy the OG summon into the queue because mod scripts will handle their spawned summons on their own
+    ds_queue_copy(self.summon_queue, self.recent_summon_queue)
+  }
+  
+  
+  ///////////////
+  var self.result = scr_run_modifiers() //projectile spawn modifiers
+  ///////////////
+  
+  if self.result = true
+  {
+    ////////////////////
+    ///// Ranged
+    ////////////////////
+    if (w_type = weapon_type_range)
+    {
+      ds_queue_destroy(self.recent_proj_queue)
+      recent_proj_queue = -1
+      
+      //init projectiles
+      while !ds_queue_empty(self.proj_queue){
+        var proj = ds_queue_dequeue(self.proj_queue);
+        if instance_exists(proj){
+          init_projectile(proj)
+        }
+      }
+      
+      ds_queue_destroy(self.proj_queue)
+      proj_queue = -1
+      
+      if (w_type = weapon_type_range)                     //|| melee_ranged
+      {
+        //self.owner_id.attack = false
+        //self.owner_id.post_attack = true
+        //draw_self()
+        //instance_destroy()
+      }
+      
+    }
+    
+    
+    
+    ////////////////////
+    ///// Summon
+    ////////////////////
+    if (w_type = weapon_type_summon)
+    {
+      ds_queue_destroy(self.recent_summon_queue)
+      recent_summon_queue = -1
+      
+      while !ds_queue_empty(self.summon_queue)
+      {
+        var summon = ds_queue_dequeue(self.summon_queue);
+        
+        //copy the last of the queues to the summon
+        summon.weapon_event_queues = ds_priority_create()
+        ds_priority_copy(summon.weapon_event_queues, self.weapon_event_queues)
+        
+        summon.is_summoned = true;
+        summon.owner_id = owner_id
+        summon.enemy = nearest_enemy(x, y, 16*20)
+        
+        //summon.direction = direction
+        summon.image_angle = summon.direction-45
+        
+        summon.sprite_summon_head = sprite_summon_head
+        summon.sprite_summon_body = sprite_summon_body
+        
+        summon.sprite_index = spr_green
+        //if (summon.sprite_index = sprite_index) {summon.image_angle -= 45}
+        
+        summon.image_xscale = w_size
+        summon.image_yscale = w_size
+        
+        
+        summon.start_x = summon.x
+        summon.start_y = summon.y
+        
+        summon.w_damage = w_damage
+        summon.w_range = w_range
+        summon.w_knockback = w_knockback
+      }
+      ds_queue_destroy(self.summon_queue)
+      summon_queue = -1
+      
+      //if (w_type = weapon_type_summon){
+        //self.owner_id.attack = false
+        //self.owner_id.post_attack = true
+        //draw_self()
+        //instance_destroy()
+      //}
+    }
+    
+    self.attack = false
+    
+  }
+}
+
 
 
 

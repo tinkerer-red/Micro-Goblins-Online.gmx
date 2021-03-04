@@ -18,17 +18,12 @@ var room_cells = global.chunk_handler.chunk_width div global.chunk_handler.tile_
 
 
 var width  = string_copy(room_string, 1, 2)
-room_string = string_delete(room_string, 1, 2)
-
-var height = string_copy(room_string, 1, 2)
-room_string = string_delete(room_string, 1, 2)
+var height = string_copy(room_string, 3, 2)
+room_string = string_delete(room_string, 1, 4)
 
 
 var width  = hex_to_dec(width);
-var height = hex_to_dec(width);
-
-//show_debug_message("width = "+string(width))
-//show_debug_message("height = "+string(height))
+var height = hex_to_dec(height);
 
 //CHECK TO MAKE SURE ALL ROOMS WILL BE EMPTY BEFORE WE WRITE
 var room_grid = map[? "room_grid"]
@@ -47,6 +42,7 @@ for(var chunk_x = 0; chunk_x <= width; chunk_x++){
 }
 
 //delete the doors variable because why would we need them? fuck em
+//What the fuck was red on about when he added this? it doesnt do anything, it's simply fake numbers for no reason at all. this really should be fixed... 02/28/21
 room_string = string_delete(room_string, 1, 4)
 
 
