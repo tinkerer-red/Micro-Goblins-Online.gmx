@@ -16,13 +16,13 @@ if !variable_instance_exists(self, "mod_seeking_start"){
   nearest_obj = nearest_enemy(xx, yy, w_range*2);
 }
 
-mod_count = scr_queue_has_mod_count(step_event_queues_temp, scr_mod_seeking)
+var mod_count = scr_queue_has_mod_count(step_event_queues_temp, scr_mod_seeking)
 
 if (mod_seeking_start = true){
   mod_seeking_start = false
   if (object_index = obj_weap_proj){
     
-    if (nearest_obj != noone){
+    if (nearest_obj != noone) && (instance_exists(nearest_obj)){
       var seeking_angle_change = (180/room_speed)*(mod_count+1);
       
       var target_dir = point_direction(x, y, nearest_obj.x, nearest_obj.y);

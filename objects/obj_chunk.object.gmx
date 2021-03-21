@@ -49,6 +49,7 @@ interior_grid_y = -1
 interior_map = -1
 
 
+
 terrain_surface = -1
 
 generated = false;
@@ -99,28 +100,34 @@ generated = false;
           <argument>
             <kind>1</kind>
             <string>///Have Existential Crisis
-//find out if you should even exist
 
-var margin = global.chunk_handler.margin
-var chunk_dist = global.chunk_handler.chunk_dist
+//first find out if it's interior or exterior
+if !is_interior(){
+  //find out if you should even exist
+  var margin = global.chunk_handler.margin
+  var chunk_dist = global.chunk_handler.chunk_dist
+  
+  //is the player with in distance of you?
+  var player = instance_nearest(x+sprite_width/2, y+sprite_height/2, obj_player)
+  
+  var closest_x = player.x div sprite_width
+  var closest_y = player.y div sprite_height
+  
+  x_diff = closest_x - chunk_x
+  y_diff = closest_y - chunk_y
+  
+  //if !point_in_rectangle(player.x, player.y, bbox_left-(sprite_width*(chunk_dist+margin)), bbox_top-(sprite_height*(chunk_dist+margin)), bbox_right+(sprite_width*(chunk_dist+margin)), bbox_bottom+(sprite_height*(chunk_dist+margin))){
+  if not ((abs(x_diff) &lt; chunk_dist+margin) &amp;&amp; (abs(y_diff) &lt; chunk_dist+margin)){
+    should_exist = false
+    //show_debug_message("Chunk: ("+string(chunk_x)+","+string(chunk_y)+") Should NOT exists")
+  }
 
-//is the player with in distance of you?
-var player = instance_nearest(x+sprite_width/2, y+sprite_height/2, obj_player)
+}else{ //if it's an interior cell
 
-var closest_x = player.x div sprite_width
-var closest_y = player.y div sprite_height
+  should_exist = chunk_interior_cell_existential_crisis_extension()
 
-x_diff = closest_x - chunk_x
-y_diff = closest_y - chunk_y
 
-//if !point_in_rectangle(player.x, player.y, bbox_left-(sprite_width*(chunk_dist+margin)), bbox_top-(sprite_height*(chunk_dist+margin)), bbox_right+(sprite_width*(chunk_dist+margin)), bbox_bottom+(sprite_height*(chunk_dist+margin))){
-if not ((abs(x_diff) &lt; chunk_dist+margin) &amp;&amp; (abs(y_diff) &lt; chunk_dist+margin)){
-  should_exist = false
-  //show_debug_message("Chunk: ("+string(chunk_x)+","+string(chunk_y)+") Should NOT exists")
 }
-
-
-
 </string>
           </argument>
         </arguments>
@@ -395,8 +402,11 @@ if ds_exists(global.chunk_handler.world_map, ds_type_map){
             <kind>1</kind>
             <string>/// Create Chunk Surface  
   var tile_size = global.chunk_handler.tile_size
-  var width  = global.chunk_handler.world_width
-  var height = global.chunk_handler.world_height
+  //var width  = global.chunk_handler.world_width
+  //var height = global.chunk_handler.world_height
+  
+  var grid_size_x = (sprite_width/tile_size);
+  var grid_size_y = (sprite_height/tile_size);
   
   var x_off = bbox_left/tile_size;
   var y_off = bbox_top/tile_size;
@@ -410,7 +420,7 @@ if ds_exists(global.chunk_handler.world_map, ds_type_map){
   
   
 if !is_interior(x,y){ //exterior cells
-  if(ds_grid_get_max(heightmap_grid, 0,0,width,height) &lt;=1){ // If max value of our grid is less or equal 1, then poceed without autotiling.
+  if(ds_grid_get_max(heightmap_grid, 0,0,grid_size_x,grid_size_y) &lt;=1){ // If max value of our grid is less or equal 1, then poceed without autotiling.
     
     
     for(var i = 0; i &lt; tiles_x; i++){
@@ -455,12 +465,20 @@ if !is_interior(x,y){ //exterior cells
     //show_debug_message("interior string exists")
     var str = interior_string
     
-    //show_debug_message("interior_string = "+string(interior_string))
-    //show_debug_message("str = "+string(str))
+    //draw the entire floor at once to optimize
+      texture_set_repeat(true);
+      shader_set(shStretch);
+      shader_set_uniform_f(shader_get_uniform(shStretch, "stretch"), 16);
+      for (var i = 0; i&lt; 16; i++){
+        draw_sprite_ext(spr_dungeon_tiles, 0, 0, i*16, 16, 1, 0, c_white, 1);
+      }
+      shader_reset();
     
+    //draw all the other objects
     for(var i = 0; i &lt; tiles_x; i++){
       for(var j = 0; j &lt; tiles_y; j++){
         var value = obsticals_grid[# i, j]
+        if (value = 0) continue;
         draw_sprite(spr_dungeon_tiles, value, i*tile_size, j*tile_size)
       }
     }
@@ -528,122 +546,9 @@ if (show_chunks) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// /* If chunk shouldnt exist Save Data
-/*
-if should_exist = false{
-  if ds_exists(chunk_data, ds_type_map) {
-//    chunk_save_to_map()
-  }
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// /* Destroy tiles and object
-/*
-if should_exist = false{
-  if ds_exists(chunk_data, ds_type_map) {
-    var tile_size = 16
-    var chunk_width = sprite_width/tile_size;
-    var chunk_height = sprite_height/tile_size;
-    
-    // Bottom
-    var b_layer = TileLayerBottom
-    
-    // MIDDLE
-    var m_layer = TileLayerMiddle
-    
-    // TOP
-    var t_layer = TileLayerTop
-    
-    // DECOR
-    var d_layer = TileLayerDecor
-    
-    //Make sure the grids exist before we try to read from them
-    if ds_exists(tile_layer_bottom_grid, ds_type_grid) 
-    &amp;&amp; ds_exists(tile_layer_middle_grid, ds_type_grid) 
-    &amp;&amp; ds_exists(tile_layer_top_grid, ds_type_grid) 
-    &amp;&amp; ds_exists(tile_layer_decor_grid, ds_type_grid) 
-    {
-      // Full Cycle
-      for (var i = 0; i &lt; chunk_width; i++){
-        for (var j = 0; j &lt; chunk_height; j++){
-          var xx = x+i*tile_size
-          var yy = y+j*tile_size
-          
-          if (tile_layer_bottom_grid[# i, j] != -1) tile_layer_delete_at(b_layer, xx, yy);
-          if (tile_layer_middle_grid[# i, j] != -1) tile_layer_delete_at(m_layer, xx, yy);
-          if (tile_layer_top_grid[# i, j] != -1) tile_layer_delete_at(t_layer, xx, yy);
-          if (tile_layer_decor_grid[# i, j] != -1) tile_layer_delete_at(d_layer, xx, yy);
-        }
-      }
-    }
-    
-  }  
-    /*
-    var active_chunk = id
-    
-    with (obj_solid){
-      if point_in_rectangle(x,y, active_chunk.bbox_left, active_chunk.bbox_top, active_chunk.bbox_right, active_chunk.bbox_bottom){
-        instance_destroy()
-      }
-    }
-  */
-//}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>///Destroy Self
 
 if should_exist = false{
-  /*
-  // Clean Up
-  if ds_exists(chunk_data, ds_type_map) {
-    ds_map_destroy(chunk_data);
-    
-    if ds_exists(tile_layer_bottom_grid, ds_type_grid) ds_grid_destroy(tile_layer_bottom_grid)
-    if ds_exists(tile_layer_middle_grid, ds_type_grid) ds_grid_destroy(tile_layer_middle_grid)
-    if ds_exists(tile_layer_top_grid, ds_type_grid) ds_grid_destroy(tile_layer_top_grid)
-    if ds_exists(tile_layer_decor_grid, ds_type_grid) ds_grid_destroy(tile_layer_decor_grid)
-    if ds_exists(tile_layer_bottom_background_grid, ds_type_grid) ds_grid_destroy(tile_layer_bottom_background_grid)
-    if ds_exists(tile_layer_middle_background_grid, ds_type_grid) ds_grid_destroy(tile_layer_middle_background_grid)
-    if ds_exists(tile_layer_top_background_grid, ds_type_grid) ds_grid_destroy(tile_layer_top_background_grid)
-    if ds_exists(tile_layer_decor_background_grid, ds_type_grid) ds_grid_destroy(tile_layer_decor_background_grid)
-  }
-  */
   if ds_exists(heightmap_grid, ds_type_grid){
     ds_grid_destroy(heightmap_grid)
   }
@@ -730,6 +635,8 @@ if (objects_in_chunk = false){
           <argument>
             <kind>1</kind>
             <string>/// Draw Chunk
+draw_set_color(c_dkgray)
+draw_rectangle(x, y, x+64, y+64, false)
 
 if is_visible(){
   if (terrain_surface != -1) || surface_exists(terrain_surface){   ///if ds_exists(heightmap_grid, ds_type_grid){
@@ -742,11 +649,21 @@ if is_visible(){
   }
   
     if (show_chunks) {
-    var chunk_debug_string = "("+string(chunk_x)+","+string(chunk_y)+")"+"#x = "+string(x)+"#y = "+string(y);
-    var scale = obj_camera_control.upscale_val/2;
-    draw_set_colour(c_yellow)
-    draw_set_font(font_debug)
-    draw_text_transformed(x,y,chunk_debug_string,1*scale, 1*scale, 0)
+    if is_interior(x,y){
+      var array = interior_chunk_find_grid_pos(chunk_x, chunk_y)
+      var grid_x = array[0];
+      var grid_y = array[1];
+      var map = array[2];
+      var zone = map[? "zone_pos"];
+      var chunk_debug_string = "("+string(grid_x)+","+string(grid_y)+")"+"#Zone = "+string(zone);
+    }else{
+      var chunk_debug_string = "("+string(chunk_x)+","+string(chunk_y)+")"+"#x = "+string(x)+"#y = "+string(y);
+    }
+      var scale = obj_camera_control.upscale_val/2;
+      draw_set_colour(c_yellow)
+      draw_set_font(font_debug)
+      draw_text_transformed(x,y,chunk_debug_string,1*scale, 1*scale, 0)
+    
   }
 
 }

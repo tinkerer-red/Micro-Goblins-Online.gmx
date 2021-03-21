@@ -36,6 +36,7 @@ var y2 = argument[5]
 
 texture_set_repeat(true);
 shader_set(shStretch);
+shader_set_hue(owner_id.fav_hue)
 shader_set_uniform_f(shader_get_uniform(shStretch, "stretch"), scl);
 draw_sprite_ext(sprite, subimg, xx, yy, scl, scale, _dir, draw_get_color(), 1);
 shader_reset();

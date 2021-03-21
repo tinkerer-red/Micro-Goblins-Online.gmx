@@ -43,8 +43,9 @@ while (finished_mods < mod_count){
   
   var gui_item = guid[| mod_id]
   
-  show_debug_message("gui_item[1] = "+string(gui_item[1]))
-  show_debug_message(gui_item)
+  //show_debug_message("gui_item[1] = "+string(gui_item[1]))
+  //show_debug_message(gui_item)
+  
   //if slider
   if (gui_item[1] = 0){
     

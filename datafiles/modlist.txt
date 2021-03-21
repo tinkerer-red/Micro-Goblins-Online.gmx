@@ -2,19 +2,22 @@
 
 
 ===Global===
-Latent (delays the weapon spawn)
-Accelerate (Increase attack speed for each consecutive shot. Resets one second after the attack)
 +++Repeater (Full Auto attacks)
 +++Charge (you must charge up the weapon first, massive damage increase)
-Dynamic Charge
 ++Dash
 ++Evade
-AOE (this gives AOE, multiples cause larger AOE size) (radius = 16+(16*modcount))
-continuous (modcount = dmge tick increased, this will make an AOE continuous, or cause tick based damage, mutliples cause longer time for aoe)
-+knockback
 +++Enlarge (double the size of the weapon and projectiles)
 +++shrink (half size)
++++AimBot
+Latent (delays the weapon spawn)
+Accelerate (Increase attack speed for each consecutive shot. Resets one second after the attack)
+Dynamic Charge
+AOE (this gives AOE, multiples cause larger AOE size) (radius = 16+(16*modcount))
++continuous (modcount = dmge tick increased, this will make an AOE continuous, or cause tick based damage, mutliples cause longer time for aoe)
++knockback
 
+
+vampirism (chance to gain life after a kill)
 Force Push (at weapon spawn (just after it spawns) force push shit away)
 Force Pull (happens before melee weapon spawns)
 grapple (force pull at collision)    /    lode stone (continuous force pull on hit enemy)
@@ -39,23 +42,23 @@ Blind (when mixed with aoe and continuous, this becomes the fog of war)
 +++Ranged (unlocks ranged mods for the melee weapon, assigns a random projectile sprite perminately)
 +++Back Stab (swings behind you; also?)
 
++++moveable (unlocks the ability to move while swinging, although it also allows you to guide which direction you are attacking, the change in direction is effected by mod count)
+
 +++Chained (Similar to yoyo's and Flail maces, good for rope darts and what not)
 +++Thrust (Chun Li kick annimation for weapons) (multiple will act as a combo attack from a single button press)
 +++slash
-whip
-
 +++Flail (changes the attacking method into a flail attack, adds attack range but makes it a bit slower.) (multiples will give it a further reach)
++++Extend (at the end of the attack animation, extend the reach of the weapon infront of the player by 2tiles*mod_count)
+whip (Will need to be able to make use of paths, and stretched sprites to path, will need at least 60 paths for the animation... uhhhg)
+
 
 "deception"? (damages you when using it although greatly increased damge, slight increase to size, and adds a color effect to the sprite?)
 Keen (slightly increases damage, greatly inreases decapitation chance)
 Jaws (1 modcount = 2 melee weapons lerch out from the side clamping down infront of the player, mod5 = 10)
---double strike (attacks a second time)
 Reflect (reflects bullets back at their owner)
-AimBot (always attacks in the direction of the closest enemy) (this is a melee modifier for balancing purposes) (Stack [90, 180, 360] degree assistance)
 Aerial Strike (every time you hit it spawn a copies of itself, which slams into the ground)
 ??AutoSwing (This is NOT rapid fire! As long as it's actively equipped it will automatically swing at enemies, if reflect is also on the weapon it wil swing at projectiles too)
 ??punching glove (doesnt matter what weapon you're using, it launches a punching glove out aswell)
-??move faster when you're swinging it?
 -
 -
 
@@ -64,7 +67,7 @@ Aerial Strike (every time you hit it spawn a copies of itself, which slams into 
 ===Ranged===
 Divine Spray "spray and pray" (inaccuracy + similar to rewpeater although used for use with card shuffler, flame thrower, cone of fire)
 Ray beam (turns the entire projectile into a ray, not really sure what this intails although the words, freeze ray made me think of this one.)
-Sticky (projectiles exclusive continuous mod)
++++Sticky (projectiles exclusive continuous mod)
 Piercing (attacks through multiple enemies)
 +++Ricochet (projectiles will bounce 1 time if coliding at a 45 degree angle or less, if piercing is present they will bounce at any angle but only 5 times)
 ethernal (attacks through walls)
@@ -136,7 +139,7 @@ Ranged mod, allows for use of pokeball style summons
 [Move] Bouncy (spawns in the direction the player was facing, will continue to move and bounce off walls untill dead)
 [Move] Spastic (bee like movement, very random, much wow)
 [Move] Jumpy (only moves in bursts, similar to terarria's slimes)
------[Move] Orbital (obits around the player, modcount = distance from player)
++++++[Move] Orbital (obits around the player, modcount = distance from player)
 [Move] Chained (spawns in chained to a stake in the ground, after a while it can break free of the chain and moves much faster, modcount = extra damage, 3 or more makes it not able to leave the chain)
 [Move] Momentum (moves quickly but has a hard time turning) (like a wheel or ball, similar to terarria's demon eyes)
 [Move] Stationary (massive health increase, with no movement)
@@ -154,7 +157,7 @@ Ranged mod, allows for use of pokeball style summons
 
 --passive/toy summon mods (not really specific to any particular mod section, like the weapon's toy mods)
 [toy] blood shot (shoots out 6 or 8 projectiles apawn death)
-[toy] blood trail (slightly less health, but leaves a trail of damaging floor tiles)
+[toy] blood trail (slightly less health, but leaves a trail of damaging floor tiles, or maybe smaller red shadowy versions of it's self.)
 [passive] Spawner ( every 3.5-(0.5*modcount) seconds it spawns a minion version of it's self, with a max of 3)
 
 

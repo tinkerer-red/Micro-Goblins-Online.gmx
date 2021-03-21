@@ -61,6 +61,12 @@ if variable_instance_exists(chunk_id, grid_string){
   var grid = variable_instance_get(chunk_id, grid_string);
 }
 
+//secondary check to make sure the chunk exists
+if (chunk_id = noone)
+|| (!instance_exists(chunk_id)){
+  return false;
+}
+
 //these checks for 0 prevents dividing by 0
 if (chunk_id.chunk_x*width) != 0 {
   var _chunk_x = xx mod (chunk_id.chunk_x*width)

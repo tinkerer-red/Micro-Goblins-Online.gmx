@@ -1,9 +1,13 @@
 ///is_interior(x, y)
 
 //returns true or false
-
-var xx = argument0
-var yy = argument1
+if (argument_count = 2){
+  var xx = argument[0]
+  var yy = argument[1]
+}else{
+  var xx = x
+  var yy = y
+}
 
 //its faster to find out if one of these are true then it is to find out if all of them are true, which is why we check for interiors then exteriors
 if (xx > global.chunk_handler.world_width-1)

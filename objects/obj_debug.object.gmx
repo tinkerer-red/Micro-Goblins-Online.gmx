@@ -87,17 +87,18 @@ guid = gui_create_gui();
 
 gui_create_string(guid, "text", "Debug Controller", c_white);
 
-gui_create_menu(guid, "Modifiers", false, 50, c_black);
+gui_create_menu(guid, "Modifiers", false, 54, c_black);
   
-  gui_create_menu(guid, "Global", false, 6, c_aqua);
+  gui_create_menu(guid, "Global", false, 7, c_aqua);
     gui_create_slider(guid, "Charge", 0, 0, 5, c_red)
     gui_create_slider(guid, "Repeater", 0, 0, 5, c_orange)
     gui_create_slider(guid, "Dash", 0, 0, 5, c_yellow)
     gui_create_slider(guid, "Evade", 0, 0, 5, c_green)
     gui_create_slider(guid, "Enlarge", 0, 0, 5, c_blue)
     gui_create_slider(guid, "Shrink", 0, 0, 5, c_aqua)
+    gui_create_slider(guid, "Aim Bot", 0, 0, 5, c_purple)
     
-  gui_create_menu(guid, "Melee", false, 8, c_green);
+  gui_create_menu(guid, "Melee", false, 10, c_green);
     gui_create_slider(guid, "Slash", 0, 0, 5, c_red);
     gui_create_slider(guid, "Thrust", 0, 0, 5, c_orange);
     gui_create_slider(guid, "Chained", 0, 0, 5, c_yellow);
@@ -106,6 +107,8 @@ gui_create_menu(guid, "Modifiers", false, 50, c_black);
     gui_create_slider(guid, "Slowness", 0, 0, 5, c_aqua);
     gui_create_slider(guid, "Back Stab", 0, 0, 5, c_purple);
     gui_create_slider(guid, "Flail", 0, 0, 5, c_red);
+    gui_create_slider(guid, "Moveable", 0, 0, 5, c_orange);
+    gui_create_slider(guid, "Extend", 0, 0, 5, c_yellow);
     
   gui_create_menu(guid, "Ranged", false, 16, c_orange);
     gui_create_slider(guid, "Bonus Shot", 0, 0, 5, c_red)
@@ -126,11 +129,12 @@ gui_create_menu(guid, "Modifiers", false, 50, c_black);
     gui_create_slider(guid, "Quick Scope", 0, 0, 5, c_orange)
     
     
-  gui_create_menu(guid, "Summon", false, 11, c_green);
+  gui_create_menu(guid, "Summon", false, 12, c_green);
     ////////////////////////////////////////////////////////
-    gui_create_menu(guid, "Movement", false, 2, c_blue);
+    gui_create_menu(guid, "Movement", false, 3, c_blue);
       gui_create_slider(guid, "Default Movement", 0, 0, 5, c_red)
       gui_create_slider(guid, "Orbital", 0, 0, 5, c_orange)
+      gui_create_slider(guid, "Chained Movement", 0, 0, 5, c_yellow)
       
     ////////////////////////////////////////////////////////
     gui_create_menu(guid, "Attack", false, 2, c_red);
@@ -153,8 +157,24 @@ gui_create_menu(guid, "Modifiers", false, 50, c_black);
     gui_create_button(guid, "Randomize Mods", scr_randomize_modifiers, c_lime);
   
   
+    
+    
+    
+    
+    
   
-  gui_create_menu(guid, "Graphics", false, 6, c_lime);
+  /// Player Values
+  gui_create_menu(guid, "Player", false, 2, c_green);
+    gui_create_button(guid, "Player Name", debugger_get_player_name, c_white)
+    gui_create_slider(guid, "Favorite Color", 0, 0, 255, c_red)
+    
+  
+    
+    
+    
+    
+  //graphics
+  gui_create_menu(guid, "Graphics", false, 6, c_fuchsia);
     gui_create_watcher(guid, "FPS", fps, c_green);
     gui_create_watcher(guid, "FPS_mean", fps_real, c_orange);
     gui_create_checkbox(guid, "Smooth Camera", obj_camera_control.smooth_camera, c_lime);
@@ -241,6 +261,7 @@ if update_debug || (global.debug = true){
           last_evade = gui_get_value(guid, "Evade");
           last_enlarge = gui_get_value(guid, "Enlarge");
           last_shrink = gui_get_value(guid, "Shrink");
+          last_aimBot = gui_get_value(guid, "Aim Bot");
         //}
         
         //if update_debug || gui_get_value(guid, 'Melee'){
@@ -252,6 +273,9 @@ if update_debug || (global.debug = true){
           last_slow = gui_get_value(guid, "Slowness");
           last_backStab = gui_get_value(guid, "Back Stab");
           last_flail = gui_get_value(guid, "Flail");
+          last_moveable = gui_get_value(guid, "Moveable");
+          last_extend = gui_get_value(guid, "Extend");
+          
         //}
           
         //if update_debug || gui_get_value(guid, 'Ranged'){
@@ -276,6 +300,7 @@ if update_debug || (global.debug = true){
         //if update_debug || gui_get_value(guid, 'Summon'){
           last_defaultMovement = gui_get_value(guid, "Default Movement");
           last_orbital = gui_get_value(guid, "Orbital");
+          last_chainedMovement = gui_get_value(guid, "Chained Movement");
           last_defaultAttack = gui_get_value(guid, "Default Attack");
           last_leap = gui_get_value(guid, "Leap");
           last_defaultHealth = gui_get_value(guid, "Default Health");
@@ -332,10 +357,30 @@ if (global.debug = true){
       
       
   if (device_mouse_x_to_gui(0) &gt; (display_get_gui_width()-243)*(1+obj_camera_control.smooth_camera)){
-      
+    
+    
     // Interact with gui
     gui_check(guid, (display_get_gui_width()-243)*(1+obj_camera_control.smooth_camera), 0, device_mouse_x_to_gui(0), device_mouse_y_to_gui(0));
-  
+    
+    
+    
+    //if the favorite color was updated make sure to change it's visual color on the menu
+    if gui_get_value(guid, 'Player') || (update_debug = true){
+      //grab and make the color
+      var fav_hue_updated_hue = gui_get_value(guid, "Favorite Color")
+      
+      //set all the local player names to the debug's name string
+      with (obj_player){
+        if htme_isLocal(){
+          self.fav_hue = fav_hue_updated_hue
+        }
+      }
+        
+      //change the menu's color
+      var color = make_colour_hsv(255-fav_hue_updated_hue, 255, 255);
+      gui_set_color(guid, "Favorite Color" , color)
+      
+    }
   }
 }
 </string>
@@ -373,6 +418,7 @@ if (global.debug = true){
           gui_set_value(guid, "Evade", floor(0.5+gui_get_value(guid, "Evade")) div 1);
           gui_set_value(guid, "Enlarge", floor(0.5+gui_get_value(guid, "Enlarge")) div 1);
           gui_set_value(guid, "Shrink", floor(0.5+gui_get_value(guid, "Shrink")) div 1);
+          gui_set_value(guid, "Aim Bot", floor(0.5+gui_get_value(guid, "Aim Bot")) div 1);
           
         }
       //Melee
@@ -385,6 +431,8 @@ if (global.debug = true){
           gui_set_value(guid, "Slowness", floor(0.5+gui_get_value(guid, "Slowness")) div 1);
           gui_set_value(guid, "Back Stab", floor(0.5+gui_get_value(guid, "Back Stab")) div 1);
           gui_set_value(guid, "Flail", floor(0.5+gui_get_value(guid, "Flail")) div 1);
+          gui_set_value(guid, "Moveable", floor(0.5+gui_get_value(guid, "Moveable")) div 1);
+          gui_set_value(guid, "Extend", floor(0.5+gui_get_value(guid, "Extend")) div 1);
           
         }
       //Range
@@ -412,6 +460,7 @@ if (global.debug = true){
           if gui_get_value(guid, 'Movement'){
            gui_set_value(guid, "Default Movement", floor(0.5+gui_get_value(guid, "Default Movement")) div 1); 
            gui_set_value(guid, "Orbital", floor(0.5+gui_get_value(guid, "Orbital")) div 1); 
+           gui_set_value(guid, "Chained Movement", floor(0.5+gui_get_value(guid, "Chained Movement")) div 1); 
            
           }
           if gui_get_value(guid, 'Attack'){
@@ -472,7 +521,8 @@ if (global.debug = true){
 if (global.debug = true){
   if (mouse_check_button_pressed(mb_left)){
     if (device_mouse_x_to_gui(0) &gt; (display_get_gui_width()-243)*(1+obj_camera_control.smooth_camera)){
-      
+    
+    //graphics
       if gui_get_value(guid, 'Graphics') || (update_debug = true){
         //adjust camera draw settings///////////////////
         obj_camera_control.smooth_camera = gui_get_value(guid, 'Smooth Camera');
@@ -553,6 +603,8 @@ if update_debug || (global.debug = true){
             if update_debug || last_evade != gui_get_value(guid, "Evade") scr_modifier_adjust(queue_post_attack_mods, scr_mod_evade, 1, gui_get_value(guid, "Evade"));
             if update_debug || last_enlarge != gui_get_value(guid, "Enlarge") scr_modifier_adjust(queue_weap_spawn_mods, scr_mod_enlarge, 6, gui_get_value(guid, "Enlarge"));
             if update_debug || last_shrink != gui_get_value(guid, "Shrink") scr_modifier_adjust(queue_weap_spawn_mods, scr_mod_shrink, 7, gui_get_value(guid, "Shrink"));
+            if update_debug || last_aimBot != gui_get_value(guid, "Aim Bot") scr_modifier_adjust(queue_pre_weap_mods, scr_mod_aimBot, 0, gui_get_value(guid, "Aim Bot"));
+            
           }
           
           //Melee
@@ -565,6 +617,8 @@ if update_debug || (global.debug = true){
             if update_debug || last_slow != gui_get_value(guid, "Slowness") scr_modifier_adjust(queue_weap_spawn_mods, scr_mod_slowness, 3, gui_get_value(guid, "Slowness"));
             if update_debug || last_backStab != gui_get_value(guid, "Back Stab") scr_modifier_adjust(queue_weap_spawn_mods, scr_mod_backStab, 1, gui_get_value(guid, "Back Stab"));
             if update_debug || last_flail != gui_get_value(guid, "Flail") scr_modifier_adjust(queue_attack_step_mods, scr_mod_flail, 6, gui_get_value(guid, "Flail"));
+            if update_debug || last_moveable != gui_get_value(guid, "Moveable") scr_modifier_adjust(queue_attack_step_mods, scr_mod_moveable, 7, gui_get_value(guid, "Moveable"));
+            if update_debug || last_extend != gui_get_value(guid, "Extend") scr_modifier_adjust(queue_attack_step_mods, scr_mod_extend, 99, gui_get_value(guid, "Extend"));
             
           }
           
@@ -574,8 +628,8 @@ if update_debug || (global.debug = true){
               if update_debug || last_bonusShot != gui_get_value(guid, "Bonus Shot") scr_modifier_adjust(queue_proj_spawn_mods, scr_mod_bonusShot, 2, gui_get_value(guid, "Bonus Shot"));
               if update_debug || last_mirrorShot != gui_get_value(guid, "Mirror Shot") scr_modifier_adjust(queue_proj_spawn_mods, scr_mod_mirrorShot, 3, gui_get_value(guid, "Mirror Shot"));
               if update_debug || last_multiShot != gui_get_value(guid, "Multi Shot") scr_modifier_adjust(queue_proj_spawn_mods, scr_mod_multishot, 4, gui_get_value(guid, "Multi Shot"));
-              if update_debug || last_inaccurate != gui_get_value(guid, "Inaccurate") scr_modifier_adjust(queue_proj_spawn_mods, scr_mod_inaccurate, 5, gui_get_value(guid, "Inaccurate"));
-              if update_debug || last_burst != gui_get_value(guid, "Burst") scr_modifier_adjust(queue_proj_spawn_mods, scr_mod_burst, 6, gui_get_value(guid, "Burst"));
+              if update_debug || last_inaccurate != gui_get_value(guid, "Inaccurate") scr_modifier_adjust(queue_proj_spawn_mods, scr_mod_inaccurate, 98, gui_get_value(guid, "Inaccurate"));
+              if update_debug || last_burst != gui_get_value(guid, "Burst") scr_modifier_adjust(queue_proj_spawn_mods, scr_mod_burst, 5, gui_get_value(guid, "Burst"));
               if update_debug || last_cluster != gui_get_value(guid, "Cluster") scr_modifier_adjust(queue_pre_col_mods, scr_mod_cluster, 3, gui_get_value(guid, "Cluster"));
               if update_debug || last_boomerang != gui_get_value(guid, "Boomerang") scr_modifier_adjust(queue_pre_col_mods, scr_mod_boomerang, 2, gui_get_value(guid, "Boomerang"));
               if update_debug || last_negarang != gui_get_value(guid, "Nega-Rang") scr_modifier_adjust(queue_col_mods, scr_mod_negarang, 1, gui_get_value(guid, "Nega-Rang"));
@@ -597,6 +651,8 @@ if update_debug || (global.debug = true){
             if gui_get_value(guid, 'Movement') || (update_debug = true){
              if update_debug || last_defaultMovement != gui_get_value(guid, "Default Movement") scr_modifier_adjust(queue_attack_step_mods, scr_mod_summon_movement_default, 1, gui_get_value(guid, "Default Movement"));
              if update_debug || last_orbital != gui_get_value(guid, "Orbital") scr_modifier_adjust(queue_attack_step_mods, scr_mod_summon_movement_orbital, 1, gui_get_value(guid, "Orbital"));
+             if update_debug || last_chainedMovement != gui_get_value(guid, "Chained Movement") scr_modifier_adjust(queue_attack_step_mods, scr_mod_summon_movement_chained, 1, gui_get_value(guid, "Chained Movement"));
+             
             }
             //Attack
             if gui_get_value(guid, 'Attack') || (update_debug = true){

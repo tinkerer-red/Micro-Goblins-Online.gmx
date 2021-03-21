@@ -3,70 +3,49 @@
 var returned = false
 
 
-if !ds_exists(/*self.*/active_queue, ds_type_priority)
-{
-  //show_debug_message("Active queue !exist")
-  if ds_exists(/*self.*/weapon_event_queues, ds_type_priority)
-  {
-    var /*self.*/step_queue = ds_priority_delete_min(/*self.*/weapon_event_queues) //the weapon queue will be in there even if nothing is in the queue its self
+if !ds_exists(active_queue, ds_type_priority){
+  if ds_exists(weapon_event_queues, ds_type_priority){
+    var step_queue = ds_priority_delete_min(weapon_event_queues) //the weapon queue will be in there even if nothing is in the queue its self
   
-    /*self.*/active_queue = ds_priority_create()
-    ds_priority_copy(/*self.*/active_queue, /*self.*/step_queue);
+    active_queue = ds_priority_create()
+    ds_priority_copy(active_queue, step_queue);
   }else{
     //show_debug_message("weapon_event_queues missing!!!")
-    
   }
 }
 
-if !ds_priority_empty(/*self.*/active_queue)
+if !ds_priority_empty(active_queue)
 {
-  //show_debug_message("Active queue !empty")
-  while !ds_priority_empty(/*self.*/active_queue)
+  while !ds_priority_empty(active_queue)
   {
-    //show_debug_message("Active queue STILL !empty")
-    var /*self.*/scr = ds_priority_find_min(/*self.*/active_queue);
+    var scr = ds_priority_find_min(active_queue);
+    var delete = script_execute(scr)
     
-    //show_debug_message("SCRIPT NAME = "+string(script_get_name(/*self.*/scr)))
-    
-    var /*self.*/delete = script_execute(/*self.*/scr)
-    //in the scripts handle combos, conflictions, and return true when finished and ready to be deleted from queue
-    
-    if /*self.*/delete
-    {
-      //show_debug_message("DELETE = true")
-      ds_priority_delete_min(/*self.*/active_queue)
+    if delete{
+      ds_priority_delete_min(active_queue)
     } else {
       break;
     }
     
-    if ds_priority_empty(/*self.*/active_queue)
-    {
-      //show_debug_message("Active queue IS empty")
-      /*self.*/returned =  true;
+    if ds_priority_empty(active_queue){
+      returned =  true;
     }
   }
-
 } else {  //if the list is empty 
-  //show_debug_message("Active queue WAS ALWAYS empty")
-  /*self.*/returned =  true;
+  returned =  true;
 }
 
-if ds_exists(active_queue, ds_type_priority)
-{
-  if ds_priority_empty(/*self.*/active_queue)
-  {
-    ds_priority_destroy(/*self.*/active_queue)
-    /*self.*/active_queue = -1
+if ds_exists(active_queue, ds_type_priority){
+  if ds_priority_empty(active_queue){
+    ds_priority_destroy(active_queue)
+    active_queue = -1
   }
 }
 
-if ds_exists(weapon_event_queues, ds_type_priority)
-{
-  if ds_priority_empty(/*self.*/weapon_event_queues)
-  {
-    //show_debug_message("weapon_event_queues is empty?")
-    ds_priority_destroy(/*self.*/weapon_event_queues)
-    /*self.*/weapon_event_queues = -1
+if ds_exists(weapon_event_queues, ds_type_priority){
+  if ds_priority_empty(weapon_event_queues){
+    ds_priority_destroy(weapon_event_queues)
+    weapon_event_queues = -1
   }
 }
 

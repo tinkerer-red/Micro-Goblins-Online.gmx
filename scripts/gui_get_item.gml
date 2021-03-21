@@ -1,4 +1,4 @@
-// gui_get_item(gui,name);
+/// gui_get_item(gui,name);
 // return item reference
 
 var n = ds_list_size(argument0);

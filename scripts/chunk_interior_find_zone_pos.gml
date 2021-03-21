@@ -1,6 +1,5 @@
-///interior_chunk_find_zone_pos(chunk_x, chunk_y)
+///chunk_interior_find_zone_pos(chunk_x, chunk_y)
 
-var array;
 var chunk_x = argument0;
 var chunk_y = argument1;
 
@@ -11,8 +10,8 @@ if (object_index = obj_chunk){
   }
 }
 
-var world_chunk_width = global.chunk_handler.world_width div global.chunk_handler.chunk_width
-var world_chunk_height = global.chunk_handler.world_height div global.chunk_handler.chunk_height
+var world_chunk_width = global.chunk_handler.world_chunk_width
+var world_chunk_height = global.chunk_handler.world_chunk_height
 
 //now find the zone
 var ext_chunk_x = chunk_x - world_chunk_width

@@ -18,8 +18,6 @@ if (array = undefined){
 interior_grid_x = array[0]
 interior_grid_y = array[1]
 interior_map = array[2]
-//show_debug_message("interior_grid_x = "+string(interior_grid_x))
-//show_debug_message("interior_grid_y = "+string(interior_grid_y))
 
 
 var room_grid = interior_map[? "room_grid"]
@@ -45,12 +43,10 @@ for(var i = 0; i < width; i++){
     var tile_str = string_copy(str, 1, 2)
     var switch_str = string_copy(str, 2, 2)
     str = string_delete(str, 1, 4)
-    var value = hex_to_dec(tile_str);
-    obsticals_grid[# i, j] = value
+    chunk_generate_interior_room_tileID_to_grid(i, j, tile_str, switch_str)
+    //var value = hex_to_dec(tile_str);
+    //obsticals_grid[# i, j] = value
   }
 }
 
-//ds_grid_print(room_grid)
-//show_debug_message("Now has aquired interior string from generation")
-//show_debug_message("interior_string = "+string(interior_string))
 

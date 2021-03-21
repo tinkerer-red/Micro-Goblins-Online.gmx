@@ -17,9 +17,7 @@ if !variable_instance_exists(self.id, "negarang_start"){
     mod_nega_dist = point_distance(x, y, owner_id.x, owner_id.y)
   }else{
     mod_nega_dist = (point_distance(x, y, owner_id.x, owner_id.y) / ((5/negarang_count/5) * room_speed))
-//    show_debug_message("(5/negarang_count/5) * room_speed) "+string((5/negarang_count/5) * room_speed))
   }
-//  show_debug_message("mod_nega_dist = "+string(mod_nega_dist))
 } 
 
 
@@ -31,7 +29,6 @@ if self.negarang_start {
   self.contact_owner = false
   
   ///set initial speeds
-  //owner_id.player_state = e_player_state.attack
   speed = 0
   self.negarang_start = false
   owner_id.spd = mod_nega_dist
@@ -40,7 +37,7 @@ if self.negarang_start {
 
 
 ///if the player is stuck on a slope or in between solids
-if point_distance(owner_id.x, owner_id.y, self.last_x, self.last_y) < 8/2
+if point_distance(owner_id.x, owner_id.y, self.last_x, self.last_y) < 1.2
   { stopped = true }
 else
   { stopped = false }

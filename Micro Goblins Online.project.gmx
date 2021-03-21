@@ -84,9 +84,21 @@
       <sprites name="Outfits">
         <sprites name="Bodies">
           <sprite>sprites\spr_body_template</sprite>
+          <sprites name="Dev Skins">
+            <sprite>sprites\spr_head_dev_skin_body_red</sprite>
+            <sprite>sprites\spr_head_dev_skin_body_olaf</sprite>
+            <sprite>sprites\spr_head_dev_skin_body_nostud_thiago</sprite>
+            <sprite>sprites\spr_head_dev_skin_body_shaymire</sprite>
+          </sprites>
         </sprites>
         <sprites name="Heads">
           <sprite>sprites\spr_head_template</sprite>
+          <sprites name="Dev Skins">
+            <sprite>sprites\spr_head_dev_skin_head_red</sprite>
+            <sprite>sprites\spr_head_dev_skin_head_olaf</sprite>
+            <sprite>sprites\spr_head_dev_skin_head_nostud_thiago</sprite>
+            <sprite>sprites\spr_head_dev_skin_head_shaymire</sprite>
+          </sprites>
         </sprites>
       </sprites>
     </sprites>
@@ -165,21 +177,26 @@
               <script>scripts\scr_mod_dash.gml</script>
               <script>scripts\scr_mod_evade.gml</script>
               <script>scripts\scr_mod_knockback.gml</script>
+              <script>scripts\scr_mod_delay.gml</script>
               <script>scripts\scr_mod_enlarge.gml</script>
               <script>scripts\scr_mod_shrink.gml</script>
+              <script>scripts\scr_mod_aimBot.gml</script>
             </scripts>
             <scripts name="Melee">
               <script>scripts\scr_mod_range.gml</script>
               <script>scripts\scr_mod_swiftness.gml</script>
               <script>scripts\scr_mod_flail_old.gml</script>
+              <script>scripts\scr_mod_moveable.gml</script>
               <script>scripts\scr_mod_slowness.gml</script>
               <script>scripts\scr_mod_backStab.gml</script>
               <script>scripts\scr_mod_chained.gml</script>
               <script>scripts\scr_mod_slash.gml</script>
               <script>scripts\scr_mod_flail.gml</script>
               <script>scripts\scr_mod_thrust.gml</script>
+              <script>scripts\scr_mod_extend.gml</script>
             </scripts>
             <scripts name="Range Mods">
+              <script>scripts\scr_mod_sticky.gml</script>
               <script>scripts\scr_mod_bonusShot.gml</script>
               <script>scripts\scr_mod_mirrorShot.gml</script>
               <script>scripts\scr_mod_multishot.gml</script>
@@ -201,6 +218,7 @@
               <scripts name="Movement">
                 <script>scripts\scr_mod_summon_movement_default.gml</script>
                 <script>scripts\scr_mod_summon_movement_orbital.gml</script>
+                <script>scripts\scr_mod_summon_movement_chained.gml</script>
               </scripts>
               <scripts name="Attack">
                 <script>scripts\scr_mod_summon_attack_default.gml</script>
@@ -284,7 +302,6 @@
           <script>scripts\percent_chance.gml</script>
           <script>scripts\round_chance.gml</script>
           <script>scripts\set_chance.gml</script>
-          <script>scripts\multi_chance.gml</script>
         </scripts>
         <scripts name="List Functions">
           <script>scripts\ds_list_reverse.gml</script>
@@ -302,18 +319,19 @@
           <script>scripts\within.gml</script>
         </scripts>
       </scripts>
+      <scripts name="Conversions">
+        <script>scripts\hex_to_bytes.gml</script>
+        <script>scripts\bytes_to_hex.gml</script>
+        <script>scripts\bytes_to_b64.gml</script>
+        <script>scripts\b64_to_bytes.gml</script>
+        <script>scripts\b64_to_hex.gml</script>
+        <script>scripts\hex_to_b64.gml</script>
+        <script>scripts\hex_to_dec.gml</script>
+        <script>scripts\timer_to_ticks.gml</script>
+        <script>scripts\dir_to_dir_and_flip.gml</script>
+        <script>scripts\string_split_to_array.gml</script>
+      </scripts>
       <scripts name="Maths">
-        <scripts name="Conversions">
-          <script>scripts\hex_to_bytes.gml</script>
-          <script>scripts\bytes_to_hex.gml</script>
-          <script>scripts\bytes_to_b64.gml</script>
-          <script>scripts\b64_to_bytes.gml</script>
-          <script>scripts\b64_to_hex.gml</script>
-          <script>scripts\hex_to_b64.gml</script>
-          <script>scripts\hex_to_dec.gml</script>
-          <script>scripts\timer_to_ticks.gml</script>
-          <script>scripts\dir_to_dir_and_flip.gml</script>
-        </scripts>
         <script>scripts\normalize.gml</script>
         <script>scripts\collision_normal.gml</script>
         <script>scripts\add_vectors.gml</script>
@@ -328,7 +346,7 @@
         <script>scripts\ticks_to_seconds.gml</script>
       </scripts>
       <script>scripts\instance_nearest_notme.gml</script>
-      <script>scripts\ds_queue_delete.gml</script>
+      <script>scripts\is_released.gml</script>
     </scripts>
     <scripts name="Drawing">
       <scripts name="Modifiers">
@@ -365,8 +383,12 @@
       <script>scripts\draw_sprite_line.gml</script>
       <script>scripts\draw_sprite_pathed.gml</script>
       <script>scripts\draw_sprite_line_shader.gml</script>
+      <script>scripts\shader_set_hue.gml</script>
     </scripts>
     <scripts name="Utillity">
+      <scripts name="Player">
+        <script>scripts\player_is_local.gml</script>
+      </scripts>
       <scripts name="Network">
         <scripts name="htme">
           <script>scripts\htme_init.gml</script>
@@ -584,6 +606,7 @@
         <script>scripts\gui_set_gui.gml</script>
         <script>scripts\gui_destroy_gui.gml</script>
         <script>scripts\gui_set_value.gml</script>
+        <script>scripts\gui_set_color.gml</script>
         <script>scripts\gui_get_value.gml</script>
         <script>scripts\gui_get_item.gml</script>
         <script>scripts\gui_check.gml</script>
@@ -602,10 +625,6 @@
         <scripts name="Internal">
           <script>scripts\_gui_create_item.gml</script>
           <script>scripts\src_url.gml</script>
-        </scripts>
-        <scripts name="Debug Buttons">
-          <script>scripts\scr_guid_clear_modifiers.gml</script>
-          <script>scripts\scr_randomize_modifiers.gml</script>
         </scripts>
       </scripts>
       <scripts name="TMC_SGS">
@@ -656,8 +675,14 @@
           <script>scripts\generate_dungeon_rooms_grid.gml</script>
           <script>scripts\generate_town_grid.gml</script>
           <script>scripts\chunkify_interior_string.gml</script>
-          <script>scripts\interior_chunk_find_zone_pos.gml</script>
+          <script>scripts\chunk_interior_find_zone_pos.gml</script>
           <script>scripts\chunk_interior_exists.gml</script>
+          <script>scripts\chunk_interior_map_exists.gml</script>
+          <script>scripts\chunk_interior_cell_existential_crisis_extension.gml</script>
+          <script>scripts\chunk_interior_cell_data_exists.gml</script>
+          <script>scripts\chunk_interior_player_in_zone.gml</script>
+          <script>scripts\generate_dungeon_rooms_grid_remove_surrounding_rooms.gml</script>
+          <script>scripts\chunk_generate_interior_room_tileID_to_grid.gml</script>
         </scripts>
         <script>scripts\chunk_init.gml</script>
         <script>scripts\chunk_debug_toggle.gml</script>
@@ -685,6 +710,7 @@
             <script>scripts\scr_value_2dig.gml</script>
           </scripts>
           <script>scripts\elliptical_gradient.gml</script>
+          <script>scripts\elliptical_gradient_non_centered.gml</script>
           <script>scripts\scr_zcolor_2dig.gml</script>
           <script>scripts\scr_draw_2dig.gml</script>
           <scripts name="misc">
@@ -718,6 +744,11 @@
       </scripts>
       <scripts name="debug">
         <scripts name="debug commands">
+          <scripts name="Debug Buttons">
+            <script>scripts\scr_guid_clear_modifiers.gml</script>
+            <script>scripts\scr_randomize_modifiers.gml</script>
+            <script>scripts\debugger_get_player_name.gml</script>
+          </scripts>
           <scripts name="debug menu scripts">
             <script>scripts\teleport_to_shore.gml</script>
             <script>scripts\src_restart.gml</script>
@@ -735,8 +766,7 @@
     </scripts>
     <script>scripts\scr_collision_test.gml</script>
     <script>scripts\scr_draw_circle.gml</script>
-    <script>scripts\string_split_to_array.gml</script>
-    <script>scripts\breadth_first_search_create.gml</script>
+    <script>scripts\interior_dungeon_hallway_breadth_first_search_create.gml</script>
     <script>scripts\sgs_place_free.gml</script>
     <script>scripts\getPerlinNoise.gml</script>
     <script>scripts\randomSeed.gml</script>
@@ -744,6 +774,7 @@
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shStretch.shader</shader>
+    <shader type="GLSLES">shaders\shd_hue.shader</shader>
   </shaders>
   <fonts name="fonts">
     <font>fonts\fontGGUI</font>
@@ -803,6 +834,7 @@
           <object>objects\obj_dungeon_exit</object>
         </objects>
       </objects>
+      <object>objects\game_init</object>
     </objects>
     <object>objects\obj_diag_wall</object>
     <object>objects\obj_wall</object>
@@ -817,6 +849,7 @@
       <room>rooms\htme_lanlobby</room>
     </rooms>
     <room>rooms\room_lvl_one</room>
+    <room>rooms\room_lvl_one_old</room>
     <room>rooms\room_lvl_one_bk</room>
     <room>rooms\room0</room>
   </rooms>

@@ -11,6 +11,20 @@
     <event eventtype="0" enumb="0">
       <action>
         <libid>1</libid>
+        <id>604</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_inherited</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
         <id>603</id>
         <kind>7</kind>
         <userelative>0</userelative>
@@ -78,7 +92,8 @@ else
             <kind>1</kind>
             <string>///define player variables
 
-
+//stats
+e_health = 30
 
 //movement stuff
 self.acceleration = 0.25
@@ -287,16 +302,19 @@ for (var i = 0; i &lt; 3; i++)
   repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_bonusShot, 2);
   repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_mirrorShot, 3);
   repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_multishot, 4);
-  repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_inaccurate, 5);
-  repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_burst, 6);
+  repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_burst, 5);
+  repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_inaccurate, 98);
   repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_airStrike, 99);
   repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_4, 1);
   ///////////////////////////////////////////////////////////////////////////
+  repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_delay, 0);
   repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_slash, 2);
   repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_thrust, 3);
   repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_seeking, 4);
   repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_guiding, 5);
-  repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_flail, 4);
+  repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_flail, 6);
+  repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_moveable, 7);
+  repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_extend, 99);
   
   repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_summon_movement_default, 4);
   
@@ -308,6 +326,7 @@ for (var i = 0; i &lt; 3; i++)
   repeat( 0 ) ds_priority_add(queue_pre_col_mods, scr_6, 3);
   ///////////////////////////////////////////////////////////////////////////
   repeat( 0 ) ds_priority_add(queue_col_mods, scr_mod_negarang, 1);
+  repeat( 0 ) ds_priority_add(queue_col_mods, scr_mod_sticky, 1);
   repeat( 0 ) ds_priority_add(queue_col_mods, scr_7, 2);
   ///////////////////////////////////////////////////////////////////////////
   repeat( 0 ) ds_priority_add(queue_post_attack_mods, scr_mod_evade, 1);
@@ -374,6 +393,8 @@ for (var i = 0; i &lt; 3; i++)
 
 
 self.name = "Test-icle"
+self.fav_hue = 0
+
 
 if(variable_global_exists("htme_object"))
 {
@@ -396,7 +417,7 @@ mp_setType("physics", mp_type.SMART)
 
 
 //add variables
-mp_add("playerName", "name", buffer_string, 60*room_speed)
+mp_add("playerName", "name", buffer_string, 3*room_speed)
 mp_setType("playerName",mp_type.SMART)
 
 //buffer_f16 isn't supported
@@ -413,6 +434,8 @@ mp_setType("controls",mp_type.FAST)
 mp_add("item_a", "item_a_map,item_a_prior", buffer_string, 1)
 mp_add("item_b", "item_b_map,item_b_prior", buffer_string, 1)
 mp_add("item_c", "item_c_map,item_c_prior", buffer_string, 1)
+
+mp_add("fav_hsv", "fav_hue", buffer_f32, room_speed)
 
 
 //RE ADD THIS WHEN ARMOR EXISTS
@@ -517,6 +540,7 @@ if (!htme_isLocal())
   if(variable_global_exists("htme_object"))
   {
     self.name = mp_map_syncOut("name", name)
+    self.fav_hue = mp_map_syncOut("fav_hue", fav_hue)
     self.up = mp_map_syncOut("up", up)
     self.down = mp_map_syncOut("down", down)
     self.left = mp_map_syncOut("left", left)
@@ -551,7 +575,38 @@ if (!htme_isLocal())
     //array[10] = mp_map_syncOut("armor_body_prior", last_encoded_equipment[10])
     //array[11] = mp_map_syncOut("armor_boggle_prior", last_encoded_equipment[11])
     decode_equipment(array);
+   
     
+    
+    //also update the player sprite
+    switch (string_lower(self.name))
+    {
+    case "red":
+      head = spr_head_dev_skin_head_red;
+      body = spr_head_dev_skin_body_red;
+      break;
+    case "arma":
+    case "armadillo":
+      head = spr_head_template;
+      body = spr_body_template;
+      break;
+    case "olaf":
+      head = spr_head_dev_skin_head_olaf;
+      body = spr_head_dev_skin_body_olaf;
+      break;
+    case "shiv":
+    case "shaymire":
+      head = spr_head_dev_skin_head_shaymire;
+      body = spr_head_dev_skin_body_shaymire;
+      break;
+    case "nostud thiago":
+      head = spr_head_dev_skin_head_nostud_thiago;
+      body = spr_head_dev_skin_body_nostud_thiago;
+      break;
+    default:
+      head = spr_head_template;
+      body = spr_body_template;
+    } 
   }
 }
 </string>
@@ -662,6 +717,20 @@ ypreviousframe = y
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>604</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_inherited</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
     </event>
     <event eventtype="3" enumb="1">
       <action>
@@ -693,6 +762,7 @@ if (htme_isLocal())
   if(variable_global_exists("htme_object"))
   {
     mp_map_syncIn("name",self.name)
+    mp_map_syncIn("fav_hue",self.fav_hue)
     mp_map_syncIn("up",self.up)
     mp_map_syncIn("down",self.down)
     mp_map_syncIn("left",self.left)
@@ -934,27 +1004,6 @@ if (self.player_state = e_player_state.move)
     
     
     
-    
-    /*  {
-        self.active_w_cooldown = 2
-        
-        
-      }
-    */
-    
-      
-      /*
-    //check to make sure all the data is there
-    if ds_exists(self.weapon_event_queues, ds_type_priority)
-    {
-      if ds_priority_size(self.weapon_event_queues) &lt; 8
-      {
-        new_queue = true
-      }
-    }
-    */
-    
-    
     ///////////////////////////////////////////////////////
     // create the active weapon queues from the queue array
     ///////////////////////////////////////////////////////
@@ -986,12 +1035,6 @@ if (self.player_state = e_player_state.move)
       
       
       self.active_w_knockback = 16
-      
-      //self.active_w_size = 1
-      //self.active_w_speed = 22.5
-      //self.active_w_proj_speed = 8
-      //self.active_w_range = 16 * 20
-      
     }
     
     
@@ -1244,7 +1287,7 @@ if self.player_state = e_player_state.attack &amp;&amp; !self.attack &amp;&amp; 
 ////////////////////////////////////////////////////////////////////
 //Weapon Spawn Queue
 ////////////////////////////////////////////////////////////////////
-if self.player_state = e_player_state.attack &amp;&amp; self.attack &amp;&amp; !self.post_attack//if attacking and spawning the attack
+if self.player_state = e_player_state.attack &amp;&amp; (self.attack == true) &amp;&amp; !self.post_attack//if attacking and spawning the attack
 {
   //show_debug_message("Weapon Spawn")
   
@@ -1389,6 +1432,22 @@ if mouse_check_button(mb_right){
 
 if (visible = true)
 {
+  // draw name
+  if (view_object[view_current] != id){
+    view_res = view_hview[view_current]/view_hport[view_current]
+    draw_set_halign(fa_center);
+    sting_offset = (string_height(name)*view_res) + (2*view_res)
+    draw_text_transformed(x, bbox_top-sting_offset*obj_camera_control.upscale_val, name, view_res*obj_camera_control.upscale_val, view_res*obj_camera_control.upscale_val, 0)
+    draw_set_halign(fa_left);
+  }
+  
+  
+  
+  //every third frame dont draw the player
+  if (ceil(iframes) mod 2) exit;
+  
+  
+  
   //damage
   if (self.player_anim_state = e_player_anim.dmg) {
     ///if anim_damage(INCOMING DAMAGE DIRECTION){
@@ -1425,14 +1484,7 @@ if (visible = true)
   }/// end !damage
   
   
-  // draw name
-  if (view_object[view_current] != id){
-    view_res = view_hview[view_current]/view_hport[view_current]
-    draw_set_halign(fa_center);
-    sting_offset = (string_height(name)*view_res) + (2*view_res)
-    draw_text_transformed(x, bbox_top-sting_offset*obj_camera_control.upscale_val, name, view_res*obj_camera_control.upscale_val, view_res*obj_camera_control.upscale_val, 0)
-    draw_set_halign(fa_left);
-  }
+  
 }
 </string>
           </argument>

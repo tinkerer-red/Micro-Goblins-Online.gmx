@@ -20,7 +20,7 @@ if (mod_count = 1){
 }
 
 //just making sure the player doesnt move while blasting away shit
-spd = 0 
+//spd = 0 
 //show_debug_message("scr_mod_repeater")
 return true
 

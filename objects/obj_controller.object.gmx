@@ -930,7 +930,9 @@ if (window_has_focus()) &amp;&amp; (htme_isLocal())
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>global.numberOfLocalPlayers = 0
+            <string>/// F5 = Restart Game
+
+global.numberOfLocalPlayers = 0
 global.numberOfGlobalPlayers = 0
 draw_set_alpha(1)
 draw_set_color(c_white)

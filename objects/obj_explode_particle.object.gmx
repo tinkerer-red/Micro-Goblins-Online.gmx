@@ -138,7 +138,9 @@ if (fade_to_color == 1) {
           <argument>
             <kind>1</kind>
             <string>// Draw the sprite
+shader_set_hue(owner_id.fav_hue)
 draw_sprite_general(spr, -1, xx, yy, size, size, x, y, image_xscale, image_yscale, rotation, current_color, current_color, current_color, current_color, alpha);
+shader_reset()
 </string>
           </argument>
         </arguments>

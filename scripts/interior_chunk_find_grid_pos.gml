@@ -25,8 +25,8 @@ if (object_index = obj_chunk){
   }
 }
 
-var ext_chunk_x = chunk_x - global.chunk_handler.world_chunk_width
-var ext_chunk_y = chunk_y
+var int_chunk_x = chunk_x - global.chunk_handler.world_chunk_width
+var int_chunk_y = chunk_y
 
 
 //if we only have access to the chunks location
@@ -34,8 +34,8 @@ if (argument_count < 3){
   //now find the zone
   var zones_per_col = global.chunk_handler.world_chunk_height div global.chunk_handler.interior_zone_size
   
-  var zone_x = ext_chunk_x div global.chunk_handler.interior_zone_size
-  var zone_y = ext_chunk_y div global.chunk_handler.interior_zone_size
+  var zone_x = int_chunk_x div global.chunk_handler.interior_zone_size
+  var zone_y = int_chunk_y div global.chunk_handler.interior_zone_size
   
   var zone_pos = zone_x*zones_per_col + zone_y
 
@@ -77,24 +77,16 @@ if (argument_count < 3){
     if (map[? "zone_pos"] = zone_pos){
       found_map = true;
     }else{ //if we didnt find it on our initial pass, then we can loop
-      ////////////////////show_debug_message("did not find zone on first pass")
-      
       var _j = json_encode(global.chunk_handler.active_interior_chunks)
-      ////////////////////show_debug_message(_j)
-      
-      ////////////////////show_debug_message("first key = "+string(key))
       
       while (key != undefined) && (found_map = false){
         key = ds_map_find_next(global.chunk_handler.active_interior_chunks, key)
-        ////////////////////show_debug_message("key = "+string(key))
         map = global.chunk_handler.active_interior_chunks[? key]
         if (map != undefined){
           if (map[? "zone_pos"] = zone_pos){
             found_map = true;
             break;
           }
-        }else{
-          ////////////////////show_debug_message("map = undefined")
         }
       }//end while
       
@@ -111,12 +103,16 @@ if (map[? "zone_pos"] != zone_pos){
 }
 
 //if we have found our map, grab the grid
-var grid_x = ext_chunk_x - zone_x*global.chunk_handler.interior_zone_size;
-var grid_y = ext_chunk_y - zone_y*global.chunk_handler.interior_zone_size;
+var grid_x = int_chunk_x - zone_x*global.chunk_handler.interior_zone_size;
+var grid_y = int_chunk_y - zone_y*global.chunk_handler.interior_zone_size;
 
 //negative value check
 if (sign(grid_x) = -1){  grid_x += global.chunk_handler.interior_zone_size}
 if (sign(grid_y) = -1){  grid_y += global.chunk_handler.interior_zone_size}
+
+//all of the interior chunk scripts keep track of the data they collected for future use
+//save the map to the chunk
+interior_map = map
 
 
 array[0] = grid_x;

@@ -11,6 +11,20 @@
     <event eventtype="0" enumb="0">
       <action>
         <libid>1</libid>
+        <id>604</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_inherited</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
         <id>603</id>
         <kind>7</kind>
         <userelative>0</userelative>
@@ -25,7 +39,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>dis_traveled = 0
+            <string>//init values
+
+dis_traveled = 0
 do_not_collide = false
 collide_ground = false
 collide_enemy  = false
@@ -165,6 +181,22 @@ if variable_instance_exists(id, "weapon_event_queues"){
         </arguments>
       </action>
     </event>
+    <event eventtype="3" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>604</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_inherited</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+    </event>
     <event eventtype="3" enumb="1">
       <action>
         <libid>1</libid>
@@ -208,7 +240,7 @@ update_enemy(room_speed*3)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Apply default values if not summon
+            <string>///Apply default mods if not summon
 
 if !variable_instance_exists(self, "enemy_mods_init") || (enemy_mods_init = false){
   //if is_enemy
@@ -459,6 +491,35 @@ if self.collide &amp;&amp; !self.pre_collide  //if officially collided
           <argument>
             <kind>1</kind>
             <string>show_debug_player(0, "enemy_id("+string(id)+") e_health = "+string(e_health))
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// draw self
+
+
+//every third frame dont draw the player
+if (ceil(iframes) mod 2) exit;
+
+draw_self()
 </string>
           </argument>
         </arguments>

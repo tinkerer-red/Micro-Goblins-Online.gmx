@@ -168,7 +168,7 @@ bouncy (1 floor collision prevention)
 ---[Summon] something which leaves a damaging trail
 
 
-[Weapon] orbital airstrike/Hammer of dawn - halo reach/gears of war 4 ()
+--[Weapon] orbital airstrike/Hammer of dawn - halo reach/gears of war 4 ()
 [Weapon] Dubstep gun/Alien Gizmo - Saints Row 4/South Park ()
 [Weapon] Shrink Ray - Duke Nukem ()
 [Weapon] Sheepinator/quacko-ray - Ratchet and Clank [turns enemies into sheep/ducks] ()

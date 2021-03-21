@@ -80,6 +80,11 @@ if(!instance_exists(_checker)) instance_create(0,0,_checker);
         var grid = variable_instance_get(chunk_id, grid_string);
       }
       
+      //secondary check to make sure the chunk exists
+      if (chunk_id = noone)
+      || (!instance_exists(chunk_id)){
+        return false;
+      }
       
       //these checks for 0 prevents dividing by 0
       if (chunk_id.chunk_x*width) != 0 {

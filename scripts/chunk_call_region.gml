@@ -9,26 +9,14 @@ if (sign(yy) = -1) {var y_sign = -1} else {var y_sign = 0}
 var cell_x = (xx div chunk_width) + x_sign
 var cell_y = (yy div chunk_height) + y_sign
 
-//call center chunk
-//chunk_call(cell_x, cell_y)
-//call the rest of the chunks
-
-/*
-for (var i = -chunk_dist; i <= chunk_dist; i++){
-  for (var j = -chunk_dist; j <= chunk_dist; j++){
-    chunk_call(cell_x+i, cell_y+j)
-  }
-}
-*/
-
-//Spiral
-    var _x, _y, dx, dy;
+//Spiral generation
+    var _x, _y, dx, dy, t, maxI;
     _x = 0;
     _y = 0;
     dx = 0;
-    var dy = -1;
-    var t = max(cell_x, cell_y);
-    var maxI = t*t;
+    dy = -1;
+    t = max(cell_x, cell_y);
+    maxI = t*t;
     for(var i =0; i < maxI; i++){
         if ((-chunk_dist <= _x) && (_x <= chunk_dist) && (-chunk_dist <= _y) && (_y <= chunk_dist)){
             // DO STUFF...
@@ -45,10 +33,6 @@ for (var i = -chunk_dist; i <= chunk_dist; i++){
           break;
         }
     }
-
-
-
-
 
 
 

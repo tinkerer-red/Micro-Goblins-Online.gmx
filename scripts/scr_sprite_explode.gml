@@ -39,5 +39,6 @@ for (i = 0; i < ww; i += argument4) {
         particle.xx = i;                                                                // X
         particle.yy = j;                                                                // Y
         particle.direction = direction;                                                 // Direction
+        particle.owner_id = owner_id
     }
 }

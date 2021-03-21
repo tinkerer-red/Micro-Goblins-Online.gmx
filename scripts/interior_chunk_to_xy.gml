@@ -16,7 +16,7 @@ var zone_x = zone_pos div zones_per_col
 var zone_y = zone_pos mod zones_per_col
 
 
-var xx = (zone_x*(global.chunk_handler.interior_zone_size*global.chunk_handler.chunk_width)) + global.chunk_handler.world_width;
+var xx = (zone_x*(global.chunk_handler.interior_zone_size*global.chunk_handler.chunk_width)) + global.chunk_handler.world_width-1;
 var yy = (zone_y*(global.chunk_handler.interior_zone_size*global.chunk_handler.chunk_height));
 
 xx += cell_x*global.chunk_handler.chunk_width

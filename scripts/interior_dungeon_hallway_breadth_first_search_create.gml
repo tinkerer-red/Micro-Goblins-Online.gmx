@@ -1,16 +1,11 @@
-///breadth_first_search_create(x, y, hcells, vcells, cell_width, cell_height, cx, cy)
+///interior_dungeon_hallway_breadth_first_search_create(hcells, vcells, cx, cy)
 
 /*
    Returns Array
-  
-  x = left side of the grid
-  y = top side of the grid
   width = how many cells wide
   height = how many cells high
-  tile_width = how large of tiles width to check
-  tile_height = how large of tiles height to check
-  cx = the optimal location in the world
-  cy = the optimal location in the world
+  cx = the optimal location in the dungeon
+  cy = the optimal location in the dungeon
 */
 /*
 var width = argument2,

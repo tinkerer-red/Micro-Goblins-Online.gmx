@@ -1,18 +1,19 @@
-///chunkify_interior_string(x1, y1, string, interior_map)
+///chunkify_interior_string(x1, y1, string, interior_map, valid_room_list, size, is_hall)
 
-//show_debug_message("==================================================")
-//show_debug_message("==================================================")
-//show_debug_message("==================================================")
-//show_debug_message("chunkifying string")
-//show_debug_message("==================================================")
-//show_debug_message("==================================================")
-//show_debug_message("==================================================")
+var _x = argument[0];
+var _y = argument[1];
+var room_string = argument[2];
+var map = argument[3];
+var room_list = argument[4];
+var size = argument[5];
 
-
-var _x = argument0;
-var _y = argument1;
-var room_string = argument2;
-var map = argument3;
+if (argument_count = 7){
+  var is_hall = argument[6]; //this value allows for a room to be generated over important room neighbors which were removed from valid room list
+}else{
+  var is_hall = false;
+}
+var dung_width = size*4 -1
+var dung_height = size*4 -1
 
 var room_cells = global.chunk_handler.chunk_width div global.chunk_handler.tile_size
 
@@ -27,17 +28,24 @@ var height = hex_to_dec(height);
 
 //CHECK TO MAKE SURE ALL ROOMS WILL BE EMPTY BEFORE WE WRITE
 var room_grid = map[? "room_grid"]
-for(var chunk_x = 0; chunk_x <= width; chunk_x++){
-    for(var chunk_y = 0; chunk_y <= height; chunk_y++){
-        if (_x+chunk_x < 0) || (_x+chunk_x > global.chunk_handler.interior_zone_size){
-          show_debug_message("failed number one")
+for(var chunk_x = 0; chunk_x < width; chunk_x++){
+    for(var chunk_y = 0; chunk_y < height; chunk_y++){
+        
+        if (_x+chunk_x < 0) || (_x+chunk_x > dung_width){
           return false;}
-        if (_y+chunk_y < 0) || (_y+chunk_y > global.chunk_handler.interior_zone_size){
-          show_debug_message("failed number two")
+        if (_y+chunk_y < 0) || (_y+chunk_y > dung_height){
           return false;}
         if (room_grid[# _x+chunk_x, _y+chunk_y] != ""){
-          show_debug_message("failed number three")
           return false;}
+        
+        if (is_hall = false){
+          //check to make sure the ds_list even has the value still
+          var value = (_x+chunk_x) + ((_y+chunk_y)*(dung_width+1))
+          var pos = ds_list_find_index(room_list, value)
+          if (pos = -1) {
+            return false;
+          }
+        }
     }
 }
 
@@ -49,15 +57,11 @@ room_string = string_delete(room_string, 1, 4)
 
 //get the string grid
 var room_grid = map[? "room_grid"]
-//show_debug_message("about to for loop 1")
-//show_debug_message("height = "+string(height))
 //scroll across the top line of the top chunks
 for(var chunk_x = 0; chunk_x < width; chunk_x++){
     for(var row = 0; row < room_cells; row++){
         for(var chunk_y = 0; chunk_y < height; chunk_y++){
-            
             room_grid[# _x+chunk_x, _y+chunk_y] += string_copy(room_string, 1, room_cells*4)
-            //show_debug_message("room_grid[# "+string(_x+chunk_x)+", "+string(_y+chunk_y)+"] = "+room_grid[# _x+chunk_x, _y+chunk_y])
             room_string = string_delete(room_string, 1, room_cells*4)
         }
     }

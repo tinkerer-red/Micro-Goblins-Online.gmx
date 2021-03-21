@@ -1,6 +1,7 @@
 ///scr_mod_charged()
 
-
+// global
+// queue_button_mod
 
 var mod_count = scr_queue_has_mod_count(self.active_queue, scr_mod_charged)
 

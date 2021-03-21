@@ -6,7 +6,7 @@
 //  Returns: real
 //
 //  The returned is a multiplier value for lost frames,
-//    this function is really only to server as a
+//    this function is really only to serve as a
 //    replacement for dividing by delta_time by ideal_delta.
 //
 //  The function also helps clean up the code a bit in my opinion

@@ -25,9 +25,6 @@ if (chunk = noone){
       var grid_x = array[0]
       var grid_y = array[1]
       var map = array[2]
-      //show_debug_message("grid_x = "+string(grid_x))
-      //show_debug_message("grid_y = "+string(grid_y))
-      //show_debug_message("map = "+string(map))
       
       var chunk_id_grid = map[? "chunk_id_grid"]
       var chunk = chunk_id_grid[# abs(grid_x), abs(grid_y)]
@@ -44,7 +41,7 @@ if (chunk = noone){
 
 
 
-if (chunk >= 0){ //if the chunk isnt in the negative values
+if (chunk >= 0){ //if the chunk isnt noone, or undefined, or self, etc.
   with (chunk){
       //clean up any chunk that is out of range
       if (should_exist = false){
@@ -52,11 +49,14 @@ if (chunk >= 0){ //if the chunk isnt in the negative values
         return false;
       }
       
+      
+      //if the chunk isnt generated
       if (generated = false)
-      || (heightmap_grid = -1){
+      || (!is_interior() && heightmap_grid = -1){
         var player = instance_nearest(x+sprite_width/2, y+sprite_height/2, obj_player)
         if !point_in_rectangle(player.x, player.y, bbox_left-(sprite_width*(chunk_dist)), bbox_top-(sprite_height*(chunk_dist)), bbox_right+(sprite_width*(chunk_dist)), bbox_bottom+(sprite_height*(chunk_dist))){
           should_exist = false;
+          
           event_user(1)
           //alarm_set(3,1);
           continue;
@@ -67,7 +67,6 @@ if (chunk >= 0){ //if the chunk isnt in the negative values
       continue;
       
   }
-}else{
 }
 
 

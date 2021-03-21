@@ -39,6 +39,7 @@ var grid_size_y = (sprite_height/tile_size);
 var world_width  = global.chunk_handler.world_width  /tile_size
 var world_height = global.chunk_handler.world_height /tile_size
 
+
 //seed = global.chunk_handler.world_seed
 //var world_heightmap = global.chunk_handler.world_heightmap
 //landmass = gpu_noise_offset(world_heightmap, x, y);

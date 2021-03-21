@@ -13,6 +13,7 @@ var value = range * perc
 var value = value + argument0
 
 }else{
+  randomize()
   var value = random_range(argument0, argument1)
 
 }

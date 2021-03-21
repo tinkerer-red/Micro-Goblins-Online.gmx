@@ -247,6 +247,7 @@ self.echo_inst.w_start_dir = self.w_start_dir
             <kind>1</kind>
             <string>///annimate weapon / spawn melee proj
 
+if (weapon_event_queues != -1){
 
 
 //we put this at the top to ensure an exta frame of animation for the extremely fast melee weapons.
@@ -275,17 +276,20 @@ if (anim_attack_start){
 
 if (w_type = weapon_type_melee)
 {
-  //if no animation modifiers, then run defult slash
+  //if no animation modifiers, then run defult single stab anim
   
   // reset values for ideal location (so modifiers can calculate new locations on their own)
-  x = self.owner_id.x + lengthdir_x(dis, w_start_dir);
-  y = self.owner_id.y + lengthdir_y(dis, w_start_dir);
-  direction = w_start_dir;
-  image_angle = direction-45;
+  if (!variable_instance_exists(self, "mod_delay_start")){
+    x = self.owner_id.x + lengthdir_x(dis, w_start_dir);
+    y = self.owner_id.y + lengthdir_y(dis, w_start_dir);
+    direction = w_start_dir;
+    image_angle = direction-45;
+  }
   
   ///if attack is finished
   if (anim_attack_timer &lt;= 0)
   {
+    self.owner_id.player_state = e_player_state.attack
     self.owner_id.attack = false
     self.owner_id.post_attack = true
     
@@ -314,6 +318,7 @@ if (w_type = weapon_type_range) &amp;&amp; (self.attack = false)
   anim_attack_timer -= 1*lag()
   if (anim_attack_timer &lt;= 0)
   {
+    self.owner_id.player_state = e_player_state.attack
     self.owner_id.attack = false
     self.owner_id.post_attack = true
   }
@@ -326,9 +331,13 @@ if (w_type = weapon_type_summon) &amp;&amp; (self.attack = false)
   anim_attack_timer -= 1*lag()
   if (anim_attack_timer &lt;= 0)
   {
+    self.owner_id.player_state = e_player_state.attack
     self.owner_id.attack = false
     self.owner_id.post_attack = true
   }
+}
+
+
 }
 </string>
           </argument>
@@ -351,7 +360,7 @@ if (w_type = weapon_type_summon) &amp;&amp; (self.attack = false)
           <argument>
             <kind>1</kind>
             <string>///Attack step event
-
+if (weapon_event_queues != -1){
 ////////////////////////////////////////////////////////////////////
 //Attack step event
 ////////////////////////////////////////////////////////////////////
@@ -404,18 +413,18 @@ if !self.attack &amp;&amp; !self.collide &amp;&amp; !self.pre_collide  //if spaw
     var enemy = nearest_enemy(x, y, w_hype)
     if (enemy != noone)
     {
-      enemy.e_health -= w_damage
-      
-      draw_particle_blood(enemy.x, enemy.y)
-      
-      enemy.spd = self.w_knockback
-      enemy.direction = direction //point_direction(x, y, enemy.x, enemy.y)
+      if (enemy.invulnerable = false){
+        deal_damage(enemy, w_damage)
+        
+        enemy.spd = self.w_knockback
+        enemy.direction = direction
+      }
     }
   }
 }
 
 
-
+}
 </string>
           </argument>
         </arguments>
@@ -437,6 +446,8 @@ if !self.attack &amp;&amp; !self.collide &amp;&amp; !self.pre_collide  //if spaw
           <argument>
             <kind>1</kind>
             <string>///Projectile/Summon spawn modifiers
+
+if (weapon_event_queues != -1){
 ////////////////////////////////////////////////////////////////////
 //Projectile/Summon spawn modifiers
 ////////////////////////////////////////////////////////////////////
@@ -466,6 +477,7 @@ if !self.attack &amp;&amp; !self.collide &amp;&amp; !self.pre_collide  //if spaw
       
       proj.direction = direction
       proj.owner_weap = id
+      proj.owner_id = owner_id
       
       /// init the new projectile ignoring proj spawn modifiers since these shouldnt be on there at all
       proj.weapon_event_queues = ds_priority_create()
@@ -523,6 +535,7 @@ if self.attack  //if spawning projectiles
     
     proj.direction = direction
     proj.owner_weap = id
+    proj.owner_id = owner_id
     
     ds_queue_enqueue(self.recent_proj_queue, proj)
     //we also create a full queue to give these projectiles their step events in the next code block
@@ -581,15 +594,6 @@ if self.attack  //if spawning projectiles
       
       ds_queue_destroy(self.proj_queue)
       proj_queue = -1
-      
-      if (w_type = weapon_type_range)                     //|| melee_ranged
-      {
-        //self.owner_id.attack = false
-        //self.owner_id.post_attack = true
-        //draw_self()
-        //instance_destroy()
-      }
-      
     }
     
     
@@ -652,7 +656,7 @@ if self.attack  //if spawning projectiles
 
 
 
-
+}
 </string>
           </argument>
         </arguments>
@@ -674,7 +678,7 @@ if self.attack  //if spawning projectiles
           <argument>
             <kind>1</kind>
             <string>///Pre collision modifiers
-
+if (weapon_event_queues != -1){
 ////////////////////////////////////////////////////////////////////
 //Pre collision modifiers
 ////////////////////////////////////////////////////////////////////
@@ -691,7 +695,7 @@ if !self.attack &amp;&amp; !self.collide &amp;&amp; self.pre_collide //if collis
 
 
 
-
+}
 </string>
           </argument>
         </arguments>
@@ -713,7 +717,7 @@ if !self.attack &amp;&amp; !self.collide &amp;&amp; self.pre_collide //if collis
           <argument>
             <kind>1</kind>
             <string>///collision modifiers
-
+if (weapon_event_queues != -1){
 ////////////////////////////////////////////////////////////////////
 //collision modifiers
 ////////////////////////////////////////////////////////////////////
@@ -727,7 +731,7 @@ if !self.attack &amp;&amp; self.collide  //if officially collided
   }
 }
 
-
+}
 </string>
           </argument>
         </arguments>
@@ -761,9 +765,11 @@ if (is_chained){
 }
 
 // if the weapon is targeting draw the target
+shader_set_hue(owner_id.fav_hue)
 if is_targeting{
   draw_sprite(spr_target, 0, mod_targeting_target_x, mod_targeting_target_y)
 }
+shader_reset()
 
 </string>
           </argument>
@@ -786,10 +792,9 @@ if is_targeting{
           <argument>
             <kind>1</kind>
             <string>///draw self
-
-
+shader_set_hue(owner_id.fav_hue)
 draw_self()
-
+shader_reset();
 </string>
           </argument>
         </arguments>

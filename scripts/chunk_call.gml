@@ -7,20 +7,29 @@ var xx = cell_x*global.chunk_handler.chunk_width
 var yy = cell_y*global.chunk_handler.chunk_height
 
 
-//if the cell already exists, dont try to make a new one
-if ds_map_exists(global.chunk_handler.active_chunks, chunk_string(cell_x, cell_y)){
-  return false;
-}
 
-if chunk_interior_exists(cell_x, cell_y){
-  return false;
-}
-
+//for any reason the chunks shouldnt generate
+  //if the cell already exists, dont try to make a new one
+  if ds_map_exists(global.chunk_handler.active_chunks, chunk_string(cell_x, cell_y)){
+    return false;
+  }
+  
+  //make sure interior cells dont gen if the player isnt inside them
+  if is_interior(xx,yy){
+    if !chunk_interior_player_in_zone(cell_x, cell_y){
+      return false;
+    }
+    if chunk_interior_exists(cell_x, cell_y){
+      return false;
+    }
+  }
+  
+/*
 ///this check might be to laggy remove it later if it causes issues
 if collision_point( xx, yy, obj_chunk, false, false){
   return false;
 }
-
+*/
 var chunk = instance_create(cell_x*chunk_width, cell_y*chunk_height, obj_chunk);
 
 // remember the chunk

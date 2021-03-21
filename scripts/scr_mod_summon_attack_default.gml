@@ -20,12 +20,13 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
     }
     */
     
-    
-    //if we're in the correct event then activate
-    if (mod_summon_attack_default_start = true) {
-      if (enemy != noone) {
-        if place_meeting(x, y, enemy) {
-          deal_damage(enemy)
+    if (move_active = false){ //if we arew not restrained by movement mods
+      //if we're in the correct event then activate
+      if (mod_summon_attack_default_start = true) {
+        if (enemy != noone) {
+          if place_meeting(x, y, enemy) {
+            deal_damage(enemy, e_damage)
+          }
         }
       }
     }

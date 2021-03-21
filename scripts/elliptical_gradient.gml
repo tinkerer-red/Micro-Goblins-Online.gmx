@@ -5,7 +5,7 @@
   ry     = y location in grid
   width  = grid width
   height = grid height
-  perc   = apply percentage, 0.5 will only apply the start of the gradient 50% grom center.
+  perc   = apply percentage, 0.5 will only apply the start of the gradient 50% from center.
 */
 
 var rx = argument0;

@@ -78,6 +78,8 @@ ds_map_add_map(global.chunk_handler.active_interior_chunks, _chunk_string, inter
 var _struct = chunk_tile_find(xx, yy, "layer_structures")
 
 
+ds_map_add(interior_map, "zone_pos", open_zone)
+
 //store the exit location
         if ds_map_exists(global.chunk_handler.active_chunks, chunk_string(cell_x, cell_y)){
           var map = global.chunk_handler.active_chunks

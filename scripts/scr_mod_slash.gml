@@ -43,16 +43,6 @@ if (object_index = obj_weapon) && (w_type = weapon_type_melee){
   }
   
   
-  ///notes to understand the cos and sin
-  //
-  // cos((anim_timer-anim_flip_frame) * pi_time)
-  // sin((anim_timer) * pi_time)
-  //
-  // anim_timer is used to equate where the wave currently is
-  // anim_flip_frame is used to move the wave over, of course if you want to move it over exactly by half then you can just use sin() instead of cos()
-  // pi_time is just a method to make the wave it's self. multiplying pi_time will dictate how many times to wave peaks/vallies before it finishes the timer
-  // lastly max_-_multiplier is the maximum distance we want the axis to move, the cos/sin function would move it a parcent of the max
-  
 //  if (mod_slash_start = true){
 //    mod_slash_start = false;
   

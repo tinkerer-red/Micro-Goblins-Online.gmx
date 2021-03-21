@@ -4,11 +4,12 @@ var sprite = spr_lightning;
 var particle = prt_sparkle;
 var width = w_hype - 4;
 
-arc_frame++
-if arc_frame >= sprite_get_number(arc_frame){
-  arc_frame = 0
+arc_frame += sprite_get_number(spr_lightning)/(room_speed*0.33)
+if arc_frame >= sprite_get_number(spr_lightning){
+  arc_frame = arc_frame mod sprite_get_number(spr_lightning)
 }
-
+//show_debug_player(arc_frame)
+//show_debug_player("sprite_get_number(arc_frame) = "+string(sprite_get_number(spr_lightning)))
 //var pathIndex = argument[0]
 
 /*
@@ -71,6 +72,8 @@ for (var i = 0; i < arc_count; i++){
     var xx = target.x
     var yy = target.y
     
+    if (point_distance(xx, yy, x, y) < 16*8){
+    
     draw_set_color(c_aqua)
     draw_sprite_line_shader(sprite, 
                       arc_frame,
@@ -80,6 +83,7 @@ for (var i = 0; i < arc_count; i++){
                       y, //y2
                       width)
     draw_set_color(c_white)
+    }
   }
 }
 

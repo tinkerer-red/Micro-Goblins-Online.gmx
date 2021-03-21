@@ -76,7 +76,7 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
         }
         
         if place_meeting(x, y, enemy) {
-          deal_damage(enemy)
+          deal_damage(enemy, e_damage)
         }
       } //end attack_active
     } //end of leap start

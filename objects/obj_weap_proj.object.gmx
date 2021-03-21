@@ -30,7 +30,7 @@ do_not_collide = false
 collide_ground = false
 collide_enemy  = false
 collide_solid  = false
-
+collision_active = true
 
 w_range = 16*10  //this value is only here incase we have an error
 self.collide = false
@@ -119,13 +119,13 @@ breaking = false
             <string>///destroy left over paths
 
 path_delete(previous_locations_path)
-draw_sprite_explode(sprite_index)
+if (collision_active){
+  draw_sprite_explode(sprite_index)
+}
 </string>
           </argument>
         </arguments>
       </action>
-    </event>
-    <event eventtype="2" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -142,79 +142,24 @@ draw_sprite_explode(sprite_index)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///[MOD] Cluster Shot
-/*
-//ds_priority_delete_value(self.step_event_queues, scr_mod_cluster)
-//is_clustered--
-//show_debug_message("cluster alarm")
-repeat(2){ //ideally 3
-//  if (irandom(2) &gt; 0){ //this helps cut down on the massive entities when 5 cluster mods are active
-    var proj = instance_copy(false);
-    
-    //create new queues
-    //proj.active_queue = ds_priority_create()
-    //ds_priority_copy(proj.active_queue, active_queue);
-    
-    proj.weapon_event_queues = ds_priority_create()
-    ds_priority_copy(proj.weapon_event_queues, self.weapon_event_queues)
-    
-    proj.step_event_queues = ds_priority_create()
-    ds_priority_copy(proj.step_event_queues, self.step_event_queues)
-    
-    self.step_event_queues_temp = -1
-    //the step event will fill this priority for us
-    
-    //variables
-    proj.direction = htme_random_range(0, 360)
-    
-    proj.w_range = w_range*0.666
-    proj.dis_traveled = 0
-    proj.speed = speed*0.666
-    
-    proj.image_angle = proj.direction-45
-    
-    proj.x = x+lengthdir_x(2,proj.direction)
-    proj.y = y+lengthdir_y(2,proj.direction)
-    
-    proj.start_x = proj.x
-    proj.start_y = proj.y
-    
-    mod_cluster_init = false
-    
-    var path_number = path_get_number(previous_locations_path)-1;
-    var path_xx = path_get_point_x(previous_locations_path, path_number);
-    var path_yy = path_get_point_y(previous_locations_path, path_number);
-    
-    proj.previous_locations_path = path_add();
-    path_set_closed(proj.previous_locations_path, false);
-    path_add_point(proj.previous_locations_path, path_xx, path_yy, speed);
-    
-//  }
-}
+            <string>///clean up left over queues
 
-//scr_clear_modifiers()
-//ds_priority_destroy(self.step_event_queues)
-//instance_destroy(self.id)
-
-// with self
-
-var proj = self.id;
-//variables
-proj.direction = htme_random_range(0, 360)
-
-proj.w_range = w_range*0.666
-proj.dis_traveled = 0
-proj.speed = speed*0.666
-
-proj.image_angle = proj.direction-45
-
-proj.x = x+lengthdir_x(2,proj.direction)
-proj.y = y+lengthdir_y(2,proj.direction)
-
-proj.start_x = proj.x
-proj.start_y = proj.y
-
-mod_cluster_init = false
+if ds_exists(self.pre_col_queues_temp, ds_type_priority){
+            ds_priority_destroy(self.pre_col_queues_temp)
+            self.pre_col_queues_temp = -1
+          }
+          if ds_exists(self.pre_col_queues, ds_type_priority){
+            ds_priority_destroy(self.pre_col_queues)
+            self.pre_col_queues = -1
+          }
+          if ds_exists(self.step_event_queues_temp, ds_type_priority){
+            ds_priority_destroy(self.step_event_queues_temp)
+            self.step_event_queues_temp = -1
+          }
+          if ds_exists(self.step_event_queues, ds_type_priority){
+            ds_priority_destroy(self.step_event_queues)
+            self.step_event_queues = -1
+          }
 </string>
           </argument>
         </arguments>
@@ -311,9 +256,13 @@ if projectile_active {
     
     ///if we are about to collide
     dis_traveled += speed
-    col_proj_ground()
-    col_proj_solid()
-    col_proj_enemy() //this function will not activate when colliding with an ally or a friendly summon
+    if (collision_active){
+      col_proj_ground()
+      col_proj_solid()
+      col_proj_enemy() //this function will not activate when colliding with an ally or a friendly summon
+    }else{
+      instance_destroy()
+    }
   }
   
   
@@ -441,11 +390,23 @@ if projectile_active {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// breaking animation
+            <string>///Disable collision checks if to many projectiles are nearby
+/*
+if (instance_number(obj_weap_proj) &gt;= (1000/global.numberOfLocalPlayers)){
+  collision_active = false;
+}
 
-if (breaking){
-  show_debug_message("breaking")
-
+/*
+if (collision_active = true){
+  var proj_count = collision_circle_list(x, y, 8, obj_weap_proj, -1, true)
+  if (proj_count = noone) {
+    exit;
+  }else{
+    if (ds_list_size(proj_count) &gt; 32){
+      collision_active = false;
+    }
+    ds_list_destroy(proj_count)
+  }
 }
 </string>
           </argument>
@@ -470,6 +431,7 @@ if (breaking){
           <argument>
             <kind>1</kind>
             <string>///draw modifiers
+
 if projectile_active{
   if (is_lasered){
     draw_laser(previous_locations_path)
@@ -509,7 +471,9 @@ if (is_airstrike){
             <string>///draw Self
 if (projectile_active){
   if sprite_exists(sprite_index){
+    shader_set_hue(owner_id.fav_hue)
     draw_self()
+    shader_reset()
   }
 }
 </string>

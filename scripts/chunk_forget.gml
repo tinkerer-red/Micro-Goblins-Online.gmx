@@ -12,10 +12,10 @@ if ds_map_exists(active_chunks, chunk_str){
 //  return -1;
 }
 
-//if the cell is an exterior cell, check to see if the cell was saved to a zone
-if (argument0 > global.chunk_handler.world_chunk_width)
+//if the cell is an interior cell, check to see if the cell was saved to a zone
+if (argument0 > global.chunk_handler.world_chunk_width-1)
 || (argument0 < 0)
-|| (argument1 > global.chunk_handler.world_chunk_height)
+|| (argument1 > global.chunk_handler.world_chunk_height-1)
 || (argument1 < 0)
 {
   if variable_instance_exists(self, "interior_map")
