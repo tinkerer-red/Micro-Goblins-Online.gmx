@@ -51,20 +51,14 @@ if (w_type = weapon_type_range) || (melee_ranged > 0){
   }
   
   
-  show_debug_message("ds_queue_size(self.proj_queue) = "+string(ds_queue_size(self.proj_queue)))
-  show_debug_message("ds_queue_size(self.recent_proj_queue) = "+string(ds_queue_size(self.recent_proj_queue)))
-  
-  
 }
 
 
 
 //reload the new projectiles into the original queue
 if (mod_count = 1){
-  show_debug_message("(mod_count = 1)")
   if ds_queue_size(self.recent_proj_queue) = 0{
     ds_queue_copy(self.recent_proj_queue, self.proj_queue)
-    show_debug_message("coppied!")
   }
 }
 

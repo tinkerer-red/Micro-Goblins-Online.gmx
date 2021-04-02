@@ -1,6 +1,10 @@
 =====Weapon Mods=====
 
 
+===Toy===
+Prop (it's a modifier to allow for prop hunt, basically turns you into a prop object for a while, the higher the mod the longer it lasts, 6 is infinate untill death)
+
+
 ===Global===
 +++Repeater (Full Auto attacks)
 +++Charge (you must charge up the weapon first, massive damage increase)
@@ -15,19 +19,28 @@ Dynamic Charge
 AOE (this gives AOE, multiples cause larger AOE size) (radius = 16+(16*modcount))
 +continuous (modcount = dmge tick increased, this will make an AOE continuous, or cause tick based damage, mutliples cause longer time for aoe)
 +knockback
+Exstingish (reduce the size of AOE/continuous attacks by one)
+Exploding corpses (Dead enemies will explode when their body disapears, explosion size relative to modcount, with a mod count of 1 you just need to hit the enemy 1 second before death to explode it, otherwise it wont explode, 5 mod count will give you a 5 second timer. enlarged creatures gives a +50% explosion radius per enlarge, calculated after initial radius calculation, each section of the enemy will also explode, so msnake creatures, and decapitated heads will both create their own explosions)
 
 
-vampirism (chance to gain life after a kill)
+???  CHANCE BASED MODS  ???
+Shockwave (create a wide projectile which deals small damage but adds a slight knockback and pierce, modcount = range and width)
+Radience (on collision chance to create a healing ally AOE)
+Meteor (on collision chance to spawn a meteor from the sky which lands on an enemy)
+
+
+vampirism/leech (chance to gain life after a kill)
 Force Push (at weapon spawn (just after it spawns) force push shit away)
 Force Pull (happens before melee weapon spawns)
 grapple (force pull at collision)    /    lode stone (continuous force pull on hit enemy)
 knockback (force push at collision)
+Soulbound (can't be dropped)
 
 Stasis (esentially freeze / stun effect; mod count = stasis time)
 
 Chain Lightning (hits each enemy in a certain distance, 1*modcount = arcs)
 Teleport (teleports the colided to a random open position)
-Frosty (slows the target)
+Frost (slows the target)
 Blind (when mixed with aoe and continuous, this becomes the fog of war)
 
 ==general damage and death effects==
@@ -41,6 +54,8 @@ Blind (when mixed with aoe and continuous, this becomes the fog of war)
 +++Slow (swings slower)
 +++Ranged (unlocks ranged mods for the melee weapon, assigns a random projectile sprite perminately)
 +++Back Stab (swings behind you; also?)
+Plumble (when collided with an enemy tapping will cause additional damage, enemy players can dash out, and repeater stacks with this mod)
+Perry/blade turn (perry reflects projectiles, while blade turn will reflect melee weapons 90 degrees to the side of the enemy player)
 
 +++moveable (unlocks the ability to move while swinging, although it also allows you to guide which direction you are attacking, the change in direction is effected by mod count)
 
@@ -49,11 +64,12 @@ Blind (when mixed with aoe and continuous, this becomes the fog of war)
 +++slash
 +++Flail (changes the attacking method into a flail attack, adds attack range but makes it a bit slower.) (multiples will give it a further reach)
 +++Extend (at the end of the attack animation, extend the reach of the weapon infront of the player by 2tiles*mod_count)
+Throwable (tapping the attack button will cause for a normal swing although holding it for 0.25 of a second will throw it, holding it for a full second will throw it at max range, and the max range is dictated by weapon range + modcount)
 whip (Will need to be able to make use of paths, and stretched sprites to path, will need at least 60 paths for the animation... uhhhg)
 
 
 "deception"? (damages you when using it although greatly increased damge, slight increase to size, and adds a color effect to the sprite?)
-Keen (slightly increases damage, greatly inreases decapitation chance)
+Keen/vorpal (slightly increases damage, greatly inreases decapitation chance)
 Jaws (1 modcount = 2 melee weapons lerch out from the side clamping down infront of the player, mod5 = 10)
 Reflect (reflects bullets back at their owner)
 Aerial Strike (every time you hit it spawn a copies of itself, which slams into the ground)
@@ -87,6 +103,7 @@ Drag (projectiles move at half speed)
 +++Mirror Shot (Shoots a projectile behind you)
 +++Targeting
 +++Air Strike
+Bouncy (when colliding with ground, bounce in a random angle with in a 180 degree cone of where it's headed, number of bounces is relative to mod count, distance gets cut in half each time, and speed drops by 33%)
 "Ray Casting", or "ray tracing", or just "tracer" (this has a very very small heat seeking adjustment, although it will skip the step events, and jump dirrectly to collision events, In practice this means that the projectiles will appear to spawn directly on their targets, usefull for a BFG or a cone of electricity type weapon [example: electro gun GTA2])
 Welder (similar to repeater although it keeps the weapon spawned, creating new projectiles, although will over heat depending on how many mods it has, although this also means more projectiles come out faster aswell)
 
@@ -134,6 +151,8 @@ Ranged mod, allows for use of pokeball style summons
 [Attack] Rotational (rotates and shoots at the player, if the summon is a minion/group they could rotate around each other)
 [Attack] Dopple Strike (shares player attack system)
 [Attack] Looting (less damage, but if it kills an AI enemy (non summon) then when it dies it will drop an item)
+[attack] spitter (spits up a trail of creep, modcount = length of trail)
+[propultion] shoots out a bunch of short ranged projectiles behind it, rocketing it around the room bouncing off walls dealing collision damage and projectile damage. (mod count = time propultion happens)
 
 -----movement (the default is directly walking at the nearest player)
 [Move] Bouncy (spawns in the direction the player was facing, will continue to move and bounce off walls untill dead)
@@ -159,6 +178,7 @@ Ranged mod, allows for use of pokeball style summons
 [toy] blood shot (shoots out 6 or 8 projectiles apawn death)
 [toy] blood trail (slightly less health, but leaves a trail of damaging floor tiles, or maybe smaller red shadowy versions of it's self.)
 [passive] Spawner ( every 3.5-(0.5*modcount) seconds it spawns a minion version of it's self, with a max of 3)
+[toy] Throwable (similar code as used in melee throwable although with out the 0.25 delay, but this allows for pokeballs to be a usable item)
 
 
 

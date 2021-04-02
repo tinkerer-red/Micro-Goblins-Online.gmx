@@ -65,7 +65,28 @@ var y_miltiplier = cos((anim_timer-anim_flip_frame)  * pi_time)*max_y_multiplier
 
 draw_set_color(image_blend)
 
-draw_sprite_pos(sprite_index,
+draw_sprite_pos(body,
+                image_index, 
+                
+                //top left
+                x-(sprite_xoffset)+trav_dis_x, 
+                y-(sprite_yoffset)-(y_miltiplier*anim_face_dir), 
+                
+                //top right
+                x+(sprite_width-sprite_xoffset)-trav_dis_x, 
+                y-(sprite_yoffset)+(y_miltiplier*anim_face_dir), 
+                
+                //bottom right
+                x+(sprite_width-sprite_xoffset)-trav_dis_x, 
+                y+(sprite_height-sprite_yoffset)+(y_miltiplier*anim_face_dir), 
+                
+                //bottom left
+                x-(sprite_xoffset)+trav_dis_x, 
+                y+(sprite_height-sprite_yoffset)-(y_miltiplier*anim_face_dir), 
+                
+                image_alpha);
+
+draw_sprite_pos(head,
                 image_index, 
                 
                 //top left
@@ -110,7 +131,7 @@ if (anim_timer <= 0)
 //this will keep track of the view ports we've iterated through, that way we never count down the anim timer more then once each frame
 if (view_current < view_loop) || (global.numberOfLocalPlayers = 1){
   view_loop = view_current
-  anim_timer -= 1*lag()
+  anim_timer -= obj_camera_control.frame_delay
 }else if (view_current > view_loop){
   view_loop = view_current
 }

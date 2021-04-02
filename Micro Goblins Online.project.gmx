@@ -65,6 +65,7 @@
     <extension index="5">extensions\NoisePack CPU</extension>
     <extension index="6">extensions\Sprite Exploder</extension>
     <extension index="7">extensions\Essential Scripts</extension>
+    <extension index="8">extensions\Collision_Cone</extension>
   </NewExtensions>
   <sounds name="sound">
     <sound>sound\snd_mod_charge</sound>
@@ -77,6 +78,7 @@
         <sprites name="Modifiers">
           <sprite>sprites\spr_laser</sprite>
           <sprite>sprites\spr_target</sprite>
+          <sprite>sprites\spr_aoe_runic</sprite>
           <sprite>sprites\spr_chain</sprite>
           <sprite>sprites\spr_lightning</sprite>
         </sprites>
@@ -138,6 +140,7 @@
       <sprite>sprites\spr_chunk_supervisor</sprite>
       <sprite>sprites\spr_particle_controller</sprite>
       <sprite>sprites\spr_chunk</sprite>
+      <sprite>sprites\spr_collision_cone</sprite>
     </sprites>
     <sprites name="Test Sprites">
       <sprite>sprites\spr_red</sprite>
@@ -157,6 +160,7 @@
     <sprite>sprites\spr_dungeon_tiles</sprite>
     <sprite>sprites\spr_dungeon_exit</sprite>
     <sprite>sprites\sprite54_test</sprite>
+    <sprite>sprites\sprite63</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
@@ -172,6 +176,8 @@
         <scripts name="Modifiers">
           <scripts name="Weapon">
             <scripts name="Global Mods">
+              <script>scripts\scr_mod_continuous.gml</script>
+              <script>scripts\scr_mod_aoe.gml</script>
               <script>scripts\scr_mod_charged.gml</script>
               <script>scripts\scr_mod_repeater.gml</script>
               <script>scripts\scr_mod_dash.gml</script>
@@ -181,6 +187,7 @@
               <script>scripts\scr_mod_enlarge.gml</script>
               <script>scripts\scr_mod_shrink.gml</script>
               <script>scripts\scr_mod_aimBot.gml</script>
+              <script>scripts\scr_mod_tractorBeam.gml</script>
             </scripts>
             <scripts name="Melee">
               <script>scripts\scr_mod_range.gml</script>
@@ -273,13 +280,17 @@
           <script>scripts\tile_point_precise.gml</script>
         </scripts>
         <script>scripts\col_with_player.gml</script>
-        <script>scripts\deal_damage.gml</script>
         <script>scripts\collision_circle_list.gml</script>
+        <script>scripts\collision_cone_list.gml</script>
       </scripts>
       <script>scripts\nearest_enemy.gml</script>
       <script>scripts\is_enemy.gml</script>
+      <script>scripts\is_entity.gml</script>
       <script>scripts\update_enemy.gml</script>
       <script>scripts\is_hoarded.gml</script>
+      <script>scripts\move_towards.gml</script>
+      <script>scripts\deal_damage.gml</script>
+      <script>scripts\deal_tick_damage.gml</script>
     </scripts>
     <scripts name="functions">
       <scripts name="Essential Scripts">
@@ -347,6 +358,7 @@
       </scripts>
       <script>scripts\instance_nearest_notme.gml</script>
       <script>scripts\is_released.gml</script>
+      <script>scripts\cull_list_for_enemies.gml</script>
     </scripts>
     <scripts name="Drawing">
       <scripts name="Modifiers">
@@ -765,7 +777,7 @@
       <script>scripts\scr_view_visble_handler.gml</script>
     </scripts>
     <script>scripts\scr_collision_test.gml</script>
-    <script>scripts\scr_draw_circle.gml</script>
+    <script>scripts\collision_normal_circle.gml</script>
     <script>scripts\interior_dungeon_hallway_breadth_first_search_create.gml</script>
     <script>scripts\sgs_place_free.gml</script>
     <script>scripts\getPerlinNoise.gml</script>
@@ -853,7 +865,7 @@
     <room>rooms\room_lvl_one_bk</room>
     <room>rooms\room0</room>
   </rooms>
-  <constants number="14">
+  <constants number="17">
     <constant name="weapon_type_melee">0</constant>
     <constant name="weapon_type_range">1</constant>
     <constant name="weapon_type_summon">2</constant>
@@ -861,6 +873,7 @@
     <constant name="weapon_type">1</constant>
     <constant name="weapon_sprite">2</constant>
     <constant name="weapon_proj_sprite">3</constant>
+    <constant name="weapon_aoe_sprite">4</constant>
     <constant name="team_none">0</constant>
     <constant name="team_white">1</constant>
     <constant name="team_red">2</constant>
@@ -868,6 +881,8 @@
     <constant name="team_green">4</constant>
     <constant name="team_yellow">5</constant>
     <constant name="team_black">6</constant>
+    <constant name="one_tile">16</constant>
+    <constant name="one_chunk">256</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

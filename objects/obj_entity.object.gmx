@@ -29,6 +29,30 @@
 
 iframes = 0
 invulnerable = false
+damage_sources_map = ds_map_create()
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>ds_map_destroy(damage_sources_map)
 </string>
           </argument>
         </arguments>
@@ -58,6 +82,70 @@ if (iframes &lt;= 0){
   iframes = 0
 }else{
   iframes -= 1*lag()
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Tick Damage Handler
+
+//cycle through all damage sources
+var size = ds_map_size(damage_sources_map);
+
+if (size &gt; 0){
+//find the particle type
+  var damage_sources_key = ds_map_find_first(damage_sources_map);
+  var damage_source = damage_sources_map[? damage_sources_key];
+  
+  /////for each particle type
+  repeat(size){
+    
+    if (damage_source != undefined){
+      var damage = damage_source[? "damage"];
+      var time = damage_source[? "time"];
+      var damage_dealer = damage_source[? "damage_dealer"];
+      
+      time -= 1*lag()
+      damage_source[? "time"] = time
+      show_debug_player("time = "+string(time))
+      
+      var target = self
+      
+      //check to see if we should even run the rest of the checks
+      if (obj_tick_handler.ticked_over){
+        if (instance_exists(damage_dealer)){
+          with (damage_dealer){
+            deal_damage(target, damage, true)
+          }
+        }
+      }
+      
+      if (time &lt;= 0){
+        ds_map_destroy(damage_source)
+        ds_map_delete(damage_sources_map, damage_sources_key)
+      }
+    }
+    
+    var damage_sources_key = ds_map_find_next(damage_sources_map, damage_sources_key);
+    var damage_source = damage_sources_map[? damage_sources_key];
+    
+  }//end repeat loop
 }
 </string>
           </argument>

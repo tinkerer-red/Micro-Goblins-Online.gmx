@@ -60,7 +60,7 @@ halo 3's grenade types, equipment, and weapons
 Zombie Estate 2
 
 [Weapon] Air Pump - Dig Dug - ()
-[Weapon] Concrete Donkey - Worms - ()
+[Weapon] Concrete Donkey - Worms - (ranged + enlarge + airstrike + bouncy)
 [Weapon] Blow Torch - Worms - (melee + 5x repeater)
 [Weapon] Magsec3 - Perfect Dark - (range + burst + tiny)
 [Weapon] Fin's Sword - "What if adventure time was an anime" (It's a sword that summons duplicates who attack the target from a long range in quick succession)

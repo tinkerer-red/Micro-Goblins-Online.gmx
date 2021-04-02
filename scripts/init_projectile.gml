@@ -10,6 +10,7 @@ ds_priority_copy(proj.weapon_event_queues, self.weapon_event_queues)
 proj.image_angle = proj.direction-45
 
 proj.sprite_index = sprite_proj
+proj.sprite_aoe = sprite_aoe
 proj.w_hype = fast_hype(proj.sprite_height, proj.sprite_width)
 //if (proj.sprite_index = sprite_index) {proj.image_angle -= 45}
 

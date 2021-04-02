@@ -135,6 +135,11 @@ if (smooth_camera){
 
 max_frame_skip = 4 //10 at 60fps 3 at 20 fps
 frames_skipped = 0
+
+frame_rate = 60
+frame_counter = 0
+frame_delay = 0
+//frame_mod = 1
 </string>
           </argument>
         </arguments>
@@ -763,7 +768,16 @@ for (var i = 0; i &lt; global.numberOfLocalPlayers; i++){
             <kind>1</kind>
             <string>///handle frame skipping
 
-if (lag() &gt; 2) &amp;&amp; (frames_skipped &lt; max_frame_skip){
+var frame_mod = room_speed/frame_rate;
+
+var last_frame_counter = frame_counter;
+frame_counter = frame_counter mod frame_mod
+
+if (last_frame_counter != frame_counter)
+{var frame_over = true} else {var frame_over = false;}
+
+if (frame_over = false)
+|| (lag() &gt; 2) &amp;&amp; (frames_skipped &lt; max_frame_skip){
   draw_enable_drawevent(false);
   frames_skipped++
   
@@ -773,6 +787,10 @@ if (lag() &gt; 2) &amp;&amp; (frames_skipped &lt; max_frame_skip){
 }
 
 
+frame_counter += 1*lag();
+
+//this variable is used when any script inside the draw event needs to know how many frames of animation it needs to skip to make the animations take equally as long for all settings. Very important
+frame_delay += 1*lag();
 
 </string>
           </argument>
@@ -841,6 +859,32 @@ if (lag() &gt; 2) &amp;&amp; (frames_skipped &lt; max_frame_skip){
 }else{
   application_surface_draw_enable(true)
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="75">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//reset frameskip delay counter
+
+//this variable is used when any script inside the draw event needs to know how many frames of animation it needs to skip to make the animations take equally as long for all settings. Very important
+frame_delay = 0
 </string>
           </argument>
         </arguments>

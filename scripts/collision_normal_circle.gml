@@ -1,4 +1,4 @@
-/// scr_draw_circle(x, y, radius, resolution, prec)
+/// collision_normal_circle(x, y, radius, resolution, prec)
 
 // x
 // y

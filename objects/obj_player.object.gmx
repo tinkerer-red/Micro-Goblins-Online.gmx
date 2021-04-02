@@ -253,6 +253,7 @@ for (var i = 0; i &lt; 3; i++)
   
   self.item_data[i, weapon_sprite] = spr_weap_test
   self.item_data[i, weapon_proj_sprite] = spr_weap_test
+  self.item_data[i, weapon_aoe_sprite] = spr_aoe_runic
   
   self.item_queues[i] = ds_priority_create()
   
@@ -298,6 +299,7 @@ for (var i = 0; i &lt; 3; i++)
   repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_mod_range, 8);
   repeat( 0 ) ds_priority_add(queue_weap_spawn_mods, scr_3, 1);
   ///////////////////////////////////////////////////////////////////////////
+  repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_tractorBeam, 1);
   repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_targeting, 1);
   repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_bonusShot, 2);
   repeat( 0 ) ds_priority_add(queue_proj_spawn_mods, scr_mod_mirrorShot, 3);
@@ -327,6 +329,8 @@ for (var i = 0; i &lt; 3; i++)
   ///////////////////////////////////////////////////////////////////////////
   repeat( 0 ) ds_priority_add(queue_col_mods, scr_mod_negarang, 1);
   repeat( 0 ) ds_priority_add(queue_col_mods, scr_mod_sticky, 1);
+  repeat( 0 ) ds_priority_add(queue_col_mods, scr_mod_continuous, 1);
+  repeat( 0 ) ds_priority_add(queue_col_mods, scr_mod_aoe, 2);
   repeat( 0 ) ds_priority_add(queue_col_mods, scr_7, 2);
   ///////////////////////////////////////////////////////////////////////////
   repeat( 0 ) ds_priority_add(queue_post_attack_mods, scr_mod_evade, 1);
@@ -515,6 +519,22 @@ body = spr_body_template
 </string>
           </argument>
         </arguments>
+      </action>
+    </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>604</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_inherited</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
       </action>
     </event>
     <event eventtype="3" enumb="2">

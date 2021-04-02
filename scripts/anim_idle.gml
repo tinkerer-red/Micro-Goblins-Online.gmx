@@ -122,7 +122,7 @@ draw_sprite_pos(head,
 //this will keep track of the view ports we've iterated through, that way we never count down the anim timer more then once each frame
 if (view_current < view_loop) || (global.numberOfLocalPlayers = 1){
   view_loop = view_current
-  anim_timer -= 1*lag()
+  anim_timer -= obj_camera_control.frame_delay
 }else if (view_current > view_loop){
   view_loop = view_current
 }

@@ -15,7 +15,7 @@ if !place_free(xx,yy)
   //var hype = sqrt(power(sprite_width,2)+power(sprite_height,2))
   
   //var dir = collision_normal(xx, yy, obj_solid, self.sprite_width, 1)
-  var dir = scr_draw_circle(x,y,sprite_height*1.25,sprite_height*1.25/21,false);
+  var dir = collision_normal_circle(x,y,sprite_height*1.25,sprite_height*1.25/21,false);
   
   array[0] = speed
   array[1] = direction + (angle_difference(dir, direction)-90)*2

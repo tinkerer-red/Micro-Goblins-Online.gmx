@@ -119,7 +119,8 @@ breaking = false
             <string>///destroy left over paths
 
 path_delete(previous_locations_path)
-if (collision_active){
+if (collision_active)
+&amp;&amp; !variable_instance_exists(self.id, "aoe_start"){
   draw_sprite_explode(sprite_index)
 }
 </string>

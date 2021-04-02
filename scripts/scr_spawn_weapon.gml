@@ -30,6 +30,7 @@ weap.w_name = self.item_data[weap_num, weapon_name]
 weap.w_type = self.item_data[weap_num, weapon_type]
 weap.sprite_index = self.item_data[weap_num, weapon_sprite]
 weap.sprite_proj = self.item_data[weap_num, weapon_proj_sprite]
+weap.sprite_aoe = self.item_data[weap_num, weapon_aoe_sprite]
 
 if (weap.w_type != weapon_type_range)
 {
