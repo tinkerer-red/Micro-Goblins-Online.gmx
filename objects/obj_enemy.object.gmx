@@ -95,8 +95,7 @@ move_active = false
 e_health = 10
 e_damage = 1
 
-start_x = x
-start_y = y
+
 </string>
           </argument>
         </arguments>
@@ -278,6 +277,7 @@ if !variable_instance_exists(self, "enemy_mods_init") || (enemy_mods_init = fals
     repeat( 1 ) ds_priority_add(queue_attack_step_mods, scr_mod_summon_health_default, 3);
     
     
+    
   }
   
   ///if is summon
@@ -286,6 +286,20 @@ if !variable_instance_exists(self, "enemy_mods_init") || (enemy_mods_init = fals
 </string>
           </argument>
         </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>604</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_inherited</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
       </action>
     </event>
     <event eventtype="3" enumb="0">
@@ -504,10 +518,26 @@ if self.collide &amp;&amp; !self.pre_collide  //if officially collided
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>show_debug_player(0, "enemy_id("+string(id)+") e_health = "+string(e_health))
+            <string>///show debug health
+
+show_debug_player(0, "enemy_id("+string(id)+") e_health = "+string(e_health))
 </string>
           </argument>
         </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>604</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_inherited</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
       </action>
     </event>
     <event eventtype="8" enumb="0">
@@ -534,6 +564,32 @@ if self.collide &amp;&amp; !self.pre_collide  //if officially collided
 if (ceil(iframes) mod 2) exit;
 
 draw_self()
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///debug draw
+
+draw_set_color(c_yellow)
+draw_line(x, y, x+(right-left)*10, y+(down-up)*10)
+draw_set_color(c_white)
+//draw_circle(mp_xgoal, mp_ygoal, 4, false)
 </string>
           </argument>
         </arguments>

@@ -17,5 +17,6 @@ for (var i = -reach; i <= reach; i++){
     chunk_uncall(cell_x+i, cell_y+j)
   }
 }
+
 //*/
 

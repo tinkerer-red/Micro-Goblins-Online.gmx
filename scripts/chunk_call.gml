@@ -51,7 +51,7 @@ chunk.loadid = -1
 
 
 with (chunk) {
-  event_user(0); 
+  event_user(0);
   alarm_set(0, room_speed*60); //set the initial alarm to 1 minute to evenly space out the supervisor saving from the initial cell's saving
   //alarm_set(0, room_speed*60*2);
 }

@@ -25,7 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>dis_traveled = 0
+            <string>///init variables
+
+dis_traveled = 0
 do_not_collide = false
 collide_ground = false
 collide_enemy  = false
@@ -63,6 +65,8 @@ previous_locations_path = path_add();
 path_set_closed(previous_locations_path, false);
 path_add_point(previous_locations_path, x, y, speed);
 
+//lag handler
+queued_to_del = false
 
 ///modifier variables
 is_lasered = false
@@ -119,10 +123,37 @@ breaking = false
             <string>///destroy left over paths
 
 path_delete(previous_locations_path)
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///sprite explode
+
+
 if (collision_active)
-&amp;&amp; !variable_instance_exists(self.id, "aoe_start"){
+&amp;&amp; (projectile_active)
+&amp;&amp; !variable_instance_exists(self.id, "aoe_start")
+&amp;&amp; (instance_number(obj_weap_proj) &lt; 50){
   draw_sprite_explode(sprite_index)
 }
+
 </string>
           </argument>
         </arguments>
@@ -161,6 +192,11 @@ if ds_exists(self.pre_col_queues_temp, ds_type_priority){
             ds_priority_destroy(self.step_event_queues)
             self.step_event_queues = -1
           }
+          //if ds_exists(self.weapon_event_queues, ds_type_priority){
+          //  ds_priority_destroy(self.weapon_event_queues)
+          //  self.weapon_event_queues = -1
+          //}
+          
 </string>
           </argument>
         </arguments>
@@ -184,17 +220,21 @@ if ds_exists(self.pre_col_queues_temp, ds_type_priority){
           <argument>
             <kind>1</kind>
             <string>///store previous locations
+
 if projectile_active{
-  previous_locations_step += 1
+  if !to_much_lag(){
   
-  if (previous_locations_step = previous_locations_steps){
-      previous_locations_step = 0
-      previous_locations_i +=1
-      
-      previous_locations_array[previous_locations_i, 0] = x
-      previous_locations_array[previous_locations_i, 1] = y
-      path_add_point(previous_locations_path, x, y, speed);
-      //show_debug_message("Stored new value")
+    previous_locations_step += 1
+    
+    if (previous_locations_step = previous_locations_steps){
+        previous_locations_step = 0
+        previous_locations_i +=1
+        
+        previous_locations_array[previous_locations_i, 0] = x
+        previous_locations_array[previous_locations_i, 1] = y
+        path_add_point(previous_locations_path, x, y, speed);
+        //show_debug_message("Stored new value")
+    }
   }
 }
 </string>
@@ -219,7 +259,9 @@ if projectile_active{
             <kind>1</kind>
             <string>///Run Modifiers
 
-if projectile_active {
+if projectile_active 
+//&amp;&amp; ticked_over()
+{
   ////////////////////////////////////////////////////////////////////
   //Attack step event
   ////////////////////////////////////////////////////////////////////
@@ -262,7 +304,7 @@ if projectile_active {
       col_proj_solid()
       col_proj_enemy() //this function will not activate when colliding with an ally or a friendly summon
     }else{
-      instance_destroy()
+      //instance_destroy()
     }
   }
   
@@ -392,22 +434,35 @@ if projectile_active {
           <argument>
             <kind>1</kind>
             <string>///Disable collision checks if to many projectiles are nearby
-/*
-if (instance_number(obj_weap_proj) &gt;= (1000/global.numberOfLocalPlayers)){
-  collision_active = false;
-}
-
-/*
-if (collision_active = true){
-  var proj_count = collision_circle_list(x, y, 8, obj_weap_proj, -1, true)
-  if (proj_count = noone) {
-    exit;
-  }else{
-    if (ds_list_size(proj_count) &gt; 32){
-      collision_active = false;
+if (collision_active) &amp;&amp; (!queued_to_del){
+  
+  if (instance_number(obj_weap_proj) &gt; 600){
+    if (1*lag() &gt; 6)
+    || (fps &lt; 10){
+        collision_active = false;
     }
-    ds_list_destroy(proj_count)
   }
+  
+  /*
+  if (collision_active = true){
+    var proj_count = collision_circle_list(x, y, 8, obj_weap_proj, -1, true)
+    if (proj_count = noone) {
+      exit;
+    }else{
+      if (ds_list_size(proj_count) &gt; 32){
+        collision_active = false;
+      }
+      ds_list_destroy(proj_count)
+    }
+  }*/
+}else{
+  if to_much_lag(){
+    if (queued_to_del){
+    }else{
+//      queued_to_del = true
+    }
+  }
+ collision_active = true  
 }
 </string>
           </argument>
@@ -434,20 +489,23 @@ if (collision_active = true){
             <string>///draw modifiers
 
 if projectile_active{
-  if (is_lasered){
-    draw_laser(previous_locations_path)
-  }
+  if !to_much_lag(){
   
-  if (is_arcLightning){
-    draw_arcLightning()
+    if (is_lasered){
+      draw_laser(previous_locations_path)
+    }
+    
+    if (is_arcLightning){
+      draw_arcLightning()
+    }
+  
+    
   }
 }
 
 if (is_airstrike){
-  draw_airStrike()
-}
-
-
+      draw_airStrike()
+    }
 
 </string>
           </argument>

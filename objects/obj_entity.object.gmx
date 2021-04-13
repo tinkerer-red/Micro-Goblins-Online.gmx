@@ -27,9 +27,34 @@
             <kind>1</kind>
             <string>///init global entity data
 
+//health system
 iframes = 0
 invulnerable = false
 damage_sources_map = ds_map_create()
+
+//inputs
+up    = 0
+down  = 0
+left  = 0
+right = 0
+
+//movement
+self.acceleration = 0.25
+self.max_speed = 2
+spd = 0
+dir = direction
+self.speed = 0
+self.hspeed = 0
+self.vspeed = 0
+self.friction = 0.0
+xpreviousframe = x
+ypreviousframe = y
+start_x = x
+start_y = y
+
+//
+in_interior = false
+
 </string>
           </argument>
         </arguments>
@@ -128,7 +153,7 @@ if (size &gt; 0){
       var target = self
       
       //check to see if we should even run the rest of the checks
-      if (obj_tick_handler.ticked_over){
+      if (ticked_over()){
         if (instance_exists(damage_dealer)){
           with (damage_dealer){
             deal_damage(target, damage, true)
@@ -147,6 +172,62 @@ if (size &gt; 0){
     
   }//end repeat loop
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///reset movement inputs
+
+up    = 0
+down  = 0
+left  = 0
+right = 0
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///handle movement
+
+
+
+scr_entity_input_to_move_vector()
+scr_entity_state_move()
 </string>
           </argument>
         </arguments>

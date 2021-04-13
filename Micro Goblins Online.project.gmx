@@ -66,6 +66,7 @@
     <extension index="6">extensions\Sprite Exploder</extension>
     <extension index="7">extensions\Essential Scripts</extension>
     <extension index="8">extensions\Collision_Cone</extension>
+    <extension index="9">extensions\GML_Tasks</extension>
   </NewExtensions>
   <sounds name="sound">
     <sound>sound\snd_mod_charge</sound>
@@ -128,6 +129,9 @@
       <sprite>sprites\prt_sparkleSmall</sprite>
       <sprite>sprites\prt_dust2</sprite>
       <sprite>sprites\prt_dust</sprite>
+      <sprites name="Shader Effects">
+        <sprite>sprites\shd_water_displacement</sprite>
+      </sprites>
     </sprites>
     <sprites name="Utility Sprite">
       <sprite>sprites\spr_dualbooting</sprite>
@@ -268,6 +272,11 @@
         <script>scripts\scr_player_state_move_input.gml</script>
         <script>scripts\scr_player_state_move.gml</script>
       </scripts>
+      <scripts name="entities">
+        <script>scripts\scr_entity_input_to_move_vector.gml</script>
+        <script>scripts\scr_entity_state_move.gml</script>
+        <script>scripts\script442.gml</script>
+      </scripts>
       <scripts name="Collisions">
         <script>scripts\chunk_tile_meeting_precise.gml</script>
         <script>scripts\chunk_tile_free.gml</script>
@@ -355,6 +364,7 @@
         <script>scripts\fast_hype.gml</script>
         <script>scripts\tanh.gml</script>
         <script>scripts\ticks_to_seconds.gml</script>
+        <script>scripts\minimum_spanning_tree.gml</script>
       </scripts>
       <script>scripts\instance_nearest_notme.gml</script>
       <script>scripts\is_released.gml</script>
@@ -396,6 +406,8 @@
       <script>scripts\draw_sprite_pathed.gml</script>
       <script>scripts\draw_sprite_line_shader.gml</script>
       <script>scripts\shader_set_hue.gml</script>
+      <script>scripts\shader_set_outline.gml</script>
+      <script>scripts\shader_set_displacement.gml</script>
     </scripts>
     <scripts name="Utillity">
       <scripts name="Player">
@@ -775,6 +787,32 @@
       </scripts>
       <script>scripts\time_script.gml</script>
       <script>scripts\scr_view_visble_handler.gml</script>
+      <scripts name="Tick Handler">
+        <script>scripts\ticked_over.gml</script>
+      </scripts>
+      <script>scripts\to_much_lag.gml</script>
+      <script>scripts\enough_lag.gml</script>
+      <scripts name="GML Tasks">
+        <script>scripts\gml_task_cleanup.gml</script>
+        <script>scripts\gml_task_cleanup_script.gml</script>
+        <script>scripts\gml_task_create.gml</script>
+        <script>scripts\gml_task_find.gml</script>
+        <script>scripts\gml_task_find_all.gml</script>
+        <script>scripts\gml_task_ini.gml</script>
+        <script>scripts\gml_task_progress_get.gml</script>
+        <script>scripts\gml_task_remove.gml</script>
+        <script>scripts\gml_task_step.gml</script>
+        <script>scripts\gml_task_time_system.gml</script>
+        <script>scripts\gml_task_time_task.gml</script>
+        <script>scripts\gml_task_value_add.gml</script>
+        <script>scripts\gml_task_value_get.gml</script>
+        <script>scripts\gml_task_value_set.gml</script>
+        <scripts name="private">
+          <script>scripts\grid_create.gml</script>
+          <script>scripts\grid_fill.gml</script>
+          <script>scripts\grid_clear.gml</script>
+        </scripts>
+      </scripts>
     </scripts>
     <script>scripts\scr_collision_test.gml</script>
     <script>scripts\collision_normal_circle.gml</script>
@@ -783,10 +821,14 @@
     <script>scripts\getPerlinNoise.gml</script>
     <script>scripts\randomSeed.gml</script>
     <script>scripts\section_percent.gml</script>
+    <script>scripts\script_execute_async.gml</script>
+    <script>scripts\test_scr.gml</script>
+    <script>scripts\draw_sprite_repeat.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shStretch.shader</shader>
     <shader type="GLSLES">shaders\shd_hue.shader</shader>
+    <shader type="GLSLES">shaders\shd_water.shader</shader>
   </shaders>
   <fonts name="fonts">
     <font>fonts\fontGGUI</font>
@@ -806,6 +848,7 @@
       <object>objects\obj_debug</object>
       <object>objects\obj_controller</object>
       <object>objects\obj_tick_handler</object>
+      <object>objects\obj_lag_controller</object>
       <objects name="Visuals">
         <object>objects\obj_camera_control</object>
         <object>objects\obj_particle_controller</object>
@@ -852,6 +895,8 @@
     <object>objects\obj_wall</object>
     <object>objects\obj_ball</object>
     <object>objects\obj_test</object>
+    <object>objects\object34</object>
+    <object>objects\obj_gml_task_handler</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_one_player_TEST</room>

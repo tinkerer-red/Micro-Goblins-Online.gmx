@@ -1,27 +1,26 @@
-///scr_player_state_move(player_id_local, modifiers)
+///scr_player_state_move()
 
-var player_id_local = argument[0]
-var modifier = argument[1]
+var time_adjust = 60/room_speed;
 
 if (spd != 0)
 {
   ///apply friction
   if (!ceil(right) && !ceil(left) && !ceil(down) && !ceil(up)) || 
   (right == left && up == down) ||
-  (abs(spd) > min(point_distance(0, 0, (right-left), (down-up)), 1) * max_speed * (60/room_speed)) || 
+  (abs(spd) > min(point_distance(0, 0, (right-left), (down-up)), 1) * max_speed * (time_adjust)) || 
   (self.player_state != e_player_state.move)
   {
     var spd_multiplier = sign(spd);
     var desired_spd = abs(spd);
     
-    spd -= acceleration * spd_multiplier * (60/room_speed) * lag()
+    spd -= acceleration * spd_multiplier * (time_adjust) * lag()
     
     var spd_multiplier_new  = sign(spd);
     
     //if we are close enough to the max speed and got dropped under it, then bring speed to equal it.
-    if (desired_spd > max_speed * 60/room_speed)
-    && (abs(spd) < max_speed * (60/room_speed))
-      {spd = (max_speed * (60/room_speed)) * spd_multiplier}
+    if (desired_spd > max_speed * time_adjust)
+    && (abs(spd) < max_speed * (time_adjust))
+      {spd = (max_speed * (time_adjust)) * spd_multiplier}
     
     //if we have crossed over 0, set spd to 0
     if (spd_multiplier_new != spd_multiplier)

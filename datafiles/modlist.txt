@@ -153,6 +153,7 @@ Ranged mod, allows for use of pokeball style summons
 [Attack] Looting (less damage, but if it kills an AI enemy (non summon) then when it dies it will drop an item)
 [attack] spitter (spits up a trail of creep, modcount = length of trail)
 [propultion] shoots out a bunch of short ranged projectiles behind it, rocketing it around the room bouncing off walls dealing collision damage and projectile damage. (mod count = time propultion happens)
+[attack] telekenisis (makes use of the gravity gun modifier)
 
 -----movement (the default is directly walking at the nearest player)
 [Move] Bouncy (spawns in the direction the player was facing, will continue to move and bounce off walls untill dead)

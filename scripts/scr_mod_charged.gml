@@ -49,7 +49,7 @@ if (mod_charge_start){ //if the mod is active
 
 //play sound effects
 if (instance_exists(obj_tick_handler)){
-  if (obj_tick_handler.ticked_over){
+  if (ticked_over()){
     mod_charge_audio_tick_timer += 1
     
     var percent = mod_charge_timer/mod_charge_time

@@ -100,7 +100,6 @@ self.acceleration = 0.25
 self.max_speed = 2
 self.spd = 0
 self.dir = 90
-self.last_dis = 0
 self.speed = 0
 self.hspeed = 0
 self.vspeed = 0
@@ -841,11 +840,11 @@ if (htme_isLocal())
 
 if (self.player_state = e_player_state.move)
 {
-  scr_player_state_move_input(self.player_id_global, 1)
+  scr_player_state_move_input()
   
 }
 
-scr_player_state_move(self.player_id_global, 1)
+scr_player_state_move()
 //show_debug_player(self.player_id_local, "spd = "+string(spd))
 
 
@@ -1457,6 +1456,7 @@ if (visible = true)
     view_res = view_hview[view_current]/view_hport[view_current]
     draw_set_halign(fa_center);
     sting_offset = (string_height(name)*view_res) + (2*view_res)
+    shader_set_outline(5, c_blue)
     draw_text_transformed(x, bbox_top-sting_offset*obj_camera_control.upscale_val, name, view_res*obj_camera_control.upscale_val, view_res*obj_camera_control.upscale_val, 0)
     draw_set_halign(fa_left);
   }

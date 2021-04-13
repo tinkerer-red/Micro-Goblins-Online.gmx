@@ -25,7 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/*
+            <string>///Init
+
+/*
 tile_layer_bottom_grid = -1
 tile_layer_middle_grid = -1
 tile_layer_top_grid = -1
@@ -54,7 +56,8 @@ terrain_surface = -1
 
 generated = false;
 
-
+//for use with specialized drawing
+has_water = false
 
 </string>
           </argument>
@@ -150,8 +153,18 @@ if !is_interior(){
             <kind>1</kind>
             <string>/// /* Stagger the chunk Saving
 
+
+var reach = global.chunk_handler.chunk_dist+global.chunk_handler.margin
+var total_ideal_chunks = ((reach+reach+1)*(reach+reach+1))*global.numberOfLocalPlayers
+
+
 if should_exist = false {
-  if (global.chunk_handler.chunk_saved_this_frame = false &amp;&amp; global.chunk_handler.chunk_loaded_this_frame = false) || (generated = false) || (heightmap_grid = -1){
+  if (global.chunk_handler.chunk_saved_this_frame = false &amp;&amp; global.chunk_handler.chunk_loaded_this_frame = false)
+  || (generated = false)
+  || (heightmap_grid = -1)
+  || !enough_lag()
+  || (instance_number(obj_chunk) &gt; total_ideal_chunks)
+  {
     global.chunk_handler.chunk_saved_this_frame = true
     //show_debug_message("global.chunk_handler.chunk_saved_this_frame = false")
     event_user(1);
@@ -188,13 +201,17 @@ if should_exist = false {
             <kind>1</kind>
             <string>///Stagger the chunk Loading
 
-if (global.chunk_handler.chunk_loaded_this_frame = false){
-  global.chunk_handler.chunk_loaded_this_frame = true
+
+//if (global.chunk_handler.chunk_gen_this_frame = false)
+if !enough_lag()
+{
+  global.chunk_handler.chunk_gen_this_frame = true
   //show_debug_message("global.chunk_handler.chunk_loaded_this_frame = false")
+  
   event_user(4);
+  
 }else{
   alarm_set(2, 1)
-  //show_debug_message("global.chunk_handler.chunk_loaded_this_frame = TRUE!!!")
   
 }
 
@@ -223,7 +240,9 @@ if (global.chunk_handler.chunk_loaded_this_frame = false){
             <kind>1</kind>
             <string>///Stagger the chunk gen
 
-if (global.chunk_handler.chunk_gen_this_frame = false){
+if (global.chunk_handler.chunk_gen_this_frame = false)
+|| !enough_lag()
+{
   global.chunk_handler.chunk_gen_this_frame = true
   //show_debug_message("global.chunk_handler.chunk_gen_this_frame = false")
   event_user(2);
@@ -425,9 +444,9 @@ if !is_interior(x,y){ //exterior cells
     
     for(var i = 0; i &lt; tiles_x; i++){
       for(var j = 0; j &lt; tiles_y; j++){
-    
+        
         //heightmap tiles
-        if(heightmap_grid[#i, j] &lt;= 0.15){draw_sprite(tile_water, 0, (i*tile_size), (j*tile_size));}
+        if(heightmap_grid[#i, j] &lt;= 0.15){has_water = true}     //draw_sprite(tile_water, 0, (i*tile_size), (j*tile_size));}
         else if(heightmap_grid[#i, j] &gt; 0.15 &amp;&amp; heightmap_grid[#i, j] &lt; 0.25){draw_sprite(tile_sand, 0, i*tile_size, j*tile_size);}
         else if(heightmap_grid[#i, j] &gt;= 0.25 &amp;&amp; heightmap_grid[#i, j] &lt;= 0.6){draw_sprite(tile_grass, 0, i*tile_size, j*tile_size);}
         else if(heightmap_grid[#i, j] &gt; 0.6 &amp;&amp; heightmap_grid[#i, j] &lt;= 0.7){draw_sprite(tile_dirt, 0, i*tile_size, j*tile_size);}
@@ -635,8 +654,17 @@ if (objects_in_chunk = false){
           <argument>
             <kind>1</kind>
             <string>/// Draw Chunk
-draw_set_color(c_dkgray)
-draw_rectangle(x, y, x+64, y+64, false)
+
+
+
+if (has_water = true){
+  shader_set_displacement(shd_water_displacement);
+    draw_sprite_repeat(tile_water, 0, x, y, sprite_width, sprite_height, 0.5);
+  texture_set_interpolation(false);
+  texture_set_repeat(false);
+  shader_reset();
+}
+
 
 if is_visible(){
   if (terrain_surface != -1) || surface_exists(terrain_surface){   ///if ds_exists(heightmap_grid, ds_type_grid){
@@ -645,7 +673,11 @@ if is_visible(){
     draw_set_alpha(1)
     //draw_self()
   }else{
+    draw_set_color(c_dkgray);
+    draw_rectangle(x, y, x+64, y+64, false);
+    draw_set_color(c_white);
     draw_self()
+    
   }
   
     if (show_chunks) {
@@ -667,8 +699,6 @@ if is_visible(){
   }
 
 }
-
-
 
 </string>
           </argument>

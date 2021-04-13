@@ -44,29 +44,31 @@ if (object_index = obj_weapon) && (w_type = weapon_type_range || melee_ranged > 
     repeat(ds_queue_size(self.recent_proj_queue)){
       var _proj = ds_queue_dequeue(self.recent_proj_queue);
       
-      ////these two are not needed but im leaving them here for testing to make sure
-//                                                var __proj = ds_queue_dequeue(self.proj_queue);
-//                                                if (_proj != __proj) {show_message("scr_mod_airStrike: _proj != __proj")}
-      //////////////////////////
-      
-      _proj.dis_traveled += _proj.w_range/mod_airstrike_timer_max*lag()
-      
-      if (_proj.dis_traveled >= _proj.w_range){ //if we have reached our end point
+      //make sure the instance wasnt removed from the lag controller
+      if instance_exists(_proj){
+        ////these two are not needed but im leaving them here for testing to make sure
+  //                                                var __proj = ds_queue_dequeue(self.proj_queue);
+  //                                                if (_proj != __proj) {show_message("scr_mod_airStrike: _proj != __proj")}
+        //////////////////////////
         
-        _proj.x = _proj.mod_airstrike_end_point_x
-        _proj.y = _proj.mod_airstrike_end_point_y
-        //_proj.projectile_active = true
-        _proj.is_airstrike = false
+        _proj.dis_traveled += _proj.w_range/mod_airstrike_timer_max*lag()
         
-        
-        init_projectile(_proj)
-      }else{
-        //add the projectiles back into the queue
-        ds_queue_enqueue(self.recent_proj_queue, _proj)
-        ds_queue_enqueue(self.proj_queue, _proj)
+        if (_proj.dis_traveled >= _proj.w_range){ //if we have reached our end point
+          
+          _proj.x = _proj.mod_airstrike_end_point_x
+          _proj.y = _proj.mod_airstrike_end_point_y
+          //_proj.projectile_active = true
+          _proj.is_airstrike = false
+          
+          
+          init_projectile(_proj)
+        }else{
+          //add the projectiles back into the queue
+          ds_queue_enqueue(self.recent_proj_queue, _proj)
+          ds_queue_enqueue(self.proj_queue, _proj)
+        }
       }
     }
-    
     if (mod_airstrike_timer < 0) || (ds_queue_size(self.recent_proj_queue) = 0){
       //reload the queue
       ds_queue_copy(self.recent_proj_queue, self.proj_queue)

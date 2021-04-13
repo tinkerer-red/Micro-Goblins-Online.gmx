@@ -222,50 +222,19 @@ for (var i = 0; i &lt; player_count; i++){
     || (player.y div chunk_height) != (player.yprevious div chunk_height)
     || sign(player.x) != sign(player.xprevious)
     || sign(player.y) != sign(player.yprevious) {
+      
+//      timer_start()
       chunk_uncall_region(player.xprevious, player.yprevious)
+//      timer_end()
+//      timer_start()
       chunk_call_region(player.x, player.y)
+//      timer_end()
     }
   }
 }
     
 
 
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Interior Cells
-
-for (var i = 0; i &lt; global.numberOfLocalPlayers; i++){
-  with (obj_player){
-    if (player_id_local = i){ //with the current player
-        show_debug_player(i, "trying to find free tiles")
-        if !chunk_tile_free(x, y, "layer_structures"){
-          //init generation process
-//          show_debug_player(i, "collided with structure")
-        }else{
-//          show_debug_player(i, "free tiles T.T")
-        }
-        
-    }
-  }
-}
 </string>
           </argument>
         </arguments>
@@ -292,7 +261,8 @@ for (var i = 0; i &lt; global.numberOfLocalPlayers; i++){
 
 chunk_loaded_this_frame = false;
 chunk_gen_this_frame = false;
-chunk_saved_this_frame = false
+chunk_saved_this_frame = false;
+
 </string>
           </argument>
         </arguments>

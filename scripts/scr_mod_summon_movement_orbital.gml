@@ -25,6 +25,7 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
       
       orbital_dist = sprite_width*(mod_summon_movement_orbital_mod_count + is_summoned) *0.5
       orbital_rot  = direction
+      max_step_size = 1
       
       mod_summon_movement_orbital_start = true
     }
@@ -36,9 +37,12 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
         cy = y - lengthdir_y(orbital_dist, orbital_rot)
         
         if (is_summoned){
-          cx = mean(cx,cx,cx, owner_id.x)
-          cy = mean(cy,cy,cy, owner_id.y)
+          cx = owner_id.x //mean(cx, owner_id.x)
+          cy = owner_id.y //mean(cy, owner_id.y)
         }
+        
+        orbital_rot = point_direction(cx, cy, x, y) 
+        //orbital_rot += angle_difference(orbital_rot, direction)/2
         
         orbital_dist = sprite_width*(mod_summon_movement_orbital_mod_count + is_summoned)
         mod_summon_movement_orbital_start = false
@@ -59,11 +63,30 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
         var new_x = cx+lengthdir_x(orbital_dist, orbital_rot)
         var new_y = cy+lengthdir_y(orbital_dist, orbital_rot)
         
-        x = new_x
-        y = new_y
+        var xx = new_x - x;
+        var yy = new_y - y;
         
-        pre_x = x
-        pre_y = y
+        //now that we have our ideal vector we also need to find out the min vector
+        var current_dist = point_distance(x, y, new_x, new_y);
+        var error = min(current_dist, max_speed)/max_speed;
+        
+        
+        if !is_summoned{
+          //actually apply the inputs
+          up += abs(sign(min(yy, 0))*error)
+          down += sign(max(yy, 0))*error
+          left += abs(sign(min(xx, 0))*error)
+          right += sign(max(xx, 0))*error
+        
+        }else{//if it's a summon just mean the inputs with the player's inputs to try it's best to keep up
+          up += mean( abs(sign(min(yy, 0))*error) , owner_id.up)
+          down += mean( sign(max(yy, 0))*error , owner_id.down)
+          left += mean( abs(sign(min(xx, 0))*error) , owner_id.left)
+          right += mean( sign(max(xx, 0))*error , owner_id.right)
+        }
+        
+        pre_x = new_x
+        pre_y = new_y
         mod_summon_movement_orbital_start = true;
       }
     }

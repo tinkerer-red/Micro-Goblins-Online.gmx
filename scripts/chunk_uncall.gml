@@ -9,7 +9,6 @@ var chunk_str = chunk_string(cell_x, cell_y)
 
 
 
-
 var chunk = noone
 //check for exterior chunks
 if ds_map_exists(global.chunk_handler.active_chunks, chunk_str){
@@ -50,9 +49,15 @@ if (chunk >= 0){ //if the chunk isnt noone, or undefined, or self, etc.
       }
       
       
+      var reach = global.chunk_handler.chunk_dist+global.chunk_handler.margin
+      var total_ideal_chunks = ((reach+reach+1)*(reach+reach+1))*global.numberOfLocalPlayers
+      
       //if the chunk isnt generated
       if (generated = false)
-      || (!is_interior() && heightmap_grid = -1){
+      || (!is_interior()
+          && ((heightmap_grid = -1)
+              || (instance_number(obj_chunk) > total_ideal_chunks)))
+      {
         var player = instance_nearest(x+sprite_width/2, y+sprite_height/2, obj_player)
         if !point_in_rectangle(player.x, player.y, bbox_left-(sprite_width*(chunk_dist)), bbox_top-(sprite_height*(chunk_dist)), bbox_right+(sprite_width*(chunk_dist)), bbox_bottom+(sprite_height*(chunk_dist))){
           should_exist = false;
@@ -63,6 +68,7 @@ if (chunk >= 0){ //if the chunk isnt noone, or undefined, or self, etc.
         }
       }
       
+      //have existential crisis
       alarm_set(3,1);
       continue;
       
