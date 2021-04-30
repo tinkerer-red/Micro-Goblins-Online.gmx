@@ -71,11 +71,7 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
           var xx = mp_xgoal - x;
           var yy = mp_ygoal - y;
           
-          //actually apply the inputs
-          up += abs(sign(min(yy, 0))*max_step_size)
-          down += sign(max(yy, 0))*max_step_size
-          left += abs(sign(min(xx, 0))*max_step_size)
-          right += sign(max(xx, 0))*max_step_size
+          vector_to_inputs(xx, yy, max_step_size)
           
           update_enemy(room_speed*3)
         }

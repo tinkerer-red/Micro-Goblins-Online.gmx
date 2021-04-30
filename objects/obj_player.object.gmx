@@ -317,7 +317,7 @@ for (var i = 0; i &lt; 3; i++)
   repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_moveable, 7);
   repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_extend, 99);
   
-  repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_summon_movement_default, 4);
+  repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_mod_summon_movement_walk, 4);
   
   repeat( 0 ) ds_priority_add(queue_attack_step_mods, scr_5, 1);
   ///////////////////////////////////////////////////////////////////////////
@@ -513,8 +513,9 @@ debug = false
             <kind>1</kind>
             <string>/// Define Outfit
 
-head = spr_head_template
-body = spr_body_template
+head = spr_head_template;
+body = spr_body_template;
+fav_hue = 0; //default hue is red
 </string>
           </argument>
         </arguments>

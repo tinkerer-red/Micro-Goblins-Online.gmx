@@ -9,4 +9,7 @@ shader_set(shd_water)
 texture_set_stage(displacement_sampler, spr)
 var time_uniform = shader_get_uniform(shd_water, "time")
 shader_set_uniform_f(time_uniform, current_time / 1000)
+var zoom_uniform = shader_get_uniform(shd_water, "zoom")
+shader_set_uniform_f(zoom_uniform, obj_camera_control.player_zoom[view_current])
+
 

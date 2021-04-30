@@ -87,7 +87,7 @@ guid = gui_create_gui();
 
 gui_create_string(guid, "text", "Debug Controller", c_white);
 
-gui_create_menu(guid, "Modifiers", false, 57, c_black);
+gui_create_menu(guid, "Modifiers", false, 58, c_black);
   
   gui_create_menu(guid, "Global", false, 9, c_aqua);
     gui_create_slider(guid, "AOE", 0, 0, 5, c_aqua)
@@ -132,12 +132,13 @@ gui_create_menu(guid, "Modifiers", false, 57, c_black);
     gui_create_slider(guid, "Quick Scope", 0, 0, 5, c_orange)
     
     
-  gui_create_menu(guid, "Summon", false, 12, c_green);
+  gui_create_menu(guid, "Summon", false, 13, c_green);
     ////////////////////////////////////////////////////////
-    gui_create_menu(guid, "Movement", false, 3, c_blue);
+    gui_create_menu(guid, "Movement", false, 4, c_blue);
       gui_create_slider(guid, "Default Movement", 0, 0, 5, c_red)
       gui_create_slider(guid, "Orbital", 0, 0, 5, c_orange)
       gui_create_slider(guid, "Chained Movement", 0, 0, 5, c_yellow)
+      gui_create_slider(guid, "Jumpy", 0, 0, 5, c_orange)
       
     ////////////////////////////////////////////////////////
     gui_create_menu(guid, "Attack", false, 2, c_red);
@@ -307,6 +308,7 @@ if update_debug || (global.debug = true){
           last_defaultMovement = gui_get_value(guid, "Default Movement");
           last_orbital = gui_get_value(guid, "Orbital");
           last_chainedMovement = gui_get_value(guid, "Chained Movement");
+          last_jumpy = gui_get_value(guid, "Jumpy");
           last_defaultAttack = gui_get_value(guid, "Default Attack");
           last_leap = gui_get_value(guid, "Leap");
           last_defaultHealth = gui_get_value(guid, "Default Health");
@@ -470,6 +472,7 @@ if (global.debug = true){
            gui_set_value(guid, "Default Movement", floor(0.5+gui_get_value(guid, "Default Movement")) div 1); 
            gui_set_value(guid, "Orbital", floor(0.5+gui_get_value(guid, "Orbital")) div 1); 
            gui_set_value(guid, "Chained Movement", floor(0.5+gui_get_value(guid, "Chained Movement")) div 1); 
+           gui_set_value(guid, "Jumpy", floor(0.5+gui_get_value(guid, "Jumpy")) div 1); 
            
           }
           if gui_get_value(guid, 'Attack'){
@@ -661,9 +664,10 @@ if update_debug || (global.debug = true){
           if gui_get_value(guid, 'Summon') || (update_debug = true){
             //Movement
             if gui_get_value(guid, 'Movement') || (update_debug = true){
-             if update_debug || last_defaultMovement != gui_get_value(guid, "Default Movement") scr_modifier_adjust(queue_attack_step_mods, scr_mod_summon_movement_default, 1, gui_get_value(guid, "Default Movement"));
+             if update_debug || last_defaultMovement != gui_get_value(guid, "Default Movement") scr_modifier_adjust(queue_attack_step_mods, scr_mod_summon_movement_walk, 1, gui_get_value(guid, "Default Movement"));
              if update_debug || last_orbital != gui_get_value(guid, "Orbital") scr_modifier_adjust(queue_attack_step_mods, scr_mod_summon_movement_orbital, 1, gui_get_value(guid, "Orbital"));
              if update_debug || last_chainedMovement != gui_get_value(guid, "Chained Movement") scr_modifier_adjust(queue_attack_step_mods, scr_mod_summon_movement_chained, 1, gui_get_value(guid, "Chained Movement"));
+             if update_debug || last_jumpy != gui_get_value(guid, "Jumpy") scr_modifier_adjust(queue_attack_step_mods, scr_mod_summon_movement_jumpy, 1, gui_get_value(guid, "Jumpy"));
              
             }
             //Attack

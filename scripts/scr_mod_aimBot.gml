@@ -59,7 +59,7 @@ if !variable_instance_exists(self, "mod_aimBot_start") || (mod_aimBot_start = fa
 }
 
 
-show_debug_message("mod_count = "+string(mod_count))
+//show_debug_message("mod_count = "+string(mod_count))
 if (mod_count = 1){
   
   mod_aimBot_start = false

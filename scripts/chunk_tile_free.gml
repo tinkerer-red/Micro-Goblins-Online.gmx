@@ -49,7 +49,10 @@ if is_interior(argument[0], argument[1]){
 }else{
     var chunk_str = "("+string(xx div width)+","+string(yy div height)+")";
     if ds_map_exists(active_chunks, chunk_str){
-      var chunk_id = active_chunks[? chunk_str]
+      var chunk_id = active_chunks[? chunk_str];
+      //we need to increment the exterior's tiles because the exterior chunks store 1 extra tile in every direction to make sure drawing is done properly
+      xx++;
+      yy++;
     }else{
       return true
     }

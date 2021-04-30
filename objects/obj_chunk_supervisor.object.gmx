@@ -71,6 +71,50 @@ chunk_init(256, 3)
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>///Auto Tile System Init (ats_init)
+
+// Specifies a z (depth) for the different tiles in form of a DS priority to pass over to the ats_init function below.
+var priority = ds_priority_create();
+ds_priority_add(priority, spr_tile_air, 0);
+ds_priority_add(priority, spr_tile_sand, 1);
+ds_priority_add(priority, spr_tile_grass, -1);
+ds_priority_add(priority, spr_tile_rock, -2);
+ds_priority_add(priority, spr_tile_cobble, -3);
+ds_priority_add(priority, spr_example_tile_stone, -4);
+ds_priority_add(priority, spr_tile_dungeon, -5);
+
+// Initializes the Autotiling Tilemap Shaders extension (go to the script for more information).
+ats_init(tile_size, tile_size, priority, 5);
+
+// The DS priority is only temporary, so we can destroy it after the extension is initialized.
+ds_priority_destroy(priority);
+
+// Creates an ATS rectangle. This is an instance that visualizes tiles over a rectangular area.
+ats_rectangle = ats_rectangle_create(chunk_width / tile_size+2, chunk_height / tile_size+2, false);
+
+// Creates a grid for holding the sprites used for the tiles.
+ats_grid = ds_grid_create(chunk_width / tile_size+2, chunk_height / tile_size+2);
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>/// /* Init Auto Save
 
 //alarm_set(0, room_speed*60*2)
@@ -385,6 +429,7 @@ show_debug_message("===============")
             <string>/// Destroy Memory
 
 event_user(15)
+ats_free()
 </string>
           </argument>
         </arguments>

@@ -31,6 +31,23 @@ if (spd != 0)
       {dir = direction}
   }
   
+  //Also make sure we're not colliding with another entity
+  if !enough_lag(){
+    var nearest_entity = instance_nearest_notme(x, y, obj_entity)
+    var pushing_force = 4;
+    var error = 1 - normalize(point_distance(x, y, nearest_entity.x, nearest_entity.y), 0, (sprite_width+nearest_entity.sprite_width)*0.4 )
+    
+    if (error > 0){
+      var error_spd = error*pushing_force;
+      var error_dir = point_direction(nearest_entity.x, nearest_entity.y, x, y)
+      
+      var array = add_vectors(spd, dir, error_spd, error_dir,)
+      
+      spr = array[0]
+      dir = array[1]
+    }
+  }
+
   //show_debug_message("about to check for tile collisions")
   if place_free(x, y) && !chunk_tile_meeting_precise(x, y)
   {
@@ -90,7 +107,6 @@ if (spd != 0)
   }
 }
 //else {sprite_index = spr_green}
-
 
 
 

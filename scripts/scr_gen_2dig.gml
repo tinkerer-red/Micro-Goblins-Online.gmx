@@ -33,8 +33,8 @@ var refined = argument5;
 var perc = argument6
 
 var tile_size = global.chunk_handler.tile_size;
-var grid_size_x = (sprite_width/tile_size);
-var grid_size_y = (sprite_height/tile_size);
+var grid_size_x = (sprite_width/tile_size)+2;
+var grid_size_y = (sprite_height/tile_size)+2;
 
 var world_width  = global.chunk_handler.world_width  /tile_size
 var world_height = global.chunk_handler.world_height /tile_size
@@ -46,15 +46,15 @@ var world_height = global.chunk_handler.world_height /tile_size
 //var array = gpu_noise_2d(world_heightmap, x, y)
 //show_debug_message(array)
 
-var x_off = bbox_left/tile_size
-var y_off = bbox_top/tile_size
+var x_off = bbox_left/tile_size-1
+var y_off = bbox_top/tile_size-1
 
 var grid = ds_grid_create(grid_size_x, grid_size_y)
 
-var left   = bbox_left/tile_size
-var right  = bbox_right/tile_size
-var top    = bbox_top/tile_size
-var bottom = bbox_bottom/tile_size
+var left   = x_off
+var right  = x_off+grid_size_x
+var top    = y_off
+var bottom = y_off+grid_size_y
 
 for(var i = left; i < right; i++){
     for(var j = top; j < bottom; j++){

@@ -62,7 +62,7 @@ while(returned = false){
   //once we have the string run it through a function to be able to split the string up into the chunks we tell the function what the top left most corner is,
   // and it will iterate through out the string cutting it down to size for each chunk. 
   returned = chunkify_interior_string(x1, y1, str, map, valid_rooms_list, size)
-  show_debug_message("[CENTRAL ROOM] returned = "+string(returned))
+  ////show_debug_message("[CENTRAL ROOM] returned = "+string(returned))
 }
 //grad some data for the hallway gen later
   var center_xx  = x1
@@ -101,8 +101,8 @@ var illegal_hall_zone_y2 = y1
 
 
 var str = dungeon_room_get_str(chunk_x+x1*blazeIt, chunk_y+y1*blazeIt, "spawn")
-returned = chunkify_interior_string(x1, y1, str, map, valid_rooms_list, size)
-show_debug_message("[SPAWN ROOM] returned = "+string(returned))
+returned = chunkify_interior_string(x1, y1, str, map, valid_rooms_list, size);
+//show_debug_message("[SPAWN ROOM] returned = "+string(returned))
 
 
 //remove all side rooms from valid room list
@@ -175,7 +175,7 @@ for(var y1 = height-1; y1 >= height-size; y1--){
     }
     
     returned = chunkify_interior_string(x1, y1, str, map, valid_rooms_list, size)
-    show_debug_message("[Entrance HALL ROOM] returned = "+string(returned))
+    //show_debug_message("[Entrance HALL ROOM] returned = "+string(returned))
     
     //remove all side rooms from valid room list
     //actual hallway room
@@ -230,7 +230,7 @@ while (!finalized){
    
   var str = dungeon_room_get_str(chunk_x+x1*blazeIt, chunk_y+y1*blazeIt, "boss", size);
   finalized = chunkify_interior_string(x1, y1, str, map, valid_rooms_list, size);
-  show_debug_message("[BOSS ROOM] returned = "+string(finalized))
+  //show_debug_message("[BOSS ROOM] returned = "+string(finalized))
   blazeIt++;
 }
 //store the value for future use when spawning hallways
@@ -266,9 +266,9 @@ if (size > 1){
       var y1 = val div width;
         
       var str = dungeon_room_get_str(chunk_x+x1*blazeIt, chunk_y+y1*blazeIt, "treasure", size);
-      //show_debug_message(str)
+      ////show_debug_message(str)
       finalized = chunkify_interior_string(x1, y1, str, map, valid_rooms_list, size);
-      show_debug_message("[TREASURE ROOM] returned = "+string(finalized))
+      //show_debug_message("[TREASURE ROOM] returned = "+string(finalized))
       blazeIt++;
     }
     //store the value for future use when spawning hallways
@@ -300,7 +300,7 @@ if (size > 1){
         
         var str = dungeon_room_get_str(chunk_x+x1*blazeIt, chunk_y+y1*blazeIt, "puzzle", size);
         finalized = chunkify_interior_string(x1, y1, str, map, valid_rooms_list, size);
-        show_debug_message("[PUZZLE ROOM] returned = "+string(finalized))
+        //show_debug_message("[PUZZLE ROOM] returned = "+string(finalized))
         blazeIt++;
     }
     //store the value for future use when spawning hallways

@@ -39,7 +39,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//init values
+            <string>///init values
 
 dis_traveled = 0
 do_not_collide = false
@@ -63,6 +63,12 @@ self.pre_col_queues_temp = -1
 self.constant_timer = 0
 
 self.is_summoned = false
+
+self.is_possessed = false
+self.possesser_id = noone
+
+mp_wander_timer = 0
+
 </string>
           </argument>
         </arguments>
@@ -197,6 +203,45 @@ if variable_instance_exists(id, "weapon_event_queues"){
     <event eventtype="3" enumb="2">
       <action>
         <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Fade out of view
+var view_distance_max = 16*50
+var view_distance_min = view_distance_max - (view_distance_max * (1/4))
+var dis = distance_to_object(instance_nearest(x,y,obj_player))
+
+
+if (dis &gt; view_distance_max)
+{
+  visible = false
+} else {
+  if (dis &gt; view_distance_min )
+  {
+    visible = true
+    image_alpha = normalize(dis, view_distance_min, view_distance_max)/100
+  } else {
+    visible = true
+    image_alpha = 1
+  }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
         <id>604</id>
         <kind>0</kind>
         <userelative>0</userelative>
@@ -272,7 +317,7 @@ if !variable_instance_exists(self, "enemy_mods_init") || (enemy_mods_init = fals
 //    ds_priority_add(weapon_event_queues, queue_col_mods, 7);
     
     //replace this in the future with dungeon genoration type of code
-    repeat( 1 ) ds_priority_add(queue_attack_step_mods, scr_mod_summon_movement_default, 1);
+    repeat( 1 ) ds_priority_add(queue_attack_step_mods, scr_mod_summon_movement_walk, 1);
     repeat( 1 ) ds_priority_add(queue_attack_step_mods, scr_mod_summon_attack_default, 2);
     repeat( 1 ) ds_priority_add(queue_attack_step_mods, scr_mod_summon_health_default, 3);
     
@@ -283,6 +328,29 @@ if !variable_instance_exists(self, "enemy_mods_init") || (enemy_mods_init = fals
   ///if is summon
   
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Update Enemy
+
+update_enemy(room_speed*3)
 </string>
           </argument>
         </arguments>
@@ -319,25 +387,52 @@ if !variable_instance_exists(self, "enemy_mods_init") || (enemy_mods_init = fals
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Fade out of view
-var view_distance_max = 16*50
-var view_distance_min = view_distance_max - (view_distance_max * (1/4))
-var dis = distance_to_object(instance_nearest(x,y,obj_player))
+            <string>///Ideal Inputs
 
-
-if (dis &gt; view_distance_max)
-{
-  visible = false
-} else {
-  if (dis &gt; view_distance_min )
+//varify enemy
+if (enemy != noone)
+&amp;&amp; instance_exists(enemy){
+  // move to enemy
+  mp_xgoal = enemy.x;
+  mp_ygoal = enemy.y;
+  
+  //set wander timer to 0 so a new location is generated when the enemy is out of range
+  mp_wander_timer = room_speed
+}else{
+  if (is_summoned)
+  &amp;&amp; (point_distance(x, y, owner_id.x, owner_id.y) &gt; one_tile*8)
   {
-    visible = true
-    image_alpha = normalize(dis, view_distance_min, view_distance_max)/100
-  } else {
-    visible = true
-    image_alpha = 1
+    mp_xgoal = owner_id.x;
+    mp_ygoal = owner_id.y;
+  }
+  else
+  {
+    //set the center value for the entity to the player if it's summoned (incase we need a last resort to move it)
+    if (is_summoned){
+      start_x = owner_id.x
+      start_y = owner_id.y
+    }
+    
+    //if still wandering decrement timer
+    mp_wander_timer -= 1*lag()
+    
+    if (mp_wander_timer &lt;= 0){
+      //wander
+      var wander_range = 3
+      
+      wander_x = htme_random_range(-one_tile*wander_range, one_tile*wander_range);
+      wander_y = htme_random_range(-one_tile*wander_range, one_tile*wander_range);
+      //reset wander timer
+      mp_wander_timer = room_speed
+    }
+    
+    mp_xgoal = start_x+wander_x
+    mp_ygoal = start_y+wander_y
   }
 }
+
+ideal_vector_x = mp_xgoal - x;
+ideal_vector_y = mp_ygoal - y;
 </string>
           </argument>
         </arguments>

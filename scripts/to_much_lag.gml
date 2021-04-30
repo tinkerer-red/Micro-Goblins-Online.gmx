@@ -14,7 +14,7 @@ if (1*lag() >= obj_lag_controller.skipped_steps){
     if (ds_priority_find_priority(obj_lag_controller.laggy_objects_priority, object_index) == undefined){
       var count = instance_number(object_index)
       ds_priority_add(obj_lag_controller.laggy_objects_priority, object_index, count)
-      show_debug_message("added "+string(count)+" objects to priority")
+      //show_debug_message("added "+string(count)+" objects to priority")
     } 
   }
   

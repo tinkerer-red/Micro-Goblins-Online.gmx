@@ -21,6 +21,9 @@ AOE (this gives AOE, multiples cause larger AOE size) (radius = 16+(16*modcount)
 +knockback
 Exstingish (reduce the size of AOE/continuous attacks by one)
 Exploding corpses (Dead enemies will explode when their body disapears, explosion size relative to modcount, with a mod count of 1 you just need to hit the enemy 1 second before death to explode it, otherwise it wont explode, 5 mod count will give you a 5 second timer. enlarged creatures gives a +50% explosion radius per enlarge, calculated after initial radius calculation, each section of the enemy will also explode, so msnake creatures, and decapitated heads will both create their own explosions)
+Soul Consumer (Massive damage increase, although it requires souls to make use of)
+Soul Extractor (will grant you souls for every kill)
+
 
 
 ???  CHANCE BASED MODS  ???
@@ -123,20 +126,55 @@ scatter shot (similar to multishot although you get 3 times as many, size decrea
 Ranged mod, allows for use of pokeball style summons
 
 -----health styles (default is normal health)
+---new---
+	Regenerative (when under it's defined max health, heal up, this is passive)
+	Regrowth (Max Health is devided into 2 health bars, one of which is 2/3 the health required to knock them to the floor, making them inactive, 1/3 of the health bar is used to dictate how many extra hits required to hit them before they get back up, when they get back up their "to get knocked down" health bar is fully restored, although their "knocked down to kill" health bar will never be reestablished, no matter the synergies) [insert tubthumping joke somewhere "i get knocked down!"]
+	Timed (has 9999 health but will die on it's own after a specific amount of time, likely based on health prior to this)
+	[NAME THIS] (on player collision die) [for use with chests]
+	Loot (on death drop items, the items dropped will either be random, or based on the name of the etity, unless it's player summoned then only drop common-uncommon items no matter the mod count) [An entity name like "tree" will only drop apples and wood, where an entity name like "crate" will drop items from the dungeon pool, and "chest" will drop usable items only]
+	Segmented (basically snake like creatures which have sections, modcount*2+1 = segments; Only the head is effected by knockback?)
+	Headless (On death the head gains flying and can not attack anymore, really only usefull if collision damage is still active, otherwise pointless)
+	Swarm (makes modcount more of the same spawn with 75% damage, and slight max speed increase) (they should also completely ignore each other's collision, and only the leader dictates which way they move, the rest will cycle through the directional inputs in a counter clockwise direction, and average the direction to the leader, the leaders, inputs*2, and their current spin direction.)
+	
+	
 [Health] Multiply (on death split into 1+modcount more of it's self at half the size and health)
 +++++[Health] boss (makes spawn larger with more health)
-[Health] twins (makes 2 of the same spawn with 75% damage)
+[Health] twins (makes 2 of the same spawn with 75% damage, and slight max speed increase)
 [Health] masked (can only be hit from behind, this also gives it an ice like effect locking it's direction)
-[Health] sectioned (basically snake like creatures which have sections, a single one would be like siamese twins) (doubles each time)
 [Health] Reflective (causes the reflect modifier for ranged shots) (for use with bubble shield style summons, also a massive damper on ranged weapons)
 [Health] Minion (half default health, but summons 3) (useful for Zerge rushes)
-+++++[Health] Timed (has 9999 health but will die on it's own after a specific amount of time, likely based on health prior to this)
-+++++[Health] Stout (size and damage decreases over time, also relative to health)
++++++[Health] Stout (size and damage decreases relative to health)
 [Health] Dopple Heart (shares player health)
 [Health] Timid (will turn to stone unmoveable or attackable when an enemy is close) {Anti melee}
 ??[Health] Spectral (ony takes damage from continuous, aoe, air strike, or any other devine style magic mod)
+[Health] Reinforcements (When taking damage for the first time, spawn a bunch of coppies of the summon on the edges of the screen, 3*mod_count)
+
+
+
+
 
 -----attack styles (default is walking into the player)
+---new---
+	Charge (if enemy is with in the direction it is currently moveing dash in that direction untill you collide with something, this is grid based movement only? 1-2 second cool down for player possesion, longer to normal) [movement speeds: 1 chunk in 4 seconds, 2.666, 1.333, 1, 0.5]
+	Continum Charge (the entity dashes from it's current location off the screen, back on from the other side, and lands on it's same location-ish. this attack can only be used left and right, never any other direction) [modcount = number of selves which will dash the screen the second time, of mod count is only 1 then there is no second time]
+	Trail of creep (leaves it behind their movement, not effected by player movement)
+	Kamikaze (it will explode when it is close to the player, when it dies, or when the possesion player uses ability 3)
+	Minion Production (This allows them to spawn 3-7 extremely basic minions, trying to use this attack after they already have max minions only produces a projectile shot at the desired enemy, this projectile does make use of other ranged based mods) [boss mode makes each projectile into a volly of projectiles instead]
+	Passive (This ONLY prevents the default collision damage, For players this is a worthless mod)
+	Neutural (This prevents the default enemy tracking, but if a player deals any damage to this entity it will permanately focus on the first player who dealt damage to it, then then next successive player in queue, this provieds a substantial damage increase for the entity, and the first damage is ignored, but it acts like it was damaged still giving it iframes)
+	Squirt [maybe better name] (shoots a random volly of 3-5 projectiles, the volly is with in a 90 degree area of desired location, every second when player controlled, longer for normal)
+	Ranged (Shoots [modcount] projectiles, directly at the player)
+	Burst Shot (Shoots [modcount]=[3,4,6,8,12] projectiles out in even directions from it's movement's closest cardinal direction so if moving movestly left it will start the first projectile aimed perfectly left) [the bursts are loaded when the cooldown passes, so when you already have 1 burst loaded, it doesnt have to be used, and the next 4 can still be loaded, 5 bursts can be loaded at one time, though if it's an enemy maybe add a delay for their desired attack time]
+	knockback (this is a passive attack which knocks back all entities; modcount 1 = 5 second delay, with a 3 tile knockback; modcount 2 = 2 seconds, 4 tiles; modcount 3 = 1 second, 4 tiles; modcount 4 = 0 second, 4 tiles; modcount 5 = 0 second, 6 tiles;)
+	Massive Jump (3 frame jump off the top of the screen, for 1 second this mod takes movement control and can move at double the max speed durring this time, It will be able to move over any non-wall obsticle and land onto the enemy, if enemy controlled will miss 2/3 of the times OR enemy AI can only dictate this movement for the first half second, if summoned will miss 1/4 of the time, cool down should be considered on timing when programmed)
+	Cross beams (X shaped laser beams coming from the entity, for 1 second, with a cool down of 3 seconds, the entity is unable to move or do anything else durring this time) [modcount also dictates laser beam width]
+	Plus beams (+ shaped laser beams coming from the entity, for 1 second, with a cool down of 3 seconds, the entity is unable to move or do anything else durring this time) [modcount also dictates laser beam width]
+	Laser Eye (A directional laser beam coming from the entity, for 1 second, with a cool down of 0 second for the player and 1 second for anything else, the entity is unable to move or do anything else durring this time) [modcount also dictates laser beam width]
+	Stomp (A small jump, then pound to the ground, it's just a weak AOE+knockback, modcount = AOE size)
+	Meateor Swarm (modcount = meteors, spawn a bunch of meteors which falls from the sky, pre mark their landing possitions, and never spawn any ontop of the player, or in front of the player, summons will have a shorter delay on this attack and will have a random percent 20-100 of which meteors will be spawns on an enemy, player possesed will spawn 50% of meteors ontop of enemies every time, and only a 20% chance to spawn one on a enemy-PLAYER) [Isaac's crack the sky effect]
+	Spin attack (basically just spin in circles, in a 1/2 chunk radius, if colliding with a wall, get some extreme knockback in the other direction, also throwing out projectiles 3 a second)
+	
+
 [Attack] Sef Destruct (explodes, dealing half it's remaining health with a max of ___) (if this modifier is mixed with timer, just make it explode at the end of the timer)
 [Attack] ranged (will shoot projectiles)
 [Attack] bumper (doesnt actually hurt the player but gives a high knockback)
@@ -154,8 +192,18 @@ Ranged mod, allows for use of pokeball style summons
 [attack] spitter (spits up a trail of creep, modcount = length of trail)
 [propultion] shoots out a bunch of short ranged projectiles behind it, rocketing it around the room bouncing off walls dealing collision damage and projectile damage. (mod count = time propultion happens)
 [attack] telekenisis (makes use of the gravity gun modifier)
+[attack] mimic (prevent any other mod from activating untill an enemy player is with in striking range, if no enemies are nearby, then stick near your owner) 
 
 -----movement (the default is directly walking at the nearest player)
+---new---
+	Grid based movement, (this is a faster movement style with the side effects that it can only move in the 4 directions)
+	Flight, (This is free directional movement, which allows for moving over objects, although it will converge undesired inputs into the desired ones with a sine wave which rocks back and forth from top-left and bottom-right)
+	Bouncy, (Moves around the room slowly, bouncing off the walls, if it's an enemy it will always start it's initial movement diagonally, if it's player spawned it will move in the direction it was summoned, if player controlled they can only slightly ajust it's speed and angle, but it will not diverge from it's initial path untill it collides with a wall.) [speed = modcount tiles per second]
+	Burrow, (can only move while it's underdround, collision is turned off, and it must come back up once every 3 seconds, if it's current location is block either nudge it over 8 pixels, or deal some dagame to it and dont make it come back up then restart the timer, can not attack while under ground)
+	Leaper, (it's actually a lot like airstrike in mechanics, dont move unles given an input, only move while leap is active, other movement mods can either take place before or after, or dynamically change the speed based on if it's in or out of a jump. this one will take some trouble shooting to see what works save it for later)
+	Teleport, (This is less of a movement type and more of a movement ability, almost exactly the same as Massive Jump, although the entity goes invisible, and will do it's best to use this effect when a projectile is on a collision course for it, or if the player is out of reach)
+	Inverse Movement, (Will always try to reach the closest possition oposite of the player, although this does give the summon infinate flight, if it is outside, simly try to stay on the edge of the player camera? idk If it is player possesed let it move freely, with the usual restrictions on flight)
+	
 [Move] Bouncy (spawns in the direction the player was facing, will continue to move and bounce off walls untill dead)
 [Move] Spastic (bee like movement, very random, much wow)
 [Move] Jumpy (only moves in bursts, similar to terarria's slimes)
@@ -174,6 +222,7 @@ Ranged mod, allows for use of pokeball style summons
 [Move] Spector (move through walls although can also be hit through walls, modcount = number of walls to move through)
 [Move] Scaredy (will run away from players and enemies, movement greatly increases although its a shitty movement direction)
 [Move] Stealthy?? (Turns to stone when the player is far enough away and an enemy projectile exists with in range) {Anti melee}
+[Move] Swimming (This will always take last priority, but if the summon is not inside water it will flail around, although if it is, it gets double the movement speed. and a passive default movement mod)
 
 --passive/toy summon mods (not really specific to any particular mod section, like the weapon's toy mods)
 [toy] blood shot (shoots out 6 or 8 projectiles apawn death)

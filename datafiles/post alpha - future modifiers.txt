@@ -34,8 +34,9 @@ Absorb life / vampirism
 
 
 =====Armor Mods=====
+Vitae (more health)
 blade turn (ignore the first X hits from each enemy)
-chivalry (teleports you infront of ally taking the damage for it, or just take the damage for an ally with in a radius relative to the mod count)
+chivalry (teleports you infront of ally taking the damage for it, or just take the damage for an ally with in a radius relative to the mod count and draw a particle to inform the player that they took their allies damage)
 Ward/Shield (Takes a hit then recharges and repeats)
 Smooth skin (prevents any sticky projectiles)
 "Lightweight" [not usable with heavyweight] (Move faster but knockback effects send you back 5x further)
@@ -45,29 +46,27 @@ Burning Embers (aoe fire dmg to nearby enemies)
 Hell Fire (sets you on fire)
 Reflect (Reflects the next attack back then recharges and repeats)
 Sanctuary/Dodge (Chance to miss you is x)
-Vigor/Tank (Extra Health)
-Adrenal Gland (faster speed)
-Paralyze (cant move)
+Vigor (1 Extra Heart)
+Adrenal Gland (faster attack speed)
+Paralyze (cant move) "lol wtf arma"-red
 Empower (extra dmg)
-Water walking (walks on water)
-wings (move over all non wall objects)
-ice skates (playermovement on ice is un effected but max speed is doubled)
+Water walking (walks on water, with a max of 15 tiles, 5 water walking on 3 armor pieces will allow for this max)
+wings (move over all non wall objects, with a max of 15 tiles, 5 water walking on 3 armor pieces will allow for this max)
+ice skates (playermovement on ice is un effected, and max speed is doubled, although on mountain or cave terrain movement is decreased)
 Anti AOE (needs a better name)
 Anti Continuous (needs a better name)
 Anti trap (allows hovering over pitfalls and spike traps)
-Explorer (For every one hundred blocks explored on the map, you regain a small amount of health)
-Spike trail (leave)
-Surprise Gift (Whenever you use a consumable, you sometimes create a random consumables)
+Explorer (For every one hundred blocks explored on the map, you regain a small amount of health) "this is a great idea arma"-Red
+Spike trail (leaves a trail of spikes behind the player)
+Surprise Gift (Whenever you use a consumable, you have a chance to create a random consumables, although like 60% of the time it's the same thing you just used [doesnt work on relics]) [a max of 15 gives a 100% chance to get a new item every time, leading to a possibly insane build completely reliant on consumables]
 Radiance (slowly heals allies)
 Fright (at half max HP, you move 2x speed)
 Slimmy Armor (when damage is taken summon a slime)
 Ankhed? (prevents debuff effects)
-True Sight (Lets you see through fog of war)
+True Sight (Lets you see through fog of war, and blind)
 Agro (enemy monsters will make you and others with agro their priority)
 Passive (enemy monsters will attack you less often when other players or summons are around)
-increase max life
-vampirism (chance to gain life after a kill)
-summoner's buff (increase minion strength and health)
+summoner's buff (increase minion strength and health, or just count or something like that)
 force push when damage is taken
 chance to force pull when damage is dealt
 replace your activate buttom with another weapon slot (not stackable)
@@ -85,33 +84,32 @@ sprint? (double tap movement key to activate)
 
 
 =====Toy Mods=====
-Breakable (will break after X number of hits, but deals 10x damage on the final hit)
+Breakable (will break after X number of hits, but deals [2*mod_count]x damage on the final hit)
 Stinky (green outline of their sprite, and green smell lines, effects are visible in the fog of war)
-Polymorph
-Portal/teleport (a single of this mod will randomly teleport the collided to a random nearby location, 2 will make portal's portals, 3+ will make 3+ one way portals)
-paint (leaves long lasting particle effects)
-confeti (like cluster, but ya know..)
+Polymorph (mod count is relative to how weak the new enemy will be, and how weak the current enemy must be for it to even be effected) [an impossible polymorph 10 will convert even the final boss into a basic slime, this would make for an amazing relic to get for speed runners, maybe if you make it to your first dungeon and open the boss room chest in under a minute you can get this item]
+Portal/teleport (a single of this mod will randomly teleport the collided to a random nearby location, 2 will make portal's portals, 3+ will make 3+ one way portals a>b, b>c, c>a)
++++paint (leaves long lasting particle effects)
+confeti (like cluster, but ya know.. short but fun particle effects)
 Grapple
 grappling hook
-binoculars (this can increase your view distance by one more, making eash tile a single pixel)
+binoculars (this can increase your view distance by one more, making each tile a single pixel)
 mower (allows you to cut grass faster, idk)
 block-aid (summons a pushable block)
 rotten egg (just makes a stinky effect on a player for a while, creatures notice you from a further distance and around walls)
 Drunk (randomly adds velocity in a random direction)
 compass? (draws arrows to things out of screen, tells you if things are traps)
-Eggnialation/Insta Kill (makes you lay an egg that does nothing) <-- haha
-Spectre (summons unless ghosts that cant hurt anything)
+Eggnialation/Insta Kill (makes you lay an egg that does nothing) "haha"-Red
+Spectre (summons useless ghosts that cant hurt anything)
 Shiny (adds a shiny effect)
 Light ()
-Superstition (does absolutely nothing)
-broken modem (Online only!)
-Soulbound (can not drop the bound object)
-Cursed (can not un equip)
-Breaking (has a damage meter and breaks after a while)
+Superstition (does absolutely nothing, but we could imply that it does something by making it the only status effect to go on your hud)
+broken modem (Online only!, it just wont send out updates to the server for longer periods, maybe this should be an armor mod)
+Soulbound (can not drop the bound object) [can't be stacked]
+Cursed (can not un equip) [can't be stacked]
 banish/sunder (despells summoned objects)
 bow-wow (a pet chain chomp)
 Demi-Plane (creates a trap door which leads to a small 30x30 room, objects placed in this room never go away) Similar to tents although not related to a single charactor
-Aim Bot (will always face you in the direction of the closest entity)
+Aim Bot (will always face you in the direction of the closest entity, when you press the attack button)
 Revert/retreat (Over Watch Tracers rewind time ability)
 
 

@@ -6,9 +6,11 @@ attribute vec2 in_TextureCoord;              // (u,v)
 varying vec2 v_vTexcoord;
 varying vec4 v_vColour;
 
+
 void main()
 {
     vec4 object_space_pos = vec4( in_Position.x, in_Position.y, in_Position.z, 1.0);
+    
     gl_Position = gm_Matrices[MATRIX_WORLD_VIEW_PROJECTION] * object_space_pos;
     
     v_vColour = in_Colour;
@@ -19,6 +21,7 @@ varying vec4 v_vColour;
 
 uniform sampler2D displacementMap;
 uniform float time;
+uniform float zoom;
 
 void main() {
     vec2 time_offset = vec2(time, -time / 2.0) / 4.0;
@@ -27,4 +30,5 @@ void main() {
     vec2 offset = vec2(brightness, (-brightness+displace.b/4.0)) / 2.0 + time/8.0;
     //vec2 offset = ;
     gl_FragColor = v_vColour * texture2D(gm_BaseTexture, v_vTexcoord + offset);
+    
 }

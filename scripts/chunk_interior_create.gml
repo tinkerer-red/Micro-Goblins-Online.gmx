@@ -30,24 +30,24 @@ var key = ds_map_find_first(global.chunk_handler.active_interior_chunks);
 var map = global.chunk_handler.active_interior_chunks[? key]
 if (map != undefined){
   open_zone = map[? "zone_pos"]+1;
-  show_debug_message("advanced open zone possition to "+string(open_zone))
+  //show_debug_message("advanced open zone possition to "+string(open_zone))
 }
 
 while (key != undefined){
-    show_debug_message("zone while loop")
+    //show_debug_message("zone while loop")
     key = ds_map_find_next(global.chunk_handler.active_interior_chunks, key)
     if (key = undefined) break;
-    show_debug_message("key = "+key)
+    //show_debug_message("key = "+key)
     var map = global.chunk_handler.active_interior_chunks[? key]
     if (map != undefined){
       if (map[? "zone_pos"] >= open_zone){
-        show_debug_message("if >=")
+        //show_debug_message("if >=")
         open_zone = map[? "zone_pos"]+1
       }else{
-        show_debug_message('map[? "zone_pos"] < open_zone')
+        //show_debug_message('map[? "zone_pos"] < open_zone')
       }
     }else{
-      show_debug_message("map = undefined")
+      //show_debug_message("map = undefined")
     }
 }
 
@@ -71,7 +71,7 @@ ds_map_add(interior_map, "chunk_id_grid", chunk_id_grid)
 ds_map_add_map(global.chunk_handler.active_interior_chunks, _chunk_string, interior_map)
 
 //var _json = json_encode(global.chunk_handler.active_interior_chunks)
-//show_debug_message(_json)
+////show_debug_message(_json)
 
 
 //find out what structure we're generating
@@ -151,8 +151,8 @@ ds_map_add(interior_map, "zone_pos", open_zone)
 
 
 
-//show_debug_message("chunk_interior_create switch start")
-//show_debug_message("_struct = "+string(_struct))
+////show_debug_message("chunk_interior_create switch start")
+////show_debug_message("_struct = "+string(_struct))
 //generate the interior based on what structure it was
 switch(_struct)
 {
@@ -182,7 +182,7 @@ chunk.chunk_y = cell_y
 chunk.world_name = world_name;
 chunk.chunk_dist = global.chunk_handler.chunk_dist
 
-chunk.show_chunks = show_chunks;
+chunk.//show_chunks = //show_chunks;
 chunk.loadid = -1
 
 

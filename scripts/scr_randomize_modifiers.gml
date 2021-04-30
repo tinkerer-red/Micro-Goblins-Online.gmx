@@ -51,11 +51,11 @@ while (finished_mods < mod_count){
     
     //if size is 0-5
     if (gui_item[3] = 0) && (gui_item[4] = 5){
-      show_debug_message("0-5")
+      //show_debug_message("0-5")
       //gui_item[2] += 1
       gui_set_value(guid, gui_item[0], gui_item[2] + 1)
       finished_mods++
-      show_debug_message("gui_item = "+string(gui_item))
+      //show_debug_message("gui_item = "+string(gui_item))
     }
   }
 }

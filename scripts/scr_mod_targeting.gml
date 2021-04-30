@@ -77,8 +77,8 @@ if (object_index = obj_weapon) && (w_type = weapon_type_range || melee_ranged > 
     
     //add the projectiles back into the queue
     ds_queue_copy(self.recent_proj_queue, self.proj_queue)
-    show_debug_message("ds_queue_size(proj_queue) = "+string(ds_queue_size(proj_queue)))
-    show_debug_message("ds_queue_size(recent_proj_queue) = "+string(ds_queue_size(recent_proj_queue)))
+    //show_debug_message("ds_queue_size(proj_queue) = "+string(ds_queue_size(proj_queue)))
+    //show_debug_message("ds_queue_size(recent_proj_queue) = "+string(ds_queue_size(recent_proj_queue)))
     
     is_targeting = false
     

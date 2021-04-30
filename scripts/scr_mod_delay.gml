@@ -44,7 +44,7 @@ if !variable_instance_exists(self, "mod_delay_start"){
 if (mod_count = 0) && (mod_delay_start = true){
     mod_delay_timer += 1*lag()
     
-    show_debug_message("mod_delay_timer = "+string(mod_delay_timer))
+    //show_debug_message("mod_delay_timer = "+string(mod_delay_timer))
     
     if (mod_delay_timer >= mod_delay_time){
       if (object_index = obj_weap_proj){
@@ -65,7 +65,7 @@ if (mod_count = 0) && (mod_delay_start = true){
       }
       
       if (object_index = obj_enemy) || (object_index = obj_summon){
-        show_debug_message("attack_active = "+string(attack_active))
+        //show_debug_message("attack_active = "+string(attack_active))
         move_active = false
         attack_active = false
       }

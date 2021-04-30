@@ -20,7 +20,7 @@ world_name = "World"
 world_width  = chunk_width*128  //131072 16*16*512   //tileSize * chunkSize * number of chunks
 world_height = chunk_height*128  //131072 16*16*512
 
- world_chunk_width = global.chunk_handler.world_width div global.chunk_handler.chunk_width
+world_chunk_width = global.chunk_handler.world_width div global.chunk_handler.chunk_width
 world_chunk_height = global.chunk_handler.world_height div global.chunk_handler.chunk_height
 
 /* World Sizes

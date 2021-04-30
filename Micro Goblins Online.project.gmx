@@ -67,6 +67,7 @@
     <extension index="7">extensions\Essential Scripts</extension>
     <extension index="8">extensions\Collision_Cone</extension>
     <extension index="9">extensions\GML_Tasks</extension>
+    <extension index="10">extensions\Autotiling Tilemap Shaders</extension>
   </NewExtensions>
   <sounds name="sound">
     <sound>sound\snd_mod_charge</sound>
@@ -145,6 +146,19 @@
       <sprite>sprites\spr_particle_controller</sprite>
       <sprite>sprites\spr_chunk</sprite>
       <sprite>sprites\spr_collision_cone</sprite>
+    </sprites>
+    <sprites name="Tiles">
+      <sprite>sprites\spr_tile_air</sprite>
+      <sprite>sprites\spr_tile_sand</sprite>
+      <sprite>sprites\spr_tile_grass</sprite>
+      <sprite>sprites\spr_tile_rock</sprite>
+      <sprite>sprites\spr_tile_cobble</sprite>
+      <sprite>sprites\spr_tile_dungeon</sprite>
+      <sprite>sprites\spr_example_tile_dirt</sprite>
+      <sprite>sprites\spr_example_tile_stone1</sprite>
+      <sprite>sprites\spr_example_tile_stone</sprite>
+      <sprite>sprites\spr_example_tile_glass</sprite>
+      <sprite>sprites\spr_example_tile_template</sprite>
     </sprites>
     <sprites name="Test Sprites">
       <sprite>sprites\spr_red</sprite>
@@ -227,9 +241,10 @@
             </scripts>
             <scripts name="Summons">
               <scripts name="Movement">
-                <script>scripts\scr_mod_summon_movement_default.gml</script>
+                <script>scripts\scr_mod_summon_movement_walk.gml</script>
                 <script>scripts\scr_mod_summon_movement_orbital.gml</script>
                 <script>scripts\scr_mod_summon_movement_chained.gml</script>
+                <script>scripts\scr_mod_summon_movement_jumpy.gml</script>
               </scripts>
               <scripts name="Attack">
                 <script>scripts\scr_mod_summon_attack_default.gml</script>
@@ -241,6 +256,7 @@
                 <script>scripts\scr_mod_summon_health_enlarged.gml</script>
                 <script>scripts\scr_mod_summon_health_timed.gml</script>
               </scripts>
+              <script>scripts\scr_mod_summon_DESIGN.gml</script>
             </scripts>
             <scripts name="Toy">
               <script>scripts\scr_mod_paint.gml</script>
@@ -350,6 +366,7 @@
         <script>scripts\timer_to_ticks.gml</script>
         <script>scripts\dir_to_dir_and_flip.gml</script>
         <script>scripts\string_split_to_array.gml</script>
+        <script>scripts\vector_to_inputs.gml</script>
       </scripts>
       <scripts name="Maths">
         <script>scripts\normalize.gml</script>
@@ -824,11 +841,23 @@
     <script>scripts\script_execute_async.gml</script>
     <script>scripts\test_scr.gml</script>
     <script>scripts\draw_sprite_repeat.gml</script>
+    <script>scripts\README.gml</script>
+    <scripts name="Autotiling Tilemap Shaders">
+      <script>scripts\ats_init.gml</script>
+      <script>scripts\ats_free.gml</script>
+      <script>scripts\ats_rectangle_create.gml</script>
+      <script>scripts\ats_rectangle_update.gml</script>
+      <script>scripts\ats_rectangle_draw.gml</script>
+    </scripts>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shStretch.shader</shader>
     <shader type="GLSLES">shaders\shd_hue.shader</shader>
     <shader type="GLSLES">shaders\shd_water.shader</shader>
+    <shaders name="Autotiling Tilemap Shaders">
+      <shader type="GLSLES">shaders\sh_ats_0.shader</shader>
+      <shader type="GLSLES">shaders\sh_ats_1.shader</shader>
+    </shaders>
   </shaders>
   <fonts name="fonts">
     <font>fonts\fontGGUI</font>
@@ -853,6 +882,9 @@
         <object>objects\obj_camera_control</object>
         <object>objects\obj_particle_controller</object>
         <object>objects\obj_dualbooting</object>
+        <objects name="Autotiling Tilemap Shaders">
+          <object>objects\obj_ats_rectangle</object>
+        </objects>
         <objects name="Sprite Explode Particles">
           <objects name="rm_explosion">
             <object>objects\obj_explode_particle</object>
@@ -897,6 +929,7 @@
     <object>objects\obj_test</object>
     <object>objects\object34</object>
     <object>objects\obj_gml_task_handler</object>
+    <object>objects\obj_example</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_one_player_TEST</room>

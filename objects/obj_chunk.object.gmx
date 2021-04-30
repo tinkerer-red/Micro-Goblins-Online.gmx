@@ -202,8 +202,8 @@ if should_exist = false {
             <string>///Stagger the chunk Loading
 
 
-//if (global.chunk_handler.chunk_gen_this_frame = false)
-if !enough_lag()
+if (global.chunk_handler.chunk_gen_this_frame = false)
+|| !enough_lag()
 {
   global.chunk_handler.chunk_gen_this_frame = true
   //show_debug_message("global.chunk_handler.chunk_loaded_this_frame = false")
@@ -380,13 +380,17 @@ if (should_exist = false){
   exit;
 }
 
-//if the cell is an exterior cell
+
+//make sure the world's chunk map exists first
 if ds_exists(global.chunk_handler.world_map, ds_type_map){
+  
   //load the chunk data here
-  if !is_interior(x,y){
-    chunk_generate()
-  }else{
+  if is_interior(x,y){ //if the cell is an exterior cell
     chunk_generate_interior_room()
+    
+  }else{
+    chunk_generate()
+    
   }
   
   alarm_set(1,1)
@@ -424,11 +428,11 @@ if ds_exists(global.chunk_handler.world_map, ds_type_map){
   //var width  = global.chunk_handler.world_width
   //var height = global.chunk_handler.world_height
   
-  var grid_size_x = (sprite_width/tile_size);
-  var grid_size_y = (sprite_height/tile_size);
+  var grid_size_x = (sprite_width/tile_size)+2;
+  var grid_size_y = (sprite_height/tile_size)+2;
   
-  var x_off = bbox_left/tile_size;
-  var y_off = bbox_top/tile_size;
+  var x_off = bbox_left/tile_size+1;
+  var y_off = bbox_top/tile_size+1;
   
   terrain_surface = surface_create(sprite_width, sprite_height)
   
@@ -441,29 +445,44 @@ if ds_exists(global.chunk_handler.world_map, ds_type_map){
 if !is_interior(x,y){ //exterior cells
   if(ds_grid_get_max(heightmap_grid, 0,0,grid_size_x,grid_size_y) &lt;=1){ // If max value of our grid is less or equal 1, then poceed without autotiling.
     
-    
-    for(var i = 0; i &lt; tiles_x; i++){
-      for(var j = 0; j &lt; tiles_y; j++){
+  //First we'll copy the tile structure over to the Autotiling grid
+    for(var i = 0; i &lt; tiles_x+2; i++){
+      for(var j = 0; j &lt; tiles_y+2; j++){
         
         //heightmap tiles
-        if(heightmap_grid[#i, j] &lt;= 0.15){has_water = true}     //draw_sprite(tile_water, 0, (i*tile_size), (j*tile_size));}
-        else if(heightmap_grid[#i, j] &gt; 0.15 &amp;&amp; heightmap_grid[#i, j] &lt; 0.25){draw_sprite(tile_sand, 0, i*tile_size, j*tile_size);}
-        else if(heightmap_grid[#i, j] &gt;= 0.25 &amp;&amp; heightmap_grid[#i, j] &lt;= 0.6){draw_sprite(tile_grass, 0, i*tile_size, j*tile_size);}
-        else if(heightmap_grid[#i, j] &gt; 0.6 &amp;&amp; heightmap_grid[#i, j] &lt;= 0.7){draw_sprite(tile_dirt, 0, i*tile_size, j*tile_size);}
-        else if(heightmap_grid[#i, j] &gt; 0.7 &amp;&amp; heightmap_grid[#i, j] &lt;= 0.8){draw_sprite(tile_rock, 0, i*tile_size, j*tile_size);}
-        else if(heightmap_grid[#i, j] &gt; 0.8){draw_sprite(tile_snow, 0, i*tile_size, j*tile_size);}//
+        if(heightmap_grid[#i, j] &lt;= 0.15){    has_water = true;                 obj_chunk_supervisor.ats_grid[#i, j] = spr_tile_air;}
+        else if(heightmap_grid[#i, j] &gt; 0.15 &amp;&amp; heightmap_grid[#i, j] &lt; 0.25)  {obj_chunk_supervisor.ats_grid[#i, j] = spr_tile_sand;}
+        else if(heightmap_grid[#i, j] &gt;= 0.25 &amp;&amp; heightmap_grid[#i, j] &lt;= 0.6) {obj_chunk_supervisor.ats_grid[#i, j] = spr_tile_grass;}
+        else if(heightmap_grid[#i, j] &gt; 0.6 &amp;&amp; heightmap_grid[#i, j] &lt;= 0.7)   {obj_chunk_supervisor.ats_grid[#i, j] = spr_tile_rock;}
+        else if(heightmap_grid[#i, j] &gt; 0.7 &amp;&amp; heightmap_grid[#i, j] &lt;= 0.8)   {obj_chunk_supervisor.ats_grid[#i, j] = spr_tile_cobble;}
+        else if(heightmap_grid[#i, j] &gt; 0.8)                                   {obj_chunk_supervisor.ats_grid[#i, j] = spr_example_tile_stone;}//
         
         //dungeon tiles
-        if (structure_grid[#i, j] = 1){ draw_sprite(spr_black, 0, i*tile_size, j*tile_size); }
-        if (structure_grid[#i, j] = 2){ draw_sprite(spr_black, 0, i*tile_size, j*tile_size); }
-        if (structure_grid[#i, j] = 3){ draw_sprite(spr_black, 0, i*tile_size, j*tile_size); }
-        if (structure_grid[#i, j] = 4){ draw_sprite(spr_red, 0, i*tile_size, j*tile_size); }
+        if (structure_grid[#i, j] = 1){ obj_chunk_supervisor.ats_grid[#i, j] = spr_tile_dungeon; }
+        if (structure_grid[#i, j] = 2){ obj_chunk_supervisor.ats_grid[#i, j] = spr_tile_dungeon; }
+        if (structure_grid[#i, j] = 3){ obj_chunk_supervisor.ats_grid[#i, j] = spr_tile_dungeon; }
+        //if (structure_grid[#i, j] = 4){ heightmap_grid[#i, j] = spr_; }
       }
     }
   }
-
-
-
+  
+  ///Once the autotiling grid is populated, we can now draw the grid to the terrain surface
+  ats_rectangle_update(obj_chunk_supervisor.ats_rectangle, 
+                       obj_chunk_supervisor.ats_grid,
+                       0, 0, tiles_x+2, tiles_y+2)
+  
+  surface_set_target(terrain_surface)
+    ats_rectangle_draw(obj_chunk_supervisor.ats_rectangle, obj_chunk_supervisor.ats_grid, 1, 1, 16, 16, 0, 0);
+  surface_reset_target()
+  
+  /*nope
+  ///Now resize the grids and remove extra uneeded data
+  ds_grid_set_grid_region(heightmap_grid, heightmap_grid, 1, 1, tiles_x+1, tiles_y+1, 0, 0);
+  ds_grid_set_grid_region(structure_grid, structure_grid, 1, 1, tiles_x+1, tiles_y+1, 0, 0);
+  ds_grid_resize(heightmap_grid, tiles_x, tiles_y);
+  ds_grid_resize(structure_grid, tiles_x, tiles_y);
+  */
+  
 }else{ //if it's an interior cell
   //show_debug_message("interior")
   /*
@@ -695,7 +714,7 @@ if is_visible(){
       draw_set_colour(c_yellow)
       draw_set_font(font_debug)
       draw_text_transformed(x,y,chunk_debug_string,1*scale, 1*scale, 0)
-    
+      draw_set_colour(c_white)
   }
 
 }
