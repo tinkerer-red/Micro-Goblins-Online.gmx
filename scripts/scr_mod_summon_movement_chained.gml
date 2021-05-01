@@ -1,157 +1,102 @@
 ///scr_mod_summon_movement_chained()
 
 
-///scr_mod_summon_movement_chained()
+///DESCRIPTION: Keep the entity chained to a location, (stack in the ground for enemies, player if summoned)
+// Modcount = How much damage should be increased, and the distance of the chain's reach
 //
 //summon step event
 
+
+
+//Entity Check, find out of the object using this script is actually an entity
 if (object_index = obj_summon) || (object_index = obj_enemy){
+  
+  
+  
+  //Check the mod count to help optimize math, and skip un needed script executions
+  var mod_count = scr_queue_has_mod_count(step_event_queues_temp, scr_mod_summon_DESIGN)+1
+  
+  
+  
+  //init
+  if !variable_instance_exists(self, "mod_summon_movement_chained_start"){
+    //init what ever values are needed
+    mod_summon_movement_chained_timer = room_speed
+    mod_summon_movement_chained_start = true
+    mod_chained_dist_max = mod_count*one_tile*3 + one_tile
+    mod_chained_cx = x
+    mod_chained_cy = y
+    mod_chained_max_speed = max_speed
+    mod_chained_min_speed = max_speed - 0.05*mod_count
     
     
-    //init
-    if !variable_instance_exists(self, "mod_summon_movement_chained_start"){
-      
-      mod_summon_movement_chained_mod_count = scr_queue_has_mod_count(step_event_queues, scr_mod_summon_movement_chained)
-      
-      //stat buffs
-      e_damage += 0.25*mod_summon_movement_chained_mod_count
-      
-      if is_summoned{
-        dir = point_direction(owner_id.x, owner_id.y, x, y)
+    //stat buffs
+    e_damage += 0.25*mod_count
+    max_speed = mod_chained_min_speed
+  }
+  
+  
+  
+  //is this mod currently active? (for instance when the enemy is just finishing with a jump or shot, is the next jump/shot on a cool down?) This is primarily here incase another mod needs to highjack or prevent a specific mod from happening
+  if (mod_summon_movement_chained_start){
+   
+    /////look for inputs/////
+      //if possessed, grab player inputs
+      if is_possessed{
+        var possessed_vector_x = possesser_id.down - possesser_id.up;
+        var possessed_vector_y = possesser_id.right - possesser_id.left;
       }else{
-        dir = 0
+        var possessed_vector_x = 0;
+        var possessed_vector_y = 0;
       }
       
-      //center x and y
-      mod_chained_cx = x
-      mod_chained_cy = y
+      //if summoned update center x,y
+      if (is_summoned){
+        //center x and y
+        mod_chained_cx = owner_id.x
+        mod_chained_cy = owner_id.y
+      }
       
-      //previous location init
-      pre_x = start_x
-      pre_y = start_y
+      //grab the desired inputs for this mod, sometimes they are the given inputs, or manipulated inputs, sometimes they are the mirrored inputs of the enemy.
+      //move the entity back to it's starting location if it's out of bounds
+      if (point_distance(mod_chained_cx, mod_chained_cy, x, y,) >= mod_chained_dist_max){
+        var mod_vector_x = mod_chained_cx - x;
+        var mod_vector_y = mod_chained_cy - y;
+        max_speed = mod_chained_max_speed
+        show_debug_player("out of bounds")
+      }else{
+        var mod_vector_x = 0;
+        var mod_vector_y = 0;
+        max_speed = mod_chained_min_speed
+      }
       
-      //ideal direction before input manipulation
-      mod_chained_ideal_speed = 0
-      mod_chained_ideal_direction = 0
+      //add the two inputs as desired, or simply take the player inputs, either way.
+         //This is also where you will add any bias to the movements
+      var true_vector_x = clamp( mod_vector_x + possessed_vector_x, -1, 1);
+      var true_vector_y = clamp( mod_vector_y + possessed_vector_y, -1, 1);
+    /////////////////////////  
+    
+    vector_to_inputs(true_vector_x, true_vector_y, 2)
       
-      //ideal vector
-      mod_chained_vector_x = 0
-      mod_chained_vector_y = 0
-      
-      //max movement
-      mod_chained_dist_max = sprite_width*((mod_summon_movement_chained_mod_count + (is_summoned*0.5))*4 + 1)
-      mod_chained_move_time = room_speed/mod_summon_movement_chained_mod_count
-      
-      mod_summon_movement_chained_start = true
+    ///if cooldown is needed
+    mod_summon_movement_chained_timer -= 1*lag()
+    if !mod_summon_movement_chained_timer{
+      //change active states, or what ever
     }
     
-    if (attack_active = false){ //if we arew not restrained by attack mods
-      
-      //for the first mod in the queue keep track of the center x and y
-      if (mod_summon_movement_chained_start = true){
-        var mod_chained_desired_dir  = htme_random_range(0,360)
-        var mod_chained_desired_dist = htme_random_range(0,mod_chained_dist_max/2.5)
-        
-        mod_chained_desired_x = mod_chained_cx+lengthdir_x(mod_chained_desired_dist, mod_chained_desired_dir)
-        mod_chained_desired_y = mod_chained_cy+lengthdir_y(mod_chained_desired_dist, mod_chained_desired_dir)
-        
-        //up to five hops per second 
-        mod_chained_move_timer = mod_chained_move_time
-        mod_chained_hop_count = mod_summon_movement_chained_mod_count
-        
-        mod_summon_movement_chained_start = false
-      
-      } //end init
-      
-      
-      //keep track of the mod count
-      var mod_count = scr_queue_has_mod_count(step_event_queues_temp, scr_mod_summon_movement_chained)+1;
-      
-      //reload the modifier
-      //  this section is only here so we dont have to run the same mod 5 times but just
-      //  once with the same calculations and just multiply the result by the mod count.
-      if (mod_count = 1){
-        
-        //if summoned update center x,y
-        if (is_summoned){
-          //center x and y
-          mod_chained_cx = owner_id.x
-          mod_chained_cy = owner_id.y
-        }
-        
-        //move the entity back to it's starting location if it's out of bounds
-        if (point_distance(mod_chained_cx, mod_chained_cy, x, y,) >= mod_chained_dist_max){
-          var array = add_vectors(mod_chained_ideal_speed, 
-                                  mod_chained_ideal_direction, 
-                                  point_distance(x, y, mod_chained_cx, mod_chained_cy),
-                                  point_direction(x, y, mod_chained_cx, mod_chained_cy));
-          mod_chained_ideal_speed =  array[0]
-          mod_chained_ideal_direction = array[1]
-          
-          vector_to_inputs(mod_chained_vector_x, mod_chained_vector_y, 2)
-        }
-
-        //if it's time to decrement the hop
-        if (mod_chained_move_timer <= 0){
-          mod_chained_hop_count--;
-          mod_chained_move_timer = mod_chained_move_time
-          
-          if (mod_chained_hop_count <= 0){
-            mod_summon_movement_chained_start = true;
-          }
-          
-        }else{
-          
-          //do the jump
-          var movement_speed = point_distance(x, y, mod_chained_desired_x, mod_chained_desired_y);
-          
-          //if it's close enough to it's new location, just stop it from moving any more
-          if (point_distance(x, y, mod_chained_desired_x, mod_chained_desired_y) <= 16){
-            mod_chained_ideal_speed = 0
-            mod_chained_ideal_direction = 0
-          
-          }else{ //if we're still fairly far from our desired location lets calculate the movement vector
-            
-            mod_chained_ideal_speed = point_distance(x, y, mod_chained_desired_x, mod_chained_desired_y)
-            mod_chained_ideal_direction = point_direction(x, y, mod_chained_desired_x, mod_chained_desired_y)
-            
-            
-            //if it's to far from it's central location, move it back
-            if (point_distance(x, y, mod_chained_cx, mod_chained_cy) > mod_chained_dist_max){
-              var array = add_vectors(mod_chained_ideal_speed,
-                                      mod_chained_ideal_direction,
-                                      point_distance(x, y, mod_chained_cx, mod_chained_cy),
-                                      point_direction(x, y, mod_chained_cx, mod_chained_cy));
-              mod_chained_ideal_speed =  array[0]
-              mod_chained_ideal_direction = array[1]
-            }
-          
-          }
-          
-          mod_chained_move_timer -= 1*lag()
-        }
-      }
-      
-      mod_chained_vector_x = lengthdir_x(mod_chained_ideal_speed, mod_chained_ideal_direction)
-      mod_chained_vector_y = lengthdir_y(mod_chained_ideal_speed, mod_chained_ideal_direction)
-      
-      
-      //manipulate it with a cos to make it appear to be momentum base with the hop, so it slows down as it reaches it's final hop
-      //we'll use this variable to adjust the inputs
-      var hop_multiplier = clamp(cos((mod_chained_move_timer/mod_chained_move_time)*pi*2) + 0.5, 0, 1);
-      
-      vector_to_inputs(mod_chained_vector_x, mod_chained_vector_y, hop_multiplier)
-      
-    } //end of attack inturruption 
     
-    
+    //to prevent the mod from running an additional time this frame for no reason, simply turn off the active state of the mod.
+    mod_summon_movement_chained_start = false
+  }
+  
+  
+  
+  //if we're finished with the last mod for this frame, lets reset the mod count
+  if (mod_count = 1){
+    mod_summon_movement_chained_start = true
+  }
+  
+  
 }
 
 return false;
-
-
-
-//if we're in the correct event then activate
-
-
-

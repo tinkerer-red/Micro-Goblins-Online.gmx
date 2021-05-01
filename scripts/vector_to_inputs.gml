@@ -12,8 +12,16 @@ if (argument_count = 3){
   }
 }
 
+
+//temp values
+var t_up = abs(min(yy, 0));
+var t_down = max(yy, 0);
+var t_left = abs(min(xx, 0));
+var t_right = max(xx, 0);
+
+
 //actually apply the inputs
-up += abs(sign(min(yy, 0))*_dist)
-down += sign(max(yy, 0))*_dist
-left += abs(sign(min(xx, 0))*_dist)
-right += sign(max(xx, 0))*_dist
+up += _dist*t_up
+down += _dist*t_down
+left += _dist*t_left
+right += _dist*t_right

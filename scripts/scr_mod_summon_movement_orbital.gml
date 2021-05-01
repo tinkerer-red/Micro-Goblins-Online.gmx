@@ -20,6 +20,8 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
       
       mod_summon_movement_orbital_mod_count = scr_queue_has_mod_count(step_event_queues, scr_mod_summon_movement_orbital)
       
+      self.max_speed += 0.1*mod_summon_movement_orbital_mod_count
+      
       pre_x = start_x
       pre_y = start_y
       

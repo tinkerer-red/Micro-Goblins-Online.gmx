@@ -68,6 +68,8 @@ self.is_possessed = false
 self.possesser_id = noone
 
 mp_wander_timer = 0
+wander_x = 0
+wander_y = 0
 
 </string>
           </argument>
@@ -101,7 +103,10 @@ move_active = false
 e_health = 10
 e_damage = 1
 
-
+mp_xgoal = x
+mp_ygoal = y
+ideal_vector_x = x
+ideal_vector_y = y
 </string>
           </argument>
         </arguments>
@@ -318,7 +323,7 @@ if !variable_instance_exists(self, "enemy_mods_init") || (enemy_mods_init = fals
     
     //replace this in the future with dungeon genoration type of code
     repeat( 1 ) ds_priority_add(queue_attack_step_mods, scr_mod_summon_movement_walk, 1);
-    repeat( 1 ) ds_priority_add(queue_attack_step_mods, scr_mod_summon_attack_default, 2);
+    //repeat( 1 ) ds_priority_add(queue_attack_step_mods, scr_mod_summon_attack_default, 2);
     repeat( 1 ) ds_priority_add(queue_attack_step_mods, scr_mod_summon_health_default, 3);
     
     
@@ -388,51 +393,53 @@ update_enemy(room_speed*3)
           <argument>
             <kind>1</kind>
             <string>///Ideal Inputs
-
-//varify enemy
-if (enemy != noone)
-&amp;&amp; instance_exists(enemy){
-  // move to enemy
-  mp_xgoal = enemy.x;
-  mp_ygoal = enemy.y;
-  
-  //set wander timer to 0 so a new location is generated when the enemy is out of range
-  mp_wander_timer = room_speed
-}else{
-  if (is_summoned)
-  &amp;&amp; (point_distance(x, y, owner_id.x, owner_id.y) &gt; one_tile*8)
-  {
-    mp_xgoal = owner_id.x;
-    mp_ygoal = owner_id.y;
-  }
-  else
-  {
-    //set the center value for the entity to the player if it's summoned (incase we need a last resort to move it)
-    if (is_summoned){
-      start_x = owner_id.x
-      start_y = owner_id.y
+if ticked_over(){
+  //varify enemy
+  if (enemy != noone)
+  &amp;&amp; instance_exists(enemy){
+    // move to enemy
+    mp_xgoal = enemy.x;
+    mp_ygoal = enemy.y;
+    
+    //set wander timer to 0 so a new location is generated when the enemy is out of range
+    mp_wander_timer = room_speed
+  }else{
+    if (is_summoned)
+    &amp;&amp; (point_distance(x, y, owner_id.x, owner_id.y) &gt; one_tile*8)
+    {
+      mp_xgoal = owner_id.x;
+      mp_ygoal = owner_id.y;
     }
-    
-    //if still wandering decrement timer
-    mp_wander_timer -= 1*lag()
-    
-    if (mp_wander_timer &lt;= 0){
-      //wander
-      var wander_range = 3
+    else
+    {
+      //set the center value for the entity to the player if it's summoned (incase we need a last resort to move it)
+      if (is_summoned){
+        start_x = owner_id.x
+        start_y = owner_id.y
+      }
       
-      wander_x = htme_random_range(-one_tile*wander_range, one_tile*wander_range);
-      wander_y = htme_random_range(-one_tile*wander_range, one_tile*wander_range);
-      //reset wander timer
-      mp_wander_timer = room_speed
+      //if still wandering decrement timer
+      mp_wander_timer -= obj_tick_handler.tick_step*lag()
+      
+      if (mp_wander_timer &lt;= 0){
+        //wander
+        var wander_range = 3
+        
+        wander_x = htme_random_range(-one_tile*wander_range, one_tile*wander_range);
+        wander_y = htme_random_range(-one_tile*wander_range, one_tile*wander_range);
+        //reset wander timer
+        mp_wander_timer = room_speed
+      }
+      
+      mp_xgoal = start_x+wander_x
+      mp_ygoal = start_y+wander_y
     }
-    
-    mp_xgoal = start_x+wander_x
-    mp_ygoal = start_y+wander_y
   }
+  
+  
+  ideal_vector_x = mp_xgoal - x;
+  ideal_vector_y = mp_ygoal - y;
 }
-
-ideal_vector_x = mp_xgoal - x;
-ideal_vector_y = mp_ygoal - y;
 </string>
           </argument>
         </arguments>
@@ -633,6 +640,48 @@ show_debug_player(0, "enemy_id("+string(id)+") e_health = "+string(e_health))
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Collision Damage
+
+
+if (object_index = obj_summon) || (object_index = obj_enemy){
+    //init
+    if !variable_instance_exists(self, "mod_summon_attack_collision_active"){
+      //e_damage += 0.5*mod_count
+      mod_summon_attack_collision_active = true
+    }
+    
+    if mod_summon_attack_collision_active{ //if we arew not restrained by movement mods
+      //if we're in the correct event then activate
+      if (enemy != noone) {
+        if place_meeting(x, y, enemy) {
+          deal_damage(enemy, e_damage)
+        }
+      }
+    }
+}
+
+
+
+</string>
+          </argument>
+        </arguments>
       </action>
     </event>
     <event eventtype="8" enumb="0">

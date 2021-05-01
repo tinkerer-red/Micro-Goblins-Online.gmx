@@ -242,9 +242,12 @@
             <scripts name="Summons">
               <scripts name="Movement">
                 <script>scripts\scr_mod_summon_movement_walk.gml</script>
+                <script>scripts\scr_mod_summon_movement_jumpy.gml</script>
                 <script>scripts\scr_mod_summon_movement_orbital.gml</script>
                 <script>scripts\scr_mod_summon_movement_chained.gml</script>
-                <script>scripts\scr_mod_summon_movement_jumpy.gml</script>
+                <scripts name="out of date">
+                  <script>scripts\scr_mod_summon_movement_jumpy_old.gml</script>
+                </scripts>
               </scripts>
               <scripts name="Attack">
                 <script>scripts\scr_mod_summon_attack_default.gml</script>

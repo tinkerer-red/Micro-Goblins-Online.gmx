@@ -87,7 +87,7 @@ guid = gui_create_gui();
 
 gui_create_string(guid, "text", "Debug Controller", c_white);
 
-gui_create_menu(guid, "Modifiers", false, 58, c_black);
+gui_create_menu(guid, "Modifiers", false, 57, c_black);
   
   gui_create_menu(guid, "Global", false, 9, c_aqua);
     gui_create_slider(guid, "AOE", 0, 0, 5, c_aqua)
@@ -132,7 +132,7 @@ gui_create_menu(guid, "Modifiers", false, 58, c_black);
     gui_create_slider(guid, "Quick Scope", 0, 0, 5, c_orange)
     
     
-  gui_create_menu(guid, "Summon", false, 13, c_green);
+  gui_create_menu(guid, "Summon", false, 12, c_green);
     ////////////////////////////////////////////////////////
     gui_create_menu(guid, "Movement", false, 4, c_blue);
       gui_create_slider(guid, "Default Movement", 0, 0, 5, c_red)
@@ -141,8 +141,7 @@ gui_create_menu(guid, "Modifiers", false, 58, c_black);
       gui_create_slider(guid, "Jumpy", 0, 0, 5, c_orange)
       
     ////////////////////////////////////////////////////////
-    gui_create_menu(guid, "Attack", false, 2, c_red);
-      gui_create_slider(guid, "Default Attack", 0, 0, 5, c_orange)
+    gui_create_menu(guid, "Attack", false, 1, c_red);
       gui_create_slider(guid, "Leap", 0, 0, 5, c_yellow)
       
     ////////////////////////////////////////////////////////
@@ -309,7 +308,6 @@ if update_debug || (global.debug = true){
           last_orbital = gui_get_value(guid, "Orbital");
           last_chainedMovement = gui_get_value(guid, "Chained Movement");
           last_jumpy = gui_get_value(guid, "Jumpy");
-          last_defaultAttack = gui_get_value(guid, "Default Attack");
           last_leap = gui_get_value(guid, "Leap");
           last_defaultHealth = gui_get_value(guid, "Default Health");
           last_stoutHealth = gui_get_value(guid, "Stout");
@@ -476,7 +474,6 @@ if (global.debug = true){
            
           }
           if gui_get_value(guid, 'Attack'){
-           gui_set_value(guid, "Default Attack", floor(0.5+gui_get_value(guid, "Default Attack")) div 1); 
            gui_set_value(guid, "Leap", floor(0.5+gui_get_value(guid, "Leap")) div 1); 
            
           }
@@ -672,7 +669,6 @@ if update_debug || (global.debug = true){
             }
             //Attack
             if gui_get_value(guid, 'Attack') || (update_debug = true){
-             if update_debug || last_defaultAttack != gui_get_value(guid, "Default Attack") scr_modifier_adjust(queue_attack_step_mods, scr_mod_summon_attack_default, 1, gui_get_value(guid, "Default Attack"));
              if update_debug || last_leap != gui_get_value(guid, "Leap") scr_modifier_adjust(queue_attack_step_mods, scr_mod_summon_attack_leap, 1, gui_get_value(guid, "Leap"));
              
             }

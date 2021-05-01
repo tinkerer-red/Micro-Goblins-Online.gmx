@@ -21,6 +21,7 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
     //store what ever values are needed
     mod_summon_movement_walk_start = true
     mod_summon_movement_walk_speed = lerp(0.33, 1.5, (mod_count-1)/4)
+    self.max_speed += 0.15*mod_count
   }
   
   
@@ -31,24 +32,24 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
     /////look for inputs/////
       //if possessed, grab player inputs
       if is_possessed{
-        possessed_vector_x = possesser_id.down - possesser_id.up;
-        possessed_vector_y = possesser_id.right - possesser_id.left;
+        var possessed_vector_x = possesser_id.down - possesser_id.up;
+        var possessed_vector_y = possesser_id.right - possesser_id.left;
       }else{
-        possessed_vector_x = ideal_vector_x;
-        possessed_vector_y = ideal_vector_y;
+        var possessed_vector_x = 0;
+        var possessed_vector_y = 0;
       }
       
       //grab the desired inputs for this mod, sometimes they are the given inputs, or manipulated inputs, sometimes they are the mirrored inputs of the enemy.
-      mod_vector_x = ideal_vector_x;
-      mod_vector_y = ideal_vector_y;
+      var mod_vector_x = ideal_vector_x;
+      var mod_vector_y = ideal_vector_y;
       
       //add the two inputs as desired, or simply take the player inputs, either way.
          //This is also where you will add any bias to the movements
-      true_vector_x = clamp( mod_vector_x + possessed_vector_x, -1, 1);
-      true_vector_y = clamp( mod_vector_y + possessed_vector_y, -1, 1);
+      var true_vector_x = clamp( mod_vector_x + possessed_vector_x, -1, 1);
+      var true_vector_y = clamp( mod_vector_y + possessed_vector_y, -1, 1);
     /////////////////////////  
     
-    show_debug_player("mod_summon_movement_walk_speed = "+string(mod_summon_movement_walk_speed))
+    
     //apply movement
     vector_to_inputs(true_vector_x, true_vector_y, mod_summon_movement_walk_speed)
     

@@ -3,6 +3,7 @@
 
 ===Toy===
 Prop (it's a modifier to allow for prop hunt, basically turns you into a prop object for a while, the higher the mod the longer it lasts, 6 is infinate untill death)
+Speed Up (the portal 2's orange gel)
 
 
 ===Global===
@@ -135,7 +136,7 @@ Ranged mod, allows for use of pokeball style summons
 	Segmented (basically snake like creatures which have sections, modcount*2+1 = segments; Only the head is effected by knockback?)
 	Headless (On death the head gains flying and can not attack anymore, really only usefull if collision damage is still active, otherwise pointless)
 	Swarm (makes modcount more of the same spawn with 75% damage, and slight max speed increase) (they should also completely ignore each other's collision, and only the leader dictates which way they move, the rest will cycle through the directional inputs in a counter clockwise direction, and average the direction to the leader, the leaders, inputs*2, and their current spin direction.)
-	
+	Hive Mind (This should probably be a passive effect, if there are entities >=4 of the same name and owner_id, Then every other frame they only use the leader's movements, or move towards the leader?)
 	
 [Health] Multiply (on death split into 1+modcount more of it's self at half the size and health)
 +++++[Health] boss (makes spawn larger with more health)
@@ -203,6 +204,7 @@ Ranged mod, allows for use of pokeball style summons
 	Leaper, (it's actually a lot like airstrike in mechanics, dont move unles given an input, only move while leap is active, other movement mods can either take place before or after, or dynamically change the speed based on if it's in or out of a jump. this one will take some trouble shooting to see what works save it for later)
 	Teleport, (This is less of a movement type and more of a movement ability, almost exactly the same as Massive Jump, although the entity goes invisible, and will do it's best to use this effect when a projectile is on a collision course for it, or if the player is out of reach)
 	Inverse Movement, (Will always try to reach the closest possition oposite of the player, although this does give the summon infinate flight, if it is outside, simly try to stay on the edge of the player camera? idk If it is player possesed let it move freely, with the usual restrictions on flight)
+	
 	
 [Move] Bouncy (spawns in the direction the player was facing, will continue to move and bounce off walls untill dead)
 [Move] Spastic (bee like movement, very random, much wow)
