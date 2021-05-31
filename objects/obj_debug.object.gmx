@@ -87,9 +87,9 @@ guid = gui_create_gui();
 
 gui_create_string(guid, "text", "Debug Controller", c_white);
 
-gui_create_menu(guid, "Modifiers", false, 57, c_black);
+gui_create_menu(guid, "Modifiers", false, 58, c_black);
   
-  gui_create_menu(guid, "Global", false, 9, c_aqua);
+  gui_create_menu(guid, "Global", false, 10, c_aqua);
     gui_create_slider(guid, "AOE", 0, 0, 5, c_aqua)
     gui_create_slider(guid, "Continuous", 0, 0, 5, c_purple)
     gui_create_slider(guid, "Charge", 0, 0, 5, c_red)
@@ -99,6 +99,7 @@ gui_create_menu(guid, "Modifiers", false, 57, c_black);
     gui_create_slider(guid, "Enlarge", 0, 0, 5, c_blue)
     gui_create_slider(guid, "Shrink", 0, 0, 5, c_aqua)
     gui_create_slider(guid, "Aim Bot", 0, 0, 5, c_purple)
+    gui_create_slider(guid, "Knockback", 0, 0, 5, c_red)
     
   gui_create_menu(guid, "Melee", false, 10, c_green);
     gui_create_slider(guid, "Slash", 0, 0, 5, c_red);
@@ -252,7 +253,7 @@ for (var i = 0; i &lt; 8; i++)
             <string>///Debug Controller Previous Values
 if update_debug || (global.debug = true){
   if update_debug || (mouse_check_button(mb_left)){
-    if update_debug || (device_mouse_x_to_gui(0) &gt; (display_get_gui_width()-243)*(1+obj_camera_control.smooth_camera)){
+    if update_debug || (device_mouse_x_to_gui(0) &gt; (window_get_width()-243)*(1+obj_camera_control.smooth_camera)){
       
       last_smooth = gui_get_value(guid, 'Smooth Camera');
       
@@ -267,6 +268,7 @@ if update_debug || (global.debug = true){
           last_enlarge = gui_get_value(guid, "Enlarge");
           last_shrink = gui_get_value(guid, "Shrink");
           last_aimBot = gui_get_value(guid, "Aim Bot");
+          last_knockback = gui_get_value(guid, "Knockback");
         //}
         
         //if update_debug || gui_get_value(guid, 'Melee'){
@@ -362,11 +364,11 @@ if (global.debug = true){
       
       
       
-  if (device_mouse_x_to_gui(0) &gt; (display_get_gui_width()-243)*(1+obj_camera_control.smooth_camera)){
+  if (device_mouse_x_to_gui(0) &gt; (window_get_width()-243)*(1+obj_camera_control.smooth_camera)){
     
     
     // Interact with gui
-    gui_check(guid, (display_get_gui_width()-243)*(1+obj_camera_control.smooth_camera), 0, device_mouse_x_to_gui(0), device_mouse_y_to_gui(0));
+    gui_check(guid, (window_get_width()-243)*(1+obj_camera_control.smooth_camera), 0, device_mouse_x_to_gui(0), device_mouse_y_to_gui(0));
     
     
     
@@ -411,7 +413,7 @@ if (global.debug = true){
             <kind>1</kind>
             <string>///Clamp the modifier's scales
 if (global.debug = true){
-    if (device_mouse_x_to_gui(0) &gt; (display_get_gui_width()-243)*(1+obj_camera_control.smooth_camera)){
+    if (device_mouse_x_to_gui(0) &gt; (window_get_width()-243)*(1+obj_camera_control.smooth_camera)){
   
       ///Debug Controller New Values
       if gui_get_value(guid, 'Modifiers'){
@@ -427,6 +429,7 @@ if (global.debug = true){
           gui_set_value(guid, "Enlarge", floor(0.5+gui_get_value(guid, "Enlarge")) div 1);
           gui_set_value(guid, "Shrink", floor(0.5+gui_get_value(guid, "Shrink")) div 1);
           gui_set_value(guid, "Aim Bot", floor(0.5+gui_get_value(guid, "Aim Bot")) div 1);
+          gui_set_value(guid, "Knockback", floor(0.5+gui_get_value(guid, "Knockback")) div 1);
           
         }
       //Melee
@@ -529,7 +532,7 @@ if (global.debug = true){
             <string>///Debug Controller Apply Variables
 if (global.debug = true){
   if (mouse_check_button_pressed(mb_left)){
-    if (device_mouse_x_to_gui(0) &gt; (display_get_gui_width()-243)*(1+obj_camera_control.smooth_camera)){
+    if (device_mouse_x_to_gui(0) &gt; (window_get_width()-243)*(1+obj_camera_control.smooth_camera)){
     
     //graphics
       if gui_get_value(guid, 'Graphics') || (update_debug = true){
@@ -580,7 +583,7 @@ if (global.debug = true){
             <string>///Debug Controller Apply New Values [Modifiers]
 if update_debug || (global.debug = true){
   //if (mouse_check_button_released(mb_left)){
-    if (device_mouse_x_to_gui(0) &gt; (display_get_gui_width()-243)*(1+obj_camera_control.smooth_camera)) || (update_debug = true){
+    if (device_mouse_x_to_gui(0) &gt; (window_get_width()-243)*(1+obj_camera_control.smooth_camera)) || (update_debug = true){
       
       if (gui_get_value(guid, 'Modifiers')
         &amp;&amp; (gui_get_value(guid, 'Global')
@@ -615,6 +618,7 @@ if update_debug || (global.debug = true){
             if update_debug || last_enlarge != gui_get_value(guid, "Enlarge") scr_modifier_adjust(queue_weap_spawn_mods, scr_mod_enlarge, 6, gui_get_value(guid, "Enlarge"));
             if update_debug || last_shrink != gui_get_value(guid, "Shrink") scr_modifier_adjust(queue_weap_spawn_mods, scr_mod_shrink, 7, gui_get_value(guid, "Shrink"));
             if update_debug || last_aimBot != gui_get_value(guid, "Aim Bot") scr_modifier_adjust(queue_pre_weap_mods, scr_mod_aimBot, 0, gui_get_value(guid, "Aim Bot"));
+            if update_debug || last_knockback != gui_get_value(guid, "Knockback") scr_modifier_adjust(queue_weap_spawn_mods, scr_mod_knockback, 0, gui_get_value(guid, "Knockback"));
             
           }
           
@@ -902,7 +906,7 @@ if (global.debug = true){
 
 if (global.debug = true){
     draw_set_font(fontGGUI)
-    gui_draw(guid, (display_get_gui_width()-243)*(1+obj_camera_control.smooth_camera), 0);
+    gui_draw(guid, (window_get_width()-243)*(1+obj_camera_control.smooth_camera), 0);
     
 }
 </string>

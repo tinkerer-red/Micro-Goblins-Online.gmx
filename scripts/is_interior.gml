@@ -1,5 +1,12 @@
 ///is_interior(x, y)
 
+/*
+This script returns true if the given coordinates are an ixterior cell zone
+
+array[0] = chunk_x
+array[1] = chunk_y
+*/
+
 //returns true or false
 if (argument_count = 2){
   var xx = argument[0]

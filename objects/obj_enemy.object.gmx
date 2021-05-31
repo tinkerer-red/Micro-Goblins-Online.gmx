@@ -102,6 +102,7 @@ move_active = false
 
 e_health = 10
 e_damage = 1
+e_knockback = 1
 
 mp_xgoal = x
 mp_ygoal = y
@@ -323,7 +324,7 @@ if !variable_instance_exists(self, "enemy_mods_init") || (enemy_mods_init = fals
     
     //replace this in the future with dungeon genoration type of code
     repeat( 1 ) ds_priority_add(queue_attack_step_mods, scr_mod_summon_movement_walk, 1);
-    //repeat( 1 ) ds_priority_add(queue_attack_step_mods, scr_mod_summon_attack_default, 2);
+    repeat( 1 ) ds_priority_add(queue_attack_step_mods, scr_mod_summon_attack_stomp, 2);
     repeat( 1 ) ds_priority_add(queue_attack_step_mods, scr_mod_summon_health_default, 3);
     
     

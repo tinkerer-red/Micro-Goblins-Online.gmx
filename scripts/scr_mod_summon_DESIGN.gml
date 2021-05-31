@@ -22,7 +22,7 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
   if !variable_instance_exists(self, "mod_summon_MOD_NAME_start"){
     //store what ever values are needed
     mod_summon_MOD_NAME_timer = room_speed
-    mod_summon_MOD_NAME_start = true
+    mod_summon_MOD_NAME_start = false
     
     //stat buffs
   }
@@ -32,7 +32,15 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
   
   //is this mod currently active? (for instance when the enemy is just finishing with a jump or shot, is the next jump/shot on a cool down?) This is primarily here incase another mod needs to highjack or prevent a specific mod from happening
   if (mod_summon_MOD_NAME_start){
-   
+    
+    
+    //Secondary init, this is only activated on the second frame after every mod has be activated once, this is only a percasionary effect to make sure everything has added to values if needed.
+    if !variable_instance_exists(self, "mod_summon_MOD_NAME_init"){
+      mod_summon_MOD_NAME_init = true;
+    }
+    
+    
+    
     /////look for inputs/////
       //if possessed, grab player inputs
       if is_possessed{
@@ -75,3 +83,7 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
   
   
 }
+
+
+//only ever return true if the modifier is no longer needed, doing so will remove one of the modifier from the queue.
+return false

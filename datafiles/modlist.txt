@@ -4,11 +4,19 @@
 ===Toy===
 Prop (it's a modifier to allow for prop hunt, basically turns you into a prop object for a while, the higher the mod the longer it lasts, 6 is infinate untill death)
 Speed Up (the portal 2's orange gel)
+Laser pointer, when an entity is seeking an enemy it has a high chance to follow the laser pointer
+Betrail (allows for the collision event to be applied to allies too, useful for healing weapons and heat seeking)
+Healing (heals the collided entity)
+Overcharge (buffs the collided entity for a short time, mod count = length of time, and buff strength)
+Rainbow (the hue of the weapon is continuously changing, mod count = change speed)
+Psycho (All mods attempt to do the opposite, so heat seaking would steer away from enemies, guiding would move in the oposite direction of the player's inputs etc)
 
 
 ===Global===
 +++Repeater (Full Auto attacks)
+Spray (much like repeater although much faster, inacurate, and massive damage decrease)
 +++Charge (you must charge up the weapon first, massive damage increase)
+Dynamic Charge (much like charge although has a max charge of 5 seconds)
 ++Dash
 ++Evade
 +++Enlarge (double the size of the weapon and projectiles)
@@ -24,7 +32,9 @@ Exstingish (reduce the size of AOE/continuous attacks by one)
 Exploding corpses (Dead enemies will explode when their body disapears, explosion size relative to modcount, with a mod count of 1 you just need to hit the enemy 1 second before death to explode it, otherwise it wont explode, 5 mod count will give you a 5 second timer. enlarged creatures gives a +50% explosion radius per enlarge, calculated after initial radius calculation, each section of the enemy will also explode, so msnake creatures, and decapitated heads will both create their own explosions)
 Soul Consumer (Massive damage increase, although it requires souls to make use of)
 Soul Extractor (will grant you souls for every kill)
-
+Kinesis (on collision, freeze the player and enemy for a second or so and allow the player to adjust where the knockback will be applied, similar to golf mechanics, or breath of the wilds kinesis effect)
+Tractor Beam (make a list of all enemies infront of the weapon, for each enemy allign them slightly closer to the center point of the line, and move them to the player, like the gravity gun)
+Consumable (makes the item a one time use, not ever something the player would want, but it would be useful for AI created items)
 
 
 ???  CHANCE BASED MODS  ???
@@ -58,8 +68,10 @@ Blind (when mixed with aoe and continuous, this becomes the fog of war)
 +++Slow (swings slower)
 +++Ranged (unlocks ranged mods for the melee weapon, assigns a random projectile sprite perminately)
 +++Back Stab (swings behind you; also?)
+Cyclone (links charged sword swing, swing the weapon in a circle, just copy the flail code)
 Plumble (when collided with an enemy tapping will cause additional damage, enemy players can dash out, and repeater stacks with this mod)
-Perry/blade turn (perry reflects projectiles, while blade turn will reflect melee weapons 90 degrees to the side of the enemy player)
+Perry (perry reflects projectiles, while blade turn will reflect melee weapons 90 degrees to the side of the enemy player)
+blade turn (if colliding with an enemy's weapon buttom mash to see who deals extra damage, this mod does not proc if the enemy is already in the damage dealt list)
 
 +++moveable (unlocks the ability to move while swinging, although it also allows you to guide which direction you are attacking, the change in direction is effected by mod count)
 
@@ -156,13 +168,13 @@ Ranged mod, allows for use of pokeball style summons
 
 -----attack styles (default is walking into the player)
 ---new---
-	Charge (if enemy is with in the direction it is currently moveing dash in that direction untill you collide with something, this is grid based movement only? 1-2 second cool down for player possesion, longer to normal) [movement speeds: 1 chunk in 4 seconds, 2.666, 1.333, 1, 0.5]
-	Continum Charge (the entity dashes from it's current location off the screen, back on from the other side, and lands on it's same location-ish. this attack can only be used left and right, never any other direction) [modcount = number of selves which will dash the screen the second time, of mod count is only 1 then there is no second time]
-	Trail of creep (leaves it behind their movement, not effected by player movement)
-	Kamikaze (it will explode when it is close to the player, when it dies, or when the possesion player uses ability 3)
-	Minion Production (This allows them to spawn 3-7 extremely basic minions, trying to use this attack after they already have max minions only produces a projectile shot at the desired enemy, this projectile does make use of other ranged based mods) [boss mode makes each projectile into a volly of projectiles instead]
-	Passive (This ONLY prevents the default collision damage, For players this is a worthless mod)
+	Passive (This prevents the default collision damage, and applies damage to health, relative to mod count. For players this is [probably] a worthless mod)
 	Neutural (This prevents the default enemy tracking, but if a player deals any damage to this entity it will permanately focus on the first player who dealt damage to it, then then next successive player in queue, this provieds a substantial damage increase for the entity, and the first damage is ignored, but it acts like it was damaged still giving it iframes)
+	+++Charge (if enemy is with in the direction it is currently moveing dash in that direction untill you collide with something, this is grid based movement only? 1-2 second cool down for player possesion, longer to normal) [movement speeds: 1 chunk in 4 seconds, 2.666, 1.333, 1, 0.5]
+	+++Kamikaze (it will explode when it is close to the player, when it dies, or when the possesion player uses ability 3)
+	Trail of creep (leaves it behind their movement, not effected by player movement)
+	Continum Charge (the entity dashes from it's current location off the screen, back on from the other side, and lands on it's same location-ish. this attack can only be used left and right, never any other direction) [modcount = number of selves which will dash the screen the second time, of mod count is only 1 then there is no second time]
+	Minion Production (This allows them to spawn 3-7 extremely basic minions, trying to use this attack after they already have max minions only produces a projectile shot at the desired enemy, this projectile does make use of other ranged based mods) [boss mode makes each projectile into a volly of projectiles instead]
 	Squirt [maybe better name] (shoots a random volly of 3-5 projectiles, the volly is with in a 90 degree area of desired location, every second when player controlled, longer for normal)
 	Ranged (Shoots [modcount] projectiles, directly at the player)
 	Burst Shot (Shoots [modcount]=[3,4,6,8,12] projectiles out in even directions from it's movement's closest cardinal direction so if moving movestly left it will start the first projectile aimed perfectly left) [the bursts are loaded when the cooldown passes, so when you already have 1 burst loaded, it doesnt have to be used, and the next 4 can still be loaded, 5 bursts can be loaded at one time, though if it's an enemy maybe add a delay for their desired attack time]
@@ -173,7 +185,8 @@ Ranged mod, allows for use of pokeball style summons
 	Laser Eye (A directional laser beam coming from the entity, for 1 second, with a cool down of 0 second for the player and 1 second for anything else, the entity is unable to move or do anything else durring this time) [modcount also dictates laser beam width]
 	Stomp (A small jump, then pound to the ground, it's just a weak AOE+knockback, modcount = AOE size)
 	Meateor Swarm (modcount = meteors, spawn a bunch of meteors which falls from the sky, pre mark their landing possitions, and never spawn any ontop of the player, or in front of the player, summons will have a shorter delay on this attack and will have a random percent 20-100 of which meteors will be spawns on an enemy, player possesed will spawn 50% of meteors ontop of enemies every time, and only a 20% chance to spawn one on a enemy-PLAYER) [Isaac's crack the sky effect]
-	Spin attack (basically just spin in circles, in a 1/2 chunk radius, if colliding with a wall, get some extreme knockback in the other direction, also throwing out projectiles 3 a second)
+	Spin attack (basically just spin in circles, in a 1/2 chunk radius, if colliding with a wall, get some extreme knockback in the other direction, also throwing out projectiles 3 a second, inspired by TBoI's Greed mode boss)
+	Bomber (throws timed bombs)
 	
 
 [Attack] Sef Destruct (explodes, dealing half it's remaining health with a max of ___) (if this modifier is mixed with timer, just make it explode at the end of the timer)
@@ -194,6 +207,7 @@ Ranged mod, allows for use of pokeball style summons
 [propultion] shoots out a bunch of short ranged projectiles behind it, rocketing it around the room bouncing off walls dealing collision damage and projectile damage. (mod count = time propultion happens)
 [attack] telekenisis (makes use of the gravity gun modifier)
 [attack] mimic (prevent any other mod from activating untill an enemy player is with in striking range, if no enemies are nearby, then stick near your owner) 
+[attack] Hidden (Will not be drawn untill an enemy player is with in striking range, if summoned when drawing the owners camera view, make the summon transparent)
 
 -----movement (the default is directly walking at the nearest player)
 ---new---
@@ -204,7 +218,7 @@ Ranged mod, allows for use of pokeball style summons
 	Leaper, (it's actually a lot like airstrike in mechanics, dont move unles given an input, only move while leap is active, other movement mods can either take place before or after, or dynamically change the speed based on if it's in or out of a jump. this one will take some trouble shooting to see what works save it for later)
 	Teleport, (This is less of a movement type and more of a movement ability, almost exactly the same as Massive Jump, although the entity goes invisible, and will do it's best to use this effect when a projectile is on a collision course for it, or if the player is out of reach)
 	Inverse Movement, (Will always try to reach the closest possition oposite of the player, although this does give the summon infinate flight, if it is outside, simly try to stay on the edge of the player camera? idk If it is player possesed let it move freely, with the usual restrictions on flight)
-	
+	Skiddish (lunges away from a player who attacked with in range)
 	
 [Move] Bouncy (spawns in the direction the player was facing, will continue to move and bounce off walls untill dead)
 [Move] Spastic (bee like movement, very random, much wow)

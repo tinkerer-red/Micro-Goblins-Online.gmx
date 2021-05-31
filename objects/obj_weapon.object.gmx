@@ -634,9 +634,9 @@ if self.attack  //if spawning projectiles
         summon.start_x = summon.x
         summon.start_y = summon.y
         
-        summon.w_damage = w_damage
-        summon.w_range = w_range
-        summon.w_knockback = w_knockback
+        summon.e_damage = w_damage
+        summon.e_range = w_range
+        summon.e_knockback = w_knockback
       }
       ds_queue_destroy(self.summon_queue)
       summon_queue = -1

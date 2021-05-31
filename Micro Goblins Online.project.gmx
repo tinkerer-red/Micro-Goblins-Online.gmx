@@ -68,6 +68,7 @@
     <extension index="8">extensions\Collision_Cone</extension>
     <extension index="9">extensions\GML_Tasks</extension>
     <extension index="10">extensions\Autotiling Tilemap Shaders</extension>
+    <extension index="11">extensions\window_frame</extension>
   </NewExtensions>
   <sounds name="sound">
     <sound>sound\snd_mod_charge</sound>
@@ -114,6 +115,7 @@
         <sprite>sprites\prt_dashDust</sprite>
         <sprite>sprites\prt_dashLines</sprite>
         <sprite>sprites\prt_airStrike_smash</sprite>
+        <sprite>sprites\prt_aoe_explosion</sprite>
       </sprites>
       <sprite>sprites\prt_void</sprite>
       <sprite>sprites\prt_star</sprite>
@@ -201,57 +203,65 @@
               <script>scripts\scr_mod_dash.gml</script>
               <script>scripts\scr_mod_evade.gml</script>
               <script>scripts\scr_mod_knockback.gml</script>
-              <script>scripts\scr_mod_delay.gml</script>
               <script>scripts\scr_mod_enlarge.gml</script>
               <script>scripts\scr_mod_shrink.gml</script>
               <script>scripts\scr_mod_aimBot.gml</script>
-              <script>scripts\scr_mod_tractorBeam.gml</script>
+              <scripts name="unfinished">
+                <script>scripts\scr_mod_delay.gml</script>
+                <script>scripts\scr_mod_tractorBeam.gml</script>
+              </scripts>
             </scripts>
             <scripts name="Melee">
+              <script>scripts\scr_mod_slash.gml</script>
+              <script>scripts\scr_mod_thrust.gml</script>
+              <script>scripts\scr_mod_chained.gml</script>
               <script>scripts\scr_mod_range.gml</script>
               <script>scripts\scr_mod_swiftness.gml</script>
-              <script>scripts\scr_mod_flail_old.gml</script>
-              <script>scripts\scr_mod_moveable.gml</script>
               <script>scripts\scr_mod_slowness.gml</script>
               <script>scripts\scr_mod_backStab.gml</script>
-              <script>scripts\scr_mod_chained.gml</script>
-              <script>scripts\scr_mod_slash.gml</script>
               <script>scripts\scr_mod_flail.gml</script>
-              <script>scripts\scr_mod_thrust.gml</script>
+              <script>scripts\scr_mod_moveable.gml</script>
               <script>scripts\scr_mod_extend.gml</script>
+              <scripts name="unfinished">
+                <script>scripts\scr_mod_flail_old.gml</script>
+              </scripts>
             </scripts>
             <scripts name="Range Mods">
               <script>scripts\scr_mod_sticky.gml</script>
               <script>scripts\scr_mod_bonusShot.gml</script>
               <script>scripts\scr_mod_mirrorShot.gml</script>
               <script>scripts\scr_mod_multishot.gml</script>
+              <script>scripts\scr_mod_burst.gml</script>
               <script>scripts\scr_mod_inaccurate.gml</script>
-              <script>scripts\scr_mod_quickScope.gml</script>
               <script>scripts\scr_mod_cluster.gml</script>
-              <script>scripts\scr_mod_seeking.gml</script>
-              <script>scripts\scr_mod_ricochet.gml</script>
               <script>scripts\scr_mod_boomerang.gml</script>
               <script>scripts\scr_mod_negarang.gml</script>
+              <script>scripts\scr_mod_ricochet.gml</script>
+              <script>scripts\scr_mod_seeking.gml</script>
               <script>scripts\scr_mod_guiding.gml</script>
+              <script>scripts\scr_mod_laser.gml</script>
               <script>scripts\scr_mod_targeting.gml</script>
               <script>scripts\scr_mod_airStrike.gml</script>
               <script>scripts\scr_mod_arcLightning.gml</script>
-              <script>scripts\scr_mod_burst.gml</script>
-              <script>scripts\scr_mod_laser.gml</script>
+              <script>scripts\scr_mod_quickScope.gml</script>
             </scripts>
             <scripts name="Summons">
               <scripts name="Movement">
                 <script>scripts\scr_mod_summon_movement_walk.gml</script>
-                <script>scripts\scr_mod_summon_movement_jumpy.gml</script>
                 <script>scripts\scr_mod_summon_movement_orbital.gml</script>
                 <script>scripts\scr_mod_summon_movement_chained.gml</script>
+                <script>scripts\scr_mod_summon_movement_jumpy.gml</script>
                 <scripts name="out of date">
                   <script>scripts\scr_mod_summon_movement_jumpy_old.gml</script>
                 </scripts>
               </scripts>
               <scripts name="Attack">
-                <script>scripts\scr_mod_summon_attack_default.gml</script>
                 <script>scripts\scr_mod_summon_attack_leap.gml</script>
+                <scripts name="unfinished">
+                  <script>scripts\scr_mod_summon_attack_charge.gml</script>
+                  <script>scripts\scr_mod_summon_attack_kamikaze.gml</script>
+                  <script>scripts\scr_mod_summon_attack_stomp.gml</script>
+                </scripts>
               </scripts>
               <scripts name="Health">
                 <script>scripts\scr_mod_summon_health_default.gml</script>
@@ -294,7 +304,9 @@
       <scripts name="entities">
         <script>scripts\scr_entity_input_to_move_vector.gml</script>
         <script>scripts\scr_entity_state_move.gml</script>
-        <script>scripts\script442.gml</script>
+        <scripts name="Spawn Scripts">
+          <script>scripts\scr_spawn_entity_create.gml</script>
+        </scripts>
       </scripts>
       <scripts name="Collisions">
         <script>scripts\chunk_tile_meeting_precise.gml</script>
@@ -318,6 +330,9 @@
       <script>scripts\is_hoarded.gml</script>
       <script>scripts\move_towards.gml</script>
       <script>scripts\deal_damage.gml</script>
+      <script>scripts\deal_knockback.gml</script>
+      <script>scripts\deal_damage_radius.gml</script>
+      <script>scripts\deal_knockback_radius.gml</script>
       <script>scripts\deal_tick_damage.gml</script>
     </scripts>
     <scripts name="functions">
@@ -708,9 +723,11 @@
         <scripts name="maths">
           <script>scripts\is_interior.gml</script>
           <script>scripts\interior_chunk_find_grid_pos.gml</script>
+          <script>scripts\interior_chunk_find_exterior_chunk_pos.gml</script>
           <script>scripts\interior_chunk_to_xy.gml</script>
           <script>scripts\xy_to_chunk.gml</script>
           <script>scripts\interior_rooms_connected_to_bbox.gml</script>
+          <script>scripts\seed_interior_location.gml</script>
         </scripts>
         <scripts name="Private">
           <scripts name="interiorstring arrays">
@@ -852,6 +869,7 @@
       <script>scripts\ats_rectangle_update.gml</script>
       <script>scripts\ats_rectangle_draw.gml</script>
     </scripts>
+    <script>scripts\fullscreen_toggle.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shStretch.shader</shader>
@@ -934,8 +952,12 @@
     <object>objects\obj_gml_task_handler</object>
     <object>objects\obj_example</object>
   </objects>
+  <timelines name="timelines">
+    <timeline>timelines\timeline0</timeline>
+  </timelines>
   <rooms name="rooms">
     <room>rooms\room_one_player_TEST</room>
+    <room>rooms\room8</room>
     <rooms name="htme_demo">
       <room>rooms\htme_rom_menu</room>
       <room>rooms\htme_rom_connecting</room>

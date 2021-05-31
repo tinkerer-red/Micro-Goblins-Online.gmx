@@ -1,5 +1,12 @@
 ///xy_to_chunk(x, y)
 
+/*
+This script returns the the chunk's chunk possition
+
+array[0] = chunk_x
+array[1] = chunk_y
+*/
+
 var xx = argument0;
 var yy = argument1;
 var array;

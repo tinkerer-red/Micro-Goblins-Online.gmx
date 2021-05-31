@@ -64,6 +64,7 @@ if place_free(x,y)
 }else{
   image_blend = c_red
 }
+
 </string>
           </argument>
         </arguments>

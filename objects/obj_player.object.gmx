@@ -1054,7 +1054,7 @@ if (self.player_state = e_player_state.move)
       self.active_w_damage = 1
       
       
-      self.active_w_knockback = 16
+      self.active_w_knockback = 4
     }
     
     

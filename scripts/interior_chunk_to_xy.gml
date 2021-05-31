@@ -1,6 +1,7 @@
 ///interior_chunk_to_xy(zone_pos, cell_x, cell_y)
 
 /*
+This script returns the real word coordinates of the interior's cell possition
 returns: array[0] = xx
          array[1] = yy
 */

@@ -144,10 +144,11 @@ ds_map_add(interior_map, "zone_pos", open_zone)
           var bbox_struct_down = chunk_id.y + (grid_y+down_i)*tile_size
         
         //now that we have the bounding box of the structure, we can find the center point
-        var exit_x = bbox_struct_left + (bbox_struct_right - bbox_struct_left)/2
-        var exit_y = bbox_struct_down + tile_size
-        ds_map_add(interior_map, "exit_x", exit_x)
-        ds_map_add(interior_map, "exit_y", exit_y)
+        var exit_x = bbox_struct_left + (bbox_struct_right - bbox_struct_left)/2;
+        var exit_y = bbox_struct_down + tile_size;
+        
+        interior_map[? "exit_x"] = exit_x;
+        interior_map[? "exit_y"] = exit_y;
 
 
 

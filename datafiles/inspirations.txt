@@ -58,6 +58,11 @@ phantom dust
 halo 3's grenade types, equipment, and weapons
 -Perfect Dark
 Zombie Estate 2
+shovel knight's, Plague knight's, alchamey system
+look into more minigames and genres so any game could be created from mixing modifiers
+
+
+
 
 [Weapon] Air Pump - Dig Dug - ()
 [Weapon] Concrete Donkey - Worms - (ranged + enlarge + airstrike + bouncy)
@@ -139,6 +144,10 @@ Zombie Estate 2
 [Summon] Storm (Summon + Timer + Drain + Hover)
 [Summon] Power Wheel thing from over-watch (summon + defaultHealth + Self Destruct + momentum)
 [Summon] Creeper (Summon + defaultHealth + Self Destruct + defaultMove)
+[Summon] Create (Summon + solid + lootable + passive)
+[Summon] Urn (Summon + solid + lootable + passive)
+[Summon] Evil Urn (Summon + solid + [modifier which spawns a generic create] + passive)
+
 +++++++++++++++++++++++++++++++++++++++++++
 
 

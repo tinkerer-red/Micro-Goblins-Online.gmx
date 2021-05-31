@@ -34,7 +34,7 @@ if instance_exists(obj_particle_controller){
     ds_map_add_map(obj_particle_controller.particle_map, part_string, part_type_key)
     
     //define variables for the particle type
-    part_type_sprite(part_type, sprite, false, false, false)
+    part_type_sprite(part_type, sprite, true, true, false)
     part_type_size(part_type, radius*2, radius*2, 0, 0.00)
     part_type_colour3(part_type, color, color, color)
     part_type_blend(part_type, false)

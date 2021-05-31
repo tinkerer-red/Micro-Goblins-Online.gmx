@@ -41,7 +41,7 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
     
     //this is basically a second init, to prevent mod info from being lost if they are in queue after this mod.
     if !variable_instance_exists(self, "mod_summon_movement_jumpy_max_speed"){ mod_summon_movement_jumpy_max_speed = self.max_speed }
-  
+    
     //decrement timer
     mod_summon_movement_jumpy_timer -= 1*lag()
     if (mod_summon_movement_jumpy_timer <= 0){

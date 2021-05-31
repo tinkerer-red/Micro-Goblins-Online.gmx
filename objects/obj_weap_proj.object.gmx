@@ -394,12 +394,10 @@ if projectile_active
           var enemy = nearest_enemy(x, y, w_hype)
           if (enemy != noone)
           {
-              enemy.e_health -= w_damage
-              //show_debug_message("fucked up")
+              deal_damage(enemy, w_damage)
               draw_particle_blood(enemy.x, enemy.y)
               
-              enemy.spd = self.w_knockback
-              enemy.direction = direction //point_direction(x, y, enemy.x, enemy.y)
+              deal_knockback(enemy, w_knockback, direction)
             }
         }
         ///if aeo change sprite
