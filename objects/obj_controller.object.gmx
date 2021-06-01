@@ -961,7 +961,7 @@ game_restart()
             <kind>1</kind>
             <string>///toggle fullscreen
 
-fullscreen_toggle(true)
+obj_camera_control.is_fullscreened = fullscreen_toggle(true)
 </string>
           </argument>
         </arguments>

@@ -23,6 +23,8 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
     //store what ever values are needed
     mod_summon_stomp_time = room_speed*0.666
     mod_summon_stomp_timer = 0
+    mod_summon_stomp_cooldown_time = room_speed*1
+    mod_summon_stomp_cooldown_timer = 0
     mod_summon_stomp_start = true
     
     mod_summon_stomp_explosion_size = one_tile + lerp(1.2*one_tile, 6*one_tile, (mod_count-1)/4)
@@ -50,7 +52,7 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
     
     
     /////look for inputs/////
-    if (mod_summon_stomp_timer = 0){
+    if (mod_summon_stomp_timer = 0) && (mod_summon_stomp_cooldown_timer = 0){
       //if possessed, grab player inputs
       if is_possessed{
         var possessed_attack = possesser_id.item_a;
@@ -77,13 +79,23 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
     
       
     ///if cooldown is needed
-    if (mod_summon_stomp_timer > 0){
+    if (mod_summon_stomp_timer > 0)  && (mod_summon_stomp_cooldown_timer = 0){
     
       mod_summon_stomp_timer -= 1*lag()
       
       if (mod_summon_stomp_timer <= 0){
+        
+        mod_summon_stomp_timer = 0;
+        
+        //set the cooldown timer, make it shorter if it's a player possessed enemy
+        if is_possessed{
+          mod_summon_stomp_cooldown_timer = mod_summon_stomp_cooldown_time*0.5;
+        }else{
+          mod_summon_stomp_cooldown_timer = mod_summon_stomp_cooldown_time;
+        }
+        
         //change active states, or explode
-        if (point_distance(enemy.x, enemy.y, x, y) < mod_summon_stomp_explosion_size){
+        if instance_exists(enemy) && (point_distance(enemy.x, enemy.y, x, y) < mod_summon_stomp_explosion_size){
           
           mod_summon_stomp_explode = true
           deal_damage_radius(mod_summon_stomp_explosion_size, mod_summon_stomp_explosion_damage, false, false)
@@ -98,6 +110,15 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
         }
       }
     
+    }
+    
+    //handle the attack cool down
+    if (mod_summon_stomp_cooldown_timer > 0){
+      mod_summon_stomp_cooldown_timer -= 1*lag();
+      
+      if (mod_summon_stomp_cooldown_timer <= 0){
+        mod_summon_stomp_cooldown_timer = 0;
+      }
     }
     
     

@@ -91,7 +91,7 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
       
       if (mod_summon_kamikaze_timer <= 0){
         //change active states, or explode
-        if (point_distance(enemy.x, enemy.y, x, y) < mod_summon_kamikaze_explosion_size){
+        if instance_exists(enemy) && (point_distance(enemy.x, enemy.y, x, y) < mod_summon_kamikaze_explosion_size){
           
           mod_summon_kamikaze_explode = true
           show_debug_message("mod_summon_kamikaze_explosion_damage = "+string(mod_summon_kamikaze_explosion_damage))

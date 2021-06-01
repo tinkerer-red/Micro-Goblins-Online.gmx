@@ -28,6 +28,7 @@
             <string>///init / allow use of views, and set zooms
 
 resizing = true;
+is_fullscreened = false;
 free_cam_mode = false
 
 //set the ideal resolution
@@ -215,14 +216,10 @@ if (os_type = os_windows &amp;&amp; window_has_focus())
       ww = room_width;
       hh = room_height;
     }
-    //window_frame_set_region(0, 0, w, h);
-    //display_set_gui_size(w*upscale_val, h*upscale_val)
-    //window_set_size(w, h)
-    //window_frame_set_region(0, 0, w, h);
     
     surface_resize(application_surface, ww, hh)
     
-    //*
+    /*
     show_debug_message("RESIZED")
     show_debug_message("ww = "+string(ww))
     show_debug_message("display_get_gui_width = "+string(display_get_gui_width()))
@@ -356,7 +353,7 @@ if (os_type = os_windows &amp;&amp; window_has_focus())
           <argument>
             <kind>1</kind>
             <string>///[Non Windows OS] resize the app surface
-/*
+
 if (os_type != os_windows){
   //check for resize
   if (surface_get_width(application_surface) != floor(ww)) || (surface_get_height(application_surface) != floor(hh))
@@ -364,11 +361,21 @@ if (os_type != os_windows){
   || (!smooth_camera &amp;&amp; ((surface_get_width(application_surface) != display_get_gui_width()) || (surface_get_height(application_surface) != display_get_gui_height()))))
   {
     if (smooth_camera){
-      ww = display_get_gui_width()*upscale_val;
-      hh = display_get_gui_height()*upscale_val;
+      if !is_fullscreened{
+        ww = display_get_gui_width()*upscale_val;
+        hh = display_get_gui_height()*upscale_val;
+      }else{
+        ww = display_get_width()*upscale_val;
+        hh = display_get_height()*upscale_val;
+      }
     }else{
-      ww = display_get_gui_width();
-      hh = display_get_gui_height();
+      if !is_fullscreened{
+        ww = display_get_gui_width();
+        hh = display_get_gui_height();
+      }else{
+        ww = display_get_width();
+        hh = display_get_height();
+      }
     }
     
     surface_resize(application_surface, ww, hh)

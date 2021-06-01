@@ -87,7 +87,7 @@ guid = gui_create_gui();
 
 gui_create_string(guid, "text", "Debug Controller", c_white);
 
-gui_create_menu(guid, "Modifiers", false, 58, c_black);
+gui_create_menu(guid, "Modifiers", false, 61, c_black);
   
   gui_create_menu(guid, "Global", false, 10, c_aqua);
     gui_create_slider(guid, "AOE", 0, 0, 5, c_aqua)
@@ -133,7 +133,7 @@ gui_create_menu(guid, "Modifiers", false, 58, c_black);
     gui_create_slider(guid, "Quick Scope", 0, 0, 5, c_orange)
     
     
-  gui_create_menu(guid, "Summon", false, 12, c_green);
+  gui_create_menu(guid, "Summon", false, 15, c_green);
     ////////////////////////////////////////////////////////
     gui_create_menu(guid, "Movement", false, 4, c_blue);
       gui_create_slider(guid, "Default Movement", 0, 0, 5, c_red)
@@ -142,8 +142,11 @@ gui_create_menu(guid, "Modifiers", false, 58, c_black);
       gui_create_slider(guid, "Jumpy", 0, 0, 5, c_orange)
       
     ////////////////////////////////////////////////////////
-    gui_create_menu(guid, "Attack", false, 1, c_red);
+    gui_create_menu(guid, "Attack", false, 4, c_red);
       gui_create_slider(guid, "Leap", 0, 0, 5, c_yellow)
+      gui_create_slider(guid, "Stomp", 0, 0, 5, c_green)
+      gui_create_slider(guid, "Hasten", 0, 0, 5, c_blue)
+      gui_create_slider(guid, "Kamikaze", 0, 0, 5, c_purple)
       
     ////////////////////////////////////////////////////////
     gui_create_menu(guid, "Health", false, 4, c_green);
@@ -311,6 +314,9 @@ if update_debug || (global.debug = true){
           last_chainedMovement = gui_get_value(guid, "Chained Movement");
           last_jumpy = gui_get_value(guid, "Jumpy");
           last_leap = gui_get_value(guid, "Leap");
+          last_stomp = gui_get_value(guid, "Stomp");
+          last_hasten = gui_get_value(guid, "Hasten");
+          last_kamikaze = gui_get_value(guid, "Kamikaze");
           last_defaultHealth = gui_get_value(guid, "Default Health");
           last_stoutHealth = gui_get_value(guid, "Stout");
           last_enlargedHealth = gui_get_value(guid, "Enlarged");
@@ -478,6 +484,9 @@ if (global.debug = true){
           }
           if gui_get_value(guid, 'Attack'){
            gui_set_value(guid, "Leap", floor(0.5+gui_get_value(guid, "Leap")) div 1); 
+           gui_set_value(guid, "Stomp", floor(0.5+gui_get_value(guid, "Stomp")) div 1); 
+           gui_set_value(guid, "Hasten", floor(0.5+gui_get_value(guid, "Hasten")) div 1); 
+           gui_set_value(guid, "Kamikaze", floor(0.5+gui_get_value(guid, "Kamikaze")) div 1); 
            
           }
           if gui_get_value(guid, 'Health'){
@@ -674,6 +683,9 @@ if update_debug || (global.debug = true){
             //Attack
             if gui_get_value(guid, 'Attack') || (update_debug = true){
              if update_debug || last_leap != gui_get_value(guid, "Leap") scr_modifier_adjust(queue_attack_step_mods, scr_mod_summon_attack_leap, 1, gui_get_value(guid, "Leap"));
+             if update_debug || last_stomp != gui_get_value(guid, "Stomp") scr_modifier_adjust(queue_attack_step_mods, scr_mod_summon_attack_stomp, 1, gui_get_value(guid, "Stomp"));
+             if update_debug || last_hasten != gui_get_value(guid, "Hasten") scr_modifier_adjust(queue_attack_step_mods, scr_mod_summon_attack_hasten, 1, gui_get_value(guid, "Hasten"));
+             if update_debug || last_kamikaze != gui_get_value(guid, "Kamikaze") scr_modifier_adjust(queue_attack_step_mods, scr_mod_summon_attack_kamikaze, 1, gui_get_value(guid, "Kamikaze"));
              
             }
             //Health

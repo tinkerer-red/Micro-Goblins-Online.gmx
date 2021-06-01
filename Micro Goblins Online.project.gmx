@@ -257,11 +257,9 @@
               </scripts>
               <scripts name="Attack">
                 <script>scripts\scr_mod_summon_attack_leap.gml</script>
-                <scripts name="unfinished">
-                  <script>scripts\scr_mod_summon_attack_charge.gml</script>
-                  <script>scripts\scr_mod_summon_attack_kamikaze.gml</script>
-                  <script>scripts\scr_mod_summon_attack_stomp.gml</script>
-                </scripts>
+                <script>scripts\scr_mod_summon_attack_stomp.gml</script>
+                <script>scripts\scr_mod_summon_attack_hasten.gml</script>
+                <script>scripts\scr_mod_summon_attack_kamikaze.gml</script>
               </scripts>
               <scripts name="Health">
                 <script>scripts\scr_mod_summon_health_default.gml</script>
