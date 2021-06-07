@@ -54,25 +54,23 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
     
     /////look for inputs/////
       if (leap_multiplier = 0){
-        //if possessed, grab player inputs
-        if is_possessed{
-          mod_summon_movement_jumpy_possessed_vector_x = possesser_id.down - possesser_id.up;
-          mod_summon_movement_jumpy_possessed_vector_y = possesser_id.right - possesser_id.left;
-        }else{
-          mod_summon_movement_jumpy_possessed_vector_x = 0;
-          mod_summon_movement_jumpy_possessed_vector_y = 0;
-        }
-        
         //grab the desired inputs for this mod, sometimes they are the given inputs, or manipulated inputs, sometimes they are the mirrored inputs of the enemy.
         mod_summon_movement_jumpy_vector_x = ideal_vector_x;
         mod_summon_movement_jumpy_vector_y = ideal_vector_y;
+        
+        //if possessed, grab player inputs
+        if is_possessed{
+          mod_summon_movement_jumpy_vector_x = possesser_id.right - possesser_id.left;
+          mod_summon_movement_jumpy_vector_y = possesser_id.down - possesser_id.up;
+        }
+        
       } 
       
       //add the two inputs as desired, or simply take the player inputs, either way.
          //This is also where you will add any bias to the movements
       
-      var true_vector_x = clamp( mod_summon_movement_jumpy_vector_x + mod_summon_movement_jumpy_possessed_vector_x, -1, 1);
-      var true_vector_y = clamp( mod_summon_movement_jumpy_vector_y + mod_summon_movement_jumpy_possessed_vector_y, -1, 1);
+      var true_vector_x = clamp( mod_summon_movement_jumpy_vector_x, -1, 1);
+      var true_vector_y = clamp( mod_summon_movement_jumpy_vector_y, -1, 1);
     /////////////////////////  
     
     

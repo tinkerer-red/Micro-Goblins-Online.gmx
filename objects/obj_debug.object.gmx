@@ -87,7 +87,7 @@ guid = gui_create_gui();
 
 gui_create_string(guid, "text", "Debug Controller", c_white);
 
-gui_create_menu(guid, "Modifiers", false, 61, c_black);
+gui_create_menu(guid, "Modifiers", false, 63, c_black);
   
   gui_create_menu(guid, "Global", false, 10, c_aqua);
     gui_create_slider(guid, "AOE", 0, 0, 5, c_aqua)
@@ -133,7 +133,7 @@ gui_create_menu(guid, "Modifiers", false, 61, c_black);
     gui_create_slider(guid, "Quick Scope", 0, 0, 5, c_orange)
     
     
-  gui_create_menu(guid, "Summon", false, 15, c_green);
+  gui_create_menu(guid, "Summon", false, 17, c_green);
     ////////////////////////////////////////////////////////
     gui_create_menu(guid, "Movement", false, 4, c_blue);
       gui_create_slider(guid, "Default Movement", 0, 0, 5, c_red)
@@ -151,9 +151,13 @@ gui_create_menu(guid, "Modifiers", false, 61, c_black);
     ////////////////////////////////////////////////////////
     gui_create_menu(guid, "Health", false, 4, c_green);
       gui_create_slider(guid, "Default Health", 0, 0, 5, c_yellow)
-      gui_create_slider(guid, "Stout", 0, 0, 5, c_yellow)
-      gui_create_slider(guid, "Enlarged", 0, 0, 5, c_yellow)
-      gui_create_slider(guid, "Timed", 0, 0, 5, c_yellow)
+      gui_create_slider(guid, "Stout", 0, 0, 5, c_green)
+      gui_create_slider(guid, "Enlarged", 0, 0, 5, c_blue)
+      gui_create_slider(guid, "Timed", 0, 0, 5, c_purple)
+      
+    gui_create_menu(guid, "Passive", false, 1, c_yellow);
+      gui_create_slider(guid, "Mount", 0, 0, 5, c_green)
+      
   
   gui_create_menu(guid, "Toy Mods", false, 1, c_fuchsia);
     gui_create_slider(guid, "Paint", 0, 0, 5, c_red)
@@ -321,6 +325,7 @@ if update_debug || (global.debug = true){
           last_stoutHealth = gui_get_value(guid, "Stout");
           last_enlargedHealth = gui_get_value(guid, "Enlarged");
           last_timedHealth = gui_get_value(guid, "Timed");
+          last_mount = gui_get_value(guid, "Mount")
           
         //}
         
@@ -494,6 +499,9 @@ if (global.debug = true){
             gui_set_value(guid, "Stout", floor(0.5+gui_get_value(guid, "Stout")) div 1);
             gui_set_value(guid, "Enlarged", floor(0.5+gui_get_value(guid, "Enlarged")) div 1);
             gui_set_value(guid, "Timed", floor(0.5+gui_get_value(guid, "Timed")) div 1);
+          }
+          if gui_get_value(guid, 'Passive'){
+            gui_set_value(guid, "Mount", floor(0.5+gui_get_value(guid, "Mount")) div 1);
           }
           
         }
@@ -696,6 +704,12 @@ if update_debug || (global.debug = true){
               if update_debug || last_timedHealth != gui_get_value(guid, "Timed") scr_modifier_adjust(queue_attack_step_mods, scr_mod_summon_health_timed, 99, gui_get_value(guid, "Timed"));
               
             }
+            //Passive
+            if gui_get_value(guid, 'Passive') || (update_debug = true){
+              if update_debug || last_mount != gui_get_value(guid, "Mount") scr_modifier_adjust(queue_attack_step_mods, scr_mod_summon_passive_mount, 99, gui_get_value(guid, "Mount"));
+              
+            }
+            
           }
           
           //Toy Mods

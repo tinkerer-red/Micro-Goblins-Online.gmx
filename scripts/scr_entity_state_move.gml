@@ -32,7 +32,8 @@ if (spd != 0)
   }
   
   //Also make sure we're not colliding with another entity
-  if !enough_lag(){
+  if !enough_lag()
+  && !(variable_instance_exists(self, "is_mounted") && (is_mounted)){ //make sure the entity isn't mounted, if it is mounted, just assume it has more mass than another entity and push the other entity out of it's way
     var nearest_entity = instance_nearest_notme(x, y, obj_entity)
     var pushing_force = 4;
     var error = 1 - normalize(point_distance(x, y, nearest_entity.x, nearest_entity.y), 0, (sprite_width+nearest_entity.sprite_width)*0.4 )

@@ -437,9 +437,9 @@ if ticked_over(){
     }
   }
   
-  
-  ideal_vector_x = mp_xgoal - x;
-  ideal_vector_y = mp_ygoal - y;
+  var ideal_dir = point_direction(x, y, mp_xgoal, mp_ygoal)
+  ideal_vector_x = lengthdir_x(1, ideal_dir);
+  ideal_vector_y = lengthdir_y(1, ideal_dir);
 }
 </string>
           </argument>
@@ -731,8 +731,19 @@ draw_self()
             <kind>1</kind>
             <string>///debug draw
 
+///get the move vector
+//
+var move_dis = min(point_distance(0, 0, (right-left), (down-up)), 1) * acceleration * (60/room_speed);
+var move_dir = point_direction(0, 0, (right-left), (down-up));
+
+//now we update the inputs EXCLUSIVELY for debug purposes
+up    = abs(min(0, lengthdir_y(move_dis, move_dir)))
+down  = max(0, lengthdir_y(move_dis, move_dir))
+left  = abs(min(0, lengthdir_x(move_dis, move_dir)))
+right = max(0, lengthdir_x(move_dis, move_dir))
+
 draw_set_color(c_yellow)
-draw_line(x, y, x+(right-left)*10, y+(down-up)*10)
+draw_line(x, y, x+(right-left)*100, y+(down-up)*100)
 draw_set_color(c_white)
 //draw_circle(mp_xgoal, mp_ygoal, 4, false)
 </string>

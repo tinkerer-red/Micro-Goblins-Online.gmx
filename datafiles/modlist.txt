@@ -241,6 +241,7 @@ Ranged mod, allows for use of pokeball style summons
 [Move] Swimming (This will always take last priority, but if the summon is not inside water it will flail around, although if it is, it gets double the movement speed. and a passive default movement mod)
 
 --passive/toy summon mods (not really specific to any particular mod section, like the weapon's toy mods)
+[Toy] Ridable (This allows for the NPC to be mounted, and controlled by the player mounting it. This is very similar to being possessed, although it's not timed, and the player is carried with the AI, The player is also perfectly invulnerable while mounting an AI)
 [toy] blood shot (shoots out 6 or 8 projectiles apawn death)
 [toy] blood trail (slightly less health, but leaves a trail of damaging floor tiles, or maybe smaller red shadowy versions of it's self.)
 [passive] Spawner ( every 3.5-(0.5*modcount) seconds it spawns a minion version of it's self, with a max of 3)

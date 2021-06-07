@@ -16,7 +16,7 @@ var map = argument4
 if (type = 2) size = 4;
 
 //ds_grid_create(4*size, 4*size)
-show_debug_message("chunk_generate_interior switch start")
+//show_debug_message("chunk_generate_interior switch start")
 switch(type)
 {
     case 0:

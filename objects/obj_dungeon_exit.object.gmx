@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>if place_meeting(x,y, obj_player)
 {
-  show_debug_message("//////////collided with player!!!!")
+  //show_debug_message("//////////collided with player!!!!")
   
   var tp_x = exit_x
   var tp_y = exit_y
@@ -37,9 +37,9 @@
       var tp_x = map[? "exit_x"]
       var tp_y = map[? "exit_y"]
       var _j = json_encode(map)
-      show_debug_message("===================================================")
-      show_debug_message(_j)
-      show_debug_message("===================================================")
+      //show_debug_message("===================================================")
+      //show_debug_message(_j)
+      //show_debug_message("===================================================")
     }
   }else{
     show_debug_message("===================================================")
@@ -51,8 +51,8 @@
   with instance_nearest(x,y, obj_player){
     x = tp_x
     y = tp_y
-    show_debug_message("tp_x = "+string(tp_x))
-    show_debug_message("tp_y = "+string(tp_y))
+    //show_debug_message("tp_x = "+string(tp_x))
+    //show_debug_message("tp_y = "+string(tp_y))
   }
 }
 </string>

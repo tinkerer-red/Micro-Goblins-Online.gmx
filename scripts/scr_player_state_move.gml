@@ -2,6 +2,10 @@
 
 var time_adjust = 60/room_speed;
 
+if (is_jocky){
+  spd = 0
+}
+
 if (spd != 0)
 {
   ///apply friction

@@ -67,16 +67,16 @@ if (variable_global_exists("numberOfLocalPlayers") = false) || (variable_global_
     self.keyboardDown2  = 83 //ini_read_real("keyboard", "keyboardDown2", 83); //S
     
     self.keyboardAction  = 219 //ini_read_real("keyboard", "keyboardSelect", 13);
-    self.keyboardAction2 = 219 //ini_read_real("keyboard", "keyboardSelect", 13);
+    self.keyboardAction2 = 186 //ini_read_real("keyboard", "keyboardSelect", 13);
     
     self.keyboardItemA  = 73 //ini_read_real("keyboard", "keyboardSelect", 13);
-    self.keyboardItemA2 = 73 //ini_read_real("keyboard", "keyboardSelect", 13);
+    self.keyboardItemA2 = 74 //ini_read_real("keyboard", "keyboardSelect", 13);
     
     self.keyboardItemB  = 79 //ini_read_real("keyboard", "keyboardSelect", 13);
-    self.keyboardItemB2 = 79 //ini_read_real("keyboard", "keyboardSelect", 13);
+    self.keyboardItemB2 = 75 //ini_read_real("keyboard", "keyboardSelect", 13);
     
     self.keyboardItemC  = 80 //ini_read_real("keyboard", "keyboardSelect", 13);
-    self.keyboardItemC2 = 80 //ini_read_real("keyboard", "keyboardSelect", 13);
+    self.keyboardItemC2 = 76 //ini_read_real("keyboard", "keyboardSelect", 13);
     
     self.keyboardZoomIn  = 33 //ini_read_real("keyboard", "keyboardSelect", 13);
     self.keyboardZoomIn2 = 187 //ini_read_real("keyboard", "keyboardSelect", 13);
@@ -423,7 +423,7 @@ if (window_has_focus()) &amp;&amp; (htme_isLocal())
       }
       
       //action
-      if (keyboard_check(keyboardAction &amp;&amp; i = keyboard_player))
+      if (keyboard_check(keyboardAction) &amp;&amp; i = keyboard_player)
       || (keyboard_check(keyboardAction2) &amp;&amp; i = keyboard_player)
       || gamepad_button_check(i, gamepadAction)
       || gamepad_button_check(i, gamepadAction2)
@@ -672,7 +672,7 @@ if (window_has_focus()) &amp;&amp; (htme_isLocal())
           }
           
       }else{
-      
+          
           self.action[i] = false
           self.action_pressed[i] = false
           self.action_held[i] = false

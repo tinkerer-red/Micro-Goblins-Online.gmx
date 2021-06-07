@@ -267,6 +267,9 @@
                 <script>scripts\scr_mod_summon_health_enlarged.gml</script>
                 <script>scripts\scr_mod_summon_health_timed.gml</script>
               </scripts>
+              <scripts name="Passive">
+                <script>scripts\scr_mod_summon_passive_mount.gml</script>
+              </scripts>
               <script>scripts\scr_mod_summon_DESIGN.gml</script>
             </scripts>
             <scripts name="Toy">
@@ -321,7 +324,6 @@
         <script>scripts\collision_circle_list.gml</script>
         <script>scripts\collision_cone_list.gml</script>
       </scripts>
-      <script>scripts\nearest_enemy.gml</script>
       <script>scripts\is_enemy.gml</script>
       <script>scripts\is_entity.gml</script>
       <script>scripts\update_enemy.gml</script>
@@ -400,6 +402,9 @@
         <script>scripts\minimum_spanning_tree.gml</script>
       </scripts>
       <script>scripts\instance_nearest_notme.gml</script>
+      <script>scripts\nearest_enemy.gml</script>
+      <script>scripts\nearest_ally.gml</script>
+      <script>scripts\nearest_player.gml</script>
       <script>scripts\is_released.gml</script>
       <script>scripts\cull_list_for_enemies.gml</script>
     </scripts>

@@ -18,10 +18,10 @@ if (event_type = ev_draw){
   }
 }else{//if not inside the draw event
   //fast guess if visible.
-  var nearest_player = instance_nearest(x, y, obj_player)
-  var dist = point_distance(x,y,nearest_player.x,nearest_player.y)
-  if (nearest_player.player_id_local != -1){
-    if (dist > fast_hype(view_wview[nearest_player.player_id_local], view_hview[nearest_player.player_id_local])) return false;
+  var player = instance_nearest(x, y, obj_player)
+  var dist = point_distance(x,y,player.x,player.y)
+  if (player.player_id_local != -1){
+    if (dist > fast_hype(view_wview[player.player_id_local], view_hview[player.player_id_local])) return false;
   }
   
   var i=0;

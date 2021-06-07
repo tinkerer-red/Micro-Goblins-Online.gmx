@@ -38,7 +38,8 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
         cx = x - lengthdir_x(orbital_dist, orbital_rot)
         cy = y - lengthdir_y(orbital_dist, orbital_rot)
         
-        if (is_summoned){
+        if (is_summoned)
+        && !(variable_instance_exists(self, "is_mounted") && is_mounted && (mounted_id = owner_id)){ //is the owner isn't also mounting the AI
           cx = owner_id.x //mean(cx, owner_id.x)
           cy = owner_id.y //mean(cy, owner_id.y)
         }

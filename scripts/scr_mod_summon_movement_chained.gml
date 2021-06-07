@@ -43,8 +43,8 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
     /////look for inputs/////
       //if possessed, grab player inputs
       if is_possessed{
-        var possessed_vector_x = possesser_id.down - possesser_id.up;
-        var possessed_vector_y = possesser_id.right - possesser_id.left;
+        var possessed_vector_x = possesser_id.right - possesser_id.left;
+        var possessed_vector_y = possesser_id.down - possesser_id.up;
       }else{
         var possessed_vector_x = 0;
         var possessed_vector_y = 0;

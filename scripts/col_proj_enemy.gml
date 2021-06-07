@@ -6,7 +6,7 @@ if (ticked_over()){
   
   if (collided_entity = noone) return false;
   
-  if is_enemy(collided_entity){
+  if is_enemy(collided_entity) && (!collided_entity.is_jocky){
     self.pre_collide = true
     collide_enemy = collided_entity
     return true;

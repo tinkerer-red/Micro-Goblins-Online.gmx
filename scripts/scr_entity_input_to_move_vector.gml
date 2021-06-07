@@ -6,6 +6,7 @@
 var move_dis = min(point_distance(0, 0, (right-left), (down-up)), 1) * acceleration * (60/room_speed);
 move_dir = point_direction(0, 0, (right-left), (down-up));
 
+
 var move_vector = add_vectors(move_dis, move_dir, spd, dir)
 
 var sign_multiplier = sign(spd)

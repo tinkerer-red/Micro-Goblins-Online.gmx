@@ -214,6 +214,8 @@ self.item_c = 0
 self.item_a_pressed = 0
 self.item_b_pressed = 0
 self.item_c_pressed = 0
+self.action = 0
+self.action_pressed = 0
 
 self.zoom_in_pressed = 0
 self.zoom_out_pressed = 0
@@ -568,9 +570,11 @@ if (!htme_isLocal())
     self.item_a = mp_map_syncOut("item_a", item_a)
     self.item_b = mp_map_syncOut("item_b", item_b)
     self.item_c = mp_map_syncOut("item_c", item_c)
+    self.action = mp_map_syncOut("action",self.action)
     self.item_a_pressed = mp_map_syncOut("item_a_pressed", item_a_pressed)
     self.item_b_pressed = mp_map_syncOut("item_b_pressed", item_b_pressed)
     self.item_c_pressed = mp_map_syncOut("item_c_pressed", item_c_pressed)
+    self.action_pressed = mp_map_syncOut("action_pressed",self.action_pressed)
     //player_state = mp_map_syncOut("player_state", player_state)
     
     //sync equipment
@@ -790,9 +794,11 @@ if (htme_isLocal())
     mp_map_syncIn("item_a",self.item_a)
     mp_map_syncIn("item_b",self.item_b)
     mp_map_syncIn("item_c",self.item_c)
+    mp_map_syncIn("action",self.action)
     mp_map_syncIn("item_a_pressed",self.item_a_pressed)
     mp_map_syncIn("item_b_pressed",self.item_b_pressed)
     mp_map_syncIn("item_c_pressed",self.item_c_pressed)
+    mp_map_syncIn("action_pressed",self.action_pressed)
     //mp_map_syncIn("player_state",player_state)
     
     //sync equipment
@@ -918,7 +924,7 @@ for (var i = 0; i &lt; 3; i++)
 ///////////////////////////
 //Melee weapon cancel check
 ///////////////////////////
-if (self.item_a_pressed || self.item_b_pressed || self.item_c_pressed)
+if (!is_jocky) &amp;&amp; (self.item_a_pressed || self.item_b_pressed || self.item_c_pressed)
 {
   if (self.weap_num &gt;= 0) &amp;&amp; (self.player_state = e_player_state.attack)
   {
@@ -973,7 +979,7 @@ if (self.item_a_pressed || self.item_b_pressed || self.item_c_pressed)
 //Button Queue
 ////////////////////////////////////////////////////////////////////
 
-if (self.player_state = e_player_state.move)
+if (!is_jocky) &amp;&amp; (self.player_state = e_player_state.move)
 {
   if (self.item_a || self.item_b || self.item_c) || (self.mod_charge_timer &gt;= room_speed)
   {
