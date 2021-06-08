@@ -97,8 +97,8 @@ self.team = team_none
 update_enemy_time = 0
 enemy = noone //nearest_enemy(x,y, 16*50)
 
-attack_active = false
-move_active = false
+attack_active = true
+move_active = true
 
 e_health = 10
 e_damage = 1

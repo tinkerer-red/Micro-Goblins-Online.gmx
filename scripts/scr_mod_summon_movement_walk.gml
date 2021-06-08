@@ -27,7 +27,8 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
   
   
   //is this mod currently active? (for instance when the enemy is just finishing with a jump or shot, is the next jump/shot on a cool down?) This is primarily here incase another mod needs to highjack or prevent a specific mod from happening
-  if (mod_summon_movement_walk_start){
+  if (mod_summon_movement_walk_start)
+  && (move_active){
    
     /////look for inputs/////
       

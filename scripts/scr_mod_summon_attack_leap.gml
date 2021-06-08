@@ -16,7 +16,7 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
   
   
   
-  if (move_active = false){ //if we arew not restrained by movement mods
+  if (attack_active){ //if we are not restrained by movement mods
     
     //if we're in the correct event then activate
     if (mod_summon_attack_leap_start = true) {
@@ -46,7 +46,7 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
             leap_target_y = _enemy.y
           }
           
-          attack_active = true
+          attack_active = false
           leap_anim_start = true
           direction = _dir
         }
@@ -67,7 +67,7 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
                 leap_target_x = enemy.x
                 leap_target_y = enemy.y
                 
-                attack_active = true
+                attack_active = false
                 leap_anim_start = true
                 direction = point_direction(x, y, enemy.x, enemy.y)
               }
@@ -81,7 +81,7 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
       
       
       //pause for a second to animate the attack
-      if (attack_active = true){
+      if (attack_active = false){
         
         if (leap_active = false){ //if we are not actively leaping
           if (leap_anim_start = true) { //if we're just starting the animation

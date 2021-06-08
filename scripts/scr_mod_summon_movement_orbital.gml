@@ -32,7 +32,7 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
       mod_summon_movement_orbital_start = true
     }
     
-    if (attack_active = false){ //if we arew not restrained by attack mods
+    if (move_active){ //if we arew not restrained by attack mods
       //for the first mod keep track of the center x and y
       if (mod_summon_movement_orbital_start = true){
         cx = x - lengthdir_x(orbital_dist, orbital_rot)

@@ -62,7 +62,7 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
       
       var attack = false;
       //grab the desired inputs for this mod, sometimes they are the given inputs, or manipulated inputs, sometimes they are the mirrored inputs of the enemy.
-      if (enemy != noone){
+      if (enemy != noone) && instance_exists(enemy){
         if point_distance(enemy.x, enemy.y, x, y) < mod_summon_stomp_distance{
           var attack = true;
         }
@@ -72,6 +72,7 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
          //This is also where you will add any bias to the movements
       if (attack || possessed_attack){
         mod_summon_stomp_timer = mod_summon_stomp_time
+        attack_active = true;
       }
     }
     /////////////////////////  
@@ -95,19 +96,21 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
         }
         
         //change active states, or explode
-        if instance_exists(enemy) && (point_distance(enemy.x, enemy.y, x, y) < mod_summon_stomp_explosion_size){
+        //if instance_exists(enemy)
+        //&& (point_distance(enemy.x, enemy.y, x, y) < mod_summon_stomp_explosion_size){
           
           mod_summon_stomp_explode = true
           deal_damage_radius(mod_summon_stomp_explosion_size, mod_summon_stomp_explosion_damage, false, false)
           deal_knockback_radius(mod_summon_stomp_explosion_size, mod_summon_stomp_explosion_damage)
           draw_particle_aoe_circle(prt_aoe_explosion, x, y, mod_summon_stomp_explosion_size+(one_tile*0.5), 0.4*room_speed, c_white)
           
+          attack_active = false;
           //this would be the entities final hurrah, lets cut the modifier off since nothing else will matter. "Admiral Ackbar!!"
-          return true;
+          //return true;
           
-        }else{
-          mod_summon_stomp_timer = 0;
-        }
+        //}else{
+        //  mod_summon_stomp_timer = 0;
+        //}
       }
     
     }

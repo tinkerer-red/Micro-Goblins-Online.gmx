@@ -52,7 +52,7 @@ if (variable_global_exists("numberOfLocalPlayers") = false) || (variable_global_
           <argument>
             <kind>1</kind>
             <string>///define buttons    
-    
+    ///   https://keycode.info
     
     self.keyboardLeft   = 37 //ini_read_real("keyboard", "keyboardLeft", 37); //left arrow
     self.keyboardLeft2  = 65 //ini_read_real("keyboard", "keyboardLeft2", 65); //A

@@ -18,8 +18,12 @@ if (argument_count = 4){
 }
 
 var list = collision_circle_list(x, y, radius, obj_entity, -1, true);
-var list_length = ds_list_size(list)
 
+//if the returned list is filled with noone, then exit
+if (list == noone) exit;
+
+
+var list_length = ds_list_size(list)
 
 for(var i = 0; i < list_length; i++){
   var entity = list[| i]
