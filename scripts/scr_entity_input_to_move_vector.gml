@@ -22,7 +22,8 @@ if (abs(spd) <= max_speed * (60/room_speed)) //|| (abs(angle_difference(dir, mov
 }
 
 
-dir = move_vector[1] //+ (180 + (180 * sign_multiplier))
-
+if (sign_multiplier = 1){
+  dir = move_vector[1]
+}
 
 

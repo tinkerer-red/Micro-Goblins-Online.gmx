@@ -36,7 +36,7 @@ if !to_much_lag(){
           new_proj.y = y+lengthdir_y(self.distance, _proj.direction+ (_dir*(i+1) * j) );
           new_proj.direction = point_direction(x,y,new_proj.x,new_proj.y)
           new_proj.owner_weap = id
-        
+          new_proj.owner_id = owner_id
         }
       }
     }

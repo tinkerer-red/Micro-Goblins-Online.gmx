@@ -12,6 +12,7 @@ if (spd != 0)
   if (!ceil(right) && !ceil(left) && !ceil(down) && !ceil(up)) || 
   (right == left && up == down) ||
   (abs(spd) > min(point_distance(0, 0, (right-left), (down-up)), 1) * max_speed * (time_adjust)) || 
+  (sign(spd) = -1 || (abs(angle_difference(dir, move_dir)) >= 45)) ||
   (self.player_state != e_player_state.move)
   {
     var spd_multiplier = sign(spd);
@@ -22,18 +23,26 @@ if (spd != 0)
     var spd_multiplier_new  = sign(spd);
     
     //if we are close enough to the max speed and got dropped under it, then bring speed to equal it.
+    //do this for both negative speed and possitive speed
     if (desired_spd > max_speed * time_adjust)
     && (abs(spd) < max_speed * (time_adjust))
-      {spd = (max_speed * (time_adjust)) * spd_multiplier}
+    {
+      spd = (max_speed * time_adjust) * spd_multiplier
+    }
     
     //if we have crossed over 0, set spd to 0
     if (spd_multiplier_new != spd_multiplier)
       && (spd_multiplier_new != 0)
       && (spd_multiplier != 0)
-    {spd = 0}
+    {
+      spd = 0
+    }
     
+    //if no buttons are being pressed set the aim to the last moved direction
     if (!ceil(right) && !ceil(left) && !ceil(down) && !ceil(up))
-      {dir = direction}
+    {
+      dir = direction
+    }
   }
   
   //show_debug_message("about to check for tile collisions")

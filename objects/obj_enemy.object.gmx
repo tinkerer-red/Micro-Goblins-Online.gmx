@@ -323,7 +323,7 @@ if !variable_instance_exists(self, "enemy_mods_init") || (enemy_mods_init = fals
 //    ds_priority_add(weapon_event_queues, queue_col_mods, 7);
     
     //replace this in the future with dungeon genoration type of code
-    repeat( 1 ) ds_priority_add(queue_attack_step_mods, scr_mod_summon_movement_walk, 1);
+    repeat( 2 ) ds_priority_add(queue_attack_step_mods, scr_mod_summon_movement_walk, 1);
     repeat( 1 ) ds_priority_add(queue_attack_step_mods, scr_mod_summon_attack_kamikaze, 2);
     repeat( 1 ) ds_priority_add(queue_attack_step_mods, scr_mod_summon_health_default, 3);
     
@@ -402,6 +402,7 @@ if ticked_over(){
     mp_xgoal = enemy.x;
     mp_ygoal = enemy.y;
     
+    
     //set wander timer to 0 so a new location is generated when the enemy is out of range
     mp_wander_timer = room_speed
   }else{
@@ -441,6 +442,8 @@ if ticked_over(){
   ideal_vector_x = lengthdir_x(1, ideal_dir);
   ideal_vector_y = lengthdir_y(1, ideal_dir);
 }
+
+
 </string>
           </argument>
         </arguments>
@@ -466,6 +469,8 @@ if ticked_over(){
 ////////////////////////////////////////////////////////////////////
 //Attack step event
 ////////////////////////////////////////////////////////////////////
+
+
 if !self.collide &amp;&amp; !self.pre_collide
 {
   //show_debug_message("summon - Attack step event")
@@ -733,6 +738,7 @@ draw_self()
 
 ///get the move vector
 //
+/*
 var move_dis = min(point_distance(0, 0, (right-left), (down-up)), 1) * acceleration * (60/room_speed);
 var move_dir = point_direction(0, 0, (right-left), (down-up));
 

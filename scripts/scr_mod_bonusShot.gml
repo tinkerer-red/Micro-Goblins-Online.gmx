@@ -25,6 +25,7 @@ if !to_much_lag(){
     ///set variables for new projectile
           
     new_proj.owner_weap = id
+    new_proj.owner_id = owner_id
     new_proj.direction = direction+_acc
       
   }

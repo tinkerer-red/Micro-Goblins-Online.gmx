@@ -25,10 +25,15 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>tick_timer = 0
+            <string>//used to handle game tick
+tick_timer = 0
 tps = 10
 tick_step = room_speed/tps
 tick_over = false
+
+//used for every other frame calculations
+second_frame_timer = 0
+second_frame = false
 
 audio_charge = -1
 </string>
@@ -67,6 +72,36 @@ if (tick_timer div tick_step){
   if (tick_over){
     tick_over = false
   }
+}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///keep track of every other frame
+
+if (second_frame_timer = 1){
+  second_frame = true
+  second_frame_timer = 0
+}else{
+  second_frame = false
+  second_frame_timer++
 }
 
 </string>

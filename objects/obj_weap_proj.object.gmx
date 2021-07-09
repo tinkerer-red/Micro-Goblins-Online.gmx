@@ -102,6 +102,32 @@ breaking = false
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///init draw variables
+
+predraw_finished = false
+draw_finished = false
+postdraw_finished = false
+
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="1" enumb="0">
       <action>
@@ -123,36 +149,6 @@ breaking = false
             <string>///destroy left over paths
 
 path_delete(previous_locations_path)
-
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///sprite explode
-
-
-if (collision_active)
-&amp;&amp; (projectile_active)
-&amp;&amp; !variable_instance_exists(self.id, "aoe_start")
-&amp;&amp; (instance_number(obj_weap_proj) &lt; 50){
-  draw_sprite_explode(sprite_index)
-}
 
 </string>
           </argument>
@@ -201,6 +197,112 @@ if ds_exists(self.pre_col_queues_temp, ds_type_priority){
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///sprite explode
+
+
+if (collision_active)
+&amp;&amp; (projectile_active)
+&amp;&amp; !variable_instance_exists(self.id, "aoe_start")
+&amp;&amp; (instance_number(obj_weap_proj) &lt; 25)
+&amp;&amp; !enough_lag(){
+  draw_sprite_explode(sprite_index)
+}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///disable and enable projectiles
+
+
+
+///disable entity if out of bounds from all local players
+
+//grab the max view radius
+var r = obj_camera_control.max_view_radius
+var max_r = r*2
+
+var entity_x = x
+var entity_y = y
+var out_of_bounds_count = 0
+
+entity_active = false;
+var ent = self;
+
+//with all players
+with (obj_player){
+  //grab the location
+  var xx = x
+  var yy = y
+  var dist = point_distance(entity_x, entity_y, xx, yy)
+  
+  
+  //find out if they are a local player
+  if (player_id_local != -1){
+    //find out if the entity is even with in bounds of the view
+    if (dist &lt; r){
+      ent.entity_active = true;
+      ent.visible = true
+      break;
+    }else{
+      ent.visible = false
+    }
+  }
+  
+  //find out if the entity is close ish to a player, if it's not we can probable safely delete it
+  //We do this for all players to prevent an object from desyncing with other players
+  if (dist &gt; max_r){
+    out_of_bounds_count++
+  }
+}
+
+if (out_of_bounds_count = global.numberOfGlobalPlayers){
+  instance_destroy(ent)
+}
+
+
+
+
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="3" enumb="0">
       <action>
@@ -221,8 +323,8 @@ if ds_exists(self.pre_col_queues_temp, ds_type_priority){
             <kind>1</kind>
             <string>///store previous locations
 
-if projectile_active{
-  if !to_much_lag(){
+if every_other_frame() &amp;&amp; projectile_active{
+  if !enough_lag(){
   
     previous_locations_step += 1
     
@@ -259,7 +361,7 @@ if projectile_active{
             <kind>1</kind>
             <string>///Run Modifiers
 
-if projectile_active 
+if (projectile_active)// &amp;&amp; entity_active)
 //&amp;&amp; ticked_over()
 {
   ////////////////////////////////////////////////////////////////////
@@ -434,15 +536,17 @@ if projectile_active
             <string>///Disable collision checks if to many projectiles are nearby
 if (collision_active) &amp;&amp; (!queued_to_del){
   
-  if (instance_number(obj_weap_proj) &gt; 600){
-    if (1*lag() &gt; 6)
-    || (fps &lt; 10){
+  if (instance_number(obj_weap_proj) &gt; 200) &amp;&amp; to_much_lag(){
+    if (1*lag() &gt; obj_lag_controller.skipped_steps)
+    || (fps &lt; 20){
         collision_active = false;
+        //visible = false
+        queued_to_del = true
     }
   }
   
   /*
-  if (collision_active = true){
+  if (collision_active){
     var proj_count = collision_circle_list(x, y, 8, obj_weap_proj, -1, true)
     if (proj_count = noone) {
       exit;
@@ -453,15 +557,52 @@ if (collision_active) &amp;&amp; (!queued_to_del){
       ds_list_destroy(proj_count)
     }
   }*/
+
 }else{
+  
   if to_much_lag(){
     if (queued_to_del){
+      //instance_destroy()
+      //show_debug_player("deleted")
     }else{
-//      queued_to_del = true
+      queued_to_del = true
+    }
+  }else{ //if there is no longer too much lag
+    if (queued_to_del){
+      queued_to_del = false
     }
   }
- collision_active = true  
+ collision_active = true
+ //visible = true
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="77">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///reset draw variables
+
+predraw_finished = false
+draw_finished = false
+postdraw_finished = false
+
 </string>
           </argument>
         </arguments>
@@ -486,22 +627,33 @@ if (collision_active) &amp;&amp; (!queued_to_del){
             <kind>1</kind>
             <string>///draw modifiers
 
-if projectile_active{
-  if !to_much_lag(){
-  
-    if (is_lasered){
-      draw_laser(previous_locations_path)
+if not (predraw_finished){
+  if projectile_active &amp;&amp; is_visible(){
+    with (obj_weap_proj){
+      //if there is too much lag, or the predraw was already finished
+      if (self.projectile_active) &amp;&amp; is_visible(){
+        if (self.predraw_finished = true)
+        //|| to_much_lag()
+        {
+          break;
+        }else{
+          self.predraw_finished = true
+          if (self.is_lasered){
+            draw_laser(self.previous_locations_path)
+          }
+          
+          if (self.is_arcLightning){
+            draw_arcLightning()
+          }
+        
+          
+        }
+      }
     }
-    
-    if (is_arcLightning){
-      draw_arcLightning()
-    }
-  
-    
   }
 }
 
-if (is_airstrike){
+if (is_airstrike) &amp;&amp; !enough_lag(){
       draw_airStrike()
     }
 
@@ -526,7 +678,7 @@ if (is_airstrike){
           <argument>
             <kind>1</kind>
             <string>///draw Self
-if (projectile_active){
+if (projectile_active) &amp;&amp; is_visible(){
   if sprite_exists(sprite_index){
     shader_set_hue(owner_id.fav_hue)
     draw_self()

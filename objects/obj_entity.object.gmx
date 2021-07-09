@@ -219,6 +219,76 @@ if (just_dismounted) just_dismounted = false;
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>///disable and enable entities
+
+
+
+///disable entity if out of bounds from all local players
+
+//grab the max view radius
+var r = obj_camera_control.max_view_radius
+var max_r = r*2
+
+var entity_x = x
+var entity_y = y
+var out_of_bounds_count = 0
+
+entity_active = false;
+var ent = self;
+
+//with all players
+with (obj_player){
+  //grab the location
+  var xx = x
+  var yy = y
+  var dist = point_distance(entity_x, entity_y, xx, yy)
+  
+  
+  //find out if they are a local player
+  if (player_id_local != -1){
+    //find out if the entity is even with in bounds of the view
+    if (dist &lt; r){
+      ent.entity_active = true;
+      break;
+    }
+  }
+  
+  //find out if the entity is close ish to a player, if it's not we can probable safely delete it
+  //We do this for all players to prevent an object from desyncing with other players
+  if (dist &gt; max_r){
+    out_of_bounds_count++
+  }
+}
+
+if (out_of_bounds_count = global.numberOfGlobalPlayers){
+  instance_destroy(ent)
+}
+
+
+
+
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>///reset movement inputs
 
 up    = 0

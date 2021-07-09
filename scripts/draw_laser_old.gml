@@ -49,13 +49,9 @@ if (1*lag() < 6)
       nextY = path_get_y(pathIndex, min(i + q, 1))
       
       //Divide [dx, dy] by its own length to turn it into a unit vector (a vector with length 1)
-      var d = arctan2(nextY - oldY, nextX - oldX);
-      var dx = cos(d);
-      var dy = sin(d);
-      //d = point_distance(nextX, nextY, oldX, oldY)
-      //dx = (nextX - oldX) / d
-      //dy = (nextY - oldY) / d
-      
+      d = point_distance(nextX, nextY, oldX, oldY)
+      dx = (nextX - oldX) / d
+      dy = (nextY - oldY) / d
       oldX = newX
       oldY = newY
       newX = nextX

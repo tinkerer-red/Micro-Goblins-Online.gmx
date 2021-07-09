@@ -20,4 +20,6 @@ if (dis_traveled >= (w_range/2)){
 var blend = 1-wave_length
 
 //actually draw the sprite
+shader_set_hue(owner_id.fav_hue)
 draw_sprite_ext(sprite_index, image_index, xx, yy, image_xscale, image_yscale, rot, c_white, blend)
+shader_reset()

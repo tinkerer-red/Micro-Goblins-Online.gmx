@@ -10,17 +10,22 @@ var move_vector = add_vectors(move_dis, move_dir, spd, dir)
 
 var sign_multiplier = sign(spd)
 
-if !(abs(spd) >= max_speed * (time_adjust)) //|| (abs(angle_difference(dir, move_dir)) >= 45)
+
+if (abs(spd) < max_speed * (time_adjust)) //|| (abs(angle_difference(dir, move_dir)) >= 45)
 {
   if (sign_multiplier != 0){
     spd = move_vector[0] * sign_multiplier
+    
   }else{
-    spd = move_vector[0]
+    spd = move_vector[0]// * sign_multiplier
+    
   }
 }
 
 
-dir = move_vector[1] //+ (180 + (180 * sign_multiplier))
-
+//dir = move_vector[1]
+if (sign_multiplier = 1){
+  dir = move_vector[1]
+}
 
 

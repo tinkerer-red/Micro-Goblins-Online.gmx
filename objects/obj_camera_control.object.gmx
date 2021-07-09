@@ -32,9 +32,10 @@ is_fullscreened = false;
 free_cam_mode = false
 
 //set the ideal resolution
-var ideal_h = 288;
-var ideal_w = 512;
+ideal_h = 288;
+ideal_w = 512;
 ideal_volume = ideal_h+ideal_w;
+max_view_radius = (fast_hype(obj_camera_control.ideal_h*2, obj_camera_control.ideal_w*2) * 1.1) /2
     
 split_boarder = 2
 
@@ -189,7 +190,7 @@ window_frame_was_ready = false;
             <kind>1</kind>
             <string>///[Window's ONLY] resize the app surface
 
-if (os_type = os_windows &amp;&amp; window_has_focus())
+if (os_type = os_windows &amp;&amp; window_has_focus()) &amp;&amp; false
 //    || window_has_focus()
     {
   
@@ -354,7 +355,8 @@ if (os_type = os_windows &amp;&amp; window_has_focus())
             <kind>1</kind>
             <string>///[Non Windows OS] resize the app surface
 
-if (os_type != os_windows){
+if true //(os_type != os_windows)
+{
   //check for resize
   if (surface_get_width(application_surface) != floor(ww)) || (surface_get_height(application_surface) != floor(hh))
   || ((smooth_camera &amp;&amp; ((surface_get_width(application_surface) != floor(display_get_gui_width()*upscale_val)) || (surface_get_height(application_surface) != floor(display_get_gui_height()*upscale_val))))
@@ -515,17 +517,23 @@ if (os_type != os_windows){
           <argument>
             <kind>1</kind>
             <string>/// [debug] resolution 
-/*
+
 for (var i = 0; i &lt; global.numberOfLocalPlayers; i++)
 {
     
-show_debug_player(i, "res_volume = "+string(view_hport[i]+view_wport[i]))
-show_debug_player(i, "ideal_volume = "+string(ideal_volume))
-show_debug_player(i, "res_scale[i] = "+string(res_scale[i]))
+//show_debug_player(i, "res_volume = "+string(view_hport[i]+view_wport[i]))
+//show_debug_player(i, "ideal_volume = "+string(ideal_volume))
+//show_debug_player(i, "res_scale[i] = "+string(res_scale[i]))
 //show_debug_player(i, "display_get_gui_height = "+string(display_get_gui_height()))
-show_debug_player(i, "window_get_height = "+string(window_get_width()))
-show_debug_player(i, "surface_get_height = "+string(surface_get_width(application_surface)))
+//show_debug_player(i, "window_get_height = "+string(window_get_width()))
+//show_debug_player(i, "surface_get_height = "+string(surface_get_width(application_surface)))
+show_debug_player(i, "view_hview[0] = " +string(view_hview[0]))
+show_debug_player(i, "view_wview[0] = " +string(view_wview[0]))
 
+var ideal_h = 288;
+var ideal_w = 512;
+show_debug_player(i, "ideal_h = " +string(ideal_h*2))
+show_debug_player(i, "ideal_w = " +string(ideal_w*2))
 
 }
 </string>
@@ -867,7 +875,7 @@ if (smooth_camera || resizing)
 resizing = false;
 
 if (os_type = os_windows
-&amp;&amp; window_has_focus())
+&amp;&amp; window_has_focus()) &amp;&amp; false
 {
   window_frame_update();
   // if the extension just finished readying up:

@@ -26,7 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>laggy_objects_priority = ds_priority_create()
-skipped_steps = room_speed/6
+skipped_steps = room_speed/13
 to_much_lag_this_frame = false
 enough_lag_this_frame = false
 ideal_fps = 60
@@ -71,21 +71,24 @@ if (obj_index != undefined){
   //show_debug_message("skipped_steps = "+string(skipped_steps))
   
   if (latancy &gt; skipped_steps){
-    var percent = (1 - (skipped_steps/latancy)) * 0.75
+    var percent = (1 - (skipped_steps/latancy)) * 0.33
   }else{
-    var percent = 0.15
+    var percent = 0.165
   }
   
-  //show_debug_message(percent)
+  
+  //show_debug_message(string(floor(count*percent)))
+  //show_debug_message(string(count))
   //now delete 10% of all those objects in descriminately
   // "oof them daddy" -Red
   repeat(floor(count*percent)){
     var obj = instance_find(obj_index, 0);
     if (obj != noone){
+      //show_debug_message("destroyed an object")
       instance_destroy(obj)
     }else{
-      show_debug_message("no object exists")
-      break;
+      //show_debug_message("no object exists")
+      //break;
     }
   }
 }

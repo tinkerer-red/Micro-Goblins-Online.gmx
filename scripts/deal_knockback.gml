@@ -18,7 +18,7 @@ if (argument_count = 4){
 
 
 //first find the angle difference
-var diff = angle_difference(knockbacked_id.direction, direction)
+var diff = angle_difference(knockbacked_id.direction, knockback_angle)
 
 //if the angle difference is less than 180, then the player is already moving in the direction we want to apply knockback
 if (abs(diff) < 90){

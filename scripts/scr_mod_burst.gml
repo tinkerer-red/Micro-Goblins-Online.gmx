@@ -48,6 +48,7 @@ if !to_much_lag(){
         new_proj.dis_traveled = distance
         
         new_proj.owner_weap = id
+        new_proj.owner_id = owner_id
       }
     }
     

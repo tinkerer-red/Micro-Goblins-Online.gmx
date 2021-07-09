@@ -411,6 +411,7 @@
     <scripts name="Drawing">
       <scripts name="Modifiers">
         <script>scripts\draw_laser.gml</script>
+        <script>scripts\draw_laser_old.gml</script>
         <script>scripts\draw_arcLightning.gml</script>
         <script>scripts\draw_airStrike.gml</script>
         <script>scripts\draw_particle_aoe_circle.gml</script>
@@ -829,9 +830,8 @@
       <script>scripts\scr_view_visble_handler.gml</script>
       <scripts name="Tick Handler">
         <script>scripts\ticked_over.gml</script>
+        <script>scripts\every_other_frame.gml</script>
       </scripts>
-      <script>scripts\to_much_lag.gml</script>
-      <script>scripts\enough_lag.gml</script>
       <scripts name="GML Tasks">
         <script>scripts\gml_task_cleanup.gml</script>
         <script>scripts\gml_task_cleanup_script.gml</script>
@@ -852,6 +852,10 @@
           <script>scripts\grid_fill.gml</script>
           <script>scripts\grid_clear.gml</script>
         </scripts>
+      </scripts>
+      <scripts name="Lag Control">
+        <script>scripts\enough_lag.gml</script>
+        <script>scripts\to_much_lag.gml</script>
       </scripts>
     </scripts>
     <script>scripts\scr_collision_test.gml</script>
@@ -953,7 +957,6 @@
     <object>objects\obj_test</object>
     <object>objects\object34</object>
     <object>objects\obj_gml_task_handler</object>
-    <object>objects\obj_example</object>
   </objects>
   <timelines name="timelines">
     <timeline>timelines\timeline0</timeline>

@@ -8,6 +8,7 @@ if (spd != 0)
   if (!ceil(right) && !ceil(left) && !ceil(down) && !ceil(up)) || 
   (right == left && up == down) ||
   (abs(spd) > min(point_distance(0, 0, (right-left), (down-up)), 1) * max_speed * (time_adjust))
+  || (sign(spd) = -1)
   {
     var spd_multiplier = sign(spd);
     var desired_spd = abs(spd);
@@ -19,13 +20,17 @@ if (spd != 0)
     //if we are close enough to the max speed and got dropped under it, then bring speed to equal it.
     if (desired_spd > max_speed * time_adjust)
     && (abs(spd) < max_speed * (time_adjust))
-      {spd = (max_speed * (time_adjust)) * spd_multiplier}
+    {
+      spd = (max_speed * (time_adjust)) * spd_multiplier
+    }
     
     //if we have crossed over 0, set spd to 0
     if (spd_multiplier_new != spd_multiplier)
       && (spd_multiplier_new != 0)
       && (spd_multiplier != 0)
-    {spd = 0}
+    {
+      spd = 0
+    }
     
     if (!ceil(right) && !ceil(left) && !ceil(down) && !ceil(up))
       {dir = direction}
@@ -48,7 +53,7 @@ if (spd != 0)
       dir = array[1]
     }
   }
-
+  
   //show_debug_message("about to check for tile collisions")
   if place_free(x, y) && !chunk_tile_meeting_precise(x, y)
   {

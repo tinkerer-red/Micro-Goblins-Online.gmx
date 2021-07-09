@@ -34,7 +34,7 @@ if !to_much_lag(){
         new_proj.y = owner_id.y+lengthdir_y(distance, new_proj.direction)
         
         new_proj.owner_weap = id
-      
+        new_proj.owner_id = owner_id
       }
     }
   }
