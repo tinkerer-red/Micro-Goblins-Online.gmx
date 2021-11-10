@@ -58,10 +58,27 @@ for (j = 0; j < size; j += 2) {
 }
 ds_list_destroy(list);
 
+
+//create the weighted list to prioritize the first tiles over the last tiles
+var temp_array;
+var j = 0;
+var tile_variants_max_minus_one = self.ats_tile_variants_max - 1;
+  for (var i = 0; i < tile_variants_max_minus_one; i++){
+  //for (var i = tile_variants_max_minus_one; i >= 0; i--){
+    var v = i+1;
+    repeat //(v*v*v*v){
+    (100/v/v/v){
+      temp_array[j] = i;
+      //temp_array[j] = tile_variants_max_minus_one - i;
+      j++;
+    }
+  }
+
 // Creates a grid of random numbers for the tile variants.
-random_set_seed(99999989);
+random_set_seed(world_seed);
 self.ats_grid_tile_variants = ds_grid_create(64, 64);
 var tile_variants_max_minus_one = self.ats_tile_variants_max - 1;
 for (var t_y = 0; t_y < 64; ++t_y) for (var t_x = 0; t_x < 64; ++t_x) {
-    self.ats_grid_tile_variants[# t_x, t_y] = irandom(tile_variants_max_minus_one);
+    ///self.ats_grid_tile_variants[# t_x, t_y] = irandom(tile_variants_max_minus_one);
+    self.ats_grid_tile_variants[# t_x, t_y] = temp_array[irandom_range(0,array_length_1d(temp_array)-1)];
 }

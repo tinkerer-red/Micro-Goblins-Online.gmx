@@ -49,7 +49,7 @@ draw_rectangle(argument1+xx-8, argument2+yy+1, argument1+xx+(sets[4]+sets[6])+8+
 
 draw_set_color($eeeeee);
 draw_set_halign(fa_center);
-draw_text_transformed(argument1+xx-8 + ((sets[4]+sets[6])+8+1)/2, argument2+yy+1 + sets[8]/2, sets[2+sets[0]],1.2*((1+obj_camera_control.smooth_camera)/2), 1.2*((1+obj_camera_control.smooth_camera)/2), 0);
+draw_text_transformed(argument1+xx-8 + ((sets[4]+sets[6])+8+1)/2, argument2+yy+1 + sets[8]/2, sets[2+sets[0]],1, 1, 0);
 draw_set_halign(fa_left);
 
 draw_set_valign(fa_top);

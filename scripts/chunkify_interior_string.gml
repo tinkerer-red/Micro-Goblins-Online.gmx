@@ -7,6 +7,7 @@ var map = argument[3];
 var room_list = argument[4];
 var size = argument[5];
 
+
 if (argument_count = 7){
   var is_hall = argument[6]; //this value allows for a room to be generated over important room neighbors which were removed from valid room list
 }else{

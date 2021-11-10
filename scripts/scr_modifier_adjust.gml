@@ -3,7 +3,7 @@
 var queue = argument0;
 var scr = argument1;
 var prio = argument2;
-var count = argument3;
+var count = round(argument3);
 
 var diff = count - scr_queue_has_mod_count(queue, scr)
 

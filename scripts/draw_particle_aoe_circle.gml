@@ -2,7 +2,7 @@
 
 ///draw_particle_blood(x, y)
 
-if instance_exists(obj_particle_controller){
+if instance_exists(obj_particle_controller) && !to_much_lag(){
   
   var sprite = argument[0]
   var x1 = argument[1]
@@ -18,7 +18,7 @@ if instance_exists(obj_particle_controller){
   
   //the particle type's string, used for key name, and checks
   var part_string = "part_type_aoe_circle_"+string(sprite)+"_"+string(radius)+"_"+string(time)+"_"+string(color)
-  var emit_string = "part_emit_aoe_circle_"+string(x1)+"_"+string(y1)
+  var emit_string = "part_emit_aoe_circle_"+string(round(x1 div 8)*8)+"_"+string(round(y1 div 8)*8)
   
   
   // if the map doesnt have the value add it to the map

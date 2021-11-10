@@ -64,14 +64,14 @@ look into more minigames and genres so any game could be created from mixing mod
 
 
 
-[Weapon] Air Pump - Dig Dug - ()
++++++[Weapon] Air Pump - Dig Dug - ()
 [Weapon] Concrete Donkey - Worms - (ranged + enlarge + airstrike + bouncy)
 [Weapon] Blow Torch - Worms - (melee + 5x repeater)
 [Weapon] Magsec3 - Perfect Dark - (range + burst + tiny)
 [Weapon] Fin's Sword - "What if adventure time was an anime" (It's a sword that summons duplicates who attack the target from a long range in quick succession)
 
 
-
+Repulser - melee weapon, Cone based force push, evade, and reflect projectiles.
 
 [Weapon] Long Sword - - (melee + enlarge)
 [Weapon] Warp Blade - Urealms - (melee + teleport)

@@ -1,6 +1,10 @@
 ///col_proj_enemy()
 if (ticked_over()){
-  var collided_entity = collision_rectangle(bbox_left, bbox_top, bbox_right, bbox_bottom, obj_entity, false, true)
+  
+  //var collided_entity = collision_rectangle(bbox_left, bbox_top, bbox_right, bbox_bottom, obj_entity, false, true)
+  
+  //circle collisions are slightly faster anyways
+  var collided_entity = collision_circle(x, y, w_hype, obj_entity, false, true)
   
   collide_enemy = noone
   

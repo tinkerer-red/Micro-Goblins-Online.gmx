@@ -1,7 +1,7 @@
-///scr_randomize_modifiers()
+///scr_randomize_modifiers(count)
 
 
-var mod_count = gui_get_value(guid, "Random Mod Count");
+var mod_count = argument0;
 
 
 

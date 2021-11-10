@@ -19,8 +19,18 @@ with (argument0) {
         surface_set_target(sf_0);
           draw_clear_alpha(c_white,0)
             draw_enable_alphablend(false);
-                var t_y, t_x, width = width_tiles, height = height_tiles, a = obj_chunk_supervisor.ats_a, rgb = obj_chunk_supervisor.ats_rgb, tile,
-                    tile_variants_max_minus_one = obj_chunk_supervisor.ats_tile_variants_max - 1, random_value, grid_tile_variants = obj_chunk_supervisor.ats_grid_tile_variants;
+                
+                var t_y, 
+                    t_x, 
+                    width = width_tiles, 
+                    height = height_tiles, 
+                    a = obj_chunk_supervisor.ats_a, 
+                    rgb = obj_chunk_supervisor.ats_rgb, 
+                    tile,
+                    tile_variants_max_minus_one = obj_chunk_supervisor.ats_tile_variants_max - 1, 
+                    random_value, 
+                    grid_tile_variants = obj_chunk_supervisor.ats_grid_tile_variants;
+                    
                 for (t_y = 0; t_y < height; ++t_y) {
                     for (t_x = 0; t_x < width; ++t_x) {
                         tile = argument1[# t_x, t_y];

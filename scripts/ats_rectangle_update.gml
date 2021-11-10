@@ -46,4 +46,5 @@ with (argument0) {
             
         draw_enable_alphablend(true);
     }
+    texture_set_interpolation(false);
 }

@@ -2,7 +2,7 @@
 
 
 ===Toy===
-Prop (it's a modifier to allow for prop hunt, basically turns you into a prop object for a while, the higher the mod the longer it lasts, 6 is infinate untill death)
+Prop (it's a modifier to allow for prop hunt, basically turns you into a prop object for a while, the higher the mod the longer it lasts, 6 is infinate untill death, mechanically speaking this acts more like invisibility, enemy AI simly wont see you if you arent moving) 
 Speed Up (the portal 2's orange gel)
 Laser pointer, when an entity is seeking an enemy it has a high chance to follow the laser pointer
 Betrail (allows for the collision event to be applied to allies too, useful for healing weapons and heat seeking)
@@ -142,8 +142,8 @@ Ranged mod, allows for use of pokeball style summons
 ---new---
 	Regenerative (when under it's defined max health, heal up, this is passive)
 	Regrowth (Max Health is devided into 2 health bars, one of which is 2/3 the health required to knock them to the floor, making them inactive, 1/3 of the health bar is used to dictate how many extra hits required to hit them before they get back up, when they get back up their "to get knocked down" health bar is fully restored, although their "knocked down to kill" health bar will never be reestablished, no matter the synergies) [insert tubthumping joke somewhere "i get knocked down!"]
-	Timed (has 9999 health but will die on it's own after a specific amount of time, likely based on health prior to this)
-	[NAME THIS] (on player collision die) [for use with chests]
+	+++++Timed (has 9999 health but will die on it's own after a specific amount of time, likely based on health prior to this)
+	[NAME THIS] (on player collision, die) [for use with chests]
 	Loot (on death drop items, the items dropped will either be random, or based on the name of the etity, unless it's player summoned then only drop common-uncommon items no matter the mod count) [An entity name like "tree" will only drop apples and wood, where an entity name like "crate" will drop items from the dungeon pool, and "chest" will drop usable items only]
 	Segmented (basically snake like creatures which have sections, modcount*2+1 = segments; Only the head is effected by knockback?)
 	Headless (On death the head gains flying and can not attack anymore, really only usefull if collision damage is still active, otherwise pointless)

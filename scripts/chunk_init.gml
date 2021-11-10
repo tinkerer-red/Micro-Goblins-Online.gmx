@@ -48,7 +48,7 @@ if ds_map_exists(world_map, "Seed"){
   world_seed = world_map[? "Seed"];
 }else{ //if the seed doesnt exists
   randomize(); // Comment this line to get the same output every time. For debug for example.
-  world_seed = irandom_range(65536,6553600);
+  world_seed = 334808; //irandom_range(65536,6553600);
   world_map[? "Seed"] = world_seed;
 }
 

@@ -94,17 +94,18 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
         if instance_exists(enemy) && (point_distance(enemy.x, enemy.y, x, y) < mod_summon_kamikaze_explosion_size){
           
           mod_summon_kamikaze_explode = true
-          show_debug_message("mod_summon_kamikaze_explosion_damage = "+string(mod_summon_kamikaze_explosion_damage))
+          //show_debug_message("mod_summon_kamikaze_explosion_damage = "+string(mod_summon_kamikaze_explosion_damage))
           deal_damage_radius(mod_summon_kamikaze_explosion_size, mod_summon_kamikaze_explosion_damage, false, true)
           draw_particle_aoe_circle(prt_aoe_explosion, x, y, mod_summon_kamikaze_explosion_size+(one_tile*0.5), 0.4*room_speed, c_white)
           e_health = 0
           
-          //this would be the entities final hurrah, lets cut the modifier off since nothing else will matter. "Admiral Ackbar!!"
-          return true;
           
-        }else{
-          mod_summon_kamikaze_timer = 0;
+          //   V    This is no longer tru because many modifiers activate after death
+          //this would be the entities final hurrah, lets cut the modifier off since nothing else will matter. "Admiral Ackbar!!"
+          //return true;
+          
         }
+          mod_summon_kamikaze_timer = 0;
       }
     
     }

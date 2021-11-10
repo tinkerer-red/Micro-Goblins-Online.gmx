@@ -1493,7 +1493,7 @@ if (visible = true)
   
   
   
-  //every third frame dont draw the player
+  //every third iframe dont draw the player
   if (ceil(iframes) mod 2) exit;
   
   

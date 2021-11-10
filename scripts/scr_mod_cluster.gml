@@ -61,7 +61,7 @@ var returned = false
           //this if statement is only here because durring a oneframe window,
           //if the projectile was destroyed, it will end up trying to call 'proj' when proj does not exist
           if instance_exists(proj){
-          
+            
             //create new queues
             proj.weapon_event_queues = ds_priority_create()
             ds_priority_copy(proj.weapon_event_queues, weapon_event_queues)

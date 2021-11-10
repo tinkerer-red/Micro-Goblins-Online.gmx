@@ -70,7 +70,7 @@
     <option_android_splash_time>0</option_android_splash_time>
     <option_android_support_lib_version>23.1.1</option_android_support_lib_version>
     <option_android_target_sdk_version>23</option_android_target_sdk_version>
-    <option_android_texture_page>1024</option_android_texture_page>
+    <option_android_texture_page>2048</option_android_texture_page>
     <option_android_use_test_ads>false</option_android_use_test_ads>
     <option_androidfire_GPU_device>0</option_androidfire_GPU_device>
     <option_androidfire_adcolony_enable_V4VC>false</option_androidfire_adcolony_enable_V4VC>
@@ -206,7 +206,7 @@
     <option_audioGroupCount>1</option_audioGroupCount>
     <option_author>Red</option_author>
     <option_backimage>nil</option_backimage>
-    <option_borderless>True</option_borderless>
+    <option_borderless>False</option_borderless>
     <option_changed>false</option_changed>
     <option_changeresolution>false</option_changeresolution>
     <option_closeesc>true</option_closeesc>
@@ -339,7 +339,7 @@
     <option_ios_splash_png>Configs\Default\ios\splash.png</option_ios_splash_png>
     <option_ios_splash_time>0</option_ios_splash_time>
     <option_ios_team_id></option_ios_team_id>
-    <option_ios_texture_page>1024</option_ios_texture_page>
+    <option_ios_texture_page>2048</option_ios_texture_page>
     <option_ios_use_test_ads>false</option_ios_use_test_ads>
     <option_lastchanged></option_lastchanged>
     <option_linux_display_name>Micro Goblins</option_linux_display_name>
@@ -446,7 +446,7 @@
     <option_sizeable>True</option_sizeable>
     <option_stayontop>false</option_stayontop>
     <option_sync_vertex>1</option_sync_vertex>
-    <option_textureGroup0_border>16</option_textureGroup0_border>
+    <option_textureGroup0_border>0</option_textureGroup0_border>
     <option_textureGroup0_nocropping>-1</option_textureGroup0_nocropping>
     <option_textureGroup0_parent>&lt;none&gt;</option_textureGroup0_parent>
     <option_textureGroup0_scaled>0</option_textureGroup0_scaled>
@@ -456,9 +456,27 @@
     <option_textureGroup1_parent>&lt;none&gt;</option_textureGroup1_parent>
     <option_textureGroup1_scaled>-1</option_textureGroup1_scaled>
     <option_textureGroup1_targets>9223372036854775807</option_textureGroup1_targets>
-    <option_textureGroup_count>2</option_textureGroup_count>
+    <option_textureGroup2_border>0</option_textureGroup2_border>
+    <option_textureGroup2_nocropping>-1</option_textureGroup2_nocropping>
+    <option_textureGroup2_parent>&lt;none&gt;</option_textureGroup2_parent>
+    <option_textureGroup2_scaled>0</option_textureGroup2_scaled>
+    <option_textureGroup2_targets>9223372036854775807</option_textureGroup2_targets>
+    <option_textureGroup3_border>0</option_textureGroup3_border>
+    <option_textureGroup3_nocropping>-1</option_textureGroup3_nocropping>
+    <option_textureGroup3_parent>&lt;none&gt;</option_textureGroup3_parent>
+    <option_textureGroup3_scaled>0</option_textureGroup3_scaled>
+    <option_textureGroup3_targets>9223372036854775807</option_textureGroup3_targets>
+    <option_textureGroup4_border>2</option_textureGroup4_border>
+    <option_textureGroup4_nocropping>0</option_textureGroup4_nocropping>
+    <option_textureGroup4_parent>&lt;none&gt;</option_textureGroup4_parent>
+    <option_textureGroup4_scaled>0</option_textureGroup4_scaled>
+    <option_textureGroup4_targets>9223372036854775807</option_textureGroup4_targets>
+    <option_textureGroup_count>5</option_textureGroup_count>
     <option_textureGroups0>Default</option_textureGroups0>
     <option_textureGroups1>Tiles</option_textureGroups1>
+    <option_textureGroups2>Debug</option_textureGroups2>
+    <option_textureGroups3>Particles</option_textureGroups3>
+    <option_textureGroups4>Font</option_textureGroups4>
     <option_tizen_app_id>http://yourdomain/Micro_Goblins</option_tizen_app_id>
     <option_tizen_build_version>0</option_tizen_build_version>
     <option_tizen_display_name>Micro Goblins</option_tizen_display_name>
@@ -514,7 +532,7 @@
     <option_win8_certificate_location>Windows8_TemporaryKey.pfx</option_win8_certificate_location>
     <option_win8_display_name>Micro Goblins</option_win8_display_name>
     <option_win8_internet_capable>0</option_win8_internet_capable>
-    <option_win8_interpolate>-1</option_win8_interpolate>
+    <option_win8_interpolate>0</option_win8_interpolate>
     <option_win8_landscape_allowed>-1</option_win8_landscape_allowed>
     <option_win8_landscape_flipped_allowed>-1</option_win8_landscape_flipped_allowed>
     <option_win8_logo>Configs\Default\Windows8\logos\logo150.png</option_win8_logo>
@@ -591,11 +609,11 @@
     <option_windows_runner_finished>Configs\Default\windows\Runner_finish.bmp</option_windows_runner_finished>
     <option_windows_runner_header>Configs\Default\windows\Runner_header.bmp</option_windows_runner_header>
     <option_windows_save_location>1</option_windows_save_location>
-    <option_windows_sleep_margin>5</option_windows_sleep_margin>
+    <option_windows_sleep_margin>1</option_windows_sleep_margin>
     <option_windows_splash_background_colour>#000000</option_windows_splash_background_colour>
     <option_windows_splash_screen>Configs\Default\windows\splash.png</option_windows_splash_screen>
     <option_windows_steam_app_id>0</option_windows_steam_app_id>
-    <option_windows_texture_page>512</option_windows_texture_page>
+    <option_windows_texture_page>2048</option_windows_texture_page>
     <option_windows_use_splash>0</option_windows_use_splash>
     <option_windows_vertex_buffer_method2>0</option_windows_vertex_buffer_method2>
     <option_winphone_480_splash_image>Configs\Default\WinPhone\SplashScreenImage480.jpg</option_winphone_480_splash_image>
@@ -655,7 +673,7 @@
     <option_winphone_supports_720p>-1</option_winphone_supports_720p>
     <option_winphone_supports_wvga>-1</option_winphone_supports_wvga>
     <option_winphone_supports_wxga>-1</option_winphone_supports_wxga>
-    <option_winphone_texture_page>1024</option_winphone_texture_page>
+    <option_winphone_texture_page>2048</option_winphone_texture_page>
     <option_winphone_tile_type>0</option_winphone_tile_type>
     <option_writeerrors>False</option_writeerrors>
     <option_xbone_background_colour>#FFFFFF</option_xbone_background_colour>

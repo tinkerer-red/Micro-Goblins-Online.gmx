@@ -132,47 +132,54 @@ if (iframes &lt;= 0){
             <kind>1</kind>
             <string>///Tick Damage Handler
 
-//cycle through all damage sources
-var size = ds_map_size(damage_sources_map);
 
-if (size &gt; 0){
-//find the particle type
-  var damage_sources_key = ds_map_find_first(damage_sources_map);
-  var damage_source = damage_sources_map[? damage_sources_key];
+if ds_exists(damage_sources_map, ds_type_map){
+  //cycle through all damage sources
+  var size = ds_map_size(damage_sources_map);
   
-  /////for each particle type
-  repeat(size){
+  if (size &gt; 0){
+  //find the particle type
+    var damage_sources_key = ds_map_find_first(damage_sources_map);
+    var damage_source = damage_sources_map[? damage_sources_key];
     
-    if (damage_source != undefined){
-      var damage = damage_source[? "damage"];
-      var time = damage_source[? "time"];
-      var damage_dealer = damage_source[? "damage_dealer"];
+    /////for each particle type
+    repeat(size){
       
-      time -= 1*lag()
-      damage_source[? "time"] = time
-      show_debug_player("time = "+string(time))
-      
-      var target = self
-      
-      //check to see if we should even run the rest of the checks
-      if (ticked_over()){
-        if (instance_exists(damage_dealer)){
-          with (damage_dealer){
-            deal_damage(target, damage, true)
+      if (damage_source != undefined)
+      &amp;&amp; ds_exists(damage_source, ds_type_map)
+      &amp;&amp; ds_map_exists(damage_source, "time")
+      {
+        var damage = damage_source[? "damage"];
+        var time = damage_source[? "time"];
+        var damage_dealer = damage_source[? "damage_dealer"];
+        
+        time -= 1*lag()
+        damage_source[? "time"] = time
+        show_debug_player("time = "+string(time))
+        
+        var target = self
+        
+        //check to see if we should even run the rest of the checks
+        if (ticked_over()){
+          if (instance_exists(damage_dealer)){
+            with (damage_dealer){
+              deal_damage(target, damage, true)
+            }
           }
+        }
+        
+        if (time &lt;= 0){
+          ds_map_destroy(damage_source)
+          ds_map_delete(damage_sources_map, damage_sources_key)
         }
       }
       
-      if (time &lt;= 0){
-        ds_map_destroy(damage_source)
-        ds_map_delete(damage_sources_map, damage_sources_key)
-      }
-    }
-    
-    var damage_sources_key = ds_map_find_next(damage_sources_map, damage_sources_key);
-    var damage_source = damage_sources_map[? damage_sources_key];
-    
-  }//end repeat loop
+      var damage_sources_key = ds_map_find_next(damage_sources_map, damage_sources_key);
+      var damage_source = damage_sources_map[? damage_sources_key];
+      
+    }//end repeat loop
+}
+
 }
 </string>
           </argument>

@@ -33,7 +33,59 @@ if (mouse_check_button(mb_left) &amp;&amp; mouse_check_button_pressed(mb_right))
   teleport(mouse_x, mouse_y, 0)
 }
 
+/*
+finished = false
+var i = 0
+var grid_count = 0
+var list_count = 0
+var map_count = 0
+var priority_count = 0
+var queue_count = 0
+var stack_count = 0
+var surface_count = 0
 
+while (finished = false){
+  finished = true
+  i++
+  
+  if ds_exists(i, ds_type_grid){
+    grid_count++
+    finished = false
+  }
+  if ds_exists(i, ds_type_list){
+    list_count++
+    finished = false
+  }
+  if ds_exists(i, ds_type_map){
+    map_count++
+    finished = false
+  }
+  if ds_exists(i, ds_type_priority){
+    priority_count++
+    finished = false
+  }
+  if ds_exists(i, ds_type_queue){
+    queue_count++
+    finished = false
+  }
+  if ds_exists(i, ds_type_stack){
+    stack_count++
+    finished = false
+  }
+  if surface_exists(i){
+    surface_count++
+    finished = false
+  }
+}
+
+
+show_debug_message("grid_count = "+string(grid_count))
+show_debug_message("list_count = "+string(list_count))
+show_debug_message("map_count = "+string(map_count))
+show_debug_message("priority_count = "+string(priority_count))
+show_debug_message("queue_count = "+string(queue_count))
+show_debug_message("stack_count = "+string(stack_count))
+show_debug_message("surface_count = "+string(surface_count))
 
 </string>
           </argument>

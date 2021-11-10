@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>///init / allow use of views, and set zooms
 
-resizing = true;
+resizing = false;
 is_fullscreened = false;
 free_cam_mode = false
 
@@ -76,34 +76,10 @@ for (var i = 0; i &lt; 8; i++)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// [[[REAMOVE THIS]]]
-
-ideal_x = 0
-ideal_y = 0
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>/// Allow for sub pixel movement
 
 upscale_val = 1
-smooth_camera = true
+smooth_camera = false
 
 
 if (smooth_camera){
@@ -114,6 +90,13 @@ if (smooth_camera){
 }else{
   texture_set_interpolation(false);
 }
+
+///rescale the GUI
+display_set_gui_size(window_get_width(),window_get_height());
+texture_set_interpolation(false);
+
+
+
 </string>
           </argument>
         </arguments>
@@ -188,150 +171,279 @@ window_frame_was_ready = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///[Window's ONLY] resize the app surface
+            <string>/// [debug] resolution 
 
-if (os_type = os_windows &amp;&amp; window_has_focus()) &amp;&amp; false
-//    || window_has_focus()
-    {
-  
-  //check for resize
-  if (surface_get_width(application_surface) != floor(ww)) || (surface_get_height(application_surface) != floor(hh)) //when changing smooth camera mode, or maximizing/fullscreening
-  || ((smooth_camera &amp;&amp; ((ww != floor(window_frame_get_width()*upscale_val)) || (hh != floor(window_frame_get_height()*upscale_val)))) //resizing the window with upscaling
-  || (!smooth_camera &amp;&amp; ((ww != window_frame_get_width()) || (hh != window_frame_get_height()))))  //resizing with out upscaling
-  //|| resizing
+for (var i = 0; i &lt; global.numberOfLocalPlayers; i++)
+{
+  var ideal_h = 288;
+  var ideal_w = 512;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Zoom
+
+
+
+if (global.numberOfLocalPlayers = 1)
+{
+  //singleplayer zoom funstions
+  if (obj_controller.zoom_in_pressed[0]) || (obj_controller.zoom_out_pressed[0]) || resizing
   {
-    //resizing = true;
-    var w = window_frame_get_width();
-    var h = window_frame_get_height();
+    if (obj_controller.zoom_in_pressed[0] = true)
+      {player_zoom[0] = player_zoom[0] * 2};
+    if (obj_controller.zoom_out_pressed[0] = true)
+      {player_zoom[0] = player_zoom[0] / 2};
     
-    if (window_frame_was_ready)
-    &amp;&amp; (w &gt; 0 &amp;&amp; h &gt; 0 &amp;&amp; surface_exists(application_surface)){
-      if (smooth_camera){
-        ww = window_frame_get_width()*upscale_val;
-        hh = window_frame_get_height()*upscale_val;
-      }else{
-        ww = window_frame_get_width();
-        hh = window_frame_get_height();
-      }
+    //player_zoom[0] = clamp(player_zoom[0], 0.125, 8)
+    if (global.debug = false){
+      player_zoom[0] = clamp(player_zoom[0], 0.5, 2)
     }else{
-      ww = room_width;
-      hh = room_height;
+      player_zoom[0] = clamp(player_zoom[0], 0.0078125, 32)
     }
     
-    surface_resize(application_surface, ww, hh)
+    view_hview[0] = view_hport[0]/(player_zoom[0]*res_scale[0])
+    view_wview[0] = view_wport[0]/(player_zoom[0]*res_scale[0])
     
-    /*
-    show_debug_message("RESIZED")
-    show_debug_message("ww = "+string(ww))
-    show_debug_message("display_get_gui_width = "+string(display_get_gui_width()))
-    show_debug_message("window_get_width = "+string(window_get_width()))
-    show_debug_message("window_frame_get_width = "+string(window_frame_get_width()))
-    show_debug_message("surface width = "+string(surface_get_width(application_surface)))
-    //show_debug_message("display_get_gui_width = "+string(display_get_gui_width()))
-    //*/
+    view_xview[0] = view_object[0].x - view_wview[0]/2
+    view_yview[0] = view_object[0].y - view_hview[0]/2
     
-  
-    
-    
-    ///define number of player screens per row
-    if (global.numberOfLocalPlayers = 1){
-      with obj_player{
-        if (htme_isLocal()){
-          if (player_id_local = 0){
-            view_object[0] = self
-            
-          }
-        }
-      }
-      view_hspeed[0] = 0
-      view_vspeed[0] = 0
-      
-      view_hport[0] = hh
-      view_wport[0] = ww
-      
-      view_visible[0] = true
-    }
-    else
-    {
-      var top_split    = floor(global.numberOfLocalPlayers/2)
-      var bottom_split = ceil(global.numberOfLocalPlayers/2)
-      
-      var view_port_height = hh/2
-      
-      for (var i = 0; i &lt; global.numberOfLocalPlayers; i++){
-        with obj_player{
-          if (htme_isLocal()){
-            if (player_id_local = i){
-              view_object[i] = self
-            }
-          }
-        }
-        view_hspeed[i] = 0
-        view_vspeed[i] = 0
-        
-        //resize the width and height of each view
-        
-        if (i &lt; top_split)
-        {
-            view_wport[i] = ww/top_split
-            view_xport[i] = (ww/top_split)*(i) 
-            view_yport[i] = 0
-            view_hport[i] = ceil(view_port_height)
-        } else {
-          view_wport[i] = ww/bottom_split
-          view_xport[i] = (ww/bottom_split)*(i-top_split) 
-          view_yport[i] = ceil(view_port_height)
-          view_hport[i] = floor(view_port_height)
-        }
-        
-        view_hborder[i] = 0
-        view_vborder[i] = 0
-        
-        view_visible[i] = true
-      }
-      
-      
-    }
-    
-    
-    
-    
-    ///resolution scaling variable set
-    if (global.numberOfLocalPlayers = 1)
-    {
-      var v_res = hh;
-      var h_res = ww;
-      res_volume = v_res+h_res;
-      
-      res_scale[0] = res_volume/ideal_volume;
-      
-      view_hview[0] = view_hport[0]/(player_zoom[0]*res_scale[0])
-      view_wview[0] = view_wport[0]/(player_zoom[0]*res_scale[0])
-      
-      view_xview[0] = view_object[0].x - view_wview[0]/2
-      view_yview[0] = view_object[0].y - view_hview[0]/2
-      
-    }else{
-      for (var i = 0; i &lt; global.numberOfLocalPlayers; i++)
-      {
-        var v_res = view_hport[i];
-        var h_res = view_wport[i];
-        res_volume = v_res+h_res;
-        
-        res_scale[i] = res_volume/ideal_volume //(res_volume/2)/(ideal_volume/2);
-        
-        view_hview[i] = view_hport[i]/(player_zoom[i]*res_scale[i])
-        view_wview[i] = view_wport[i]/(player_zoom[i]*res_scale[i])
-        
-        view_xview[i] = view_object[i].x - view_wview[i]/2
-        view_yview[i] = view_object[i].y - view_hview[i]/2
-        
-      }
-    
-    }
-    
+    view_hborder[0] = 0 //view_wview[0]/2
+    view_vborder[0] = 0 //view_hview[0]/2
   }
+}
+else
+{
+  //multiplayer zoom functions
+  
+  var top_split    = floor(global.numberOfLocalPlayers/2)
+  var bottom_split = ceil(global.numberOfLocalPlayers/2)
+  
+  var view_port_height = hh/2
+  
+  for (var i = 0; i &lt; global.numberOfLocalPlayers; i++)
+  {
+    if (obj_controller.zoom_in_pressed[0] = true)
+      {player_zoom[i] = player_zoom[i] * 2};
+    if (obj_controller.zoom_out_pressed[0] = true)
+      {player_zoom[i] -= player_zoom[i] / 2};
+       
+    //player_zoom[i] = clamp(player_zoom[i], 0.125, 8)
+    if (global.debug = false){
+      player_zoom[i] = clamp(player_zoom[i], 0.5, 2)
+    }else{
+      player_zoom[i] = clamp(player_zoom[i], 0.0078125, 8)
+    }
+    
+    if (obj_controller.zoom_in_pressed[0]) || (obj_controller.zoom_out_pressed[0]) || resizing{
+      view_hview[i] = view_hport[i]/(player_zoom[i]*res_scale[i])
+      view_wview[i] = view_wport[i]/(player_zoom[i]*res_scale[i])
+      
+      view_xview[i] = view_object[i].x - view_wview[i]/2
+      view_yview[i] = view_object[i].y - view_hview[i]/2
+    }
+  }
+}
 
+//}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Move views for movement
+
+for (var i = 0; i &lt; global.numberOfLocalPlayers; i++){
+  with view_object[i]{
+    if !is_interior(x,y)
+    {
+      ideal_x = x //+ clamp(lengthdir_x((view_wview[i]*0.25)*(self.spd/2), self.dir),-(view_wview[i]*0.25),view_wview[i]*0.25)
+      ideal_y = y //+ clamp(lengthdir_y((view_hview[i]*0.25)*(self.spd/2), self.dir),-(view_hview[i]*0.25),view_hview[i]*0.25)
+      
+      view_xview[i] = ideal_x-view_wview[i]/2
+      view_yview[i] = ideal_y-view_hview[i]/2
+      
+      if (!obj_camera_control.free_cam_mode) &amp;&amp; (variable_global_exists("chunk_handler"))
+      {
+        view_xview[i] = clamp(view_xview[i], 0,  global.chunk_handler.world_width-view_wview[i])
+        view_yview[i] = clamp(view_yview[i], 0,  global.chunk_handler.world_height-view_hview[i])
+      }
+    
+    
+    }else{//if the player is inside an interior cell
+      ideal_x = x //+ clamp(lengthdir_x((view_wview[i]*0.25)*(self.spd/2), self.dir),-(view_wview[i]*0.25),view_wview[i]*0.25)
+      ideal_y = y //+ clamp(lengthdir_y((view_hview[i]*0.25)*(self.spd/2), self.dir),-(view_hview[i]*0.25),view_hview[i]*0.25)
+      
+      view_xview[i] = ideal_x-view_wview[i]/2
+      view_yview[i] = ideal_y-view_hview[i]/2
+      
+      if (!obj_camera_control.free_cam_mode)
+      {
+        //find the chunks
+        var array = xy_to_chunk(x,y);
+        var chunk_x = array[0]
+        var chunk_y = array[1]
+        
+        //find the interior map and grid pos
+        var array = interior_chunk_find_grid_pos(chunk_x, chunk_y);
+        if (array = undefined){
+            continue;
+          }
+        grid_x = array[0];
+        grid_y = array[1];
+        map = array[2];
+        
+        //find the bounding limits
+        var array = interior_rooms_connected_to_bbox(map, grid_x, grid_y);
+        var tile_size = global.chunk_handler.tile_size
+        
+        bbox_view_up    = array[0]-tile_size
+        bbox_view_down  = array[1]+tile_size
+        bbox_view_left  = array[2]-tile_size
+        bbox_view_right = array[3]+tile_size
+        
+        //possition x
+        if (view_wview[i] &gt; (bbox_view_right - bbox_view_left)){
+          var ideal_x = bbox_view_left + (bbox_view_right-bbox_view_left)/2;
+          view_xview[i] = ideal_x-view_wview[i]/2
+        }else{
+          ideal_x = x //+ clamp(lengthdir_x((view_wview[i]*0.25)*(self.spd/2), self.dir),-(view_wview[i]*0.25),view_wview[i]*0.25)
+          view_xview[i] = ideal_x-view_wview[i]/2
+          view_xview[i] = clamp(view_xview[i], bbox_view_left, bbox_view_right-view_wview[i])
+        }
+        
+        //possition y
+        if (view_hview[i] &gt; (bbox_view_down - bbox_view_up)){
+          var ideal_y = bbox_view_up + (bbox_view_down-bbox_view_up)/2;
+          view_yview[i] = ideal_y-view_hview[i]/2
+        }else{
+          ideal_y = y //+ clamp(lengthdir_x((view_wview[i]*0.25)*(self.spd/2), self.dir),-(view_wview[i]*0.25),view_wview[i]*0.25)
+          view_yview[i] = ideal_y-view_hview[i]/2
+          view_yview[i] = clamp(view_yview[i], bbox_view_up, bbox_view_down-view_hview[i])
+        }
+        
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///handle frame skipping
+if !resizing{
+  
+  var frame_mod = room_speed/frame_rate;
+  
+  var last_frame_counter = frame_counter;
+  frame_counter = frame_counter mod frame_mod
+  
+  if (last_frame_counter != frame_counter)
+  {var frame_over = true} else {var frame_over = false;}
+  
+  if (frame_over = false)
+  || ((lag() &gt; 2) &amp;&amp; (frames_skipped &lt; max_frame_skip))
+  {
+    draw_enable_drawevent(false);
+    
+    frames_skipped++
+    
+  }else{
+    draw_enable_drawevent(true);
+    draw_clear(c_black);
+    
+    frames_skipped = 0;
+  }
+  
+  
+  frame_counter += 1*lag();
+  
+  //this variable is used when any script inside the draw event needs to know how many frames of animation it needs to skip to make the animations take equally as long for all settings. Very important
+  frame_delay += 1*lag();
 }
 </string>
           </argument>
@@ -358,9 +470,13 @@ if (os_type = os_windows &amp;&amp; window_has_focus()) &amp;&amp; false
 if true //(os_type != os_windows)
 {
   //check for resize
-  if (surface_get_width(application_surface) != floor(ww)) || (surface_get_height(application_surface) != floor(hh))
-  || ((smooth_camera &amp;&amp; ((surface_get_width(application_surface) != floor(display_get_gui_width()*upscale_val)) || (surface_get_height(application_surface) != floor(display_get_gui_height()*upscale_val))))
-  || (!smooth_camera &amp;&amp; ((surface_get_width(application_surface) != display_get_gui_width()) || (surface_get_height(application_surface) != display_get_gui_height()))))
+  if
+  (
+    (surface_get_width(application_surface) != floor(ww)) || (surface_get_height(application_surface) != floor(hh))
+    || ((smooth_camera &amp;&amp; ((surface_get_width(application_surface) != floor(display_get_gui_width()*upscale_val)) || (surface_get_height(application_surface) != floor(display_get_gui_height()*upscale_val))))
+    || (!smooth_camera &amp;&amp; ((surface_get_width(application_surface) != display_get_gui_width()) || (surface_get_height(application_surface) != display_get_gui_height()))))
+  )
+  &amp;&amp; !window_minimized() 
   {
     if (smooth_camera){
       if !is_fullscreened{
@@ -380,18 +496,9 @@ if true //(os_type != os_windows)
       }
     }
     
-    surface_resize(application_surface, ww, hh)
-    
-    
-    //show_debug_message("RESIZED")
-    //show_debug_message("ww = "+string(ww))
-    //show_debug_message("surface width = "+string(surface_get_width(application_surface)))
-    //show_debug_message("display_get_gui_width = "+string(display_get_gui_width()))
-    //show_debug_message("hh = "+string(hh))
-    //show_debug_message("surface height = "+string(surface_get_height(application_surface)))
-    //show_debug_message("display_get_gui_height = "+string(display_get_gui_height()))
-    
-    
+    if (ww != 0) &amp;&amp; (hh != 0){
+      surface_resize(application_surface, ww, hh)
+    }
     
     
     ///define number of player screens per row
@@ -500,360 +607,8 @@ if true //(os_type != os_windows)
           </argument>
         </arguments>
       </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// [debug] resolution 
-
-for (var i = 0; i &lt; global.numberOfLocalPlayers; i++)
-{
-    
-//show_debug_player(i, "res_volume = "+string(view_hport[i]+view_wport[i]))
-//show_debug_player(i, "ideal_volume = "+string(ideal_volume))
-//show_debug_player(i, "res_scale[i] = "+string(res_scale[i]))
-//show_debug_player(i, "display_get_gui_height = "+string(display_get_gui_height()))
-//show_debug_player(i, "window_get_height = "+string(window_get_width()))
-//show_debug_player(i, "surface_get_height = "+string(surface_get_width(application_surface)))
-show_debug_player(i, "view_hview[0] = " +string(view_hview[0]))
-show_debug_player(i, "view_wview[0] = " +string(view_wview[0]))
-
-var ideal_h = 288;
-var ideal_w = 512;
-show_debug_player(i, "ideal_h = " +string(ideal_h*2))
-show_debug_player(i, "ideal_w = " +string(ideal_w*2))
-
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Zoom
-
-
-//if any zoom button is pressed
-//var zooming = false
-//for (var i = 0; i &lt; global.numberOfLocalPlayers; i++){
-//  if (obj_controller.zoom_out_pressed[i]){
-//    var zooming = true
-//  }
-//}
-
-//if zooming {
-
-  
-if (global.numberOfLocalPlayers = 1)
-{
-  if (obj_controller.zoom_in_pressed[0]) || (obj_controller.zoom_out_pressed[0]) || resizing
-  {
-    if (obj_controller.zoom_in_pressed[0] = true)
-      {player_zoom[0] = player_zoom[0] * 2};
-    if (obj_controller.zoom_out_pressed[0] = true)
-      {player_zoom[0] = player_zoom[0] / 2};
-    
-    //player_zoom[0] = clamp(player_zoom[0], 0.125, 8)
-    if (global.debug = false){
-      player_zoom[0] = clamp(player_zoom[0], 0.5, 2)
-    }else{
-      player_zoom[0] = clamp(player_zoom[0], 0.0078125, 32)
-    }
-    
-    view_hview[0] = view_hport[0]/(player_zoom[0]*res_scale[0])
-    view_wview[0] = view_wport[0]/(player_zoom[0]*res_scale[0])
-    
-    view_xview[0] = view_object[0].x - view_wview[0]/2
-    view_yview[0] = view_object[0].y - view_hview[0]/2
-    
-    view_hborder[0] = 0 //view_wview[0]/2
-    view_vborder[0] = 0 //view_hview[0]/2
-  }
-}
-else
-{
-  //multiplayer zoom functions
-  
-  var top_split    = floor(global.numberOfLocalPlayers/2)
-  var bottom_split = ceil(global.numberOfLocalPlayers/2)
-  
-  var view_port_height = hh/2
-  
-  for (var i = 0; i &lt; global.numberOfLocalPlayers; i++)
-  {
-    if (obj_controller.zoom_in_pressed[0] = true)
-      {player_zoom[i] = player_zoom[i] * 2};
-    if (obj_controller.zoom_out_pressed[0] = true)
-      {player_zoom[i] -= player_zoom[i] / 2};
-       
-    //player_zoom[i] = clamp(player_zoom[i], 0.125, 8)
-    if (global.debug = false){
-      player_zoom[i] = clamp(player_zoom[i], 0.5, 2)
-    }else{
-      player_zoom[i] = clamp(player_zoom[i], 0.0078125, 8)
-    }
-    
-    if (obj_controller.zoom_in_pressed[0]) || (obj_controller.zoom_out_pressed[0]) || resizing{
-      view_hview[i] = view_hport[i]/(player_zoom[i]*res_scale[i])
-      view_wview[i] = view_wport[i]/(player_zoom[i]*res_scale[i])
-      
-      view_xview[i] = view_object[i].x - view_wview[i]/2
-      view_yview[i] = view_object[i].y - view_hview[i]/2
-    }
-  }
-}
-
-//}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Move views for movement
-
-for (var i = 0; i &lt; global.numberOfLocalPlayers; i++){
-  
-  with view_object[i]{
-    if !is_interior(x,y)
-    {
-      ideal_x = x //+ clamp(lengthdir_x((view_wview[i]*0.25)*(self.spd/2), self.dir),-(view_wview[i]*0.25),view_wview[i]*0.25)
-      ideal_y = y //+ clamp(lengthdir_y((view_hview[i]*0.25)*(self.spd/2), self.dir),-(view_hview[i]*0.25),view_hview[i]*0.25)
-      
-      view_xview[i] = ideal_x-view_wview[i]/2
-      view_yview[i] = ideal_y-view_hview[i]/2
-      
-      if (!obj_camera_control.free_cam_mode) &amp;&amp; (variable_global_exists("chunk_handler"))
-      {
-        view_xview[i] = clamp(view_xview[i], 0,  global.chunk_handler.world_width-view_wview[i])
-        view_yview[i] = clamp(view_yview[i], 0,  global.chunk_handler.world_height-view_hview[i])
-      }
-    
-    
-    }else{//if the player is inside an interior cell
-      ideal_x = x //+ clamp(lengthdir_x((view_wview[i]*0.25)*(self.spd/2), self.dir),-(view_wview[i]*0.25),view_wview[i]*0.25)
-      ideal_y = y //+ clamp(lengthdir_y((view_hview[i]*0.25)*(self.spd/2), self.dir),-(view_hview[i]*0.25),view_hview[i]*0.25)
-      
-      view_xview[i] = ideal_x-view_wview[i]/2
-      view_yview[i] = ideal_y-view_hview[i]/2
-      
-      if (!obj_camera_control.free_cam_mode)
-      {
-        //find the chunks
-        var array = xy_to_chunk(x,y);
-        var chunk_x = array[0]
-        var chunk_y = array[1]
-        
-        //find the interior map and grid pos
-        var array = interior_chunk_find_grid_pos(chunk_x, chunk_y);
-        if (array = undefined){
-            continue;
-          }
-        grid_x = array[0];
-        grid_y = array[1];
-        map = array[2];
-        
-        //find the bounding limits
-        var array = interior_rooms_connected_to_bbox(map, grid_x, grid_y);
-        var tile_size = global.chunk_handler.tile_size
-        
-        bbox_view_up    = array[0]-tile_size
-        bbox_view_down  = array[1]+tile_size
-        bbox_view_left  = array[2]-tile_size
-        bbox_view_right = array[3]+tile_size
-        
-        show_debug_player(i, "x = "+string(x))
-        show_debug_player(i, "y = "+string(y))
-        show_debug_player(i, "bbox_view_up = "+string(bbox_view_up))
-        show_debug_player(i, "bbox_view_down = "+string(bbox_view_down))
-        show_debug_player(i, "bbox_view_left = "+string(bbox_view_left))
-        show_debug_player(i, "bbox_view_right = "+string(bbox_view_right))
-        
-        //possition x
-        if (view_wview[i] &gt; (bbox_view_right - bbox_view_left)){
-          var ideal_x = bbox_view_left + (bbox_view_right-bbox_view_left)/2;
-          view_xview[i] = ideal_x-view_wview[i]/2
-        }else{
-          ideal_x = x //+ clamp(lengthdir_x((view_wview[i]*0.25)*(self.spd/2), self.dir),-(view_wview[i]*0.25),view_wview[i]*0.25)
-          view_xview[i] = ideal_x-view_wview[i]/2
-          view_xview[i] = clamp(view_xview[i], bbox_view_left, bbox_view_right-view_wview[i])
-        }
-        
-        //possition y
-        if (view_hview[i] &gt; (bbox_view_down - bbox_view_up)){
-          var ideal_y = bbox_view_up + (bbox_view_down-bbox_view_up)/2;
-          view_yview[i] = ideal_y-view_hview[i]/2
-        }else{
-          ideal_y = y //+ clamp(lengthdir_x((view_wview[i]*0.25)*(self.spd/2), self.dir),-(view_wview[i]*0.25),view_wview[i]*0.25)
-          view_yview[i] = ideal_y-view_hview[i]/2
-          view_yview[i] = clamp(view_yview[i], bbox_view_up, bbox_view_down-view_hview[i])
-        }
-        
-      }
-    }
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///handle frame skipping
-if !resizing{
-  
-  var frame_mod = room_speed/frame_rate;
-  
-  var last_frame_counter = frame_counter;
-  frame_counter = frame_counter mod frame_mod
-  
-  if (last_frame_counter != frame_counter)
-  {var frame_over = true} else {var frame_over = false;}
-  
-  if (frame_over = false)
-  || (lag() &gt; 2) &amp;&amp; (frames_skipped &lt; max_frame_skip){
-    draw_enable_drawevent(false);
-    frames_skipped++
-    
-  }else{
-    draw_enable_drawevent(true);
-    draw_clear(c_black);
-    
-    frames_skipped = 0;
-  }
-  
-  
-  frame_counter += 1*lag();
-  
-  //this variable is used when any script inside the draw event needs to know how many frames of animation it needs to skip to make the animations take equally as long for all settings. Very important
-  frame_delay += 1*lag();
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///toggle application drawing for smooth cam
-
-if (smooth_camera || resizing)
-&amp;&amp; ((os_type = os_windows &amp;&amp; window_frame_has_focus())
-    || window_has_focus())
-{
-  application_surface_draw_enable(false)
-}else{
-  application_surface_draw_enable(true)
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
     </event>
-    <event eventtype="3" enumb="0">
+    <event eventtype="3" enumb="1">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -870,56 +625,14 @@ if (smooth_camera || resizing)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Window resize check [Windows Only]
+            <string>
 
-resizing = false;
 
-if (os_type = os_windows
-&amp;&amp; window_has_focus()) &amp;&amp; false
+if (smooth_camera)
+&amp;&amp; ((os_type = os_windows &amp;&amp; window_frame_has_focus()))
+&amp;&amp; !window_minimized() 
 {
-  window_frame_update();
-  // if the extension just finished readying up:
-  if (window_frame_is_ready &amp;&amp; !window_frame_was_ready) {
-      window_frame_was_ready = true;
-      // override the close button behaviour, as an example:
-      //window_command_set_active(window_command_resize, 0); // can disable window resizing
-      //window_command_set_active(window_command_maximize, 0); // or ability to maximize window
-      //window_command_set_active(window_command_minimize, 0); // or ability to minimize window
-      window_frame_set_min_size(160, 170); // how small the window can be allowed to get
-      window_frame_set_background(background_color); // if you don't fill the entire window
-  }
-  
-  
-  // resize the game to fit the container window if it's visible
-  
-  // (if you don't do window resizing, you don't need this)
-  if (window_frame_get_visible()) {
-      var w = window_frame_get_width();
-      var h = window_frame_get_height();
-      if (w &gt; 0 &amp;&amp; h &gt; 0 &amp;&amp; surface_exists(application_surface)
-      &amp;&amp; (window_get_width() != w || window_get_height() != h)
-      ) {
-          // resize room (since we don't use views):
-          //view_xport[0] = 0; view_yport[0] = 0;
-          //view_wport[0] = w; view_hport[0] = h;
-          //view_wview[0] = w; view_hview[0] = h;
-          // resize the game inside the frame-window to fit it's size:
-          window_frame_set_region(0, 0, w, h);
-          // also resize application_surface:
-  //        surface_resize(application_surface, w, h);
-          resizing = true;
-          
-      }
-  }
-  
-  /*if (keyboard_check_pressed(vk_space)) {
-      var l = window_frame_get_x();
-      var t = window_frame_get_y();
-      var w = window_frame_get_width();
-      var h = window_frame_get_height();
-      show_debug_message(string(w)+" "+string(h));
-      window_frame_set_rect(l+10,t+10,w,h);
-  }*/
+  surface_resize(application_surface,window_get_width()*upscale_val,window_get_height()*upscale_val)
 }
 </string>
           </argument>
@@ -998,31 +711,12 @@ frame_delay = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///stretch draw the application surface
+            <string>///rescale the GUI
+display_set_gui_size(window_get_width(),window_get_height());
+texture_set_interpolation(false);
 
-if smooth_camera || resizing
-{
-  // DISABLE ALPHABLEND BECAUSE SURFACES //
-  draw_enable_alphablend(0);
-  texture_set_interpolation(true);
-  
-  // GET OFFSET OF THE APPLICATION SURFACE FOR MANUAL DRAWING //
-  var offset = application_get_position();
-  
-  //display_set_gui_size(ww, hh);
-  
-  // DRAW THE APPLICATION SURFACE //
-  //if resizing{
-    draw_surface_stretched(application_surface, 0, 0, ww, hh);
-  //}
-  //for (var i = 0; i &lt; global.numberOfLocalPlayers; i++){
-  //  if (view_visible[i]) draw_surface_ext(view_surface_id[i], view_xport[i]/2, view_yport[i]/2,0.5,0.5,0,0,1);
-  //}
-  
-  // RESET ALPHABLEND //
-  draw_enable_alphablend(1);
-  texture_set_interpolation(false);
-}
+
+
 </string>
           </argument>
         </arguments>
@@ -1052,7 +746,7 @@ if (global.numberOfLocalPlayers != 1)
   
   var view_port_height = hh/2
   
-  var line_width = 3*(1+obj_camera_control.smooth_camera)
+  var line_width = 3
   
   for (var i = 0; i &lt; global.numberOfLocalPlayers; i++)
   {
@@ -1070,6 +764,47 @@ if (global.numberOfLocalPlayers != 1)
 
 
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="73">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///stretch draw the application surface
+
+if (smooth_camera || resizing)
+&amp;&amp; !window_minimized() 
+{
+  // DISABLE ALPHABLEND BECAUSE SURFACES //
+  draw_enable_alphablend(0);
+  texture_set_interpolation(true);
+  
+  // GET OFFSET OF THE APPLICATION SURFACE FOR MANUAL DRAWING //
+  var offset = application_get_position();
+  
+  //resize our application surface
+  //surface_resize(application_surface,window_get_width(),window_get_height())
+  
+  // RESET ALPHABLEND //
+  draw_enable_alphablend(1);
+  //texture_set_interpolation(false);
+}
 </string>
           </argument>
         </arguments>

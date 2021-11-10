@@ -492,7 +492,26 @@ repeat(ds_queue_size(room_coord_queue)){
       var last_x = hall_x
       var last_y = hall_y
       
+      //if for some reason they are not defined give them a value of infinity +1
+      //  this is because the hallways is on the edge of the ds_grid, and we cant expand it
+      if (up = undefined) {up = infinity+1}
+      if (down = undefined) {down = infinity+1}
+      if (left = undefined) {left = infinity+1}
+      if (right = undefined) {right = infinity+1}
+      
+      //sometimes with the noise function which adds some speratic hallways,
+      //  the halway has a chance to loop in a circle into it's self, leading to no way out
+      //  this break prevents that from happening just by giving up.
+      //  this theoretically means it's possible to have a dungeon which can not be defeated 
+      // IE Impossible dungeon genoration.
+      if (up >= infinity)
+      && (down >= infinity)
+      && (left >= infinity)
+      && (right >= infinity){
+        break;
+      }
       //increment to the best possible possition
+      
       var min_val = min(up, down, left, right)
       switch min_val
       {

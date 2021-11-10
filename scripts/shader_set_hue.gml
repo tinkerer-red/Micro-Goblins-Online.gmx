@@ -1,4 +1,4 @@
-/// shader_set_hue(hue)
+/// shader_set_hue(hue) [0-255]
 
 // hue = 0-255
 

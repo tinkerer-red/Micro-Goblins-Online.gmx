@@ -45,7 +45,7 @@ switch (argument0[1]) {
         // menu
         draw_set_color($eeeeee);
         draw_set_halign(fa_center);
-        draw_text_transformed(10+argument1, argument2 + (nheight/2), ">", 1.2*((1+obj_camera_control.smooth_camera)/2), 1.2*((1+obj_camera_control.smooth_camera)/2), 270*argument0[2]);
+        draw_text_transformed(10+argument1, argument2 + (nheight/2), ">", 1, 1, 270*argument0[2]);
         draw_set_halign(fa_left);
     break;
     
@@ -75,15 +75,15 @@ if argument0[1] = 0 {
     var amount = (argument0[2]-argument0[3]) / (argument0[4]-argument0[3]) * 100;    
 
     draw_healthbar(argument1+nwidth, argument2+margin, argument1+nwidth+vwidth-w-margin, argument2+nheight-margin, amount, $2c2c2c, argument0[7], argument0[7], 0, true, false);
-    draw_text_transformed(argument1+nwidth+vwidth-w+margin, argument2 + (nheight/2), argument0[2], 1.2*((1+obj_camera_control.smooth_camera)/2), 1.2*((1+obj_camera_control.smooth_camera)/2), 0);
+    draw_text_transformed(argument1+nwidth+vwidth-w+margin, argument2 + (nheight/2), argument0[2], 1, 1, 0);
 }
 
 if argument0[1] = 4 {
-    draw_text_transformed(argument1+nwidth, argument2 + (nheight/2), argument0[2], 1.2*((1+obj_camera_control.smooth_camera)/2), 1.2*((1+obj_camera_control.smooth_camera)/2), 0);
+    draw_text_transformed(argument1+nwidth, argument2 + (nheight/2), argument0[2], 1, 1, 0);
 }
 
 // name
 text = argument0[0 + 2 * (argument0[1] = 5)];
 
 draw_set_color($eeeeee);
-draw_text_transformed(round(10+argument1 + (argument0[1] == 2) * 8 + (argument0[1] == 3 || argument0[1] == 5)*((nwidth+vwidth) / 2 - string_width(text)/2 - margin*2)), round(argument2 + (nheight/2)), text, 1.2*((1+obj_camera_control.smooth_camera)/2), 1.2*((1+obj_camera_control.smooth_camera)/2), 0);
+draw_text_transformed(round(10+argument1 + (argument0[1] == 2) * 8 + (argument0[1] == 3 || argument0[1] == 5)*((nwidth+vwidth) / 2 - string_width(text)/2 - margin*2)), round(argument2 + (nheight/2)), text, 1, 1, 0);

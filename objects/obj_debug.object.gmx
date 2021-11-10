@@ -77,7 +77,7 @@ h = 0
             <string>/// Debug Controller
 
 ///init
-draw_set_font(fontGGUI);
+draw_set_font(global.font_menu);
 update_debug = false;
 
 x = 0;
@@ -87,7 +87,7 @@ guid = gui_create_gui();
 
 gui_create_string(guid, "text", "Debug Controller", c_white);
 
-gui_create_menu(guid, "Modifiers", false, 63, c_black);
+gui_create_menu(guid, "Modifiers", false, 64, c_black);
   
   gui_create_menu(guid, "Global", false, 10, c_aqua);
     gui_create_slider(guid, "AOE", 0, 0, 5, c_aqua)
@@ -133,7 +133,7 @@ gui_create_menu(guid, "Modifiers", false, 63, c_black);
     gui_create_slider(guid, "Quick Scope", 0, 0, 5, c_orange)
     
     
-  gui_create_menu(guid, "Summon", false, 17, c_green);
+  gui_create_menu(guid, "Summon", false, 18, c_green);
     ////////////////////////////////////////////////////////
     gui_create_menu(guid, "Movement", false, 4, c_blue);
       gui_create_slider(guid, "Default Movement", 0, 0, 5, c_red)
@@ -149,11 +149,12 @@ gui_create_menu(guid, "Modifiers", false, 63, c_black);
       gui_create_slider(guid, "Kamikaze", 0, 0, 5, c_purple)
       
     ////////////////////////////////////////////////////////
-    gui_create_menu(guid, "Health", false, 4, c_green);
+    gui_create_menu(guid, "Health", false, 5, c_green);
       gui_create_slider(guid, "Default Health", 0, 0, 5, c_yellow)
       gui_create_slider(guid, "Stout", 0, 0, 5, c_green)
       gui_create_slider(guid, "Enlarged", 0, 0, 5, c_blue)
       gui_create_slider(guid, "Timed", 0, 0, 5, c_purple)
+      gui_create_slider(guid, "Multiply", 0, 0, 5, c_red)
       
     gui_create_menu(guid, "Passive", false, 1, c_yellow);
       gui_create_slider(guid, "Mount", 0, 0, 5, c_green)
@@ -199,7 +200,15 @@ gui_create_menu(guid, "Modifiers", false, 63, c_black);
   gui_create_button(guid, "Discord", src_url, $b6599b);
   gui_create_button(guid, "warp to shore", teleport_to_shore, $b6599b);
 
+gui_set_gui(guid,
+            204,
+            17,
+            70,
+            32,
+            2
+            )
 
+gui_offset = 276  
 time = 0;
 spd = 0.1;
 
@@ -260,7 +269,7 @@ for (var i = 0; i &lt; 8; i++)
             <string>///Debug Controller Previous Values
 if update_debug || (global.debug = true){
   if update_debug || (mouse_check_button(mb_left)){
-    if update_debug || (device_mouse_x_to_gui(0) &gt; (window_get_width()-243)*(1+obj_camera_control.smooth_camera)){
+    if update_debug || (device_mouse_x_to_gui(0) &gt; (window_get_width()-243)){
       
       last_smooth = gui_get_value(guid, 'Smooth Camera');
       
@@ -325,6 +334,7 @@ if update_debug || (global.debug = true){
           last_stoutHealth = gui_get_value(guid, "Stout");
           last_enlargedHealth = gui_get_value(guid, "Enlarged");
           last_timedHealth = gui_get_value(guid, "Timed");
+          last_multiplyHealth = gui_get_value(guid, "Multiply");
           last_mount = gui_get_value(guid, "Mount")
           
         //}
@@ -375,11 +385,11 @@ if (global.debug = true){
       
       
       
-  if (device_mouse_x_to_gui(0) &gt; (window_get_width()-243)*(1+obj_camera_control.smooth_camera)){
+  if (device_mouse_x_to_gui(0) &gt; (window_get_width()-gui_offset)){
     
     
     // Interact with gui
-    gui_check(guid, (window_get_width()-243)*(1+obj_camera_control.smooth_camera), 0, device_mouse_x_to_gui(0), device_mouse_y_to_gui(0));
+    gui_check(guid, (window_get_width()-gui_offset), 0, device_mouse_x_to_gui(0), device_mouse_y_to_gui(0));
     
     
     
@@ -424,7 +434,7 @@ if (global.debug = true){
             <kind>1</kind>
             <string>///Clamp the modifier's scales
 if (global.debug = true){
-    if (device_mouse_x_to_gui(0) &gt; (window_get_width()-243)*(1+obj_camera_control.smooth_camera)){
+    if (device_mouse_x_to_gui(0) &gt; (window_get_width()-243)){
   
       ///Debug Controller New Values
       if gui_get_value(guid, 'Modifiers'){
@@ -499,6 +509,7 @@ if (global.debug = true){
             gui_set_value(guid, "Stout", floor(0.5+gui_get_value(guid, "Stout")) div 1);
             gui_set_value(guid, "Enlarged", floor(0.5+gui_get_value(guid, "Enlarged")) div 1);
             gui_set_value(guid, "Timed", floor(0.5+gui_get_value(guid, "Timed")) div 1);
+            gui_set_value(guid, "Multiply", floor(0.5+gui_get_value(guid, "Multiply")) div 1);
           }
           if gui_get_value(guid, 'Passive'){
             gui_set_value(guid, "Mount", floor(0.5+gui_get_value(guid, "Mount")) div 1);
@@ -549,7 +560,7 @@ if (global.debug = true){
             <string>///Debug Controller Apply Variables
 if (global.debug = true){
   if (mouse_check_button_pressed(mb_left)){
-    if (device_mouse_x_to_gui(0) &gt; (window_get_width()-243)*(1+obj_camera_control.smooth_camera)){
+    if (device_mouse_x_to_gui(0) &gt; (window_get_width()-243)){
     
     //graphics
       if gui_get_value(guid, 'Graphics') || (update_debug = true){
@@ -559,13 +570,13 @@ if (global.debug = true){
               
         if obj_camera_control.smooth_camera != last_smooth {
           gui_set_gui(guid,
-                      168*(1+obj_camera_control.smooth_camera),
-                      18*(1+obj_camera_control.smooth_camera),
-                      70*(1+obj_camera_control.smooth_camera),
-                      16*(1+obj_camera_control.smooth_camera),
-                      3*(1+obj_camera_control.smooth_camera)
-                      )
-          
+            204,
+            17,
+            70,
+            32,
+            2
+            )
+
         }
         
         if (obj_camera_control.frame_rate != gui_get_value(guid, 'room_speed')){
@@ -600,7 +611,7 @@ if (global.debug = true){
             <string>///Debug Controller Apply New Values [Modifiers]
 if update_debug || (global.debug = true){
   //if (mouse_check_button_released(mb_left)){
-    if (device_mouse_x_to_gui(0) &gt; (window_get_width()-243)*(1+obj_camera_control.smooth_camera)) || (update_debug = true){
+    if (device_mouse_x_to_gui(0) &gt; (window_get_width()-243)) || (update_debug = true){
       
       if (gui_get_value(guid, 'Modifiers')
         &amp;&amp; (gui_get_value(guid, 'Global')
@@ -702,6 +713,7 @@ if update_debug || (global.debug = true){
               if update_debug || last_stoutHealth != gui_get_value(guid, "Stout") scr_modifier_adjust(queue_attack_step_mods, scr_mod_summon_health_stout, 88, gui_get_value(guid, "Stout"));
               if update_debug || last_enlargedHealth != gui_get_value(guid, "Enlarged") scr_modifier_adjust(queue_attack_step_mods, scr_mod_summon_health_enlarged, 2, gui_get_value(guid, "Enlarged"));
               if update_debug || last_timedHealth != gui_get_value(guid, "Timed") scr_modifier_adjust(queue_attack_step_mods, scr_mod_summon_health_timed, 99, gui_get_value(guid, "Timed"));
+              if update_debug || last_multiplyHealth != gui_get_value(guid, "Multiply") scr_modifier_adjust(queue_attack_step_mods, scr_mod_summon_health_multiply, 3, gui_get_value(guid, "Multiply"));
               
             }
             //Passive
@@ -861,52 +873,12 @@ fps_mean = ds_grid_get_mean(fps_grid,0,0,0,240-1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Debug Display Text
+            <string>///Debug Display Controller
 
 if (global.debug = true){
-  draw_set_font(font_debug)
-  var scale = obj_camera_control.upscale_val/2;
-  
-  if (global.numberOfLocalPlayers = 1){
-     h = 40
-     var xx = view_xport
-     var yy = view_yport
-     var width = string_width(debug_string[0])*scale
-     draw_set_alpha(0.5)
-     draw_set_color(c_dkgray)
-     draw_rectangle(xx,yy+(h*scale)*(1+obj_camera_control.smooth_camera), xx+width*(1+obj_camera_control.smooth_camera), yy+((h+string_height(debug_string[0]))*scale)*(1+obj_camera_control.smooth_camera), 0)
-     draw_set_alpha(1)
-     draw_set_color(c_white)
-     draw_text_transformed(xx,(yy+h*scale)*(1+obj_camera_control.smooth_camera), debug_string[0], scale*(1+obj_camera_control.smooth_camera), scale*(1+obj_camera_control.smooth_camera), 0)
-     
-  }else{
+    draw_set_font(global.font_menu)
+    gui_draw(guid, (display_get_gui_width()-gui_offset), 0);
     
-    for (var i = 0; i &lt; global.numberOfLocalPlayers; i++){
-      var xx = view_xport[i]
-      var yy = view_yport[i]
-      var width = string_width(debug_string[i])*scale
-      //height = 
-      
-      if view_visible[i]{
-        h = 40
-        if (i = 0){
-          draw_set_alpha(0.5)
-          draw_set_color(c_dkgray)
-          draw_rectangle(xx,yy+(h*scale)*(1+obj_camera_control.smooth_camera), xx+width*(1+obj_camera_control.smooth_camera), yy+((h+string_height(debug_string[i]))*scale)*(1+obj_camera_control.smooth_camera), 0)
-          draw_set_alpha(1)
-          draw_set_color(c_white)
-          draw_text_transformed(xx,(yy+h*scale)*(1+obj_camera_control.smooth_camera), debug_string[i], scale*(1+obj_camera_control.smooth_camera), scale*(1+obj_camera_control.smooth_camera), 0)
-        } else {
-          draw_set_alpha(0.5)
-          draw_set_color(c_dkgray)
-          draw_rectangle(xx,yy, xx+width*(1+obj_camera_control.smooth_camera), yy+(string_height(debug_string[i])*scale)*(1+obj_camera_control.smooth_camera), 0)
-          draw_set_alpha(1)
-          draw_set_color(c_white)
-          draw_text_transformed(xx,yy, debug_string[i], scale*(1+obj_camera_control.smooth_camera), scale*(1+obj_camera_control.smooth_camera), 0)
-        }
-      }
-    }
-  }
 }
 </string>
           </argument>
@@ -928,12 +900,52 @@ if (global.debug = true){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Debug Display Controller
+            <string>///Debug Display Text
 
 if (global.debug = true){
-    draw_set_font(fontGGUI)
-    gui_draw(guid, (window_get_width()-243)*(1+obj_camera_control.smooth_camera), 0);
+  draw_set_font(global.font_menu)
+  var scale = obj_camera_control.upscale_val/2;
+  
+  if (global.numberOfLocalPlayers = 1){
+     h = 40
+     var xx = view_xport
+     var yy = view_yport
+     var width = string_width(debug_string[0])*scale
+     draw_set_alpha(0.5)
+     draw_set_color(c_dkgray)
+     draw_rectangle(xx,yy+(h*scale), xx+width, yy+((h+string_height(debug_string[0]))*scale), 0)
+     draw_set_alpha(1)
+     draw_set_color(c_white)
+     draw_text_transformed(xx,(yy+h*scale), debug_string[0], scale, scale, 0)
+     
+  }else{
     
+    for (var i = 0; i &lt; global.numberOfLocalPlayers; i++){
+      var xx = view_xport[i]
+      var yy = view_yport[i]
+      var width = string_width(debug_string[i])*scale
+      //height = 
+      
+      if view_visible[i]{
+        h = 40
+        if (i = 0){
+          draw_set_alpha(0.5)
+          draw_set_color(c_dkgray)
+          draw_rectangle(xx,yy+(h*scale), xx+width, yy+((h+string_height(debug_string[i]))*scale), 0)
+          draw_set_alpha(1)
+          draw_set_color(c_white)
+          draw_text_transformed(xx,(yy+h*scale), debug_string[i], scale, scale, 0)
+        } else {
+          draw_set_alpha(0.5)
+          draw_set_color(c_dkgray)
+          draw_rectangle(xx,yy, xx+width, yy+(string_height(debug_string[i])*scale), 0)
+          draw_set_alpha(1)
+          draw_set_color(c_white)
+          draw_text_transformed(xx,yy, debug_string[i], scale, scale, 0)
+        }
+      }
+    }
+  }
 }
 </string>
           </argument>

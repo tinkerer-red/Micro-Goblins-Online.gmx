@@ -9,11 +9,9 @@ if (object_index = obj_summon) || (object_index = obj_enemy){
       mod_summon_health_default_start = true;
     }
     
-    if (mod_summon_health_default_start = true){
-      if (e_health <= 0){
-        instance_destroy(self)
-        return true;
-      }
+    if (e_health <= 0){
+      instance_destroy(self)
+      return true
     }
 }
 
