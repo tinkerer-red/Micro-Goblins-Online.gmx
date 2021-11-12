@@ -397,7 +397,7 @@ for (var i = 0; i &lt; 3; i++)
 
 
 
-self.name = "Test-icle"
+self.player_name = "Test-icle"
 self.fav_hue = 0
 
 
@@ -422,7 +422,7 @@ mp_setType("physics", mp_type.SMART)
 
 
 //add variables
-mp_add("playerName", "name", buffer_string, 3*room_speed)
+mp_add("playerName", "player_name", buffer_string, 3*room_speed)
 mp_setType("playerName",mp_type.SMART)
 
 //buffer_f16 isn't supported
@@ -561,7 +561,7 @@ if (!htme_isLocal())
 {
   if(variable_global_exists("htme_object"))
   {
-    self.name = mp_map_syncOut("name", name)
+    self.name = mp_map_syncOut("player_name", name)
     self.fav_hue = mp_map_syncOut("fav_hue", fav_hue)
     self.up = mp_map_syncOut("up", up)
     self.down = mp_map_syncOut("down", down)
@@ -808,7 +808,7 @@ if (htme_isLocal())
   
   if(variable_global_exists("htme_object"))
   {
-    mp_map_syncIn("name",self.name)
+    mp_map_syncIn("player_name",self.name)
     mp_map_syncIn("fav_hue",self.fav_hue)
     mp_map_syncIn("up",self.up)
     mp_map_syncIn("down",self.down)
@@ -1485,10 +1485,12 @@ if (visible = true)
   if (view_object[view_current] != id){
     view_res = view_hview[view_current]/view_hport[view_current]
     draw_set_halign(fa_center);
+    draw_set_valign(fa_bottom);
     sting_offset = (string_height(name)*view_res) + (2*view_res)
     shader_set_outline(5, c_blue)
-    draw_text_transformed(x, bbox_top-sting_offset*obj_camera_control.upscale_val, name, view_res*obj_camera_control.upscale_val, view_res*obj_camera_control.upscale_val, 0)
+    draw_text_transformed(x, bbox_top, name, view_res*obj_camera_control.upscale_val, view_res*obj_camera_control.upscale_val, 0)
     draw_set_halign(fa_left);
+    draw_set_valign(fa_top);
   }
   
   

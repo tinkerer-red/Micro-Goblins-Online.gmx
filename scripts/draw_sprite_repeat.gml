@@ -1,4 +1,4 @@
-/// draw_sprite_repeat(sprite, 0, x, y, width, height, uv_scale[1]);
+/// draw_sprite_repeat(sprite, index, x, y, width, height, uv_scale[1]);
 
 var sprite_to_draw = argument0;
 var sprite_sub_index = argument1;

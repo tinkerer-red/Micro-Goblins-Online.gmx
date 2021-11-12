@@ -58,5 +58,12 @@ active_chunks = ds_map_create()
 active_interior_chunks = ds_map_create()
 
 
+//this surface is reused for every chunk to draw their background water if they have any
+//This one surface saves a ton of GPU operations
+//and allows for the water to be pixelated.
+chunk_water_surface = surface_create(global.chunk_handler.chunk_width, global.chunk_handler.chunk_height)
+chunk_water_surface_drawn_this_frame = false
+
+
 
 

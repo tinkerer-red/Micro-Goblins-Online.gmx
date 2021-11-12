@@ -78,12 +78,12 @@ for (var i = 0; i &lt; 8; i++)
             <kind>1</kind>
             <string>/// Allow for sub pixel movement
 
-upscale_val = 1
-smooth_camera = false
+upscale_val = 2
+smooth_camera = true
 
 
 if (smooth_camera){
-  upscale_val = 2
+  //upscale_val = 2
   //texture_set_interpolation(true);
   surface_resize(application_surface,window_get_width()*upscale_val,window_get_height()*upscale_val)
 
@@ -629,7 +629,7 @@ if true //(os_type != os_windows)
 
 
 if (smooth_camera)
-&amp;&amp; ((os_type = os_windows &amp;&amp; window_frame_has_focus()))
+//&amp;&amp; ((os_type = os_windows &amp;&amp; window_frame_has_focus()))
 &amp;&amp; !window_minimized() 
 {
   surface_resize(application_surface,window_get_width()*upscale_val,window_get_height()*upscale_val)
@@ -799,7 +799,7 @@ if (smooth_camera || resizing)
   var offset = application_get_position();
   
   //resize our application surface
-  //surface_resize(application_surface,window_get_width(),window_get_height())
+  surface_resize(application_surface,window_get_width(),window_get_height())
   
   // RESET ALPHABLEND //
   draw_enable_alphablend(1);

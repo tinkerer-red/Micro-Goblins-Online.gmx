@@ -25,30 +25,6 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///World Name
-// Example: "Worlds\"+string(world_name)+"\"+string(cell_x)+","+string(cell_y)+".chnk"
-// Example: "Worlds\World123\-10,12.chnk"
-world_name = "World1"
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>///Init Chunks
 chunk_init(256, 3)
 </string>
@@ -201,6 +177,30 @@ show_chunks = false;
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///World Name
+// Example: "Worlds\"+string(world_name)+"\"+string(cell_x)+","+string(cell_y)+".chnk"
+// Example: "Worlds\World123\-10,12.chnk"
+world_name = "World1"
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="2" enumb="0">
       <action>
@@ -330,6 +330,29 @@ chunk_saved_this_frame = false;
             <string>///debug temp
 
 show_debug_player(0, "world_seed: "+string(world_seed))
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Update chunk_water_surface_drawn_this_frame
+
+chunk_water_surface_drawn_this_frame = false
 </string>
           </argument>
         </arguments>

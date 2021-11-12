@@ -216,7 +216,7 @@ if (_tooltip != noone) {
     }
     
 }
-
+draw_set_valign(fa_top)
 /*
 if (_c._debug) {
     draw_set_alpha(.5);

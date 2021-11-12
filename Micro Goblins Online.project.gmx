@@ -3,7 +3,7 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <datafiles number="7" name="datafiles">
+  <datafiles number="12" name="datafiles">
     <datafile>
       <name>modlist.txt</name>
       <exists>-1</exists>
@@ -55,6 +55,93 @@
       </ConfigOptions>
       <filename>inspirations.txt</filename>
     </datafile>
+    <datafiles number="12" name="Documentation GMS 1.4">
+      <datafile>
+        <name>data.js</name>
+        <exists>-1</exists>
+        <size>125513</size>
+        <exportAction>2</exportAction>
+        <exportDir></exportDir>
+        <overwrite>0</overwrite>
+        <freeData>-1</freeData>
+        <removeEnd>0</removeEnd>
+        <store>0</store>
+        <ConfigOptions>
+          <Config name="Default">
+            <CopyToMask>9223372036854775807</CopyToMask>
+          </Config>
+        </ConfigOptions>
+        <filename>data.js</filename>
+      </datafile>
+      <datafile>
+        <name>gmdoc.js</name>
+        <exists>-1</exists>
+        <size>1990</size>
+        <exportAction>2</exportAction>
+        <exportDir></exportDir>
+        <overwrite>0</overwrite>
+        <freeData>-1</freeData>
+        <removeEnd>0</removeEnd>
+        <store>0</store>
+        <ConfigOptions>
+          <Config name="Default">
+            <CopyToMask>9223372036854775807</CopyToMask>
+          </Config>
+        </ConfigOptions>
+        <filename>gmdoc.js</filename>
+      </datafile>
+      <datafile>
+        <name>index.html</name>
+        <exists>-1</exists>
+        <size>1418</size>
+        <exportAction>2</exportAction>
+        <exportDir></exportDir>
+        <overwrite>0</overwrite>
+        <freeData>-1</freeData>
+        <removeEnd>0</removeEnd>
+        <store>0</store>
+        <ConfigOptions>
+          <Config name="Default">
+            <CopyToMask>9223372036854775807</CopyToMask>
+          </Config>
+        </ConfigOptions>
+        <filename>index.html</filename>
+      </datafile>
+      <datafile>
+        <name>scripts.js</name>
+        <exists>-1</exists>
+        <size>5174</size>
+        <exportAction>2</exportAction>
+        <exportDir></exportDir>
+        <overwrite>0</overwrite>
+        <freeData>-1</freeData>
+        <removeEnd>0</removeEnd>
+        <store>0</store>
+        <ConfigOptions>
+          <Config name="Default">
+            <CopyToMask>9223372036854775807</CopyToMask>
+          </Config>
+        </ConfigOptions>
+        <filename>scripts.js</filename>
+      </datafile>
+      <datafile>
+        <name>style.css</name>
+        <exists>-1</exists>
+        <size>2204</size>
+        <exportAction>2</exportAction>
+        <exportDir></exportDir>
+        <overwrite>0</overwrite>
+        <freeData>-1</freeData>
+        <removeEnd>0</removeEnd>
+        <store>0</store>
+        <ConfigOptions>
+          <Config name="Default">
+            <CopyToMask>9223372036854775807</CopyToMask>
+          </Config>
+        </ConfigOptions>
+        <filename>style.css</filename>
+      </datafile>
+    </datafiles>
   </datafiles>
   <NewExtensions>
     <extension index="0">extensions\Network Engine</extension>
@@ -1121,7 +1208,6 @@
           </scripts>
           <scripts name="public">
             <script>scripts\scr_draw_9slices_ext.gml</script>
-            <script>scripts\scr_dance.gml</script>
             <script>scripts\scr_dsmap_get_keys.gml</script>
             <script>scripts\scr_dsmap_get_values.gml</script>
             <script>scripts\array_concat_1d.gml</script>

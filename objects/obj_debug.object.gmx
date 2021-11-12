@@ -25,9 +25,16 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///show_debug_overlay(true)
-show_debug_overlay(true)
+            <string>///Debug options
 
+global.debug = true
+
+if (global.debug = true)
+{
+  show_debug_overlay(true)
+} else {
+  show_debug_overlay(false)
+}
 </string>
           </argument>
         </arguments>
@@ -904,7 +911,7 @@ if (global.debug = true){
 
 if (global.debug = true){
   draw_set_font(global.font_menu)
-  var scale = obj_camera_control.upscale_val/2;
+  var scale = 0.5 //obj_camera_control.upscale_val/2;
   
   if (global.numberOfLocalPlayers = 1){
      h = 40

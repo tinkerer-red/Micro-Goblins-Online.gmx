@@ -180,7 +180,11 @@ switch (argument[2]) {
         scr_button_set_label(gObj, string(argument[4]));
         
         // setting the execution for mouse up
-        scr_button_set_on_mouseup_cb(gObj, argument[4]);
+        if (argument_count > 5) {
+          scr_button_set_on_mouseup_cb(gObj, argument[5]);
+        }else{
+          scr_button_set_on_mouseup_cb(gObj, argument[4]);
+        }
         
         component._component = gObj;
         break;

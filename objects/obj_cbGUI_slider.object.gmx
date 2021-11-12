@@ -302,6 +302,7 @@ var changeAmount;
 if (_stepValue == undefined) changeAmount = 1;
 else changeAmount = _iW / abs(maxLimit-minLimit) / _stepValue;
         
+/*
 switch (k) {
 
     case (vk_escape): 
@@ -339,7 +340,7 @@ switch (k) {
         _scr_slider_setvalue(maxLimit);
         break;
 }
-
+*/
 keyboard_lastkey = -1;
 </string>
           </argument>

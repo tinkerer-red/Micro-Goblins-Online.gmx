@@ -717,11 +717,33 @@ if (objects_in_chunk = false){
 
 
 if (has_water = true){
-  shader_set_displacement(shd_water_displacement);
-    draw_sprite_repeat(tile_water, 0, x, y, sprite_width, sprite_height, 0.5);
-  texture_set_interpolation(false);
-  texture_set_repeat(false);
-  shader_reset();
+  if (global.chunk_handler.chunk_water_surface_drawn_this_frame = false)
+  || !surface_exists(global.chunk_handler.chunk_water_surface)
+  {
+    //surfaces are destroyed when the window is resized, so recreate it if needed
+    if !surface_exists(global.chunk_handler.chunk_water_surface){
+      global.chunk_handler.chunk_water_surface = surface_create(global.chunk_handler.chunk_width, global.chunk_handler.chunk_height)
+    }
+    
+    global.chunk_handler.chunk_water_surface_drawn_this_frame = true
+    surface_set_target(global.chunk_handler.chunk_water_surface)
+    shader_set_displacement(shd_water_displacement);
+      draw_sprite_repeat(tile_water, 
+                         0, 
+                         0,
+                         0, 
+                         global.chunk_handler.chunk_width, 
+                         global.chunk_handler.chunk_height, 
+                         0.5);
+    texture_set_interpolation(false);
+    texture_set_repeat(false);
+    shader_reset();
+    surface_reset_target()
+  }
+  
+  //if the water has already been drawn this frame just redraw it.
+  draw_surface(global.chunk_handler.chunk_water_surface, x, y)
+  
 }
 
 
@@ -751,15 +773,17 @@ if is_visible(){
     }else{
       var chunk_debug_string = "("+string(chunk_x)+","+string(chunk_y)+")"+"#x = "+string(x)+"#y = "+string(y);
     }
-      var scale = obj_camera_control.upscale_val/2;
+      var scale = 1 //obj_camera_control.upscale_val/2;
       draw_set_colour(c_yellow)
       draw_set_font(global.font_menu)
+      draw_set_valign(fa_top);
+      //draw_set_halign(fa_left);
       draw_text_transformed(x,y,chunk_debug_string,1*scale, 1*scale, 0)
       draw_set_colour(c_white)
   }
 
 }
-
+texture_set_interpolation(false)
 </string>
           </argument>
         </arguments>

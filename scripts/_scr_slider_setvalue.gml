@@ -9,6 +9,10 @@ if (minLimit != undefined && maxLimit != undefined) {
     maxLimit = max(0, value);
 }
 
+if (_stepValue == 1){
+  value = round(value)
+}
+
 _perc = abs((value-minLimit) / (maxLimit-minLimit));
 _scr_slider_getcursorpos();
 

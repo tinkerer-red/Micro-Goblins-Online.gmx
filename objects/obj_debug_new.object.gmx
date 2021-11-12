@@ -25,8 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///show_debug_overlay(true)
-show_debug_overlay(true)
+            <string>///DEBUG OPTIONS
+global.debug = true
 
 </string>
           </argument>
@@ -84,11 +84,16 @@ x = 0;
 y = 0;
 
 //this array is re used many many times in this script to be used as a list of argumnets needed for changing the count of any modifier
-var array;
+//var array;
 
 //guid = gui_create_gui();
 
 //gui_create_string(guid, "text", "Debug Controller", c_white);
+scr_cbDataGUI_create()
+scr_cbDataGUI_set_gui_width(245*1.2) //245 is the default min value
+
+scr_cbDataGUI_use_presets(true)
+scr_cbDataGUI_auto_save_presets(true)
 
 
 //gui_create_menu(guid, "Modifiers", false, 64, c_black);
@@ -97,7 +102,8 @@ gui_folder_modifiers = scr_cbDataGUI_add_folder("Modifiers")
   
   //gui_create_menu(guid, "Global", false, 10, c_aqua);
   gui_folder_modifiers_global = scr_cbDataGUI_add_folder("Global", gui_folder_modifiers)
-  
+    
+    
     
     //gui_create_slider(guid, "AOE", 0, 0, 5, c_aqua)
     scr_cbDataGUI_add(self, "AOE", cbData_type.number, gui_folder_modifiers_global)
@@ -535,12 +541,24 @@ gui_folder_modifiers = scr_cbDataGUI_add_folder("Modifiers")
     
     //scr_cbDataGUI_set_on_change_cb()
     //gui_create_button(guid, "Player_Name", debugger_get_player_name, c_white)
-    scr_cbDataGUI_add(self, "Player_Name", cbData_type.text, gui_folder_player)
+    var player_names;
+    player_names[0] = "Default"
+    player_names[1] = "Red"
+    player_names[2] = "Arma"
+    player_names[3] = "Olaf"
+    player_names[4] = "Shiv"
+    player_names[5] = "nostud thiago"
+    //player_names[6] = ""
+    //player_names[7] = ""
+    
+    scr_cbDataGUI_add(self, "Player_Name", cbData_type.text, gui_folder_player, player_names)
+    scr_cbDataGUI_set_value(self, "Player_Name", "Default")
     scr_cbDataGUI_set_tooltip(self, "Player_Name", "This is a tooltip")
     
     //gui_create_slider(guid, "Favorite Color", 0, 0, 255, c_red)
     self.Favorite_Color = c_red
     scr_cbDataGUI_add(self, "Favorite_Color", cbData_type.color, gui_folder_player)
+    scr_cbDataGUI_set_value(self, "Favorite_Color", c_red)
     scr_cbDataGUI_set_tooltip(self, "Favorite_Color", "This is a tooltip")
   
     
@@ -554,46 +572,54 @@ gui_folder_modifiers = scr_cbDataGUI_add_folder("Modifiers")
     
     //gui_create_watcher(guid, "FPS", fps, c_green);
     scr_cbDataGUI_add(self, "FPS", cbData_type.number, gui_folder_graphics)
-    scr_cbDataGUI_set_tooltip(self, "FPS", "This is a tooltip")
+    scr_cbDataGUI_set_value(self, "FPS", fps)
+    scr_cbDataGUI_set_range(self, "FPS", 0, 100)
+    scr_cbDataGUI_set_tooltip(self, "FPS", "This is a watcher tool to read the current FPS")
+    
     //gui_create_watcher(guid, "FPS_mean", fps_real, c_orange);
     scr_cbDataGUI_add(self, "FPS_mean", cbData_type.number, gui_folder_graphics)
-    scr_cbDataGUI_set_tooltip(self, "FPS_mean", "This is a tooltip")
+    scr_cbDataGUI_set_range(self, "FPS_mean", 0, 1000)
+    scr_cbDataGUI_set_value(self, "FPS_mean", 0)
+    scr_cbDataGUI_set_tooltip(self, "FPS_mean", "This is a watcher tool to read the average FPS across the last 5 seconds")
     
     //gui_create_checkbox(guid, "Smooth_Camera", obj_camera_control.smooth_camera, c_lime);
     scr_cbDataGUI_add(self, "Smooth_Camera", cbData_type.boolean, gui_folder_graphics)
-    scr_cbDataGUI_set_tooltip(self, "Smooth_Camera", "This is a tooltip")
+    scr_cbDataGUI_set_value(self, "Smooth_Camera", 1)
+    scr_cbDataGUI_set_tooltip(self, "Smooth_Camera", "Toggle sub pixel shading by upscaling the in game render, does not effect UI eliments")
     
     //gui_create_checkbox(guid, "Free_Cam", obj_camera_control.free_cam_mode, c_teal);
     scr_cbDataGUI_add(self, "Free_Cam", cbData_type.boolean, gui_folder_graphics)
-    scr_cbDataGUI_set_tooltip(self, "Free_Cam", "This is a tooltip")
+    scr_cbDataGUI_set_value(self, "Free_Cam", 0)
+    scr_cbDataGUI_set_tooltip(self, "Free_Cam", "Toggle camera movement restrictions.")
     
     //gui_create_button(guid, "Show_Chunks", chunk_debug_toggle, c_yellow);
-    scr_cbDataGUI_add(self, "Show_Chunks", cbData_type.function, gui_folder_graphics)
-    scr_cbDataGUI_set_tooltip(self, "Show_Chunks", "This is a tooltip")
+    scr_cbDataGUI_add(self, "Show_Chunks", cbData_type.boolean, gui_folder_graphics)
+    scr_cbDataGUI_set_value(self, "Show_Chunks", 0)
+    scr_cbDataGUI_set_tooltip(self, "Show_Chunks", "Toggles chunks line renders and debug information")
     
     //gui_create_slider(guid, "room_speed", 60, 10, 60, c_green)
     scr_cbDataGUI_add(self, "Room_Speed", cbData_type.number, gui_folder_graphics)
-    scr_cbDataGUI_set_tooltip(self, "Room_Speed", "This is a tooltip")
+    scr_cbDataGUI_set_range(self, "Room_Speed", 10, 120)
+    scr_cbDataGUI_set_step(self, "Room_Speed", 1)
+    scr_cbDataGUI_set_value(self, "Room_Speed", room_speed)
+    scr_cbDataGUI_set_tooltip(self, "Room_Speed", "Set the number of steps to run per second. Default = 60")
     
     
     
     
     
   //gui_create_button(guid, "Restart", src_restart, $0202a4);
-  scr_cbDataGUI_add(self, "Restart", cbData_type.function, -1)
+  scr_cbDataGUI_add(self, "Restart", cbData_type.function, -1, src_restart)
   scr_cbDataGUI_set_tooltip(self, "Restart", "This is a tooltip")
-  scr_cbDataGUI_set_on_change_cb(self, "Restart", src_restart)
   
   //gui_create_button(guid, "Discord", src_url, $b6599b);
-  scr_cbDataGUI_add(self, "Show_Chunks", cbData_type.function, -1)
-  scr_cbDataGUI_set_tooltip(self, "Show_Chunks", "This is a tooltip")
-  scr_cbDataGUI_set_on_change_cb(self, "Restart", src_url)
+  scr_cbDataGUI_add(self, "Discord", cbData_type.function, -1, src_url)
+  scr_cbDataGUI_set_tooltip(self, "Discord", "This is a tooltip")
   
   
   //gui_create_button(guid, "Warp To Shore", teleport_to_shore, $b6599b);
-  scr_cbDataGUI_add(self, "Warp To Shore", cbData_type.function, -1)
-  scr_cbDataGUI_set_tooltip(self, "Warp To Shore", "This is a tooltip")
-  scr_cbDataGUI_set_on_change_cb(self, "Warp To Shore", teleport_to_shore)
+  scr_cbDataGUI_add(self, "Warp_To_Shore", cbData_type.function, -1, teleport_to_shore)
+  scr_cbDataGUI_set_tooltip(self, "Warp_To_Shore", "This is a tooltip")
   
   
   
@@ -618,6 +644,35 @@ spd = 0.1;
   scr_cbDataGUI_open_folder(gui_folder_graphics, false)
 
 
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///show_debug_overlay(true)
+if (global.debug = true)
+{
+  show_debug_overlay(true)
+} else {
+  scr_cbDataGUI_toggle_gui()
+  show_debug_overlay(false)
+}
 </string>
           </argument>
         </arguments>
@@ -849,37 +904,75 @@ if (global.debug = true){
             <string>///Debug Controller Apply Variables
 if (global.debug = true){
   if (mouse_check_button_pressed(mb_left)){
-    if (device_mouse_x_to_gui(0) &gt; (window_get_width()-243)){
+    
+    //Player
+    if (obj_player.player_name != scr_cbDataGUI_get_value(self, 'Player_Name'))
+    {
+      with (obj_player){
+        if htme_isLocal(){
+          player_name = scr_cbDataGUI_get_value(other, 'Player_Name')
+          
+          switch (string_lower(player_name))
+          {
+          case "red":
+            head = spr_head_dev_skin_head_red;
+            body = spr_head_dev_skin_body_red;
+            break;
+          case "arma":
+          case "armadillo":
+            head = spr_head_template;
+            body = spr_body_template;
+            break;
+          case "olaf":
+            head = spr_head_dev_skin_head_olaf;
+            body = spr_head_dev_skin_body_olaf;
+            break;
+          case "shiv":
+          case "shaymire":
+            head = spr_head_dev_skin_head_shaymire;
+            body = spr_head_dev_skin_body_shaymire;
+            break;
+          case "nostud thiago":
+            head = spr_head_dev_skin_head_nostud_thiago;
+            body = spr_head_dev_skin_body_nostud_thiago;
+            break;
+          default:
+            head = spr_head_template;
+            body = spr_body_template;
+          }
+        }
+      }
+
+      
+      
+    }
+    
+    
     
     //graphics
       //if gui_get_value(guid, 'Graphics') || (update_debug = true){
-      if scr_cbDataGUI_get_value(self, 'Graphics') || (update_debug = true){
+      if scr_cbDataGUI_folder_is_open(gui_folder_graphics) || (update_debug = true){
         //adjust camera draw settings///////////////////
         //obj_camera_control.smooth_camera = gui_get_value(guid, 'Smooth Camera');
         obj_camera_control.smooth_camera = scr_cbDataGUI_get_value(self, 'Smooth_Camera');
         //obj_camera_control.free_cam_mode = gui_get_value(guid, 'Free Cam');
         obj_camera_control.free_cam_mode = scr_cbDataGUI_get_value(self, 'Free_Cam');
+        //obj_camera_control.free_cam_mode = scr_cbDataGUI_get_value(self, 'Free_Cam');
         
         
-        //if obj_camera_control.smooth_camera != last_smooth {
-        //  gui_set_gui(guid,
-        //    204,
-        //    17,
-        //    70,
-        //    32,
-        //    2
-        //    )
-        //}
+        if obj_chunk_supervisor.show_chunks != scr_cbDataGUI_get_value(self, 'Show_Chunks'){
+          chunk_debug_toggle()
+        }
+        
         
         //if (obj_camera_control.frame_rate != gui_get_value(guid, 'room_speed')){
-        if (obj_camera_control.frame_rate != scr_cbDataGUI_get_value(self, 'room_speed')){
+        if (obj_camera_control.frame_rate != scr_cbDataGUI_get_value(self, 'Room_Speed')){
           //obj_camera_control.frame_rate = gui_get_value(guid, 'room_speed')
-          obj_camera_control.frame_rate = scr_cbDataGUI_get_value(self, 'room_speed')
+          obj_camera_control.frame_rate = scr_cbDataGUI_get_value(self, 'Room_Speed')
         }
       }
       ////////////////////////////////////////////////
       
-    }
   }
 }
 </string>
@@ -1254,10 +1347,14 @@ fps_mean = ds_grid_get_mean(fps_grid,0,0,0,240-1)
           <argument>
             <kind>1</kind>
             <string>///Debug Display Text
-
 if (global.debug = true){
+  
   draw_set_font(global.font_menu)
-  var scale = obj_camera_control.upscale_val/2;
+  
+  draw_set_halign(fa_left)
+  draw_set_valign(fa_top)
+  
+  var scale = 0.5 //obj_camera_control.upscale_val/2;
   
   if (global.numberOfLocalPlayers = 1){
      h = 40
@@ -1345,7 +1442,10 @@ if (global.debug = true){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (global.debug = true)
+            <string>///toggle dev tools
+
+scr_cbDataGUI_toggle_gui()
+if (global.debug = true)
 {
   global.debug = false
   show_debug_overlay(false)

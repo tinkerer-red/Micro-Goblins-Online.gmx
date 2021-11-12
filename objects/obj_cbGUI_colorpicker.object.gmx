@@ -180,6 +180,8 @@ d3d_transform_add_translation(x, y, 0);
         draw_set_halign(fa_center);
         draw_set_valign(fa_middle);
         draw_text(_bodyW / 2, _bodyH / 2, "\#" + string(value_hex));
+        draw_set_halign(fa_left);
+        draw_set_valign(fa_top);
     }
     
 d3d_transform_set_identity();

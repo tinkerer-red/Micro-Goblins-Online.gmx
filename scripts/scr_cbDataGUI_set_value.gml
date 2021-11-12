@@ -43,6 +43,9 @@ switch (comp._type) {
         } else {
             v = scr_slider_set_value(comp._component[0], val);
             scr_textbox_set_value(comp._component[1], val);
+            with comp._component[0]{
+              show_debug_message("")
+            }
         }
         break;
         

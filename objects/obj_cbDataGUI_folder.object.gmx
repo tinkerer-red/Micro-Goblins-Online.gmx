@@ -142,7 +142,7 @@ draw_set_font(_c.font);
 draw_set_halign(fa_left);
 draw_set_valign(fa_middle);
 draw_text(x + _indent * _c._folderIndent + _c._colorW * 2  + _c._padding + sprite_get_width(spr_cbDataGUI_folder_arrow), y + _c._rowH / 2, _name);
-
+draw_set_valign(fa_top);
 /*
 if (_c._debug) {
     draw_set_alpha(.5);
