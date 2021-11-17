@@ -1,4 +1,4 @@
-///scr_gen_2dig(oc, pers, wm, lac, isIsland, refined, perc)
+///scr_gen_2dig(oc, pers, wm, lac, isIsland, refined, perc, seed, method)
 
 /*
 oc = 
@@ -30,7 +30,12 @@ var wm = argument2;
 var lac = argument3;
 var isIsland = argument4;
 var refined = argument5;
-var perc = argument6
+var perc = argument6;
+var seed = argument7;
+var method = argument8;
+// 0=value noise
+// 1=cellular noise
+
 
 var tile_size = global.chunk_handler.tile_size;
 var grid_size_x = (sprite_width/tile_size)+2;
@@ -56,13 +61,47 @@ var right  = x_off+grid_size_x
 var top    = y_off
 var bottom = y_off+grid_size_y
 
+
+enum DomainWarpType{
+  OpenSimplex2,
+  OpenSimplex2Reduced,
+  BasicGrid,
+}
+
+
+//timer_start()
 for(var i = left; i < right; i++){
     for(var j = top; j < bottom; j++){
-                    var zz = clamp(scr_vn_noise(0, 1, oc, pers, 0.03125, i, j) - elliptical_gradient(i, j, world_width, world_height, perc),0,1);
+                    ///heightmap grid
+                    if (method = 0) {
+                      //var returned_array = DomainWarpSingle(seed|1, 15, 0.01, 1, i, j);
+                      //var _i = returned_array[0];
+                      //var _j = returned_array[1];
+                      var zz = scr_vn_noise(0, 1, oc, pers, wm, seed, method, i, j);// - elliptical_gradient(i, j, world_width, world_height, perc),0,1);
+                    }
+                    
+                    //biome grid
+                    if (method = 1) {
+                      var returned_array = DomainWarpSingle(seed, 30, 0.01, 1, i, j);
+                      var _i = returned_array[0];
+                      var _j = returned_array[1];
+                      var zz = scr_vn_noise(0, 1, oc, pers, wm, seed, method, i+_i, j+_j);// - elliptical_gradient(i, j, world_width, world_height, perc),0,1);
+                    }
+                    
+                    //river grid
+                    if (method = 2) {
+                      var returned_array = DomainWarpSingle(seed, 30, 0.01, 1, i, j);
+                      var _i = returned_array[0];
+                      var _j = returned_array[1];
+                      var zz = scr_vn_noise(0, 1, 1, pers, wm, seed, method, i+_i, j+_j);// - elliptical_gradient(i, j, world_width, world_height, perc),0,1);
+                      if (zz <= 0.1) {zz = zz*10}
+                      else {zz = 1}
+                    }
+                    
                     grid[# i-x_off, j-y_off] = zz;
     }
 }
-
+//timer_end()
 
 //    gpu_noise_free(landmass)
 

@@ -30,6 +30,7 @@ if collision_point( xx, yy, obj_chunk, false, false){
   return false;
 }
 */
+
 var chunk = instance_create(cell_x*chunk_width, cell_y*chunk_height, obj_chunk);
 
 // remember the chunk

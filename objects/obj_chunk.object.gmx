@@ -199,7 +199,7 @@ if should_exist = false {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Stagger the chunk Loading
+            <string>///Stagger the chunk Loading/Genning
 
 
 if (global.chunk_handler.chunk_gen_this_frame = false)
@@ -371,7 +371,7 @@ if (async_load[? "id"] == loadid) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Load Chunk data
+            <string>///Load Chunk data / Generate Chunk
 
 //_filename = "default\"+"Worlds\"+string(world_name)+"\"+string(chunk_x)+","+string(chunk_y)+".chnk"
 //_filename = "Worlds\"+string(world_name)+"\"+string(chunk_x)+","+string(chunk_y)+".chnk"
@@ -387,10 +387,8 @@ if ds_exists(global.chunk_handler.world_map, ds_type_map){
   //load the chunk data here
   if is_interior(x,y){ //if the cell is an exterior cell
     chunk_generate_interior_room()
-    
   }else{
     chunk_generate()
-    
   }
   
   alarm_set(1,1)
@@ -443,6 +441,7 @@ if ds_exists(global.chunk_handler.world_map, ds_type_map){
   
   
 if !is_interior(x,y){ //exterior cells
+  
   if(ds_grid_get_max(heightmap_grid, 0,0,grid_size_x,grid_size_y) &lt;=1){ // If max value of our grid is less or equal 1, then poceed without autotiling.
     
   //First we'll copy the tile structure over to the Autotiling grid
@@ -477,7 +476,7 @@ if !is_interior(x,y){ //exterior cells
   
   
   
-  //once the surface is drawn to we can now cycle through the surface, hue shifting the drawn tiles to their humidity and tempature based biomes
+  //once the surface is drawn to we can now cycle through the surface, hue shifting the drawn tiles to their biome and tempature based biomes
   draw_set_alpha(0.5);
   var tiles = one_chunk / one_tile;
   
@@ -492,16 +491,28 @@ if !is_interior(x,y){ //exterior cells
     var _x = (xx-1)*one_tile
     var _y = (yy-1)*one_tile
     
-    var humidity = humidity_grid[# xx, yy]*(sprite_get_width(spr_biome_color)-1)
-    var tempature = tempature_grid[# xx, yy]*(sprite_get_height(spr_biome_color)-1)
-    
+    var biome = biome_grid[# xx, yy]//*(sprite_get_width(spr_biome_color)-1)
+    //var tempature = tempature_grid[# xx, yy]//*(sprite_get_height(spr_biome_color)-1)
+    var biome_color = c_white;
+    var test = round(256/10 *biome) * 10 -25.6
+    biome_color = make_colour_rgb(test, test, test)
+    /*
+    if(biome &lt;= 0.14285)                                 {biome_color = make_colour_rgb(256*0,256*0,256*0);}
+    else if(biome &gt; 0.14285 &amp;&amp; biome &lt; 0.14285*2)     {biome_color = make_colour_rgb(256*0.14285,256*0.14285,256*0.14285);}
+    else if(biome &gt;= 0.14285*2 &amp;&amp; biome &lt;= 0.14285*3) {biome_color = make_colour_rgb(256*0.14285*2,256*0.14285*2,256*0.14285*2);}
+    else if(biome &gt; 0.14285*3 &amp;&amp; biome &lt;= 0.14285*4)  {biome_color = make_colour_rgb(256*0.14285*3,256*0.14285*3,256*0.14285*3);}
+    else if(biome &gt; 0.14285*4 &amp;&amp; biome &lt;= 0.14285*5)  {biome_color = make_colour_rgb(256*0.14285*4,256*0.14285*4,256*0.14285*4);}
+    else if(biome &gt; 0.14285*5)                           {biome_color = make_colour_rgb(256*0.14285*5,256*0.14285*5,256*0.14285*5);}//
+    */
+        
+    /*
     //grab the 4 corners closest to the desired location
-    var a0 = sprite_getpixel(spr_biome_color, 0, floor(humidity), floor(tempature))
-    var a1 = sprite_getpixel(spr_biome_color, 0, ceil(humidity), floor(tempature))
-    var a2 = sprite_getpixel(spr_biome_color, 0, floor(humidity), ceil(tempature))
-    var a3 = sprite_getpixel(spr_biome_color, 0, ceil(humidity), ceil(tempature))
+    var a0 = sprite_getpixel(spr_biome_color, 0, floor(biome), floor(tempature))
+    var a1 = sprite_getpixel(spr_biome_color, 0, ceil(biome), floor(tempature))
+    var a2 = sprite_getpixel(spr_biome_color, 0, floor(biome), ceil(tempature))
+    var a3 = sprite_getpixel(spr_biome_color, 0, ceil(biome), ceil(tempature))
     
-    var x_perc = humidity mod 1
+    var x_perc = biome mod 1
     var y_perc = tempature mod 1
     
     //merge the first two colors
@@ -515,19 +526,19 @@ if !is_interior(x,y){ //exterior cells
     
     //now merge the two humid colors vertically
     var biome_color = merge_color_squared(humid_col_1, humid_col_2, y_perc)
+    */
+    //var hue = colour_get_value(biome_color)
+    //shader_set_brightness(hue)
     
-//    var hue = colour_get_hue(biome_color)
-//    shader_set_hue(hue)
     
+    //draw_set_color(biome_color)
     
-//    draw_set_color(biome_color)
-    
-    draw_surface_part_ext(surf_temp, _x, _y, one_tile, one_tile, _x, _y, 1, 1, c_white, 1)
+    draw_surface_part_ext(surf_temp, _x, _y, one_tile, one_tile, _x, _y, 1, 1, biome_color, 1)
 //    draw_rectangle(_x, _y, _x+one_tile-1, _y+one_tile-1, false)
 //    draw_set_color(c_white)
     
     
-//    shader_reset()
+    shader_reset()
   }
   //shader_reset()
   draw_set_alpha(1)
@@ -715,52 +726,60 @@ if (objects_in_chunk = false){
             <string>/// Draw Chunk
 
 
+//check to see if the chunk is visible
+if is_visible(){
 
-if (has_water = true){
-  if (global.chunk_handler.chunk_water_surface_drawn_this_frame = false)
-  || !surface_exists(global.chunk_handler.chunk_water_surface)
-  {
-    //surfaces are destroyed when the window is resized, so recreate it if needed
-    if !surface_exists(global.chunk_handler.chunk_water_surface){
-      global.chunk_handler.chunk_water_surface = surface_create(global.chunk_handler.chunk_width, global.chunk_handler.chunk_height)
+  //draw the water first so it's underneath
+  if (has_water = true){
+    if (global.chunk_handler.chunk_water_surface_drawn_this_frame = false)
+    || !surface_exists(global.chunk_handler.chunk_water_surface)
+    {
+      //surfaces are destroyed when the window is resized, so recreate it if needed
+      if !surface_exists(global.chunk_handler.chunk_water_surface){
+        global.chunk_handler.chunk_water_surface = surface_create(global.chunk_handler.chunk_width, global.chunk_handler.chunk_height)
+      }
+      
+      global.chunk_handler.chunk_water_surface_drawn_this_frame = true
+      surface_set_target(global.chunk_handler.chunk_water_surface)
+      shader_set_displacement(shd_water_displacement);
+        draw_sprite_repeat(tile_water, 
+                           0, 
+                           0,
+                           0, 
+                           global.chunk_handler.chunk_width, 
+                           global.chunk_handler.chunk_height, 
+                           0.5);
+      texture_set_interpolation(false);
+      texture_set_repeat(false);
+      shader_reset();
+      surface_reset_target()
     }
     
-    global.chunk_handler.chunk_water_surface_drawn_this_frame = true
-    surface_set_target(global.chunk_handler.chunk_water_surface)
-    shader_set_displacement(shd_water_displacement);
-      draw_sprite_repeat(tile_water, 
-                         0, 
-                         0,
-                         0, 
-                         global.chunk_handler.chunk_width, 
-                         global.chunk_handler.chunk_height, 
-                         0.5);
-    texture_set_interpolation(false);
-    texture_set_repeat(false);
-    shader_reset();
-    surface_reset_target()
+    //if the water has already been drawn this frame just redraw it.
+    draw_surface(global.chunk_handler.chunk_water_surface, x, y)
+    
   }
-  
-  //if the water has already been drawn this frame just redraw it.
-  draw_surface(global.chunk_handler.chunk_water_surface, x, y)
-  
-}
 
 
-if is_visible(){
+
+  
   draw_set_alpha(1)
-  if (terrain_surface != -1) || surface_exists(terrain_surface){   ///if ds_exists(heightmap_grid, ds_type_grid){
+  if (terrain_surface != -1) || surface_exists(terrain_surface){
     draw_set_alpha(1)
     scr_draw_2dig()
     draw_set_alpha(1)
-    //draw_self()
-  }else{
+  }
+  
+  //draw debug chunk to know it was created properly
+  /*
+  else{
     draw_set_color(c_dkgray);
     draw_rectangle(x, y, x+64, y+64, false);
     draw_set_color(c_white);
     draw_self()
     
   }
+  //*/
   
     if (show_chunks) {
     if is_interior(x,y){

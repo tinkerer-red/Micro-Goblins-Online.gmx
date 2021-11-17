@@ -9,7 +9,7 @@ var height = sprite_height/tile_size + 2
 
 var grid = ds_grid_create(width, height)
 
-var value = scr_noise_2dig(chunk_x, chunk_y)
+var value = gold_noise(global.chunk_handler.world_seed, chunk_x, chunk_y)
 
 if (value < chance){
   var closest_x = 0

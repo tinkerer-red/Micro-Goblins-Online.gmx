@@ -1270,7 +1270,7 @@ if update_debug || (global.debug = true){
 for (var i = 0; i &lt; 8; i++)
 {
   debug_string[i] = "        [DEBUG MENU]        #"
-  if (i = 0) debug_string[i] = "        [DEBUG MENU]        #"+"fps_real = "+string(fps_real)+"#fps_mean = "+string(fps_mean)+"#"
+  if (i = 0) debug_string[i] = "        [DEBUG MENU]        #"+"fps_real = "+string(fps_real)+"#fps_mean = "+string(fps_mean)+"#world_seed = "+string(global.chunk_handler.world_seed)+"#"
 }
 </string>
           </argument>

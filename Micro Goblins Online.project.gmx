@@ -1480,6 +1480,29 @@
     <script>scripts\README.gml</script>
     <script>scripts\fullscreen_toggle.gml</script>
     <script>scripts\window_minimized.gml</script>
+    <script>scripts\gold_noise.gml</script>
+    <script>scripts\hash_marsag.gml</script>
+    <script>scripts\simplex_noise.gml</script>
+    <script>scripts\floor_noise_fast.gml</script>
+    <script>scripts\noise_hash.gml</script>
+    <script>scripts\_grad_coord.gml</script>
+    <script>scripts\_grad_coord_new.gml</script>
+    <script>scripts\_gradients2D.gml</script>
+    <script>scripts\create_array.gml</script>
+    <script>scripts\hash12.gml</script>
+    <script>scripts\hash_reed.gml</script>
+    <script>scripts\spline4.gml</script>
+    <script>scripts\ds_grid_get_bicubic.gml</script>
+    <script>scripts\ds_grid_add_with_fallout.gml</script>
+    <script>scripts\single_cellular.gml</script>
+    <script>scripts\RandVecs2D.gml</script>
+    <script>scripts\DomainWarp.gml</script>
+    <script>scripts\DomainWarpSingle.gml</script>
+    <script>scripts\TransformDomainWarpCoordinate.gml</script>
+    <script>scripts\DoSingleDomainWarp.gml</script>
+    <script>scripts\SingleDomainWarpSimplexGradient.gml</script>
+    <script>scripts\SingleDomainWarpBasicGrid.gml</script>
+    <script>scripts\scr_gen_cellular_noises.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shStretch.shader</shader>

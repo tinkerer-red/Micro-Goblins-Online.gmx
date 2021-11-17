@@ -219,6 +219,7 @@ Ranged mod, allows for use of pokeball style summons
 	Teleport, (This is less of a movement type and more of a movement ability, almost exactly the same as Massive Jump, although the entity goes invisible, and will do it's best to use this effect when a projectile is on a collision course for it, or if the player is out of reach)
 	Inverse Movement, (Will always try to reach the closest possition oposite of the player, although this does give the summon infinate flight, if it is outside, simly try to stay on the edge of the player camera? idk If it is player possesed let it move freely, with the usual restrictions on flight)
 	Skiddish (lunges away from a player who attacked with in range)
+	Seppuku (small health up. Will intentionally move infront of enemy projectiles preventing them from hitting the player, modcount = movement speed, possibly consider including a cooldown timer where after modcount number of bullets deflected it needs to cool down before attempting to deflect more projectiles)
 	
 [Move] Bouncy (spawns in the direction the player was facing, will continue to move and bounce off walls untill dead)
 [Move] Spastic (bee like movement, very random, much wow)
