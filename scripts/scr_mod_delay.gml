@@ -19,7 +19,7 @@ if !variable_instance_exists(self, "mod_delay_start"){
     speed = 0
   }
   
-  if (object_index = obj_weapon) && (w_type = weapon_type_melee){
+  if (object_index = obj_weapon) && (w_type = item_type_weapon_melee){
     self.owner_id.player_state = e_player_state.move
     mod_delay_melee_anim_attack_timer_mem = anim_attack_time
     //self.owner_id.attack = false
@@ -51,7 +51,7 @@ if (mod_count = 0) && (mod_delay_start = true){
         speed = mod_delay_proj_speed_mem
       }
       
-      if (object_index = obj_weapon) && (w_type = weapon_type_melee){
+      if (object_index = obj_weapon) && (w_type = item_type_weapon_melee){
         self.owner_id.player_state = e_player_state.move
         self.owner_id.attack = false
         self.owner_id.post_attack = true
@@ -73,7 +73,7 @@ if (mod_count = 0) && (mod_delay_start = true){
       return true
       
     }else{
-      if (object_index = obj_weapon) && (w_type = weapon_type_melee){
+      if (object_index = obj_weapon) && (w_type = item_type_weapon_melee){
         anim_attack_timer = anim_attack_time //mod_delay_melee_anim_attack_timer_mem
         
           //keep it's possition where it is

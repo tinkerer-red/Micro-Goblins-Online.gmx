@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>///define variable stats
 w_name = "Default Weapon"
-w_type = weapon_type_melee
+w_type = item_type_weapon_melee
 
 w_damage = 1
 w_knockback = 8
@@ -274,7 +274,7 @@ if (anim_attack_start){
 
 
 
-if (w_type = weapon_type_melee)
+if (w_type = item_type_weapon_melee)
 {
   //if no animation modifiers, then run defult single stab anim
   
@@ -312,7 +312,7 @@ if (w_type = weapon_type_melee)
 
 
 
-if (w_type = weapon_type_range) &amp;&amp; (self.attack = false)
+if (w_type = item_type_weapon_range) &amp;&amp; (self.attack = false)
 {
   show_debug_player(0 , "anim_attack_timer = "+string(anim_attack_timer))
   anim_attack_timer -= 1*lag()
@@ -326,7 +326,7 @@ if (w_type = weapon_type_range) &amp;&amp; (self.attack = false)
 
 
 
-if (w_type = weapon_type_summon) &amp;&amp; (self.attack = false)
+if (w_type = item_type_weapon_summon) &amp;&amp; (self.attack = false)
 {
   anim_attack_timer -= 1*lag()
   if (anim_attack_timer &lt;= 0)
@@ -457,7 +457,7 @@ if (weapon_event_queues != -1){
   ////////////////////
   ///// Melee Ranged
   ////////////////////
-  if (w_type = weapon_type_melee) &amp;&amp; ((melee_ranged &gt; 0) &amp;&amp; (proj_spawned &lt; melee_ranged))
+  if (w_type = item_type_weapon_melee) &amp;&amp; ((melee_ranged &gt; 0) &amp;&amp; (proj_spawned &lt; melee_ranged))
   {
     var anim_timer_iterations = anim_attack_time / (melee_ranged+1)
     
@@ -520,7 +520,7 @@ if self.attack  //if spawning projectiles
   ////////////////////
   ///// Ranged
   ////////////////////
-  if ((w_type = weapon_type_range) &amp;&amp; (proj_spawned = 0))
+  if ((w_type = item_type_weapon_range) &amp;&amp; (proj_spawned = 0))
   {
     proj_spawned += 1
     
@@ -549,7 +549,7 @@ if self.attack  //if spawning projectiles
   ////////////////////
   ///// Summon
   ////////////////////
-  if (w_type = weapon_type_summon)
+  if (w_type = item_type_weapon_summon)
   {
     var distance = ((self.sprite_width*self.image_xscale)/2 + (self.sprite_height*self.image_yscale)/2) /2 +1
     var xx = x+lengthdir_x(distance, self.direction);
@@ -579,7 +579,7 @@ if self.attack  //if spawning projectiles
     ////////////////////
     ///// Ranged
     ////////////////////
-    if (w_type = weapon_type_range)
+    if (w_type = item_type_weapon_range)
     {
       ds_queue_destroy(self.recent_proj_queue)
       recent_proj_queue = -1
@@ -601,7 +601,7 @@ if self.attack  //if spawning projectiles
     ////////////////////
     ///// Summon
     ////////////////////
-    if (w_type = weapon_type_summon)
+    if (w_type = item_type_weapon_summon)
     {
       ds_queue_destroy(self.recent_summon_queue)
       recent_summon_queue = -1
@@ -641,7 +641,7 @@ if self.attack  //if spawning projectiles
       ds_queue_destroy(self.summon_queue)
       summon_queue = -1
       
-      //if (w_type = weapon_type_summon){
+      //if (w_type = item_type_weapon_summon){
         //self.owner_id.attack = false
         //self.owner_id.post_attack = true
         //draw_self()

@@ -211,7 +211,7 @@ for(var i = left; i < right; i++){
     
     //show_debug_message(""+string_format(sum[6], 1, 16))
     
-    //*
+    /*
     if (grid0[# i-x_off, j-y_off] < 0) show_debug_message("sum[0] = "+string_format(sum[0], 1, 16));
     if (grid1[# i-x_off, j-y_off] < 0) show_debug_message("sum[1] = "+string_format(sum[1], 1, 16));
     if (grid2[# i-x_off, j-y_off] < 0) show_debug_message("sum[2] = "+string_format(sum[2], 1, 16));

@@ -8,6 +8,29 @@
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
+    <event eventtype="0" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_menu = false
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
@@ -92,6 +115,123 @@ show_debug_message("surface_count = "+string(surface_count))
         </arguments>
       </action>
     </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (draw_menu)
+&amp;&amp; instance_exists(obj_menu){
+  
+  for (player_i = 0; player_i &lt; global.numberOfLocalPlayers; player_i++)
+  {
+    if surface_exists(obj_menu.menu_background_surface[player_i]){
+      //display_set_gui_size(window_get_width(),window_get_height());
+      draw_set_alpha(1)
+      
+      if (obj_camera_control.smooth_camera){
+       var res_scale = 1/obj_camera_control.upscale_val
+      }else{
+        var res_scale = 1
+      }
+      
+      var vx = view_xport[player_i]
+      var vy = view_yport[player_i]
+      var vw = view_wport[player_i]
+      var vh = view_hport[player_i]
+      
+      
+      var gui_scale = obj_menu.gui_scale[player_i]
+      var w = surface_get_width(obj_menu.menu_background_surface[player_i])*gui_scale
+      var menu_x_off = vx+floor((vw-w)/2)
+      var menu_y_off = vy
+      
+      //draw the menu backdrop
+      //draw_surface(obj_menu.menu_background_surface[player_i], 0, 0)
+      draw_surface_stretched(obj_menu.menu_background_surface[player_i], 
+                             menu_x_off, 
+                             menu_y_off, 
+                             surface_get_width(obj_menu.menu_background_surface[player_i])*gui_scale-1, 
+                             surface_get_height(obj_menu.menu_background_surface[player_i])*gui_scale-1
+                             )
+                             
+      //draw the inventory grid
+      var inv_x_off = menu_x_off + obj_menu.inventory_x_off[player_i]*gui_scale
+      var inv_y_off = menu_y_off + obj_menu.inventory_y_off[player_i]*gui_scale
+      
+      
+      var inventory_view_y_off = 0
+      
+      var xscale = (surface_get_width(obj_menu.menu_inventory_surface[player_i])*gui_scale-1) / (surface_get_width(obj_menu.menu_inventory_surface[player_i])*gui_scale);
+      var yscale = (surface_get_height(obj_menu.menu_inventory_surface[player_i])*gui_scale-1) / (surface_get_height(obj_menu.menu_inventory_surface[player_i])*gui_scale);
+      
+      var height = min(obj_menu.inv_height[player_i],
+                       surface_get_height(obj_menu.menu_inventory_surface[player_i])
+                       )
+      
+      draw_surface_part_ext(obj_menu.menu_inventory_surface[player_i], 
+                             0,
+                             inventory_view_y_off,
+                             obj_menu.inv_width[player_i],
+                             height,
+                             inv_x_off,
+                             inv_y_off,
+                             xscale*gui_scale,
+                             yscale*gui_scale,
+                             c_white,
+                             1
+                             )
+      /*
+      draw_surface_stretched(obj_menu.menu_inventory_surface[player_i], 
+                             inv_x_off, 
+                             inv_y_off, 
+                             obj_menu.inv_width[player_i]*gui_scale-1, 
+                             obj_menu.inv_height[player_i]*gui_scale-1
+                             )
+      */
+    }
+  }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="9" enumb="72">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//draw_menu = true
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="9" enumb="13">
       <action>
         <libid>1</libid>
@@ -113,6 +253,29 @@ show_debug_message("surface_count = "+string(surface_count))
 show_debug_message(j)
 
 teleport(32700, 2000, 0)
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="10" enumb="72">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_menu = false
 </string>
           </argument>
         </arguments>

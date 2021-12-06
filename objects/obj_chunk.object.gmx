@@ -575,19 +575,18 @@ if !is_interior(x,y){ //exterior cells
   }
 }
 
-
+/*
 if (show_chunks) {
     //draw chunk boarders
       var chunk_str = "("+string(chunk_x)+","+string(chunk_y)+")";
-      var scale = 1//obj_camera_control.upscale_val/2;
       draw_set_colour(c_yellow)
       draw_rectangle(0, 0, sprite_width, sprite_height, true)
-      draw_set_font(global.font_menu)
-      draw_text_transformed(x,y,chunk_str,1*scale, 1*scale, 0)
+      draw_set_font(global.font_menu2x)
+      draw_text(x+1,y+1,chunk_str)
     }
-    
-    
-    surface_reset_target()                
+*/    
+
+surface_reset_target()                
 </string>
           </argument>
         </arguments>
@@ -749,39 +748,30 @@ if is_visible(){
                            global.chunk_handler.chunk_width, 
                            global.chunk_handler.chunk_height, 
                            0.5);
-      texture_set_interpolation(false);
       texture_set_repeat(false);
       shader_reset();
       surface_reset_target()
+      texture_set_interpolation(false);
+      
     }
     
-    //if the water has already been drawn this frame just redraw it.
+    //if the water has already been drawn this frame just re-draw it.
     draw_surface(global.chunk_handler.chunk_water_surface, x, y)
     
   }
-
-
-
   
-  draw_set_alpha(1)
+  
+  
+  
+  
   if (terrain_surface != -1) || surface_exists(terrain_surface){
     draw_set_alpha(1)
     scr_draw_2dig()
     draw_set_alpha(1)
   }
   
-  //draw debug chunk to know it was created properly
-  /*
-  else{
-    draw_set_color(c_dkgray);
-    draw_rectangle(x, y, x+64, y+64, false);
-    draw_set_color(c_white);
-    draw_self()
-    
-  }
-  //*/
   
-    if (show_chunks) {
+  if (show_chunks) {
     if is_interior(x,y){
       var array = interior_chunk_find_grid_pos(chunk_x, chunk_y)
       var grid_x = array[0];
@@ -792,17 +782,23 @@ if is_visible(){
     }else{
       var chunk_debug_string = "("+string(chunk_x)+","+string(chunk_y)+")"+"#x = "+string(x)+"#y = "+string(y);
     }
-      var scale = 1 //obj_camera_control.upscale_val/2;
       draw_set_colour(c_yellow)
       draw_set_font(global.font_menu)
       draw_set_valign(fa_top);
-      //draw_set_halign(fa_left);
-      draw_text_transformed(x,y,chunk_debug_string,1*scale, 1*scale, 0)
+      draw_set_halign(fa_left);
+      draw_text(x+1, y+1, chunk_debug_string)
       draw_set_colour(c_white)
   }
 
 }
+
+
 texture_set_interpolation(false)
+
+
+
+
+
 </string>
           </argument>
         </arguments>

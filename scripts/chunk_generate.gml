@@ -62,9 +62,9 @@ array_of_cell_grids = scr_gen_cellular_noises(1, 0.6, 0.0078195, 2, 1, 0, 0.6, g
 var grid0;
 grid0[0] = grid_array[0]
 grid0[1] = grid_array[1]
-grid0[2] = array_of_cell_grids[4]
-grid0[3] = array_of_cell_grids[3]
-heightmap_grid = ds_grid_add_with_fallout(grid0, 0.5)// scr_gen_2dig(3, 0.6, 0.8, 2.1042, 1, 0, 0.6); // Octaves, Persistence, Wavelength Modifier, Lacunarity, Is island, Refined and AutoTiled, elliptical gradient percent
+//grid0[2] = array_of_cell_grids[4]
+//grid0[3] = array_of_cell_grids[5]
+heightmap_grid = ds_grid_add_with_fallout(grid0, 0.25)// scr_gen_2dig(3, 0.6, 0.8, 2.1042, 1, 0, 0.6); // Octaves, Persistence, Wavelength Modifier, Lacunarity, Is island, Refined and AutoTiled, elliptical gradient percent
 
       var river_grid = array_of_cell_grids[4]
 
@@ -74,17 +74,35 @@ heightmap_grid = ds_grid_add_with_fallout(grid0, 0.5)// scr_gen_2dig(3, 0.6, 0.8
 //once we have our heightmap lets add in the rivers
 var width  = ds_grid_width(heightmap_grid)
 var height = ds_grid_height(heightmap_grid)
+var world_width  = global.chunk_handler.world_width  /one_tile
+var world_height = global.chunk_handler.world_height /one_tile
 
 //river values
-var river_reach = 0.1
-var river_amplitude = 5
+var river_reach = 0.2
+var river_amplitude = 1.5
+
 //*
+var tile_size = global.chunk_handler.tile_size;
+var x_off = bbox_left/one_tile-1
+var y_off = bbox_top/one_tile-1
+
+
+//this for statement handles several functions inside,
+//applying the eliptical gradient to turn the place into an island
+//the formatting for rivers to mark where they are for biome usage
+// and the handing for applying rivers to the heightmap.
 for(var xx = 0; xx < width; xx++)  for(var yy = 0; yy < height; yy++){
   //first we want to manipulate the river grid to make these calculations faster
   var zz = river_grid[# xx, yy]
   if (zz <= river_reach) {
     zz = zz*river_amplitude;
-    heightmap_grid[# xx, yy] = heightmap_grid[# xx, yy] + (zz - river_amplitude*river_reach)
+    //apply the eliptical gradient
+    heightmap_grid[# xx, yy] = clamp( heightmap_grid[# xx, yy] - elliptical_gradient(xx+x_off, yy+y_off, world_width, world_height, 0.6), 0, 1);
+    //apply rivers to the heightmap
+    var value = clamp(heightmap_grid[# xx, yy] + (zz - river_amplitude*river_reach), 0, 1);
+    if (heightmap_grid[# xx, yy] > value){
+      heightmap_grid[# xx, yy] = value
+    }
   } else {zz = 1}
   
   //we're over writing the original grid because we will be using the same code in just a second
@@ -97,7 +115,7 @@ for(var xx = 0; xx < width; xx++)  for(var yy = 0; yy < height; yy++){
 
 
 var grid1;
-grid1[0] = river_grid
+grid1[0] = array_of_cell_grids[0]//river_grid
 biome_grid = ds_grid_add_with_fallout(grid1, 0.33)
 
 

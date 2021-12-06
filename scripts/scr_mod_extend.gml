@@ -18,7 +18,7 @@
 //if (mod_extend_start = true){
 //  mod_extend_start = false;
   
-  if (object_index = obj_weapon) && (w_type = weapon_type_melee){
+  if (object_index = obj_weapon) && (w_type = item_type_weapon_melee){
     returned = false
     
     if (anim_attack_timer < (anim_attack_time*0.2)){

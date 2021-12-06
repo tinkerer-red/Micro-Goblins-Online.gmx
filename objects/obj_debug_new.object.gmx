@@ -48,32 +48,6 @@ global.debug = true
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///fps counter variables
-
-fps_grid = ds_grid_create(1, 250)
-fps_mean = 0
-frame_i = 0
-h = 0
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>/// Debug Controller [cbData]
 
 ///init
@@ -756,6 +730,32 @@ last_paint = scr_cbDataGUI_get_value(self, "Paint");
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///fps counter variables
+
+fps_grid = ds_grid_create(1, 250)
+fps_mean = 0
+frame_i = 0
+h = 0
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="3" enumb="2">
       <action>
@@ -1058,7 +1058,7 @@ if update_debug || (global.debug = true){
           
           //Ranged
           if scr_cbDataGUI_folder_is_open(gui_folder_modifiers_ranged) || (update_debug = true){
-            if obj_player.item_data[i, weapon_type] = weapon_type_range{
+            if obj_player.item_data[i, weapon_type] = item_type_weapon_range{
               if update_debug || last_sticky != scr_cbDataGUI_get_value(self, "Sticky") scr_modifier_adjust(queue_col_mods, scr_mod_sticky, 1, scr_cbDataGUI_get_value(self, "Sticky"));
               if update_debug || last_bonusShot != scr_cbDataGUI_get_value(self, "Bonus_Shot") scr_modifier_adjust(queue_proj_spawn_mods, scr_mod_bonusShot, 2, scr_cbDataGUI_get_value(self, "Bonus_Shot"));
               if update_debug || last_mirrorShot != scr_cbDataGUI_get_value(self, "Mirror_Shot") scr_modifier_adjust(queue_proj_spawn_mods, scr_mod_mirrorShot, 3, scr_cbDataGUI_get_value(self, "Mirror_Shot"));
@@ -1117,7 +1117,7 @@ if update_debug || (global.debug = true){
           
           //Toy Mods
           if scr_cbDataGUI_folder_is_open(gui_folder_modifiers_toy) || (update_debug = true){
-            //if obj_player.item_data[i, weapon_type] = weapon_type_range{
+            //if obj_player.item_data[i, weapon_type] = item_type_weapon_range{
             if update_debug || last_paint != scr_cbDataGUI_get_value(self, "Paint") scr_modifier_adjust(queue_col_mods, scr_mod_paint, 2, scr_cbDataGUI_get_value(self, "Paint"));
           }
           
@@ -1347,6 +1347,7 @@ fps_mean = ds_grid_get_mean(fps_grid,0,0,0,240-1)
           <argument>
             <kind>1</kind>
             <string>///Debug Display Text
+
 if (global.debug = true){
   
   draw_set_font(global.font_menu)
@@ -1354,44 +1355,45 @@ if (global.debug = true){
   draw_set_halign(fa_left)
   draw_set_valign(fa_top)
   
-  var scale = 0.5 //obj_camera_control.upscale_val/2;
   
   if (global.numberOfLocalPlayers = 1){
-     h = 40
+     var h = 21
      var xx = view_xport
      var yy = view_yport
-     var width = string_width(debug_string[0])*scale
+     var width = string_width(debug_string[0])
+     var height = string_height(debug_string[0])
      draw_set_alpha(0.5)
      draw_set_color(c_dkgray)
-     draw_rectangle(xx,yy+(h*scale), xx+width, yy+((h+string_height(debug_string[0]))*scale), 0)
+     draw_rectangle(xx, yy+h, xx+width, yy+h+height, 0)
+     //scr_draw_9slices_ext(spr_menu_9slice, 0, xx,yy+h, xx+width, yy+h+height, c_white, 1, 1)
      draw_set_alpha(1)
      draw_set_color(c_white)
-     draw_text_transformed(xx,(yy+h*scale), debug_string[0], scale, scale, 0)
+     draw_text(xx,yy+h, debug_string[0])
      
-  }else{
+  }else{ //for local multiplayer
     
     for (var i = 0; i &lt; global.numberOfLocalPlayers; i++){
       var xx = view_xport[i]
-      var yy = view_yport[i]
-      var width = string_width(debug_string[i])*scale
-      //height = 
+      var yy = view_yport[i]+4
+      var width = string_width(debug_string[i])
+      var height = string_height(debug_string[i])
       
       if view_visible[i]{
-        h = 40
+        var h = 21
         if (i = 0){
           draw_set_alpha(0.5)
           draw_set_color(c_dkgray)
-          draw_rectangle(xx,yy+(h*scale), xx+width, yy+((h+string_height(debug_string[i]))*scale), 0)
+          draw_rectangle(xx,yy+h, xx+width, yy+h+height, 0)
           draw_set_alpha(1)
           draw_set_color(c_white)
-          draw_text_transformed(xx,(yy+h*scale), debug_string[i], scale, scale, 0)
+          draw_text(xx, yy+h, debug_string[i])
         } else {
           draw_set_alpha(0.5)
           draw_set_color(c_dkgray)
-          draw_rectangle(xx,yy, xx+width, yy+(string_height(debug_string[i])*scale), 0)
+          draw_rectangle(xx,yy, xx+width, yy+height, 0)
           draw_set_alpha(1)
           draw_set_color(c_white)
-          draw_text_transformed(xx,yy, debug_string[i], scale, scale, 0)
+          draw_text(xx,yy, debug_string[i])
         }
       }
     }

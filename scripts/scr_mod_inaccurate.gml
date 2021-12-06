@@ -6,7 +6,7 @@
 
 if !to_much_lag(){
   
-  if (w_type = weapon_type_range) || (melee_ranged > 0)
+  if (w_type = item_type_weapon_range) || (melee_ranged > 0)
   {
     var temp_queue = ds_queue_create()
     ds_queue_copy(temp_queue, self.proj_queue)

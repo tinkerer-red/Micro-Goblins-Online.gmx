@@ -5,7 +5,7 @@
 
 //show_debug_message("moveable")
 
-if (object_index = obj_weapon) && (w_type = weapon_type_melee){
+if (object_index = obj_weapon) && (w_type = item_type_weapon_melee){
 
 var mod_count = scr_queue_has_mod_count(self.step_event_queues_temp, scr_mod_moveable)
 
@@ -17,7 +17,7 @@ if !variable_instance_exists(self, "mod_moveable_start"){
   mod_moveable_time = room_speed*(mod_count+1)
   mod_moveable_timer = 0
   
-  if (object_index = obj_weapon) && (w_type = weapon_type_melee){
+  if (object_index = obj_weapon) && (w_type = item_type_weapon_melee){
     self.owner_id.player_state = e_player_state.move
 //    mod_moveable_melee_anim_attack_timer_mem = anim_attack_time
     //self.owner_id.attack = false

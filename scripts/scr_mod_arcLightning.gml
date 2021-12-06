@@ -5,7 +5,7 @@
 
 //show_debug_message("scr_mod_arcLightning")
 
-if (object_index = obj_weapon) && (w_type = weapon_type_range || melee_ranged > 0){
+if (object_index = obj_weapon) && (w_type = item_type_weapon_range || melee_ranged > 0){
   
   //we only need to activate this mod a single time, no matter how many instances of the mod there are.
   if !variable_instance_exists(self, "mod_arcLightning_start"){

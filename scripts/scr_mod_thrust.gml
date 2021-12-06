@@ -18,7 +18,7 @@
 //if (mod_thrust_start = true){
 //  mod_thrust_start = false;
   
-  if (object_index = obj_weapon) && (w_type = weapon_type_melee){
+  if (object_index = obj_weapon) && (w_type = item_type_weapon_melee){
     returned = false
     
     

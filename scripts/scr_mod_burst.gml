@@ -16,7 +16,7 @@ if !to_much_lag(){
   //For everything in the projectile queue, make a burst for it, this will make it very, very busted.
   //Allowing for a max of 9 bursts to be shot out at once,
   //probably more with creative players making use of the (melee + 3x ranged + mutishot + burst)
-  if (w_type = weapon_type_range) || (melee_ranged > 0){
+  if (w_type = item_type_weapon_range) || (melee_ranged > 0){
     
     var mod_count = scr_queue_has_mod_count(active_queue, scr_mod_burst)
     var hype = fast_hype(sprite_height, sprite_width)

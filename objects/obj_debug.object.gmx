@@ -674,7 +674,7 @@ if update_debug || (global.debug = true){
           
           //Ranged
           if gui_get_value(guid, 'Ranged') || (update_debug = true){
-            if obj_player.item_data[i, weapon_type] = weapon_type_range{
+            if obj_player.item_data[i, weapon_type] = item_type_weapon_range{
               if update_debug || last_sticky != gui_get_value(guid, "Sticky") scr_modifier_adjust(queue_col_mods, scr_mod_sticky, 1, gui_get_value(guid, "Sticky"));
               if update_debug || last_bonusShot != gui_get_value(guid, "Bonus Shot") scr_modifier_adjust(queue_proj_spawn_mods, scr_mod_bonusShot, 2, gui_get_value(guid, "Bonus Shot"));
               if update_debug || last_mirrorShot != gui_get_value(guid, "Mirror Shot") scr_modifier_adjust(queue_proj_spawn_mods, scr_mod_mirrorShot, 3, gui_get_value(guid, "Mirror Shot"));
@@ -733,7 +733,7 @@ if update_debug || (global.debug = true){
           
           //Toy Mods
           if gui_get_value(guid, 'Toy Mods') || (update_debug = true){
-            //if obj_player.item_data[i, weapon_type] = weapon_type_range{
+            //if obj_player.item_data[i, weapon_type] = item_type_weapon_range{
             if update_debug || last_paint != gui_get_value(guid, "Paint") scr_modifier_adjust(queue_col_mods, scr_mod_paint, 2, gui_get_value(guid, "Paint"));
           }
           

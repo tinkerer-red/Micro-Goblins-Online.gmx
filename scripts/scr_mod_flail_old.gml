@@ -3,7 +3,7 @@
 //melee
 //weap step modifier
 
-if (object_index = obj_weapon) && (w_type = weapon_type_melee){
+if (object_index = obj_weapon) && (w_type = item_type_weapon_melee){
   
   if !variable_instance_exists(self, "mod_flail_start"){
     mod_flail_start = true;

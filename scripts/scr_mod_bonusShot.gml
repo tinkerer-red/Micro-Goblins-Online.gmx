@@ -3,7 +3,7 @@
 
 if !to_much_lag(){
 
-  if (w_type = weapon_type_range) || (melee_ranged > 0){
+  if (w_type = item_type_weapon_range) || (melee_ranged > 0){
     
     //make sure we haven't created to many projectiles
     var count = ds_queue_size(self.proj_queue)

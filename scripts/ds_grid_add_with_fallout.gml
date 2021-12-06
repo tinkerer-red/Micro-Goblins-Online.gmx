@@ -20,7 +20,11 @@ for (var i=0; i < octaves; ++i){
   grid = array[i]
   for (var xx=0; xx < width; xx++){
     for (var yy=0; yy < height; yy++){
-      grid_temp[# xx, yy] += grid[# xx, yy]*_p
+//      if (i = 0){
+//        grid_temp[# xx, yy] = (grid_temp[# xx, yy]*2-1) + ((grid[# xx, yy]*2-1)*_p)
+//      }else{
+        grid_temp[# xx, yy] += (grid[# xx, yy]*2-1)*_p
+//      }
     }
   }
   maxamp += _p
@@ -30,7 +34,7 @@ for (var i=0; i < octaves; ++i){
 //now divide the entire region 
 for (var xx=0; xx < width; xx++){
   for (var yy=0; yy < height; yy++){
-    grid_temp[# xx, yy] /= maxamp
+    grid_temp[# xx, yy] = ((grid_temp[# xx, yy])+1)/2 / maxamp;
     //if (grid_temp[# xx, yy] > 1) show_message_async("grid_temp[# xx, yy] = "+string(grid_temp[# xx, yy]));
   }
 }

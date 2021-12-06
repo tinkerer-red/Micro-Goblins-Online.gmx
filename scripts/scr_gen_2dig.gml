@@ -77,7 +77,7 @@ for(var i = left; i < right; i++){
                       //var returned_array = DomainWarpSingle(seed|1, 15, 0.01, 1, i, j);
                       //var _i = returned_array[0];
                       //var _j = returned_array[1];
-                      var zz = scr_vn_noise(0, 1, oc, pers, wm, seed, method, i, j);// - elliptical_gradient(i, j, world_width, world_height, perc),0,1);
+                      var zz = clamp(scr_vn_noise(0, 1, oc, pers, wm, seed, method, i, j) - elliptical_gradient(i, j, world_width, world_height, perc),0,1);
                     }
                     
                     //biome grid

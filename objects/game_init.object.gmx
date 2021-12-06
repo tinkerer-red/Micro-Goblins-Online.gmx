@@ -25,7 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>gml_release_mode(false);
+            <string>///Release mode and captions
+gml_release_mode(false);
 
 window_set_caption( game_display_name+"  -  v"+GM_version+"  -  Build Date: "+date_date_string(GM_build_date));
 //cursor_sprite = spr_cursor
@@ -51,12 +52,41 @@ instance_destroy();
           <argument>
             <kind>1</kind>
             <string>///define fonts
-global.font_menu = font_add_sprite_ext(fnt_menu2x,
+global.font_menu = font_add_sprite_ext(fnt_menu,
                                        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz`~0123456789!@#$%^&amp;*()-_=+[{]}\|;:'" + '"' + ",&lt;.&gt;/? ",
                                        true,
                                        1)
+global.font_menu2x = font_add_sprite_ext(fnt_menu2x,
+                                         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz`~0123456789!@#$%^&amp;*()-_=+[{]}\|;:'" + '"' + ",&lt;.&gt;/? ",
+                                         true,
+                                         1)
 
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///init non-essential global variables
+
+if !instance_exists(obj_debug){
+  global.debug = false
+}
 </string>
           </argument>
         </arguments>

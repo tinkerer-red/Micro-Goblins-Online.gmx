@@ -5,7 +5,7 @@
 
 //show_debug_message("scr_mod_airStrike")
 
-if (object_index = obj_weapon) && (w_type = weapon_type_range || melee_ranged > 0){
+if (object_index = obj_weapon) && (w_type = item_type_weapon_range || melee_ranged > 0){
   //show_debug_message("made it inside the effects!")
   
   var mod_count = scr_queue_has_mod_count(active_queue, scr_mod_airStrike)

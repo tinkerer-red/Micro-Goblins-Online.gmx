@@ -84,6 +84,21 @@ if (variable_global_exists("numberOfLocalPlayers") = false) || (variable_global_
     self.keyboardZoomOut  = 34 //ini_read_real("keyboard", "keyboardSelect", 13);
     self.keyboardZoomOut2 = 189 //ini_read_real("keyboard", "keyboardSelect", 13);
     
+    self.keyboardMenuOpen      = 13 //ini_read_real("gamepad", "gamepadExit", gp_face2);
+    self.keyboardMenuOpen2     = 13 //ini_read_real("gamepad", "gamepadExit", gp_shoulderrb);
+    
+    self.keyboardMenuSelect      = 13 //ini_read_real("gamepad", "gamepadExit", gp_face2);
+    self.keyboardMenuSelect2     = 13 //ini_read_real("gamepad", "gamepadExit", gp_shoulderrb);
+    
+    self.keyboardMenuBack      = 8 //ini_read_real("gamepad", "gamepadExit", gp_face2);
+    self.keyboardMenuBack2     = 8 //ini_read_real("gamepad", "gamepadExit", gp_shoulderrb);
+    
+    self.keyboardMenuTabLeft      = 188 //ini_read_real("gamepad", "gamepadExit", gp_face2);
+    self.keyboardMenuTabLeft2     = 188 //ini_read_real("gamepad", "gamepadExit", gp_shoulderrb);
+    
+    self.keyboardMenuTabRight      = 190 //ini_read_real("gamepad", "gamepadExit", gp_face2);
+    self.keyboardMenuTabRight2     = 190 //ini_read_real("gamepad", "gamepadExit", gp_shoulderrb);
+    
 /////////////gamepad reading start/////////////
     self.gamepadUp        = gp_padu //ini_read_real("gamepad", "gamepadUp", gp_padu);
     self.gamepadUp2       = gp_padu //ini_read_real("gamepad", "gamepadUp2", gp_padu);
@@ -97,17 +112,32 @@ if (variable_global_exists("numberOfLocalPlayers") = false) || (variable_global_
     self.gamepadRight     = gp_padr //ini_read_real("gamepad", "gamepadRight", gp_padr);
     self.gamepadRight2    = gp_padr //ini_read_real("gamepad", "gamepadRight2", gp_padr);
     
-    self.gamepadAction  = gp_face4 //ini_read_real("keyboard", "keyboardSelect", gp_face4);
-    self.gamepadAction2  = gp_shoulderr //ini_read_real("keyboard", "keyboardSelect", gp_shoulderr);
+    self.gamepadAction    = gp_face4 //ini_read_real("keyboard", "keyboardSelect", gp_face4);
+    self.gamepadAction2   = gp_shoulderr //ini_read_real("keyboard", "keyboardSelect", gp_shoulderr);
     
-    self.gamepadItemA    = gp_face3 //ini_read_real("gamepad", "gamepadSelect", gp_face3);
+    self.gamepadItemA     = gp_face3 //ini_read_real("gamepad", "gamepadSelect", gp_face3);
     self.gamepadItemA2    = gp_shoulderl //ini_read_real("gamepad", "gamepadSelect", gp_shoulderl);
     
     self.gamepadItemB      = gp_face1 //ini_read_real("gamepad", "gamepadExit", gp_face1);
-    self.gamepadItemB2      = gp_shoulderlb //ini_read_real("gamepad", "gamepadExit", gp_shoulderlb);
+    self.gamepadItemB2     = gp_shoulderlb //ini_read_real("gamepad", "gamepadExit", gp_shoulderlb);
     
     self.gamepadItemC      = gp_face2 //ini_read_real("gamepad", "gamepadExit", gp_face2);
-    self.gamepadItemC2      = gp_shoulderrb //ini_read_real("gamepad", "gamepadExit", gp_shoulderrb);
+    self.gamepadItemC2     = gp_shoulderrb //ini_read_real("gamepad", "gamepadExit", gp_shoulderrb);
+    
+    self.gamepadMenuOpen      = gp_start //ini_read_real("gamepad", "gamepadExit", gp_face2);
+    self.gamepadMenuOpen2     = gp_start //ini_read_real("gamepad", "gamepadExit", gp_shoulderrb);
+    
+    self.gamepadMenuSelect      = gp_face1 //ini_read_real("gamepad", "gamepadExit", gp_face2);
+    self.gamepadMenuSelect2     = gp_face1 //ini_read_real("gamepad", "gamepadExit", gp_shoulderrb);
+    
+    self.gamepadMenuBack      = gp_face2 //ini_read_real("gamepad", "gamepadExit", gp_face2);
+    self.gamepadMenuBack2     = gp_face2 //ini_read_real("gamepad", "gamepadExit", gp_shoulderrb);
+    
+    self.gamepadMenuTabLeft      = gp_shoulderl //ini_read_real("gamepad", "gamepadExit", gp_face2);
+    self.gamepadMenuTabLeft2     = gp_shoulderlb //ini_read_real("gamepad", "gamepadExit", gp_shoulderrb);
+    
+    self.gamepadMenuTabRight      = gp_shoulderr //ini_read_real("gamepad", "gamepadExit", gp_face2);
+    self.gamepadMenuTabRight2     = gp_shoulderrb //ini_read_real("gamepad", "gamepadExit", gp_shoulderrb);
     
     
     //self.gamepadZoomIn  = gp_axisrv
@@ -264,6 +294,36 @@ for (i = 0; i &lt;= 8; i++)
   self.zoom_out_pressed[i] = false
   self.zoom_out_held[i] = false
   self.zoom_out_timer[i] = 0
+  
+  //menu open
+  self.menu_open[i] = false
+  self.menu_open_pressed[i] = false
+  self.menu_open_held[i] = false
+  self.menu_open_timer[i] = 0
+  
+  //menu select
+  self.menu_select[i] = false
+  self.menu_select_pressed[i] = false
+  self.menu_select_held[i] = false
+  self.menu_select_timer[i] = 0
+  
+  //menu back
+  self.menu_back[i] = false
+  self.menu_back_pressed[i] = false
+  self.menu_back_held[i] = false
+  self.menu_back_timer[i] = 0
+  
+  //menu tab left
+  self.menu_tab_left[i] = false
+  self.menu_tab_left_pressed[i] = false
+  self.menu_tab_left_held[i] = false
+  self.menu_tab_left_timer[i] = 0
+  
+  //menu tab right
+  self.menu_tab_right[i] = false
+  self.menu_tab_right_pressed[i] = false
+  self.menu_tab_right_held[i] = false
+  self.menu_tab_right_timer[i] = 0
   
 }
 </string>
@@ -464,19 +524,85 @@ if (window_has_focus()) &amp;&amp; (htme_isLocal())
       }else{
           self.gpZoomOut[i] = false
       }
-    
+      
+      //menu open
+      if (keyboard_check(keyboardMenuOpen) &amp;&amp; i = keyboard_player)
+      || (keyboard_check(keyboardMenuOpen2) &amp;&amp; i = keyboard_player)
+      || gamepad_button_check(i, gamepadMenuOpen)
+      || gamepad_button_check(i, gamepadMenuOpen2)
+        //this last check is only for use with ps4 controller's touchpad button presses
+//      || ((gamepadMenuOpen  = mb_right || gamepadMenuOpen  = mb_left ) &amp;&amp; device_mouse_check_button(i, gamepadMenuOpen))
+//      || ((gamepadMenuOpen2 = mb_right || gamepadMenuOpen2  = mb_left) &amp;&amp; device_mouse_check_button(i, gamepadMenuOpen2))
+      {
+          self.gpMenuOpen[i] = true
+      }else{
+          self.gpMenuOpen[i] = false
+      }
+      
+      //menu select
+      if (keyboard_check(keyboardMenuSelect) &amp;&amp; i = keyboard_player)
+      || (keyboard_check(keyboardMenuSelect2) &amp;&amp; i = keyboard_player)
+      || gamepad_button_check(i, gamepadMenuSelect)
+      || gamepad_button_check(i, gamepadMenuSelect2)
+      {
+          self.gpMenuSelect[i] = true
+      }else{
+          self.gpMenuSelect[i] = false
+      }
+      
+      //menu back
+      if (keyboard_check(keyboardMenuBack) &amp;&amp; i = keyboard_player)
+      || (keyboard_check(keyboardMenuBack2) &amp;&amp; i = keyboard_player)
+      || gamepad_button_check(i, gamepadMenuBack)
+      || gamepad_button_check(i, gamepadMenuBack2)
+      {
+          self.gpMenuBack[i] = true
+      }else{
+          self.gpMenuBack[i] = false
+      }
+      
+      //menu tab left
+      if (keyboard_check(keyboardMenuTabLeft) &amp;&amp; i = keyboard_player)
+      || (keyboard_check(keyboardMenuTabLeft2) &amp;&amp; i = keyboard_player)
+      || gamepad_button_check(i, gamepadMenuTabLeft)
+      || gamepad_button_check(i, gamepadMenuTabLeft2)
+      {
+          self.gpMenuTabLeft[i] = true
+      }else{
+          self.gpMenuTabLeft[i] = false
+      }
+      
+      //menu tab right
+      if (keyboard_check(keyboardMenuTabRight) &amp;&amp; i = keyboard_player)
+      || (keyboard_check(keyboardMenuTabRight2) &amp;&amp; i = keyboard_player)
+      || gamepad_button_check(i, gamepadMenuTabRight)
+      || gamepad_button_check(i, gamepadMenuTabRight2)
+      {
+          self.gpMenuTabRight[i] = true
+      }else{
+          self.gpMenuTabRight[i] = false
+      }
+      
     }else{
       ///*
       self.gpUp[i]      = false
       self.gpDown[i]    = false
       self.gpLeft[i]    = false
       self.gpRight[i]   = false
+      
       self.gpAction[i]  = false
       self.gpItemA[i]   = false
       self.gpItemB[i]   = false
       self.gpItemC[i]   = false
+      
       self.gpZoomIn[i]  = false
       self.gpZoomOut[i] = false
+      
+      self.gpMenuOpen[i]     = false
+      self.gpMenuSelect[i]   = false
+      self.gpMenuBack[i]     = false
+      self.gpMenuTabLeft[i]  = false
+      self.gpMenuTabRight[i] = false
       //*/
     }
   }    
@@ -628,7 +754,7 @@ if (window_has_focus()) &amp;&amp; (htme_isLocal())
           self.right_timer[i] = 0
       }
       
-      //select
+      //action
       if (self.gpAction[i] = true)
       {
           //if the button was pressed last frame, it is no longer just pressed, but considered "active" or "down"
@@ -800,6 +926,153 @@ if (window_has_focus()) &amp;&amp; (htme_isLocal())
           self.zoom_out_timer[i] = 0
       }
       
+      //Menu Open
+      if (self.gpMenuOpen[i] = true)
+      {
+          //if the button was pressed last frame, it is no longer just pressed, but considered "active" or "down"
+          if (self.menu_open[i] = true) &amp;&amp; (self.menu_open_pressed[i] = true)  { self.menu_open_pressed[i] = false }
+          
+          // the button was not down at all last frame, and it is now, then just pressed would be true
+          if (self.menu_open[i] = false)  { self.menu_open_pressed[i] = true }
+          
+          // if the button is pressed then it is stored
+          self.menu_open[i] = true
+          
+          //this local variable is not needed by anything else, this just stores how long the button was pressed for
+          self.menu_open_timer[i]++
+          self.menu_open_timer[i] += delta_time*0.000001
+          
+          if (self.menu_open_timer[i] &gt;= (room_speed / 3))  //if it was pressed for 1/3 of a second
+          {
+              self.menu_open_held[i] = true
+          }
+          
+      }else{
+      
+          self.menu_open[i] = false
+          self.menu_open_pressed[i] = false
+          self.menu_open_held[i] = false
+          self.menu_open_timer[i] = 0
+      }
+      
+      //menu select
+      if (self.gpMenuSelect[i] = true)
+      {
+          //if the button was pressed last frame, it is no longer just pressed, but considered "active" or "down"
+          if (self.menu_select[i] = true) &amp;&amp; (self.menu_select_pressed[i] = true)  { self.menu_select_pressed[i] = false }
+          
+          // the button was not down at all last frame, and it is now, then just pressed would be true
+          if (self.menu_select[i] = false)  { self.menu_select_pressed[i] = true }
+          
+          // if the button is pressed then it is stored
+          self.menu_select[i] = true
+          
+          //this local variable is not needed by anything else, this just stores how long the button was pressed for
+          self.menu_select_timer[i]++
+          self.menu_select_timer[i] += delta_time*0.000001
+          
+          if (self.menu_select_timer[i] &gt;= (room_speed / 3))  //if it was pressed for 1/3 of a second
+          {
+              self.menu_select_held[i] = true
+          }
+          
+      }else{
+      
+          self.menu_select[i] = false
+          self.menu_select_pressed[i] = false
+          self.menu_select_held[i] = false
+          self.menu_select_timer[i] = 0
+      }
+      
+      //menu back
+      if (self.gpMenuBack[i] = true)
+      {
+          //if the button was pressed last frame, it is no longer just pressed, but considered "active" or "down"
+          if (self.menu_back[i] = true) &amp;&amp; (self.menu_back_pressed[i] = true)  { self.menu_back_pressed[i] = false }
+          
+          // the button was not down at all last frame, and it is now, then just pressed would be true
+          if (self.menu_back[i] = false)  { self.menu_back_pressed[i] = true }
+          
+          // if the button is pressed then it is stored
+          self.menu_back[i] = true
+          
+          //this local variable is not needed by anything else, this just stores how long the button was pressed for
+          self.menu_back_timer[i]++
+          self.menu_back_timer[i] += delta_time*0.000001
+          
+          if (self.menu_back_timer[i] &gt;= (room_speed / 3))  //if it was pressed for 1/3 of a second
+          {
+              self.menu_back_held[i] = true
+          }
+          
+      }else{
+      
+          self.menu_back[i] = false
+          self.menu_back_pressed[i] = false
+          self.menu_back_held[i] = false
+          self.menu_back_timer[i] = 0
+      }
+      
+      //menu tab left
+      if (self.gpMenuTabLeft[i] = true)
+      {
+          //if the button was pressed last frame, it is no longer just pressed, but considered "active" or "down"
+          if (self.menu_tab_left[i] = true) &amp;&amp; (self.menu_tab_left_pressed[i] = true)  { self.menu_tab_left_pressed[i] = false }
+          
+          // the button was not down at all last frame, and it is now, then just pressed would be true
+          if (self.menu_tab_left[i] = false)  { self.menu_tab_left_pressed[i] = true }
+          
+          // if the button is pressed then it is stored
+          self.menu_tab_left[i] = true
+          
+          //this local variable is not needed by anything else, this just stores how long the button was pressed for
+          self.menu_tab_left_timer[i]++
+          self.menu_tab_left_timer[i] += delta_time*0.000001
+          
+          if (self.menu_tab_left_timer[i] &gt;= (room_speed / 3))  //if it was pressed for 1/3 of a second
+          {
+              self.menu_tab_left_held[i] = true
+          }
+          
+      }else{
+      
+          self.menu_tab_left[i] = false
+          self.menu_tab_left_pressed[i] = false
+          self.menu_tab_left_held[i] = false
+          self.menu_tab_left_timer[i] = 0
+      }
+      
+      //menu tab right
+      if (self.gpMenuTabRight[i] = true)
+      {
+          //if the button was pressed last frame, it is no longer just pressed, but considered "active" or "down"
+          if (self.menu_tab_right[i] = true) &amp;&amp; (self.menu_tab_right_pressed[i] = true)  { self.menu_tab_right_pressed[i] = false }
+          
+          // the button was not down at all last frame, and it is now, then just pressed would be true
+          if (self.menu_tab_right[i] = false)  { self.menu_tab_right_pressed[i] = true }
+          
+          // if the button is pressed then it is stored
+          self.menu_tab_right[i] = true
+          
+          //this local variable is not needed by anything else, this just stores how long the button was pressed for
+          self.menu_tab_right_timer[i]++
+          self.menu_tab_right_timer[i] += delta_time*0.000001
+          
+          if (self.menu_tab_right_timer[i] &gt;= (room_speed / 3))  //if it was pressed for 1/3 of a second
+          {
+              self.menu_tab_right_held[i] = true
+          }
+          
+      }else{
+      
+          self.menu_tab_right[i] = false
+          self.menu_tab_right_pressed[i] = false
+          self.menu_tab_right_held[i] = false
+          self.menu_tab_right_timer[i] = 0
+      }
+      
+      
+      
       
       if gamepad_is_connected(i)
       {
@@ -834,6 +1107,9 @@ if (window_has_focus()) &amp;&amp; (htme_isLocal())
       self.right_held[i] = false
       self.right_timer[i] = 0
       
+      
+      
+      
       self.action[i] = false
       self.action_pressed[i] = false
       self.action_held[i] = false
@@ -854,6 +1130,9 @@ if (window_has_focus()) &amp;&amp; (htme_isLocal())
       self.item_c_held[i] = false
       self.item_c_timer[i] = 0
       
+      
+      
+      
       self.zoom_in[i] = false
       self.zoom_in_pressed[i] = false
       self.zoom_in_held[i] = false
@@ -863,6 +1142,34 @@ if (window_has_focus()) &amp;&amp; (htme_isLocal())
       self.zoom_out_pressed[i] = false
       self.zoom_out_held[i] = false
       self.zoom_out_timer[i] = 0
+      
+      
+      
+      
+      self.menu_open[i] = false
+      self.menu_open_pressed[i] = false
+      self.menu_open_held[i] = false
+      self.menu_open_timer[i] = 0
+      
+      self.menu_select[i] = false
+      self.menu_select_pressed[i] = false
+      self.menu_select_held[i] = false
+      self.menu_select_timer[i] = 0
+      
+      self.menu_back[i] = false
+      self.menu_back_pressed[i] = false
+      self.menu_back_held[i] = false
+      self.menu_back_timer[i] = 0
+      
+      self.menu_tab_left[i] = false
+      self.menu_tab_left_pressed[i] = false
+      self.menu_tab_left_held[i] = false
+      self.menu_tab_left_timer[i] = 0
+      
+      self.menu_tab_right[i] = false
+      self.menu_tab_right_pressed[i] = false
+      self.menu_tab_right_held[i] = false
+      self.menu_tab_right_timer[i] = 0
       //*/
     }
   }

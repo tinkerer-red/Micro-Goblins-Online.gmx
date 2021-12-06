@@ -14,7 +14,7 @@
 var mod_count = scr_queue_has_mod_count(step_event_queues_temp, scr_mod_flail)
 
 
-if (object_index = obj_weapon) && (w_type = weapon_type_melee){
+if (object_index = obj_weapon) && (w_type = item_type_weapon_melee){
   returned = false
   
   

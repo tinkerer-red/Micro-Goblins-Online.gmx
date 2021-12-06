@@ -4,7 +4,7 @@
 
 //show_debug_message("scr_mod_quickScope()")
 
-if (w_type = weapon_type_range) || (melee_ranged > 0)
+if (w_type = item_type_weapon_range) || (melee_ranged > 0)
 {
   //this is for the weapon, because the projectile init happens after spawn mods
   self.proj_speed += (6*16)/room_speed

@@ -32,7 +32,7 @@ weap.sprite_index = self.item_data[weap_num, weapon_sprite]
 weap.sprite_proj = self.item_data[weap_num, weapon_proj_sprite]
 weap.sprite_aoe = self.item_data[weap_num, weapon_aoe_sprite]
 
-if (weap.w_type != weapon_type_range)
+if (weap.w_type != item_type_weapon_range)
 {
   weap.w_start_dir = self.direction
   if (weap.w_start_dir >= 360) {weap.w_start_dir -= 360}

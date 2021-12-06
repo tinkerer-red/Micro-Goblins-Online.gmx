@@ -248,9 +248,9 @@ for (var i = 0; i &lt; 3; i++)
 {
   self.item_data[i, weapon_name] = "Sword of Testing"
   
-  if (i = 0) self.item_data[i, weapon_type] = weapon_type_range
-  if (i = 1) self.item_data[i, weapon_type] = weapon_type_melee
-  if (i = 2) self.item_data[i, weapon_type] = weapon_type_summon
+  if (i = 0) self.item_data[i, weapon_type] = item_type_weapon_range
+  if (i = 1) self.item_data[i, weapon_type] = item_type_weapon_melee
+  if (i = 2) self.item_data[i, weapon_type] = item_type_weapon_summon
   
   self.item_data[i, weapon_sprite] = spr_weap_test
   self.item_data[i, weapon_proj_sprite] = spr_weap_test
@@ -951,7 +951,7 @@ if (!is_jocky) &amp;&amp; (self.item_a_pressed || self.item_b_pressed || self.it
 {
   if (self.weap_num &gt;= 0) &amp;&amp; (self.player_state = e_player_state.attack)
   {
-    if (self.item_data[self.weap_num, weapon_type] = weapon_type_melee)
+    if (self.item_data[self.weap_num, weapon_type] = item_type_weapon_melee)
     {
       if ds_exists(self.weapon_event_queues, ds_type_priority){
         ds_priority_destroy(self.weapon_event_queues)
@@ -1481,14 +1481,15 @@ if mouse_check_button(mb_right){
 
 if (visible = true)
 {
+  
   // draw name
   if (view_object[view_current] != id){
     view_res = view_hview[view_current]/view_hport[view_current]
     draw_set_halign(fa_center);
     draw_set_valign(fa_bottom);
-    sting_offset = (string_height(name)*view_res) + (2*view_res)
+    sting_offset = (string_height(player_name)*view_res) + (2*view_res)
     shader_set_outline(5, c_blue)
-    draw_text_transformed(x, bbox_top, name, view_res*obj_camera_control.upscale_val, view_res*obj_camera_control.upscale_val, 0)
+    draw_text_transformed(x, bbox_top, player_name, view_res*obj_camera_control.upscale_val, view_res*obj_camera_control.upscale_val, 0)
     draw_set_halign(fa_left);
     draw_set_valign(fa_top);
   }

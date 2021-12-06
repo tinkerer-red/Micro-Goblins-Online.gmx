@@ -1,7 +1,7 @@
 /// scr_mod_backStab()
 
 
-if (self.item_data[self.weap_num, weapon_type] = weapon_type_melee){
+if (self.item_data[self.weap_num, weapon_type] = item_type_weapon_melee){
   
   var mod_count = scr_queue_has_mod_count(active_queue, scr_mod_backStab)
   
