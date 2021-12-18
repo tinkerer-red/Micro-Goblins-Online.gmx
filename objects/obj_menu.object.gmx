@@ -29,38 +29,28 @@
 
 //we initialize this variable as false because we check to see if its an array in the step event
 menu_background_surface = false;
+update_menus = true
 
-
-//for every player
-var player_i
-for (player_i = 0; player_i &lt;= 8; player_i++)
-{
-  //first we need to find out if the player has loaded a save file.
-  var player_had_loaded = false;
-  
-  //load save file
-  //if the player loaded a save file then we need to populate this list with the saved inventory
-  if (player_had_loaded){
-    var file_name = "name.save"
-  }else{
-    var file_name = false
-  }
-  
-  //load the inventory of the player
-  nbt_data[player_i] = nbt_data_load(file_name)
-  
-  prev_inv_items_per_row[player_i] = 0
-  inv_items_per_row[player_i] = 0
-  max_items[player_i] = 20
-  menu_open[player_i] = 0
-  cursor_pos[player_i] = 5
-  tab_pos[player_i] = 0
-  sub_menu_cursor_pos[player_i] = 0
-  in_sub_menu[player_i] = 0
-  
+//build an enum for handling the item keys for the equipment slots
+enum equip{
+  head,
+  body,
+  boggle,
+  item_a,
+  item_b,
+  item_c
 }
-  
-  
+
+enum sub_menu{
+  equip,
+  unequip,
+  consume,
+  combine,
+  drop,
+}
+
+//prep the init
+init_menu = true
 </string>
           </argument>
         </arguments>
@@ -83,27 +73,152 @@ for (player_i = 0; player_i &lt;= 8; player_i++)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Rescale the menus
+            <string>///reset the button press buffers
 
+for (player_i = 0; player_i &lt;= global.numberOfLocalPlayers; player_i++){
+  selected_this_frame[player_i] = false
+  backed_this_frame[player_i] = false
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///init the menu
 
-if window_resized()
-|| !is_array(menu_background_surface)
-|| !surface_exists(menu_background_surface[0]){
+if (init_menu){
   
-  //text transphormer
-  var text_scaling = 0.5
-  
-  if (obj_camera_control.smooth_camera){
-   var res_scale = 1/obj_camera_control.upscale_val
-  }else{
-    var res_scale = 1
-  }
-  
+  init_menu = false;
   
   //for every player
   var player_i
-  for (player_i = 0; player_i &lt; global.numberOfLocalPlayers; player_i++)
+  for (player_i = 0; player_i &lt;= 8; player_i++)
   {
+    //first we need to find out if the player has loaded a save file.
+    var player_had_loaded = false;
+    
+    
+    //load the inventory of the player
+    with (obj_player){
+      if (player_id_local = player_i){
+        var _nbt = nbt;
+        other.menu_player_id[player_i] = id
+      }
+    }
+    
+    nbt_data[player_i] = _nbt
+    
+    //menu
+    prev_inv_items_per_row[player_i] = 0
+    inv_items_per_row[player_i] = 0
+    max_items[player_i] = 20
+    menu_open[player_i] = 0
+    cursor_pos[player_i] = 5
+    tab_pos[player_i] = 0
+    
+    //sub menu
+    sub_menu_cursor_pos[player_i] = 0
+    in_sub_menu[player_i] = 0
+    selected_item_map[player_i] = noone
+    sub_menu_spawned[player_i] = false
+    sub_menu_anim_finished[player_i] = false
+    
+    //surfaces
+    menu_background_surface[player_i] = noone
+    menu_inventory_surface[player_i] = noone
+    sub_menu_surface[player_i] = noone
+    sub_menu_options[player_i] = noone
+    sub_menu_is_equiping[player_i] = false
+    sub_menu_is_combining[player_i] = false
+    sub_menu_event_inv_cursor_pos[player_i] = 5
+    
+    //lore
+    lore_surface[player_i] = noone
+    
+    //add a buffer to prevent pressing select once and accidently clicking 3 selects in a row
+    selected_this_frame[player_i] = false;
+    backed_this_frame[player_i] = false;
+    
+  }
+    
+
+  
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Rescale the menus
+
+
+
+//for every player
+for (player_i = 0; player_i &lt; global.numberOfLocalPlayers; player_i++)
+{
+
+  if (window_resized()
+  || obj_camera_control.updated_resolution
+  || !surface_exists(menu_background_surface[player_i]))
+  || update_menus
+  {
+    
+    if (update_menus){
+      surface_free(menu_background_surface[player_i])
+      surface_free(menu_inventory_surface[player_i])
+      surface_free(sub_menu_surface[player_i])
+      surface_free(lore_surface[player_i])
+    }
+    
+    draw_set_alpha(1)
+    draw_set_color(c_white)
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_top);
+    
+    //text transphormer
+    var text_scaling = 0.5
+    
+    if (obj_camera_control.smooth_camera){
+     var res_scale = 1/obj_camera_control.upscale_val
+    }else{
+      var res_scale = 1
+    }
+  
+  
     
     
     //most importantly we will need to load the NBT data of the player to get their inventory information!
@@ -111,7 +226,7 @@ if window_resized()
     
     
     
-    //get the coords of the view, and width and height
+    //get the coords of the view, width and height
     v_x[player_i] = view_xport[player_i]
     v_y[player_i] = view_yport[player_i]
     v_w[player_i] = view_wport[player_i]
@@ -134,6 +249,8 @@ if window_resized()
       //setting this to 0.5 actually causes the original surface to end up being 2x the standard size, but oh well
       gui_scale[player_i] = 0.5
     }
+    
+    var _gui_scale = gui_scale[player_i];
     
     //once we know the scale, lets reset the view height to fix some scaling issues
     v_w[player_i] = floor(v_w[player_i]/gui_scale[player_i])
@@ -208,16 +325,6 @@ if window_resized()
     
     
     
-    //build a temproary enum for making this easier
-    enum equip{
-      head,
-      body,
-      boggle,
-      item_a,
-      item_b,
-      item_c
-    }
-    
     //now draw the 6 equipment slots
     var x_off = art_border;
     var y_off = icon_height + art_border;
@@ -247,11 +354,22 @@ if window_resized()
     
     
     //draw the text box for lore and modifiers
-    var x1 = x_off
-    var y1 = y2+1+info_section_width[player_i]+1
-    var x2 = x1+info_section_width[player_i]
-    var y2 = v_h[player_i]-art_border
-    scr_draw_9slices_ext(spr_menu_9slice, 0, x1, y1, x2, y2, c_white, 1, 1)
+    var x1 = x_off;
+    var y1 = y2+1+info_section_width[player_i]+1;
+    var x2 = x1+info_section_width[player_i];
+    var y2 = v_h[player_i]-art_border;
+    
+    sub_menu_x[player_i] = x1*_gui_scale;
+    sub_menu_y[player_i] = y1*_gui_scale;
+    sub_menu_w[player_i] = (x2-x1)*_gui_scale;
+    sub_menu_h[player_i] = (y2-y1)*_gui_scale;
+    //scr_draw_9slices_ext(spr_menu_9slice, 0, x1, y1, x2, y2, c_white, 1, 1)
+    
+    
+    lore_x[player_i] = inventory_x_off[player_i]*_gui_scale;
+    lore_y[player_i] = sub_menu_y[player_i];
+    lore_w[player_i] = inv_width[player_i]*_gui_scale;
+    lore_h[player_i] = sub_menu_h[player_i];
     
     
     //draw the scroll bars boarder
@@ -263,6 +381,7 @@ if window_resized()
     
     
     //draw the bounding box for the inventory for debugging purposes
+    /*
     scr_draw_9slices_ext(spr_menu_9slice,
                          0, 
                          inventory_x_off[player_i], 
@@ -272,7 +391,7 @@ if window_resized()
                          c_white, 
                          1, 
                          1)
-    
+    */
     
     
     //once we're done drawing reset the surface target
@@ -347,7 +466,8 @@ if window_resized()
 
 
 
-
+/// reset the menu update
+update_menus = false
 
 
 
@@ -386,23 +506,32 @@ if window_resized()
 for (player_i = 0; player_i &lt;= 8; player_i++)
 {
   if (menu_open[player_i]){
-    if (!in_sub_menu[player_i]){
+    if (!in_sub_menu[player_i])
+    || (sub_menu_is_equiping[player_i] || sub_menu_is_combining[player_i]){
+      
+      //set the cursor location that we're going to be handling
+      if (sub_menu_is_equiping[player_i] || sub_menu_is_combining[player_i]){
+        var cursor_loc = sub_menu_event_inv_cursor_pos[player_i]
+      }else{
+        var cursor_loc = cursor_pos[player_i]
+      }
+      
       //handle the curser movement for the equipment slots
-      if (cursor_pos[player_i] &lt; 6){
+      if (cursor_loc &lt; 6){
         //up
         if (obj_controller.up_pressed[player_i] != 0)
         || (obj_controller.up_held[player_i] != 0)
         {
-          if (cursor_pos[player_i] &gt; 2){
-            cursor_pos[player_i] += -3
+          if (cursor_loc &gt; 2){
+            cursor_loc += -3
           }
         }
         //down
         if (obj_controller.down_pressed[player_i] != 0)
         || (obj_controller.down_held[player_i] != 0)
         {
-          if (cursor_pos[player_i] &lt; 3){
-            cursor_pos[player_i] += 3
+          if (cursor_loc &lt; 3){
+            cursor_loc += 3
           }
         }
         //left
@@ -410,24 +539,24 @@ for (player_i = 0; player_i &lt;= 8; player_i++)
         || (obj_controller.left_held[player_i] != 0)
         {
           //prevent the cursor from cycling to the top right, when on the bottom left
-          if (cursor_pos[player_i] != 3)
-          &amp;&amp; (cursor_pos[player_i] != 0){
-            cursor_pos[player_i] += -1
+          if (cursor_loc != 3)
+          &amp;&amp; (cursor_loc != 0){
+            cursor_loc += -1
           }
         }
         //right
         if (obj_controller.right_pressed[player_i] != 0)
         || (obj_controller.right_held[player_i] != 0)
         {
-          if (cursor_pos[player_i] != 2){
+          if (cursor_loc != 2){
             //if it's the second inventory row, go ahead and snap it to the second inv row pos
-            if (cursor_pos[player_i] = 5){
-              cursor_pos[player_i] = 6 + inv_items_per_row[player_i]
+            if (cursor_loc = 5){
+              cursor_loc = 6 + inv_items_per_row[player_i]
             }else{
-              cursor_pos[player_i] += 1
+              cursor_loc += 1
             }
           }else{
-            cursor_pos[player_i] = 6
+            cursor_loc = 6
           }
         }
         
@@ -441,32 +570,32 @@ for (player_i = 0; player_i &lt;= 8; player_i++)
         || (obj_controller.up_held[player_i] != 0)
         {
           //prevent pressing up on the top row
-          if ((cursor_pos[player_i]-6) div inv_items_per_row[player_i] &gt; 0){
-            cursor_pos[player_i] += -inv_items_per_row[player_i]
+          if ((cursor_loc-6) div inv_items_per_row[player_i] &gt; 0){
+            cursor_loc += -inv_items_per_row[player_i]
           }
         }
         //down
         if (obj_controller.down_pressed[player_i] != 0)
         || (obj_controller.down_held[player_i] != 0)
         {
-          cursor_pos[player_i] += inv_items_per_row[player_i]
-          cursor_pos[player_i] = clamp(cursor_pos[player_i], 0, max_items[player_i]+6-1)
+          cursor_loc += inv_items_per_row[player_i]
+          cursor_loc = clamp(cursor_loc, 0, max_items[player_i]+6-1)
         }
         //left
         if (obj_controller.left_pressed[player_i] != 0)
         || (obj_controller.left_held[player_i] != 0)
         {
           //prevent going left
-          if ((cursor_pos[player_i]-6) mod inv_items_per_row[player_i] &gt; 0){
-            cursor_pos[player_i] += -1
+          if ((cursor_loc-6) mod inv_items_per_row[player_i] &gt; 0){
+            cursor_loc += -1
           }else{
           //if we are all the way left, then jump to the correct possition
-            if ((cursor_pos[player_i]-6) div inv_items_per_row[player_i] = 0){
+            if ((cursor_loc-6) div inv_items_per_row[player_i] = 0){
             //if were on the first row go to the first equipment's row
-              cursor_pos[player_i] = 2
+              cursor_loc = 2
             }else{
             //else second row
-              cursor_pos[player_i] = 5
+              cursor_loc = 5
             }
           }
         }
@@ -475,11 +604,11 @@ for (player_i = 0; player_i &lt;= 8; player_i++)
         || (obj_controller.right_held[player_i] != 0)
         {
             //prevent going over the inventory size
-          if (cursor_pos[player_i] &lt; max_items[player_i]+6-1)
+          if (cursor_loc &lt; max_items[player_i]+6-1)
             //prevent cycling back to the left from the right
-          &amp;&amp; ((cursor_pos[player_i]-6) mod inv_items_per_row[player_i] != inv_items_per_row[player_i]-1)
+          &amp;&amp; ((cursor_loc-6) mod inv_items_per_row[player_i] != inv_items_per_row[player_i]-1)
           {
-            cursor_pos[player_i] += 1
+            cursor_loc += 1
           }
           
           
@@ -488,9 +617,36 @@ for (player_i = 0; player_i &lt;= 8; player_i++)
         
       }
       
+      //now apply the new position to the correct cursor pos
+      if (sub_menu_is_equiping[player_i] || sub_menu_is_combining[player_i]){
+        //if the selected item is an armor, only let it equip to that armor slot
+        var item = selected_item_map[player_i];
+        var item_type = item[? "item_type"]
+        
+        switch item_type
+        {
+          case item_type_armor_head:
+            sub_menu_event_inv_cursor_pos[player_i] = equip.head
+          break;
+          case item_type_armor_body:
+            sub_menu_event_inv_cursor_pos[player_i] = equip.body
+          break;
+          case item_type_armor_boggle:
+            sub_menu_event_inv_cursor_pos[player_i] = equip.boggle
+          break;
+        }
+        
+        if (item_type = item_type_weapon_melee)
+        || (item_type = item_type_weapon_range)
+        || (item_type = item_type_weapon_summon)
+        || (item_is_consumable(item)){
+          sub_menu_event_inv_cursor_pos[player_i] = clamp(cursor_loc, 3, 5)
+        }
+      }else{
+        cursor_pos[player_i] = cursor_loc
+      }
       
       
-      //once all the movements are handled, we can work on the selection options
       
       
       
@@ -524,7 +680,9 @@ for (player_i = 0; player_i &lt;= 8; player_i++)
 {
   if (menu_open[player_i]){
     if (!in_sub_menu[player_i]){
-      if (obj_controller.menu_back_pressed[player_i]){
+      if (obj_controller.menu_back_pressed[player_i])
+      &amp;&amp; (backed_this_frame[player_i] = false){
+        backed_this_frame[player_i] = true
         menu_open[player_i] = false
       }
     }
@@ -532,9 +690,386 @@ for (player_i = 0; player_i &lt;= 8; player_i++)
   }else{ //if the menu isnt open
     if (obj_controller.menu_open_pressed[player_i]){
       menu_open[player_i] = true
+      
+      //also, incase the player's select button is the same thing as the open menu button add it to the buffer
+      if (obj_controller.menu_select_pressed[player_i] != 0){
+        selected_this_frame[player_i] = true;
+      }
     }
   }
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///sub menu and text box handling
+
+for (player_i = 0; player_i &lt;= global.numberOfLocalPlayers; player_i++){
+  if (menu_open[player_i]){
+    
+    draw_set_alpha(1)
+    draw_set_color(c_white)
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_top);
+
+    if (selected_item_map[player_i] = noone)
+    &amp;&amp; (in_sub_menu[player_i] = false)
+    {
+      if (obj_controller.menu_select_pressed[player_i] != 0)
+      &amp;&amp; (selected_this_frame[player_i] = false)
+      {
+        selected_this_frame[player_i] = true;
+        var nbt = nbt_data[player_i]
+        
+        if (cursor_pos[player_i] &lt; 6){
+          switch (cursor_pos[player_i]){
+            case equip.head:   var item_key = "armor_head";   break;
+            case equip.body:   var item_key = "armor_body";   break;
+            case equip.boggle: var item_key = "armor_boggle"; break;
+            case equip.item_a: var item_key = "held_item_a";  break;
+            case equip.item_b: var item_key = "held_item_b";  break;
+            case equip.item_c: var item_key = "held_item_c";  break;
+            default:           var item_key = "";             break; //this is only here to prevent reading from a bad section of ram
+          }
+          
+          //now remove the item and select it
+          if ds_map_exists(nbt, item_key){
+            selected_item_map[player_i] = nbt[? item_key]
+            if ds_exists(selected_item_map[player_i], ds_type_map){
+              in_sub_menu[player_i] = true
+            }else{
+              selected_item_map[player_i] = noone
+            }
+          }
+          
+        }else{ //if it's inside the inventory list
+          var inventory_list = nbt[? "inventory"];
+          var inv_loc = cursor_pos[player_i]-6;
+          
+          if (inv_loc &lt; ds_list_size(inventory_list)){
+            selected_item_map[player_i] = inventory_list[| inv_loc]
+            show_debug_message(json_encode(selected_item_map[player_i]))
+            if ds_exists(selected_item_map[player_i], ds_type_map){
+              in_sub_menu[player_i] = true
+            }else{
+              selected_item_map[player_i] = noone
+            }
+          }
+          
+        }
+        
+        
+      }
+    }
+    
+    
+    
+    
+    //if an item has been selected
+    if (selected_item_map[player_i] != noone)
+    &amp;&amp; in_sub_menu[player_i]{
+      
+      //check to see if the sub menu was just spawned
+      if (sub_menu_spawned[player_i] = false){
+        sub_menu_spawned[player_i] = true
+        //reset the anim frame incase an animation was playing while thew player selected a different item
+        sub_menu_anim_frame[player_i] = 0
+        
+        
+        //adjust the sub menu's options to prevnt consuming an armor or weapon
+        sub_menu_options[player_i] = ds_list_create()
+        var item = selected_item_map[player_i];
+        sub_menu_text[player_i] = ""
+        
+        if (item_is_equipable(item)){
+          if (cursor_pos[player_i] &gt;= 6){
+            ds_list_add(sub_menu_options[player_i], sub_menu.equip)
+            sub_menu_text[player_i] += "Equip"+chr(10)
+          }else{
+            ds_list_add(sub_menu_options[player_i], sub_menu.unequip)
+            sub_menu_text[player_i] += "Unequip"+chr(10)
+          }
+        }
+        
+        if (item_is_consumable(item)){
+          ds_list_add(sub_menu_options[player_i], sub_menu.consume)
+          sub_menu_text[player_i] += "Consume"+chr(10)
+        }
+        
+        if (item_is_modifier(item)){
+          ds_list_add(sub_menu_options[player_i], sub_menu.combine)
+          sub_menu_text[player_i] += "Combine"+chr(10)
+        }
+        
+        ds_list_add(sub_menu_options[player_i], sub_menu.drop)
+        sub_menu_text[player_i] += "Drop"+chr(10)
+        
+        
+      }
+      
+      //sub menu surface
+      if (sub_menu_surface[player_i] = noone)
+      || !surface_exists(sub_menu_surface[player_i]){
+        //if the sub menu just spawned then create the surface for it
+        var xx = sub_menu_x[player_i];
+        var yy = sub_menu_y[player_i];
+        var ww = sub_menu_w[player_i];
+        var hh = sub_menu_h[player_i];
+        var _gui_scale = gui_scale[player_i];
+        sub_menu_surface[player_i] = surface_create(ww, hh)
+        
+        surface_set_target(sub_menu_surface[player_i])
+        
+        scr_draw_9slices_ext(spr_menu_9slice, 0, 0, 0, ww, hh, c_white, 1, _gui_scale)
+        draw_set_font(global.font_menu)
+        var art_border = (sprite_get_height(spr_menu_9slice) / 3)*_gui_scale;
+        var cursor_area = sprite_get_width(spr_sub_menu_cursor)*1.5*_gui_scale;
+        
+        draw_text_transformed(art_border+1+cursor_area, art_border+1, sub_menu_text[player_i], _gui_scale, _gui_scale, 0)
+        
+        surface_reset_target()
+      }
+      
+      
+      //lore surface
+      if (lore_surface[player_i] = noone)
+      || !surface_exists(lore_surface[player_i]){
+        //if the sub menu just spawned then create the surface for it
+        var xx = lore_x[player_i];
+        var yy = lore_y[player_i];
+        var ww = lore_w[player_i];
+        var hh = lore_h[player_i];
+        var _gui_scale = gui_scale[player_i];
+        lore_surface[player_i] = surface_create(ww, hh)
+        
+        surface_set_target(lore_surface[player_i])
+        
+        scr_draw_9slices_ext(spr_menu_9slice, 0, 0, 0, ww, hh, c_white, 1, _gui_scale)
+        draw_set_font(global.font_menu)
+        var art_border = (sprite_get_height(spr_menu_9slice) / 3)*_gui_scale;
+        draw_text_transformed(art_border+1, art_border+1, sub_menu_text[player_i], _gui_scale, _gui_scale, 0)
+        
+        surface_reset_target()
+        
+      }
+      
+      
+      
+      //we are drawing the sub menu animation in the gui draw event
+      
+      
+      //update cursor possition
+      if (sub_menu_spawned[player_i])
+      &amp;&amp; !(sub_menu_is_equiping[player_i] || sub_menu_is_combining[player_i])
+      {
+        if (obj_controller.up_pressed[player_i] != 0)
+        || (obj_controller.up_held[player_i] != 0)
+        {
+          sub_menu_cursor_pos[player_i] += -1
+          if (sub_menu_cursor_pos[player_i] &lt; 0){
+            sub_menu_cursor_pos[player_i] = ds_list_size(sub_menu_options[player_i]) - 1
+          }
+        }
+        //down
+        if (obj_controller.down_pressed[player_i] != 0)
+        || (obj_controller.down_held[player_i] != 0)
+        {
+          sub_menu_cursor_pos[player_i] += 1
+          if (sub_menu_cursor_pos[player_i] &gt;= ds_list_size(sub_menu_options[player_i])){
+            sub_menu_cursor_pos[player_i] = 0
+          }
+        }
+        
+        if (obj_controller.menu_select_pressed[player_i] != 0)
+        &amp;&amp; (selected_this_frame[player_i] = false){
+          selected_this_frame[player_i] = true;
+          
+          var events_list = sub_menu_options[player_i]
+          var pos = sub_menu_cursor_pos[player_i]
+          var event = events_list[| pos]
+          
+          switch event{
+            case sub_menu.equip:
+              sub_menu_is_equiping[player_i] = true
+              sub_menu_event_inv_cursor_pos[player_i] = cursor_pos[player_i]
+              //move the cursor to a reasonable spot depending on the item
+              if item_is_armor(selected_item_map[player_i]){
+                var item = selected_item_map[player_i];
+                var item_type = item[? "item_type"]
+                
+                switch item_type
+                {
+                  case item_type_armor_head:
+                    sub_menu_event_inv_cursor_pos[player_i] = equip.head
+                  break;
+                  case item_type_armor_body:
+                    sub_menu_event_inv_cursor_pos[player_i] = equip.body
+                  break;
+                  case item_type_armor_boggle:
+                    sub_menu_event_inv_cursor_pos[player_i] = equip.boggle
+                  break;
+                }
+                
+              }else{ //if it's not an armor
+                sub_menu_event_inv_cursor_pos[player_i] = 5
+              }
+            break;
+            case sub_menu.unequip:
+              item_unequip(nbt_data[player_i], cursor_pos[player_i])
+              sub_menu_spawned[player_i] = false
+              sub_menu_anim_finished[player_i] = false
+              sub_menu_cursor_pos[player_i] = 0
+              in_sub_menu[player_i] = false
+              selected_item_map[player_i] = noone
+              surface_free(sub_menu_surface[player_i])
+              surface_free(lore_surface[player_i])
+              sub_menu_surface[player_i] = noone
+              lore_surface[player_i] = noone
+            break;
+            case sub_menu.consume:
+              
+            break;
+            case sub_menu.combine:
+              sub_menu_is_combining[player_i] = true
+              sub_menu_event_inv_cursor_pos[player_i] = cursor_pos[player_i]
+            break;
+            case sub_menu.drop:
+              //find the player
+              var player = menu_player_id[player_i];
+              
+              //spawn the item
+              item_spawn(selected_item_map[player_i], player.x, player.y, 5, player.direction, player)
+              
+              //delete the item from the inventory
+              var _nbt = nbt_data[player_i]
+              var _inv = _nbt[? "inventory"]
+              ds_list_delete(_inv, cursor_pos[player_i]-6) 
+              
+              //leave the sub menu
+              sub_menu_spawned[player_i] = false
+              sub_menu_anim_finished[player_i] = false
+              sub_menu_cursor_pos[player_i] = 0
+              in_sub_menu[player_i] = false
+              selected_item_map[player_i] = noone
+              surface_free(sub_menu_surface[player_i])
+              surface_free(lore_surface[player_i])
+              sub_menu_surface[player_i] = noone
+              lore_surface[player_i] = noone
+              
+              //update the menu
+              update_menus = true
+            break;
+            
+          }
+        }
+      }
+      
+      //check to see if the player has selected anything
+      
+      //check to see if the player has backed out of the submenu
+      if (sub_menu_spawned[player_i] = true)
+      &amp;&amp; (in_sub_menu[player_i] = true)
+      &amp;&amp; (sub_menu_is_equiping[player_i] = false)
+      &amp;&amp; (sub_menu_is_combining[player_i] = false)
+      {
+        if (obj_controller.menu_back_pressed[player_i] != 0)
+        &amp;&amp; backed_this_frame[player_i] = false{
+          backed_this_frame[player_i] = true;
+          
+          sub_menu_spawned[player_i] = false
+          sub_menu_anim_finished[player_i] = false
+          sub_menu_cursor_pos[player_i] = 0
+          in_sub_menu[player_i] = false
+          selected_item_map[player_i] = noone
+          surface_free(sub_menu_surface[player_i])
+          surface_free(lore_surface[player_i])
+          sub_menu_surface[player_i] = noone
+          lore_surface[player_i] = noone
+        }
+      }
+      
+      
+      
+      //check to see if the player has selected something with the submenu's equip/combine event
+      if (sub_menu_spawned[player_i] = true)
+      &amp;&amp; (in_sub_menu[player_i] = true)
+      &amp;&amp; (sub_menu_is_equiping[player_i] || sub_menu_is_combining[player_i])
+      {
+        if (obj_controller.menu_select_pressed[player_i] != 0)
+        &amp;&amp; selected_this_frame[player_i] = false{
+          selected_this_frame[player_i] = true;
+          
+          var inv_loc = cursor_pos[player_i]-6
+          
+          
+          if (sub_menu_is_equiping[player_i]) {
+            sub_menu_is_equiping[player_i] = false
+            item_equip(nbt_data[player_i], sub_menu_event_inv_cursor_pos[player_i], cursor_pos[player_i])
+            
+            sub_menu_spawned[player_i] = false
+            sub_menu_anim_finished[player_i] = false
+            sub_menu_cursor_pos[player_i] = 0
+            in_sub_menu[player_i] = false
+            selected_item_map[player_i] = noone
+            surface_free(sub_menu_surface[player_i])
+            surface_free(lore_surface[player_i])
+            sub_menu_surface[player_i] = noone
+            lore_surface[player_i] = noone
+          }
+          if (sub_menu_is_combining[player_i]) {
+            sub_menu_is_combining[player_i] = false
+          }
+        }
+      }
+      
+      
+      //check to see if the player has backed out of the submenu's equip/combine event
+      if (sub_menu_spawned[player_i] = true)
+      &amp;&amp; (in_sub_menu[player_i] = true)
+      &amp;&amp; (sub_menu_is_equiping[player_i] || sub_menu_is_combining[player_i])
+      {
+        if (obj_controller.menu_back_pressed[player_i] != 0)
+        &amp;&amp; backed_this_frame[player_i] = false{
+          backed_this_frame[player_i] = true;
+          
+          if (sub_menu_is_equiping[player_i]) {
+            sub_menu_is_equiping[player_i] = false
+          }
+          if (sub_menu_is_combining[player_i]) {
+            sub_menu_is_combining[player_i] = false
+          }
+        }
+      }
+    }
+    
+  }
+}
+
+
+
+
+
+
+
+
+
+
 </string>
           </argument>
         </arguments>
@@ -557,105 +1092,322 @@ for (player_i = 0; player_i &lt;= 8; player_i++)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>for (player_i = 0; player_i &lt;= 8; player_i++)
-{
+            <string>///draw the primary menu
+for (var player_i = 0; player_i &lt; global.numberOfLocalPlayers; player_i++){
+  
+  draw_set_alpha(1)
+  draw_set_color(c_white)
+  draw_set_halign(fa_left);
+  draw_set_valign(fa_top);
+  
+  
   if (menu_open[player_i]){
+    if surface_exists(menu_background_surface[player_i]){
+      //display_set_gui_size(window_get_width(),window_get_height());
+      draw_set_alpha(1)
+      
+      if (obj_camera_control.smooth_camera){
+       var res_scale = 1/obj_camera_control.upscale_val
+      }else{
+        var res_scale = 1
+      }
+      
+      var vx = view_xport[player_i]
+      var vy = view_yport[player_i]
+      var vw = view_wport[player_i]
+      var vh = view_hport[player_i]
+      
+      
+      var _gui_scale = gui_scale[player_i]
+      var w = surface_get_width(menu_background_surface[player_i])*_gui_scale
+      var menu_x_off = vx+floor((vw-w)/2)
+      var menu_y_off = vy
+      
+      //draw the menu backdrop
+      //draw_surface(menu_background_surface[player_i], 0, 0)
+      draw_surface_stretched(menu_background_surface[player_i], 
+                             menu_x_off, 
+                             menu_y_off, 
+                             surface_get_width(menu_background_surface[player_i])*_gui_scale-1, 
+                             surface_get_height(menu_background_surface[player_i])*_gui_scale-1
+                             )
+                             
+      //draw the inventory grid
+      var inv_x_off = menu_x_off + inventory_x_off[player_i]*_gui_scale
+      var inv_y_off = menu_y_off + inventory_y_off[player_i]*_gui_scale
+      
+      
+      var inventory_view_y_off = 0
+      
+      var xscale = (surface_get_width(menu_inventory_surface[player_i])*_gui_scale-1) / (surface_get_width(obj_menu.menu_inventory_surface[player_i])*_gui_scale);
+      var yscale = (surface_get_height(menu_inventory_surface[player_i])*_gui_scale-1) / (surface_get_height(obj_menu.menu_inventory_surface[player_i])*_gui_scale);
+      
+      var height = min(inv_height[player_i],
+                       surface_get_height(menu_inventory_surface[player_i])
+                       )
+      
+      draw_surface_part_ext(menu_inventory_surface[player_i], 
+                             0,
+                             inventory_view_y_off,
+                             inv_width[player_i],
+                             height,
+                             inv_x_off,
+                             inv_y_off,
+                             xscale*_gui_scale,
+                             yscale*_gui_scale,
+                             c_white,
+                             1
+                             )
+      /*
+      draw_surface_stretched(menu_inventory_surface[player_i], 
+                             inv_x_off, 
+                             inv_y_off, 
+                             inv_width[player_i]*_gui_scale-1, 
+                             inv_height[player_i]*_gui_scale-1
+                             )
+      */
+      
+      //draw the cursor
+      var art_border = sprite_get_height(spr_menu_9slice) / 3;
+      var icon_height = sprite_get_height(spr_menu_tab_icons)
+      
+      //set the cursor location that we're going to be handling
+      if (sub_menu_is_equiping[player_i] || sub_menu_is_combining[player_i]){
+        var cursor_loc = sub_menu_event_inv_cursor_pos[player_i]
+      }else{
+        var cursor_loc = cursor_pos[player_i]
+      }
+      
+      
+      if (cursor_loc &lt; 6){
+        var cursor_size = 16*_gui_scale
+        
+        var xx = menu_x_off+ (art_border*2 + ((16+art_border+art_border)*(cursor_loc mod 3)))*_gui_scale;
+        var yy = menu_y_off+ (icon_height + art_border + art_border + ((16+art_border+art_border)*(cursor_loc div 3)))*_gui_scale;
+        var ww = 16*_gui_scale;
+        var hh = 16*_gui_scale;
+        
+      }else{//inventory grid section
+        var cursor_size = 32*_gui_scale
+        var cursor_offset = (cursor_loc-6);
+        var inv_slot_border = (1*_gui_scale)
+        var inv_slot = sprite_get_width(spr_menu_inventory_slot)
+        
+        var xx = inv_x_off+inv_slot_border + (inv_slot*(cursor_offset mod inv_items_per_row[player_i])*_gui_scale);
+        var yy = inv_y_off+inv_slot_border + (inv_slot*(cursor_offset div inv_items_per_row[player_i])*_gui_scale);
+        var ww = 32*_gui_scale;
+        var hh = 32*_gui_scale;
+      }
+      
+      
+      
+      draw_sprite_stretched(spr_menu_cursor, 0, (vx+xx), (vy+yy), ww, hh)
+      
+    }
+  }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///draw the sub menu
+
+for (player_i = 0; player_i &lt;= global.numberOfLocalPlayers; player_i++){
+  if (menu_open[player_i])
+  &amp;&amp; in_sub_menu[player_i]{
     
-    for (player_i = 0; player_i &lt; global.numberOfLocalPlayers; player_i++)
-    {
-      if surface_exists(menu_background_surface[player_i]){
-        //display_set_gui_size(window_get_width(),window_get_height());
-        draw_set_alpha(1)
+    draw_set_alpha(1)
+    draw_set_color(c_white)
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_top);
+    
+    //if an item has been selected
+    if (selected_item_map[player_i] != noone){
+      
+      var vx = view_xport[player_i]
+      var vy = view_yport[player_i]
+      var vw = view_wport[player_i]
+      var vh = view_hport[player_i]
+      
+      var _gui_scale = gui_scale[player_i]
+      var w = surface_get_width(menu_background_surface[player_i])*_gui_scale
+      var menu_x_off = vx+floor((vw-w)/2)
+      var menu_y_off = vy
+      
+      var xx = sub_menu_x[player_i]+menu_x_off;
+      var yy = sub_menu_y[player_i]+menu_y_off;
+      var ww = sub_menu_w[player_i];
+      var hh = sub_menu_h[player_i];
+      
+      
+      //if the sub menu is done with it's open animation then just draw it normally in place
+      if (sub_menu_anim_finished[player_i] = true){
+        texture_set_interpolation(true)  
+        draw_surface_stretched(sub_menu_surface[player_i], xx, yy, ww-1, hh-1)
+        texture_set_interpolation(false)
+      }
+      
+      
+      //sub menu's open annimation
+      if (sub_menu_spawned[player_i] = true)
+      &amp;&amp; (sub_menu_anim_finished[player_i] = false){
+        var sub_menu_anim_time = room_speed * 0.25
         
-        if (obj_camera_control.smooth_camera){
-         var res_scale = 1/obj_camera_control.upscale_val
-        }else{
-          var res_scale = 1
+        var spawn_y = yy+(hh/2);
+        var anim_perc = sub_menu_anim_frame[player_i] / sub_menu_anim_time;
+        
+        var multiplier = scr_snappy_anim(anim_perc)
+        var anim_y = spawn_y - (hh/2)*multiplier
+        var draw_h_section = clamp((yy-anim_y)+hh, 0, hh)
+        show_debug_player(0, "multiplier = "+string(multiplier))
+        
+        texture_set_interpolation(true)
+        draw_surface_part_ext(sub_menu_surface[player_i], 0, 0, ww, draw_h_section, xx, anim_y, (ww-1)/ww, (draw_h_section-1)/draw_h_section, c_white, 1)
+        texture_set_interpolation(false)
+        
+        sub_menu_anim_frame[player_i] += 1*lag()
+        
+        if (sub_menu_anim_frame[player_i] &gt;= sub_menu_anim_time){
+          sub_menu_anim_frame[player_i] = 0
+          sub_menu_anim_finished[player_i] = true
         }
+      }
+      
+      //draw the cursor
+      var art_border = (sprite_get_height(spr_menu_9slice) / 3)*_gui_scale;
+      var cursor_area = sprite_get_width(spr_sub_menu_cursor)*1.25*_gui_scale;
+      var cursor_width = sprite_get_width(spr_sub_menu_cursor)*_gui_scale
+      var cursor_height = sprite_get_height(spr_sub_menu_cursor)*_gui_scale
+      
+      if (!sub_menu_is_equiping[player_i])
+      &amp;&amp; (!sub_menu_is_combining[player_i]){
+        var cursor_x_off = wave(0, cursor_area-cursor_width, 1, 0) + (cursor_area-cursor_width)/2
+      }else{
+        var cursor_x_off = (cursor_area-cursor_width) + (cursor_area-cursor_width)/2
+      }
+      var cursor_xx = sub_menu_x[player_i]+menu_x_off + art_border+cursor_x_off;
+      
+      if sub_menu_anim_finished[player_i] {
+        var cursor_yy = sub_menu_y[player_i]+art_border
+      }else{
+        var cursor_yy = anim_y+art_border;
+      }
+      var cursor_y_off = (sub_menu_cursor_pos[player_i])*cursor_height
+      draw_sprite_stretched(spr_sub_menu_cursor, 0, cursor_xx, cursor_yy+cursor_y_off, cursor_width, cursor_height)
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///draw the lore text box
+
+///draw the sub menu
+
+for (player_i = 0; player_i &lt;= global.numberOfLocalPlayers; player_i++){
+  if (menu_open[player_i])
+  &amp;&amp; in_sub_menu[player_i]{
+    
+    draw_set_alpha(1)
+    draw_set_color(c_white)
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_top);
+    
+    //if an item has been selected
+    if (selected_item_map[player_i] != noone){
+      
+      var vx = view_xport[player_i]
+      var vy = view_yport[player_i]
+      var vw = view_wport[player_i]
+      var vh = view_hport[player_i]
+      
+      var _gui_scale = gui_scale[player_i]
+      var w = surface_get_width(menu_background_surface[player_i])*_gui_scale
+      var menu_x_off = vx+floor((vw-w)/2)
+      var menu_y_off = vy
+      
+      var xx = lore_x[player_i]+menu_x_off;
+      var yy = lore_y[player_i]+menu_y_off;
+      var ww = lore_w[player_i];
+      var hh = lore_h[player_i];
+      
+      
+      //if the sub menu is done with it's open animation then just draw it normally in place
+      if (sub_menu_anim_finished[player_i] = true){
+        texture_set_interpolation(true)
+        draw_surface_stretched(lore_surface[player_i], xx, yy, ww-1, hh-1)
+        texture_set_interpolation(false)
+      }
+      
+      
+      //sub menu's open annimation
+      if (sub_menu_spawned[player_i] = true)
+      &amp;&amp; (sub_menu_anim_finished[player_i] = false){
+        var sub_menu_anim_time = room_speed * 0.25
         
-        var vx = view_xport[player_i]
-        var vy = view_yport[player_i]
-        var vw = view_wport[player_i]
-        var vh = view_hport[player_i]
+        var spawn_y = yy+(hh/2);
+        var anim_perc = sub_menu_anim_frame[player_i] / sub_menu_anim_time;
         
+        var multiplier = scr_snappy_anim(anim_perc)
+        var anim_y = spawn_y - (hh/2)*multiplier
+        var draw_h_section = clamp((yy-anim_y)+hh, 0, hh)
+        show_debug_player(0, "multiplier = "+string(multiplier))
         
-        var _gui_scale = gui_scale[player_i]
-        var w = surface_get_width(menu_background_surface[player_i])*_gui_scale
-        var menu_x_off = vx+floor((vw-w)/2)
-        var menu_y_off = vy
+        texture_set_interpolation(true)
+        //draw_surface(lore_surface[player_i], 0, 0)
+        draw_surface_part_ext(lore_surface[player_i], 0, 0, ww, draw_h_section, xx, anim_y, (ww-1)/ww, (draw_h_section-1)/draw_h_section, c_white, 1)
+        texture_set_interpolation(false)
         
-        //draw the menu backdrop
-        //draw_surface(menu_background_surface[player_i], 0, 0)
-        draw_surface_stretched(menu_background_surface[player_i], 
-                               menu_x_off, 
-                               menu_y_off, 
-                               surface_get_width(menu_background_surface[player_i])*_gui_scale-1, 
-                               surface_get_height(menu_background_surface[player_i])*_gui_scale-1
-                               )
-                               
-        //draw the inventory grid
-        var inv_x_off = menu_x_off + inventory_x_off[player_i]*_gui_scale
-        var inv_y_off = menu_y_off + inventory_y_off[player_i]*_gui_scale
+        sub_menu_anim_frame[player_i] += 1*lag()
         
-        
-        var inventory_view_y_off = 0
-        
-        var xscale = (surface_get_width(menu_inventory_surface[player_i])*_gui_scale-1) / (surface_get_width(obj_menu.menu_inventory_surface[player_i])*_gui_scale);
-        var yscale = (surface_get_height(menu_inventory_surface[player_i])*_gui_scale-1) / (surface_get_height(obj_menu.menu_inventory_surface[player_i])*_gui_scale);
-        
-        var height = min(inv_height[player_i],
-                         surface_get_height(menu_inventory_surface[player_i])
-                         )
-        
-        draw_surface_part_ext(menu_inventory_surface[player_i], 
-                               0,
-                               inventory_view_y_off,
-                               inv_width[player_i],
-                               height,
-                               inv_x_off,
-                               inv_y_off,
-                               xscale*_gui_scale,
-                               yscale*_gui_scale,
-                               c_white,
-                               1
-                               )
-        /*
-        draw_surface_stretched(menu_inventory_surface[player_i], 
-                               inv_x_off, 
-                               inv_y_off, 
-                               inv_width[player_i]*_gui_scale-1, 
-                               inv_height[player_i]*_gui_scale-1
-                               )
-        */
-        
-        //draw the cursor
-        var art_border = sprite_get_height(spr_menu_9slice) / 3;
-        var icon_height = sprite_get_height(spr_menu_tab_icons)
-        
-        if (cursor_pos[player_i] &lt; 6){
-          var cursor_size = 16*_gui_scale
-          
-          var xx = menu_x_off+ (art_border*2 + ((16+art_border+art_border)*(cursor_pos[player_i] mod 3)))*_gui_scale;
-          var yy = menu_y_off+ (icon_height + art_border + art_border + ((16+art_border+art_border)*(cursor_pos[player_i] div 3)))*_gui_scale;
-          var ww = 16*_gui_scale;
-          var hh = 16*_gui_scale;
-          
-        }else{//inventory grid section
-          var cursor_size = 32*_gui_scale
-          var cursor_offset = (cursor_pos[player_i]-6);
-          var inv_slot_border = (1*_gui_scale)
-          var inv_slot = sprite_get_width(spr_menu_inventory_slot)
-          
-          var xx = inv_x_off+inv_slot_border + (inv_slot*(cursor_offset mod inv_items_per_row[player_i])*_gui_scale);
-          var yy = inv_y_off+inv_slot_border + (inv_slot*(cursor_offset div inv_items_per_row[player_i])*_gui_scale);
-          var ww = 32*_gui_scale;
-          var hh = 32*_gui_scale;
+        if (sub_menu_anim_frame[player_i] &gt;= sub_menu_anim_time){
+          sub_menu_anim_frame[player_i] = 0
+          sub_menu_anim_finished[player_i] = true
         }
-        
-        
-        
-        draw_sprite_stretched(spr_menu_cursor, 0, (vx+xx), (vy+yy), ww, hh)
-        
       }
     }
   }

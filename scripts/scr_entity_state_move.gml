@@ -6,8 +6,8 @@ if (spd != 0)
   var time_adjust = 60/room_speed;
   ///apply friction
   if (!ceil(right) && !ceil(left) && !ceil(down) && !ceil(up)) || 
-  (right == left && up == down) ||
-  (abs(spd) > min(point_distance(0, 0, (right-left), (down-up)), 1) * max_speed * (time_adjust))
+  (right == left && up == down)
+  || (abs(spd) > min(point_distance(0, 0, (right-left), (down-up)), 1) * max_speed * (time_adjust))
   || (sign(spd) = -1)
   {
     var spd_multiplier = sign(spd);
@@ -51,6 +51,10 @@ if (spd != 0)
       
       spr = array[0]
       dir = array[1]
+      
+      show_debug_player(0, "spd = "+string(spd))
+      show_debug_player(0, "dir = "+string(dir))
+      
     }
   }
   

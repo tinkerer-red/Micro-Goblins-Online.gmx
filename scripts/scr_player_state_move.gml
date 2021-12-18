@@ -9,11 +9,11 @@ if (is_jocky){
 if (spd != 0)
 {
   ///apply friction
-  if (!ceil(right) && !ceil(left) && !ceil(down) && !ceil(up)) || 
-  (right == left && up == down) ||
-  (abs(spd) > min(point_distance(0, 0, (right-left), (down-up)), 1) * max_speed * (time_adjust)) || 
-  (sign(spd) = -1 || (abs(angle_difference(dir, move_dir)) >= 45)) ||
-  (self.player_state != e_player_state.move)
+  if (!ceil(right) && !ceil(left) && !ceil(down) && !ceil(up))
+  || (right == left && up == down)
+  || (abs(spd) > min(point_distance(0, 0, (right-left), (down-up)), 1) * max_speed * (time_adjust))
+  || (sign(spd) = -1 || (abs(angle_difference(dir, move_dir)) >= 45))
+  || (self.player_state != e_player_state.move)
   {
     var spd_multiplier = sign(spd);
     var desired_spd = abs(spd);
@@ -35,6 +35,7 @@ if (spd != 0)
       && (spd_multiplier_new != 0)
       && (spd_multiplier != 0)
     {
+      show_debug_player(0, 'wut')
       spd = 0
     }
     
@@ -42,6 +43,10 @@ if (spd != 0)
     if (!ceil(right) && !ceil(left) && !ceil(down) && !ceil(up))
     {
       dir = direction
+    }else{
+      if (abs(angle_difference(dir, move_dir)) >= 90){
+        dir = move_dir
+      }
     }
   }
   

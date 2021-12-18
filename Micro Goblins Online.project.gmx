@@ -334,6 +334,13 @@
       <sprite>sprites\spr_example_tile_stone</sprite>
       <sprite>sprites\spr_example_tile_glass</sprite>
       <sprite>sprites\Snow_Test</sprite>
+      <sprites name="tiles with shadows">
+        <sprite>sprites\spr_grass_shadow</sprite>
+        <sprite>sprites\spr_rock2_shadow</sprite>
+        <sprite>sprites\spr_rock_shadow</sprite>
+        <sprite>sprites\spr_sand_shadow</sprite>
+        <sprite>sprites\spr_snow_shadow</sprite>
+      </sprites>
       <sprite>sprites\Grass_Test</sprite>
       <sprite>sprites\High_Rock_Test</sprite>
       <sprite>sprites\Rock_Test</sprite>
@@ -365,6 +372,7 @@
       <sprite>sprites\spr_menu_inv_grid</sprite>
       <sprite>sprites\spr_menu_cursor</sprite>
       <sprite>sprites\spr_menu_inventory_slot</sprite>
+      <sprite>sprites\spr_sub_menu_cursor</sprite>
     </sprites>
     <sprite>sprites\spr_dungeon_tiles</sprite>
     <sprite>sprites\spr_dungeon_exit</sprite>
@@ -382,7 +390,9 @@
     <background>background\background4</background>
     <background>background\background3</background>
   </backgrounds>
-  <paths name="paths"/>
+  <paths name="paths">
+    <path>paths\path_snappy</path>
+  </paths>
   <scripts name="scripts">
     <scripts name="Game">
       <scripts name="Player">
@@ -395,6 +405,7 @@
               <script>scripts\scr_mod_repeater.gml</script>
               <script>scripts\scr_mod_dash.gml</script>
               <script>scripts\scr_mod_evade.gml</script>
+              <script>scripts\scr_mod_consume.gml</script>
               <script>scripts\scr_mod_knockback.gml</script>
               <script>scripts\scr_mod_enlarge.gml</script>
               <script>scripts\scr_mod_shrink.gml</script>
@@ -519,6 +530,21 @@
         <script>scripts\collision_circle_list.gml</script>
         <script>scripts\collision_cone_list.gml</script>
       </scripts>
+      <scripts name="NBT Data">
+        <scripts name="private">
+          <script>scripts\_nbt_data_empty.gml</script>
+          <script>scripts\_nbt_data_debug.gml</script>
+        </scripts>
+        <script>scripts\nbt_data_load.gml</script>
+        <script>scripts\item_is_consumable.gml</script>
+        <script>scripts\item_is_modifier.gml</script>
+        <script>scripts\item_is_equipable.gml</script>
+        <script>scripts\item_is_armor.gml</script>
+        <script>scripts\item_equip.gml</script>
+        <script>scripts\item_unequip.gml</script>
+        <script>scripts\item_spawn.gml</script>
+        <script>scripts\item_give_player.gml</script>
+      </scripts>
       <script>scripts\is_enemy.gml</script>
       <script>scripts\is_entity.gml</script>
       <script>scripts\update_enemy.gml</script>
@@ -529,13 +555,6 @@
       <script>scripts\deal_damage_radius.gml</script>
       <script>scripts\deal_knockback_radius.gml</script>
       <script>scripts\deal_tick_damage.gml</script>
-      <scripts name="NBT Data">
-        <scripts name="private">
-          <script>scripts\_nbt_data_empty.gml</script>
-          <script>scripts\_nbt_data_debug.gml</script>
-        </scripts>
-        <script>scripts\nbt_data_load.gml</script>
-      </scripts>
     </scripts>
     <scripts name="functions">
       <scripts name="Essential Scripts">
@@ -605,6 +624,7 @@
         <script>scripts\spline4.gml</script>
         <script>scripts\ds_grid_get_bicubic.gml</script>
         <script>scripts\section_percent.gml</script>
+        <script>scripts\scr_snappy_anim.gml</script>
       </scripts>
       <script>scripts\instance_nearest_notme.gml</script>
       <script>scripts\nearest_enemy.gml</script>
@@ -657,27 +677,34 @@
           <script>scripts\sprite_data_end.gml</script>
         </scripts>
       </scripts>
-      <script>scripts\is_visible.gml</script>
+      <scripts name="animations">
+        <script>scripts\anim_idle.gml</script>
+        <script>scripts\anim_walk.gml</script>
+        <script>scripts\anim_rotate.gml</script>
+        <script>scripts\anim_damage.gml</script>
+      </scripts>
+      <scripts name="shaders">
+        <script>scripts\shader_set_hue.gml</script>
+        <script>scripts\shader_set_saturation.gml</script>
+        <script>scripts\shader_set_brightness.gml</script>
+        <script>scripts\shader_set_displacement.gml</script>
+        <script>scripts\shader_set_outline.gml</script>
+        <script>scripts\shader_set_clipped.gml</script>
+      </scripts>
+      <scripts name="util">
+        <script>scripts\is_visible.gml</script>
+        <script>scripts\merge_color_squared.gml</script>
+        <script>scripts\merge_colors.gml</script>
+        <script>scripts\window_minimized.gml</script>
+        <script>scripts\window_resized.gml</script>
+        <script>scripts\fullscreen_toggle.gml</script>
+      </scripts>
       <script>scripts\draw_cone.gml</script>
-      <script>scripts\anim_idle.gml</script>
-      <script>scripts\anim_walk.gml</script>
-      <script>scripts\anim_rotate.gml</script>
-      <script>scripts\anim_damage.gml</script>
       <script>scripts\draw_sprite_line.gml</script>
       <script>scripts\draw_sprite_pathed.gml</script>
       <script>scripts\draw_sprite_line_shader.gml</script>
-      <script>scripts\shader_set_hue.gml</script>
-      <script>scripts\shader_set_saturation.gml</script>
-      <script>scripts\shader_set_brightness.gml</script>
-      <script>scripts\shader_set_outline.gml</script>
-      <script>scripts\shader_set_displacement.gml</script>
       <script>scripts\draw_sprite_repeat.gml</script>
-      <script>scripts\merge_color_squared.gml</script>
-      <script>scripts\merge_colors.gml</script>
       <script>scripts\draw_item.gml</script>
-      <script>scripts\fullscreen_toggle.gml</script>
-      <script>scripts\window_minimized.gml</script>
-      <script>scripts\window_resized.gml</script>
     </scripts>
     <scripts name="Utillity">
       <scripts name="Player">
@@ -1529,6 +1556,7 @@
     <shader type="GLSLES">shaders\shd_saturation.shader</shader>
     <shader type="GLSLES">shaders\shd_brightness.shader</shader>
     <shader type="GLSLES">shaders\shd_water.shader</shader>
+    <shader type="GLSLES">shaders\shd_clipregion.shader</shader>
     <shaders name="Autotiling Tilemap Shaders">
       <shader type="GLSLES">shaders\sh_ats_0.shader</shader>
       <shader type="GLSLES">shaders\sh_ats_1.shader</shader>
@@ -1548,6 +1576,7 @@
       <object>objects\obj_player</object>
       <object>objects\obj_weapon</object>
       <object>objects\obj_weap_proj</object>
+      <object>objects\obj_item</object>
       <object>objects\obj_summon</object>
       <object>objects\obj_enemy</object>
     </objects>
@@ -1631,9 +1660,7 @@
     <object>objects\obj_test</object>
     <object>objects\obj_gml_task_handler</object>
   </objects>
-  <timelines name="timelines">
-    <timeline>timelines\timeline0</timeline>
-  </timelines>
+  <timelines name="timelines"/>
   <rooms name="rooms">
     <room>rooms\room_one_player_TEST</room>
     <room>rooms\room8</room>
@@ -1647,13 +1674,15 @@
     <room>rooms\room_lvl_one_bk</room>
     <room>rooms\room0</room>
   </rooms>
-  <constants number="20">
+  <constants number="22">
     <constant name="item_type_weapon_melee">0</constant>
     <constant name="item_type_weapon_range">1</constant>
     <constant name="item_type_weapon_summon">2</constant>
     <constant name="item_type_armor_head">3</constant>
     <constant name="item_type_armor_body">4</constant>
     <constant name="item_type_armor_boggle">5</constant>
+    <constant name="item_type_modifier">6</constant>
+    <constant name="item_type_default">7</constant>
     <constant name="weapon_name">0</constant>
     <constant name="weapon_type">1</constant>
     <constant name="weapon_sprite">2</constant>

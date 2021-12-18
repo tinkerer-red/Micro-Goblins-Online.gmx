@@ -450,11 +450,11 @@ if !is_interior(x,y){ //exterior cells
         
         //heightmap tiles
         if(heightmap_grid[#i, j] &lt;= 0.15){    has_water = true;                 obj_chunk_supervisor.ats_grid[#i, j] = spr_tile_air;}
-        else if(heightmap_grid[#i, j] &gt; 0.15 &amp;&amp; heightmap_grid[#i, j] &lt; 0.25)  {obj_chunk_supervisor.ats_grid[#i, j] = spr_tile_sand_final;}
-        else if(heightmap_grid[#i, j] &gt;= 0.25 &amp;&amp; heightmap_grid[#i, j] &lt;= 0.6) {obj_chunk_supervisor.ats_grid[#i, j] = spr_tile_grass_final;}
-        else if(heightmap_grid[#i, j] &gt; 0.6 &amp;&amp; heightmap_grid[#i, j] &lt;= 0.7)   {obj_chunk_supervisor.ats_grid[#i, j] = spr_tile_rock_final;}
-        else if(heightmap_grid[#i, j] &gt; 0.7 &amp;&amp; heightmap_grid[#i, j] &lt;= 0.8)   {obj_chunk_supervisor.ats_grid[#i, j] = spr_tile_high_rock_final;}
-        else if(heightmap_grid[#i, j] &gt; 0.8)                                   {obj_chunk_supervisor.ats_grid[#i, j] = spr_tile_snow_final;}//
+        else if(heightmap_grid[#i, j] &gt; 0.15 &amp;&amp; heightmap_grid[#i, j] &lt; 0.25)  {obj_chunk_supervisor.ats_grid[#i, j] = spr_sand_shadow;}
+        else if(heightmap_grid[#i, j] &gt;= 0.25 &amp;&amp; heightmap_grid[#i, j] &lt;= 0.6) {obj_chunk_supervisor.ats_grid[#i, j] = spr_grass_shadow;}
+        else if(heightmap_grid[#i, j] &gt; 0.6 &amp;&amp; heightmap_grid[#i, j] &lt;= 0.7)   {obj_chunk_supervisor.ats_grid[#i, j] = spr_rock_shadow;}
+        else if(heightmap_grid[#i, j] &gt; 0.7 &amp;&amp; heightmap_grid[#i, j] &lt;= 0.8)   {obj_chunk_supervisor.ats_grid[#i, j] = spr_rock2_shadow;}
+        else if(heightmap_grid[#i, j] &gt; 0.8)                                   {obj_chunk_supervisor.ats_grid[#i, j] = spr_snow_shadow;}//
         
         //dungeon tiles
         if (structure_grid[#i, j] = 1){ obj_chunk_supervisor.ats_grid[#i, j] = spr_tile_dungeon; }
@@ -496,51 +496,13 @@ if !is_interior(x,y){ //exterior cells
     var biome_color = c_white;
     var test = round(256/10 *biome) * 10 -25.6
     biome_color = make_colour_rgb(test, test, test)
-    /*
-    if(biome &lt;= 0.14285)                                 {biome_color = make_colour_rgb(256*0,256*0,256*0);}
-    else if(biome &gt; 0.14285 &amp;&amp; biome &lt; 0.14285*2)     {biome_color = make_colour_rgb(256*0.14285,256*0.14285,256*0.14285);}
-    else if(biome &gt;= 0.14285*2 &amp;&amp; biome &lt;= 0.14285*3) {biome_color = make_colour_rgb(256*0.14285*2,256*0.14285*2,256*0.14285*2);}
-    else if(biome &gt; 0.14285*3 &amp;&amp; biome &lt;= 0.14285*4)  {biome_color = make_colour_rgb(256*0.14285*3,256*0.14285*3,256*0.14285*3);}
-    else if(biome &gt; 0.14285*4 &amp;&amp; biome &lt;= 0.14285*5)  {biome_color = make_colour_rgb(256*0.14285*4,256*0.14285*4,256*0.14285*4);}
-    else if(biome &gt; 0.14285*5)                           {biome_color = make_colour_rgb(256*0.14285*5,256*0.14285*5,256*0.14285*5);}//
-    */
-        
-    /*
-    //grab the 4 corners closest to the desired location
-    var a0 = sprite_getpixel(spr_biome_color, 0, floor(biome), floor(tempature))
-    var a1 = sprite_getpixel(spr_biome_color, 0, ceil(biome), floor(tempature))
-    var a2 = sprite_getpixel(spr_biome_color, 0, floor(biome), ceil(tempature))
-    var a3 = sprite_getpixel(spr_biome_color, 0, ceil(biome), ceil(tempature))
-    
-    var x_perc = biome mod 1
-    var y_perc = tempature mod 1
-    
-    //merge the first two colors
-    var col_0 = make_colour_rgb(a0[0],a0[1],a0[2])
-    var col_1 = make_colour_rgb(a1[0],a1[1],a1[2])
-    var humid_col_1 = merge_color_squared(col_0, col_1, x_perc)
-    //merge the second two colors
-    var col_2 = make_colour_rgb(a2[0],a2[1],a2[2])
-    var col_3 = make_colour_rgb(a3[0],a3[1],a3[2])
-    var humid_col_2 = merge_color_squared(col_2, col_3, x_perc)
-    
-    //now merge the two humid colors vertically
-    var biome_color = merge_color_squared(humid_col_1, humid_col_2, y_perc)
-    */
-    //var hue = colour_get_value(biome_color)
-    //shader_set_brightness(hue)
-    
-    
-    //draw_set_color(biome_color)
     
     draw_surface_part_ext(surf_temp, _x, _y, one_tile, one_tile, _x, _y, 1, 1, biome_color, 1)
-//    draw_rectangle(_x, _y, _x+one_tile-1, _y+one_tile-1, false)
-//    draw_set_color(c_white)
     
-    
-    shader_reset()
+    //shader_reset()
   }
-  //shader_reset()
+  //*/
+  
   draw_set_alpha(1)
   surface_reset_target()
   surface_free(surf_temp)
@@ -609,9 +571,8 @@ surface_reset_target()
             <kind>1</kind>
             <string>///clean up the left over noise
 
-//if variable_instance_exists(id, "landmass"){
-//  gpu_noise_free(landmass)
-//}
+
+texture_set_interpolation(false)
 </string>
           </argument>
         </arguments>

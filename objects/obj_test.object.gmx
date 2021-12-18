@@ -227,6 +227,7 @@ show_debug_message("surface_count = "+string(surface_count))
           <argument>
             <kind>1</kind>
             <string>//draw_menu = true
+
 </string>
           </argument>
         </arguments>
@@ -249,10 +250,10 @@ show_debug_message("surface_count = "+string(surface_count))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var j = json_encode(global.chunk_handler.active_interior_chunks)
-show_debug_message(j)
+            <string>//var j = json_encode(global.chunk_handler.active_interior_chunks)
+//show_debug_message(j)
 
-teleport(32700, 2000, 0)
+//teleport(32700, 2000, 0)
 </string>
           </argument>
         </arguments>

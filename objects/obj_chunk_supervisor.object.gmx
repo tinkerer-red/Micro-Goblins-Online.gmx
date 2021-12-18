@@ -52,11 +52,11 @@ chunk_init(256, 3)
 // Specifies a z (depth) for the different tiles in form of a DS priority to pass over to the ats_init function below.
 var priority = ds_priority_create();
 ds_priority_add(priority, spr_tile_air, 0);
-ds_priority_add(priority, spr_tile_sand_final, 1);
-ds_priority_add(priority, spr_tile_grass_final, -1);
-ds_priority_add(priority, spr_tile_rock_final, -2);
-ds_priority_add(priority, spr_tile_high_rock_final, -3);
-ds_priority_add(priority, spr_tile_snow_final, -4);
+ds_priority_add(priority, spr_sand_shadow, 1);
+ds_priority_add(priority, spr_grass_shadow, -1);
+ds_priority_add(priority, spr_rock_shadow, -2);
+ds_priority_add(priority, spr_rock2_shadow, -3);
+ds_priority_add(priority, spr_snow_shadow, -4);
 ds_priority_add(priority, spr_tile_dungeon, -5);
 
 // Initializes the Autotiling Tilemap Shaders extension (go to the script for more information).

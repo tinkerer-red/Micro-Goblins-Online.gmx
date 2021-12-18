@@ -30,6 +30,7 @@
 resizing = false;
 is_fullscreened = false;
 free_cam_mode = false
+updated_resolution = false
 
 //set the ideal resolution
 ideal_h = 288;
@@ -496,6 +497,7 @@ if true //(os_type != os_windows)
   )
   &amp;&amp; !window_minimized() 
   {
+    updated_resolution = true
     if (smooth_camera){
       ww = display_get_gui_width()*upscale_val;
       hh = display_get_gui_height()*upscale_val;
@@ -599,6 +601,8 @@ if true //(os_type != os_windows)
     
     
     
+  }else{
+    updated_resolution = false;
   }
 
 }
@@ -624,7 +628,8 @@ if true //(os_type != os_windows)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>texture_set_interpolation(false);
+            <string>//reset texture interp
+texture_set_interpolation(false);
 </string>
           </argument>
         </arguments>

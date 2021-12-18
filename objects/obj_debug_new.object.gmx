@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>///DEBUG OPTIONS
 global.debug = true
-
+global.show_entity_data = false
 </string>
           </argument>
         </arguments>
@@ -542,7 +542,7 @@ gui_folder_modifiers = scr_cbDataGUI_add_folder("Modifiers")
   // Graphics
   //gui_create_menu(guid, "Graphics", false, 6, c_fuchsia);
   gui_folder_graphics = scr_cbDataGUI_add_folder("Graphics")
-  
+    
     
     //gui_create_watcher(guid, "FPS", fps, c_green);
     scr_cbDataGUI_add(self, "FPS", cbData_type.number, gui_folder_graphics)
@@ -558,7 +558,7 @@ gui_folder_modifiers = scr_cbDataGUI_add_folder("Modifiers")
     
     //gui_create_checkbox(guid, "Smooth_Camera", obj_camera_control.smooth_camera, c_lime);
     scr_cbDataGUI_add(self, "Smooth_Camera", cbData_type.boolean, gui_folder_graphics)
-    scr_cbDataGUI_set_value(self, "Smooth_Camera", 1)
+    scr_cbDataGUI_set_value(self, "Smooth_Camera", obj_camera_control.smooth_camera)
     scr_cbDataGUI_set_tooltip(self, "Smooth_Camera", "Toggle sub pixel shading by upscaling the in game render, does not effect UI eliments")
     
     //gui_create_checkbox(guid, "Free_Cam", obj_camera_control.free_cam_mode, c_teal);
@@ -588,7 +588,7 @@ gui_folder_modifiers = scr_cbDataGUI_add_folder("Modifiers")
   
   //gui_create_button(guid, "Discord", src_url, $b6599b);
   scr_cbDataGUI_add(self, "Discord", cbData_type.function, -1, src_url)
-  scr_cbDataGUI_set_tooltip(self, "Discord", "This is a tooltip")
+  scr_cbDataGUI_set_tooltip(self, "Discord", "Check out the development Discord")
   
   
   //gui_create_button(guid, "Warp To Shore", teleport_to_shore, $b6599b);
@@ -1271,6 +1271,35 @@ for (var i = 0; i &lt; 8; i++)
 {
   debug_string[i] = "        [DEBUG MENU]        #"
   if (i = 0) debug_string[i] = "        [DEBUG MENU]        #"+"fps_real = "+string(fps_real)+"#fps_mean = "+string(fps_mean)+"#world_seed = "+string(global.chunk_handler.world_seed)+"#"
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="5" enumb="114">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if keyboard_check_pressed(ord('H')){
+  if global.show_entity_data{
+    global.show_entity_data = false
+  }else{
+    global.show_entity_data = true
+  }
 }
 </string>
           </argument>

@@ -748,41 +748,17 @@ draw_self()
       </action>
       <action>
         <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
+        <id>604</id>
+        <kind>0</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_inherited</functionname>
         <codestring></codestring>
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///debug draw
-
-///get the move vector
-//
-/*
-var move_dis = min(point_distance(0, 0, (right-left), (down-up)), 1) * acceleration * (60/room_speed);
-var move_dir = point_direction(0, 0, (right-left), (down-up));
-
-//now we update the inputs EXCLUSIVELY for debug purposes
-up    = abs(min(0, lengthdir_y(move_dis, move_dir)))
-down  = max(0, lengthdir_y(move_dis, move_dir))
-left  = abs(min(0, lengthdir_x(move_dis, move_dir)))
-right = max(0, lengthdir_x(move_dis, move_dir))
-
-draw_set_color(c_yellow)
-draw_line(x, y, x+(right-left)*100, y+(down-up)*100)
-draw_set_color(c_white)
-//draw_circle(mp_xgoal, mp_ygoal, 4, false)
-</string>
-          </argument>
-        </arguments>
       </action>
     </event>
   </events>
