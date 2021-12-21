@@ -498,7 +498,7 @@ gui_folder_modifiers = scr_cbDataGUI_add_folder("Modifiers")
     
     //gui_create_button(guid, "Randomize_Mods", scr_randomize_modifiers, c_lime);
     scr_cbDataGUI_add(self, "Randomize_Mods", cbData_type.function, gui_folder_modifiers_random)
-    scr_cbDataGUI_set_tooltip(self, "Random_Mod_Count", "This is a tooltip")
+    scr_cbDataGUI_set_tooltip(self, "Randomize_Mods", "This is a tooltip")
     var Random_Mod_Count_array;
     Random_Mod_Count_array[0] = scr_cbDataGUI_get_value(self, "Random_Mod_Count")
     scr_cbDataGUI_set_on_change_cb(self, "Random_Mod_Count", scr_randomize_modifiers, Random_Mod_Count_array)
@@ -1027,8 +1027,6 @@ if update_debug || (global.debug = true){
           //Global
           if scr_cbDataGUI_folder_is_open(gui_folder_modifiers_global) || (update_debug = true){
             if update_debug || last_aoe != scr_cbDataGUI_get_value(self, "AOE") scr_modifier_adjust(queue_col_mods, scr_mod_aoe, 2, scr_cbDataGUI_get_value(self, "AOE"));
-            show_debug_message('last_aoe = '+string(last_aoe))
-            show_debug_message('scr_cbDataGUI_get_value(self, "AOE") = '+string(scr_cbDataGUI_get_value(self, "AOE")))
             if update_debug || last_continuous != scr_cbDataGUI_get_value(self, "Continuous") scr_modifier_adjust(queue_col_mods, scr_mod_continuous, 1, scr_cbDataGUI_get_value(self, "Continuous"));
             if update_debug || last_charge != scr_cbDataGUI_get_value(self, "Charge") scr_modifier_adjust(queue_button_mods, scr_mod_charged, 1, scr_cbDataGUI_get_value(self, "Charge"));
             if update_debug || last_repeater != scr_cbDataGUI_get_value(self, "Repeater") scr_modifier_adjust(queue_button_mods, scr_mod_repeater, 2, scr_cbDataGUI_get_value(self, "Repeater")); 

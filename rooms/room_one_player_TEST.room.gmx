@@ -16,8 +16,8 @@
   <clearDisplayBuffer>0</clearDisplayBuffer>
   <makerSettings>
     <isSet>-1</isSet>
-    <w>992</w>
-    <h>600</h>
+    <w>1936</w>
+    <h>1056</h>
     <showGrid>-1</showGrid>
     <showObjects>-1</showObjects>
     <showTiles>-1</showTiles>
@@ -26,9 +26,9 @@
     <showViews>0</showViews>
     <deleteUnderlyingObj>0</deleteUnderlyingObj>
     <deleteUnderlyingTiles>0</deleteUnderlyingTiles>
-    <page>1</page>
-    <xoffset>-366</xoffset>
-    <yoffset>-132</yoffset>
+    <page>0</page>
+    <xoffset>-284</xoffset>
+    <yoffset>-307</yoffset>
   </makerSettings>
   <backgrounds>
     <background visible="0" foreground="-1" name="" x="0" y="0" htiled="0" vtiled="0" hspeed="0" vspeed="0" stretch="0"/>
@@ -62,8 +62,26 @@
     <instance objName="obj_lag_controller" x="0" y="112" name="inst_B6E05C36" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_camera_control" x="0" y="32" name="inst_4CB23859" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_debug_new" x="0" y="0" name="inst_BA48C796" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_player" x="304" y="160" name="inst_FE07C583" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_item" x="80" y="32" name="inst_6971EA03" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_item" x="112" y="32" name="inst_54C9B36B" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_item" x="128" y="32" name="inst_A15B4630" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_item" x="144" y="32" name="inst_C6266030" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_item" x="160" y="32" name="inst_8D25CB5D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_item" x="176" y="32" name="inst_D51A6EE7" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_item" x="192" y="32" name="inst_3C87659F" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_item" x="208" y="32" name="inst_6DC7DA01" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_item" x="224" y="32" name="inst_07EFBB97" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_item" x="240" y="32" name="inst_BA0071D5" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_item" x="256" y="32" name="inst_C5918301" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_item" x="272" y="32" name="inst_136E5749" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_item" x="288" y="32" name="inst_25996780" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_item" x="304" y="32" name="inst_82779E66" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_item" x="320" y="32" name="inst_3DDA5F3A" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_item" x="336" y="32" name="inst_36A43E62" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_item" x="352" y="32" name="inst_3DB1A3DB" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_item" x="368" y="32" name="inst_1D01ACC8" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_item" x="384" y="32" name="inst_809CF1BE" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_item" x="400" y="32" name="inst_E4CC3858" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

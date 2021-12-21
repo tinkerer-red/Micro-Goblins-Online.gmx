@@ -376,19 +376,21 @@ if is_visible()
   var yy = y+lengthdir_y(16, direction)
   draw_line(x, y, xx, yy)
   
-  draw_set_color(c_lime)
-  var xx = x+lengthdir_x(16, move_dir)
-  var yy = y+lengthdir_y(16, move_dir)
-  draw_line(x, y, xx, yy)
-  
-  //draw_set_color(c_yellow)
-  //var xx = x+lengthdir_x(16, direction)
-  //var yy = y+lengthdir_y(16, direction)
-  //draw_line(x, y, xx, yy)
+  if variable_instance_exists(id, "move_dir"){
+    draw_set_color(c_lime)
+    var xx = x+lengthdir_x(16, move_dir)
+    var yy = y+lengthdir_y(16, move_dir)
+    draw_line(x, y, xx, yy)
+  }
   
   
   draw_set_color(c_white)
 }
+
+
+
+
+
 </string>
           </argument>
         </arguments>

@@ -10,6 +10,7 @@ Healing (heals the collided entity)
 Overcharge (buffs the collided entity for a short time, mod count = length of time, and buff strength)
 Rainbow (the hue of the weapon is continuously changing, mod count = change speed)
 Psycho (All mods attempt to do the opposite, so heat seaking would steer away from enemies, guiding would move in the oposite direction of the player's inputs etc)
+clone (this will clone any entity in the game, modcount = clone count)
 
 
 ===Global===

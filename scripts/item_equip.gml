@@ -14,19 +14,26 @@ switch (equipment_slot){
   default:           var item_key = "";             break; //this is only here to prevent reading from a bad section of ram
 }
 
+//grab the item
 var equipment_item = nbt[? item_key];
 
 var inventory = nbt[? "inventory"];
-var inv_item = inventory[| inv_slot-6];
+var inv_item = inventory[| inv_slot];
 
 nbt[? item_key] = inv_item
 
+//if there is something in the equipment slot
 if (ds_map_exists(nbt, item_key))
 && (equipment_item != undefined)
 && ds_exists(equipment_item, ds_type_map){
-  inventory[| inv_slot-6] = equipment_item
-}else{
-  ds_list_delete(inventory, inv_slot-6)
+  
+  //move the equipment item into the inventory
+  inventory[| inv_slot] = equipment_item
+  
+}else{  //if there is nothing inside the equipment slot
+  
+  //then delete the original listing of the inventory item to prevent item duping
+  ds_list_delete(inventory, inv_slot)
 }
 
 obj_menu.update_menus = true

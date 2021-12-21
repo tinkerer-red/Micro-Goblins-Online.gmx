@@ -46,6 +46,8 @@ enum sub_menu{
   unequip,
   consume,
   combine,
+  favorite,
+  unfavorite,
   drop,
 }
 
@@ -116,6 +118,7 @@ if (init_menu){
     
     
     //load the inventory of the player
+    menu_player_id[player_i] = noone
     with (obj_player){
       if (player_id_local = player_i){
         var _nbt = nbt;
@@ -355,13 +358,13 @@ for (player_i = 0; player_i &lt; global.numberOfLocalPlayers; player_i++)
     
     //draw the text box for lore and modifiers
     var x1 = x_off;
-    var y1 = y2+1+info_section_width[player_i]+1;
     var x2 = x1+info_section_width[player_i];
     var y2 = v_h[player_i]-art_border;
+    var y1 = y2-(art_border+art_border+sprite_get_height(fnt_menu)*5);
     
     sub_menu_x[player_i] = x1*_gui_scale;
     sub_menu_y[player_i] = y1*_gui_scale;
-    sub_menu_w[player_i] = (x2-x1)*_gui_scale;
+    sub_menu_w[player_i] = (inventory_x_off[player_i]-x1)*_gui_scale+1;
     sub_menu_h[player_i] = (y2-y1)*_gui_scale;
     //scr_draw_9slices_ext(spr_menu_9slice, 0, x1, y1, x2, y2, c_white, 1, 1)
     
@@ -642,6 +645,13 @@ for (player_i = 0; player_i &lt;= 8; player_i++)
         || (item_is_consumable(item)){
           sub_menu_event_inv_cursor_pos[player_i] = clamp(cursor_loc, 3, 5)
         }
+        
+        //if it's combinging let the cursor travel anywhere
+        if (sub_menu_is_combining[player_i])
+        &amp;&amp; (item_type = item_type_modifier){
+          sub_menu_event_inv_cursor_pos[player_i] = cursor_loc
+        }
+        
       }else{
         cursor_pos[player_i] = cursor_loc
       }
@@ -695,8 +705,14 @@ for (player_i = 0; player_i &lt;= 8; player_i++)
       if (obj_controller.menu_select_pressed[player_i] != 0){
         selected_this_frame[player_i] = true;
       }
+      
     }
   }
+  
+  //add an additional check to make sure nothing else changes the player's state
+  var player = menu_player_id[player_i];
+  if (player != noone) player.is_in_menu = menu_open[player_i];
+  
 }
 </string>
           </argument>
@@ -764,7 +780,6 @@ for (player_i = 0; player_i &lt;= global.numberOfLocalPlayers; player_i++){
           
           if (inv_loc &lt; ds_list_size(inventory_list)){
             selected_item_map[player_i] = inventory_list[| inv_loc]
-            show_debug_message(json_encode(selected_item_map[player_i]))
             if ds_exists(selected_item_map[player_i], ds_type_map){
               in_sub_menu[player_i] = true
             }else{
@@ -783,7 +798,8 @@ for (player_i = 0; player_i &lt;= global.numberOfLocalPlayers; player_i++){
     
     //if an item has been selected
     if (selected_item_map[player_i] != noone)
-    &amp;&amp; in_sub_menu[player_i]{
+    &amp;&amp; in_sub_menu[player_i]
+    {
       
       //check to see if the sub menu was just spawned
       if (sub_menu_spawned[player_i] = false){
@@ -807,7 +823,7 @@ for (player_i = 0; player_i &lt;= global.numberOfLocalPlayers; player_i++){
           }
         }
         
-        if (item_is_consumable(item)){
+        if (item_is_consumable(item) &amp;&amp; (!item_is_modifier(item))){
           ds_list_add(sub_menu_options[player_i], sub_menu.consume)
           sub_menu_text[player_i] += "Consume"+chr(10)
         }
@@ -817,9 +833,20 @@ for (player_i = 0; player_i &lt;= global.numberOfLocalPlayers; player_i++){
           sub_menu_text[player_i] += "Combine"+chr(10)
         }
         
-        ds_list_add(sub_menu_options[player_i], sub_menu.drop)
-        sub_menu_text[player_i] += "Drop"+chr(10)
+        //add a favorates option
+        if !item_is_favorited(item){
+          ds_list_add(sub_menu_options[player_i], sub_menu.favorite)
+          sub_menu_text[player_i] += "Favorite"+chr(10)
+        }else{
+          ds_list_add(sub_menu_options[player_i], sub_menu.unfavorite)
+          sub_menu_text[player_i] += "Unfavorite"+chr(10)
+        }
         
+        if !item_is_favorited(item){
+          //add a check to see if the item is a favoriteed item
+          ds_list_add(sub_menu_options[player_i], sub_menu.drop)
+          sub_menu_text[player_i] += "Drop"+chr(10)
+        }
         
       }
       
@@ -863,7 +890,9 @@ for (player_i = 0; player_i &lt;= global.numberOfLocalPlayers; player_i++){
         scr_draw_9slices_ext(spr_menu_9slice, 0, 0, 0, ww, hh, c_white, 1, _gui_scale)
         draw_set_font(global.font_menu)
         var art_border = (sprite_get_height(spr_menu_9slice) / 3)*_gui_scale;
-        draw_text_transformed(art_border+1, art_border+1, sub_menu_text[player_i], _gui_scale, _gui_scale, 0)
+        //draw_text_transformed(art_border+1, art_border+1, sub_menu_text[player_i], _gui_scale, _gui_scale, 0)
+        var item = selected_item_map[player_i]
+        _draw_lore(item, art_border, art_border, ww-art_border-art_border, hh-art_border-art_border, _gui_scale)
         
         surface_reset_target()
         
@@ -905,72 +934,76 @@ for (player_i = 0; player_i &lt;= global.numberOfLocalPlayers; player_i++){
           var event = events_list[| pos]
           
           switch event{
+            //equip event
             case sub_menu.equip:
               sub_menu_is_equiping[player_i] = true
-              sub_menu_event_inv_cursor_pos[player_i] = cursor_pos[player_i]
+              
               //move the cursor to a reasonable spot depending on the item
               if item_is_armor(selected_item_map[player_i]){
                 var item = selected_item_map[player_i];
                 var item_type = item[? "item_type"]
                 
-                switch item_type
-                {
-                  case item_type_armor_head:
-                    sub_menu_event_inv_cursor_pos[player_i] = equip.head
-                  break;
-                  case item_type_armor_body:
-                    sub_menu_event_inv_cursor_pos[player_i] = equip.body
-                  break;
-                  case item_type_armor_boggle:
-                    sub_menu_event_inv_cursor_pos[player_i] = equip.boggle
-                  break;
+                switch item_type{
+                  case item_type_armor_head: sub_menu_event_inv_cursor_pos[player_i] = equip.head break;
+                  case item_type_armor_body: sub_menu_event_inv_cursor_pos[player_i] = equip.body break;
+                  case item_type_armor_boggle: sub_menu_event_inv_cursor_pos[player_i] = equip.boggle break;
                 }
-                
               }else{ //if it's not an armor
                 sub_menu_event_inv_cursor_pos[player_i] = 5
               }
             break;
+            
+            //unequip event
             case sub_menu.unequip:
-              item_unequip(nbt_data[player_i], cursor_pos[player_i])
-              sub_menu_spawned[player_i] = false
-              sub_menu_anim_finished[player_i] = false
-              sub_menu_cursor_pos[player_i] = 0
-              in_sub_menu[player_i] = false
-              selected_item_map[player_i] = noone
-              surface_free(sub_menu_surface[player_i])
-              surface_free(lore_surface[player_i])
-              sub_menu_surface[player_i] = noone
-              lore_surface[player_i] = noone
-            break;
-            case sub_menu.consume:
+              item_unequip(menu_player_id[player_i], cursor_pos[player_i])
               
+              _close_sub_menu()
             break;
+            
+            //consume event
+            case sub_menu.consume:
+              sub_menu_is_combining[player_i] = true
+              sub_menu_event_inv_cursor_pos[player_i] = cursor_pos[player_i]
+            break;
+            
+            //combine event
             case sub_menu.combine:
               sub_menu_is_combining[player_i] = true
               sub_menu_event_inv_cursor_pos[player_i] = cursor_pos[player_i]
             break;
+            
+            //favorite event
+            case sub_menu.favorite:
+              var item = selected_item_map[player_i];
+              item[? "is_favorite"] = true
+              
+              //leave the sub menu
+              _close_sub_menu()
+              
+              //update the menu
+              update_menus = true
+            break;
+            
+            //unfavorite event
+            case sub_menu.unfavorite:
+              var item = selected_item_map[player_i];
+              item[? "is_favorite"] = false
+              
+              //leave the sub menu
+              _close_sub_menu()
+              
+              //update the menu
+              update_menus = true
+            break;
+            
+            //drop event
             case sub_menu.drop:
               //find the player
               var player = menu_player_id[player_i];
-              
-              //spawn the item
-              item_spawn(selected_item_map[player_i], player.x, player.y, 5, player.direction, player)
-              
-              //delete the item from the inventory
-              var _nbt = nbt_data[player_i]
-              var _inv = _nbt[? "inventory"]
-              ds_list_delete(_inv, cursor_pos[player_i]-6) 
+              item_drop(player, cursor_pos[player_i])
               
               //leave the sub menu
-              sub_menu_spawned[player_i] = false
-              sub_menu_anim_finished[player_i] = false
-              sub_menu_cursor_pos[player_i] = 0
-              in_sub_menu[player_i] = false
-              selected_item_map[player_i] = noone
-              surface_free(sub_menu_surface[player_i])
-              surface_free(lore_surface[player_i])
-              sub_menu_surface[player_i] = noone
-              lore_surface[player_i] = noone
+              _close_sub_menu()
               
               //update the menu
               update_menus = true
@@ -992,15 +1025,7 @@ for (player_i = 0; player_i &lt;= global.numberOfLocalPlayers; player_i++){
         &amp;&amp; backed_this_frame[player_i] = false{
           backed_this_frame[player_i] = true;
           
-          sub_menu_spawned[player_i] = false
-          sub_menu_anim_finished[player_i] = false
-          sub_menu_cursor_pos[player_i] = 0
-          in_sub_menu[player_i] = false
-          selected_item_map[player_i] = noone
-          surface_free(sub_menu_surface[player_i])
-          surface_free(lore_surface[player_i])
-          sub_menu_surface[player_i] = noone
-          lore_surface[player_i] = noone
+          _close_sub_menu()
         }
       }
       
@@ -1017,24 +1042,60 @@ for (player_i = 0; player_i &lt;= global.numberOfLocalPlayers; player_i++){
           
           var inv_loc = cursor_pos[player_i]-6
           
-          
+          ///actually equip the item
           if (sub_menu_is_equiping[player_i]) {
             sub_menu_is_equiping[player_i] = false
-            item_equip(nbt_data[player_i], sub_menu_event_inv_cursor_pos[player_i], cursor_pos[player_i])
-            
-            sub_menu_spawned[player_i] = false
-            sub_menu_anim_finished[player_i] = false
-            sub_menu_cursor_pos[player_i] = 0
-            in_sub_menu[player_i] = false
-            selected_item_map[player_i] = noone
-            surface_free(sub_menu_surface[player_i])
-            surface_free(lore_surface[player_i])
-            sub_menu_surface[player_i] = noone
-            lore_surface[player_i] = noone
+            item_equip(nbt_data[player_i], sub_menu_event_inv_cursor_pos[player_i], cursor_pos[player_i]-6)
           }
+          
+          //actually combine the item
           if (sub_menu_is_combining[player_i]) {
             sub_menu_is_combining[player_i] = false
+            
+            var mod_item = selected_item_map[player_i]
+            var mods_map = mod_item[? "modifiers"]
+            
+            var _nbt = nbt_data[player_i]
+            var inventory = _nbt[? "inventory"];
+            
+            if (sub_menu_event_inv_cursor_pos[player_i] &lt; 6){
+              switch (sub_menu_event_inv_cursor_pos[player_i]){
+                case equip.head:   var item_key = "armor_head";   break;
+                case equip.body:   var item_key = "armor_body";   break;
+                case equip.boggle: var item_key = "armor_boggle"; break;
+                case equip.item_a: var item_key = "held_item_a";  break;
+                case equip.item_b: var item_key = "held_item_b";  break;
+                case equip.item_c: var item_key = "held_item_c";  break;
+                default:           var item_key = "";             break; //this is only here to prevent reading from a bad section of ram
+              }
+              var combining_item = _nbt[? item_key];
+            }else{
+              var inv_slot = sub_menu_event_inv_cursor_pos[player_i]
+              var combining_item = inventory[| inv_slot-6];
+            }
+            
+            var mod_script = ds_map_find_first(mods_map)
+            //for each item in the modifier's map
+            for (var i = 0; i &lt; ds_map_size(mods_map); i++){
+              
+              //add that many of the modifier to the selected item
+              var mod_count = mods_map[? mod_script]
+              repeat(mod_count) {
+                item_add_modifier(combining_item, mod_script);
+              }
+              
+              var mod_script = ds_map_find_next(mods_map, mod_script)
+            }
+            
+            //lastly make sure to destroy the modifier item
+            ds_map_destroy(mod_item)
+            ds_list_delete(inventory, cursor_pos[player_i]-6)
+            
+            cursor_pos[player_i] = sub_menu_event_inv_cursor_pos[player_i]
           }
+          
+          _close_sub_menu()
+        
         }
       }
       
@@ -1250,16 +1311,16 @@ for (player_i = 0; player_i &lt;= global.numberOfLocalPlayers; player_i++){
       var menu_x_off = vx+floor((vw-w)/2)
       var menu_y_off = vy
       
-      var xx = sub_menu_x[player_i]+menu_x_off;
-      var yy = sub_menu_y[player_i]+menu_y_off;
-      var ww = sub_menu_w[player_i];
-      var hh = sub_menu_h[player_i];
+      var xx = round(sub_menu_x[player_i]+menu_x_off);
+      var yy = round(sub_menu_y[player_i]+menu_y_off);
+      var ww = round(sub_menu_w[player_i]);
+      var hh = round(sub_menu_h[player_i]);
       
       
       //if the sub menu is done with it's open animation then just draw it normally in place
       if (sub_menu_anim_finished[player_i] = true){
         texture_set_interpolation(true)  
-        draw_surface_stretched(sub_menu_surface[player_i], xx, yy, ww-1, hh-1)
+        draw_surface_stretched(sub_menu_surface[player_i], xx, yy, ww, hh)
         texture_set_interpolation(false)
       }
       
@@ -1278,7 +1339,7 @@ for (player_i = 0; player_i &lt;= global.numberOfLocalPlayers; player_i++){
         show_debug_player(0, "multiplier = "+string(multiplier))
         
         texture_set_interpolation(true)
-        draw_surface_part_ext(sub_menu_surface[player_i], 0, 0, ww, draw_h_section, xx, anim_y, (ww-1)/ww, (draw_h_section-1)/draw_h_section, c_white, 1)
+        draw_surface_part_ext(sub_menu_surface[player_i], 0, 0, ww, draw_h_section, xx, anim_y, (ww)/ww, (draw_h_section)/draw_h_section, c_white, 1)
         texture_set_interpolation(false)
         
         sub_menu_anim_frame[player_i] += 1*lag()

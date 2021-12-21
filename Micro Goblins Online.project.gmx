@@ -534,16 +534,21 @@
         <scripts name="private">
           <script>scripts\_nbt_data_empty.gml</script>
           <script>scripts\_nbt_data_debug.gml</script>
+          <script>scripts\_close_sub_menu.gml</script>
+          <script>scripts\_draw_lore.gml</script>
         </scripts>
         <script>scripts\nbt_data_load.gml</script>
         <script>scripts\item_is_consumable.gml</script>
         <script>scripts\item_is_modifier.gml</script>
+        <script>scripts\item_is_favorited.gml</script>
         <script>scripts\item_is_equipable.gml</script>
         <script>scripts\item_is_armor.gml</script>
         <script>scripts\item_equip.gml</script>
         <script>scripts\item_unequip.gml</script>
         <script>scripts\item_spawn.gml</script>
         <script>scripts\item_give_player.gml</script>
+        <script>scripts\item_add_modifier.gml</script>
+        <script>scripts\item_drop.gml</script>
       </scripts>
       <script>scripts\is_enemy.gml</script>
       <script>scripts\is_entity.gml</script>
@@ -1660,7 +1665,6 @@
     <object>objects\obj_test</object>
     <object>objects\obj_gml_task_handler</object>
   </objects>
-  <timelines name="timelines"/>
   <rooms name="rooms">
     <room>rooms\room_one_player_TEST</room>
     <room>rooms\room8</room>

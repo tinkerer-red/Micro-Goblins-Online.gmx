@@ -30,7 +30,7 @@
 
 //keep track of the item's nbt data
 if !variable_instance_exists(self, "nbt"){
-  nbt = json_decode('{ "hue": 255.000000, "is_favorite": "true", "sub_sprite_one": 1.000000, "item_type": 0.000000, "sprite": 1.000000, "modifiers": { "scr_mod_paint": 4.000000, "scr_mod_repeater": 1.000000 }, "modifiers_string": "repeater,scr_mod_paint,scr_mod_paint,scr_mod_paint,scr_mod_paint", "count": 1.000000, "sub_sprite_two": 4.000000, "value": 0.000000, "description": "This is the description of the item", "name": "item_name" }')
+  nbt = json_decode('{ "hue": 255.000000, "is_favorite": 0, "sub_sprite_one": 1.000000, "item_type": 0.000000, "sprite": 1.000000, "modifiers": { "scr_mod_paint": 4.000000, "scr_mod_repeater": 1.000000 }, "modifiers_string": "repeater,scr_mod_paint,scr_mod_paint,scr_mod_paint,scr_mod_paint", "count": 1.000000, "sub_sprite_two": 4.000000, "value": 0.000000, "description": "This is the description of the item", "name": "item_name" }')
 }
 
 //keep track of who dropped the item
@@ -180,7 +180,7 @@ if (drop_cooldown &gt; 0){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//allow players to pick up the item
+            <string>///allow players to pick up the item
 
 if (drop_cooldown = 0){
   
@@ -192,8 +192,18 @@ if (drop_cooldown = 0){
   &amp;&amp; (item_owner.object_index = obj_player)
   &amp;&amp; point_in_circle(x, y, item_owner.x, item_owner.y, col_radius)
   {
-    collector_id = item_owner
-  
+    possible_collector = item_owner
+    
+    var player_nbt = possible_collector.nbt
+    var max_slot_count = player_nbt[? "max_inventory_slots"]
+    var inventory = player_nbt[? "inventory"]
+    
+    //if there is inventory space then pick up the item
+    if (ds_list_size(inventory) &lt; max_slot_count){
+      collector_id = possible_collector
+    }
+    
+    
   }else{ //if the owner isnt there to collect
     var possible_collectors_list = instance_nearest_list(x, y, obj_player)
     

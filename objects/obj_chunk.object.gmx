@@ -691,6 +691,9 @@ if is_visible(){
 
   //draw the water first so it's underneath
   if (has_water = true){
+    draw_set_alpha(1)
+    draw_set_color(c_white)
+    
     if (global.chunk_handler.chunk_water_surface_drawn_this_frame = false)
     || !surface_exists(global.chunk_handler.chunk_water_surface)
     {

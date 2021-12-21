@@ -14,13 +14,13 @@ if (item_type = item_type_weapon_melee)
   return true;
 }
 
-var mods = item[? "modifiers"]
+var modifiers = item[? "modifiers"]
 
 if (item_type = item_type_default)
-&& (mods[? scr_mod_consume] = undefined){
-  return false;
+&& (modifiers[? scr_mod_consume] != undefined){
+  return true;
 }else{
-   return true;
+   return false;
 }
 
 

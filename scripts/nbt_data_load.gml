@@ -30,26 +30,6 @@ nbt[? "max_inventory_slots"] = 20
 if !ds_map_exists(nbt, "inventory"){
 nbt[? "inventory"] = ds_list_create()
 }
-/*
-if !ds_map_exists(nbt, "armor_head"){
-nbt[? "armor_head"] = 
-}
-if !ds_map_exists(nbt, "armor_body"){
-nbt[? "armor_body"] = 
-}
-if !ds_map_exists(nbt, "armor_boggle"){
-nbt[? "armor_boggle"] = 
-}
-if !ds_map_exists(nbt, "held_item_a"){
-nbt[? "held_item_a"] = 
-}
-if !ds_map_exists(nbt, "held_item_b"){
-nbt[? "held_item_b"] = 
-}
-if !ds_map_exists(nbt, "held_item_c"){
-nbt[? "held_item_c"] = 
-}
-*/
 
 //cycle through the inventory list and convert map strings into maps
 var inv = nbt[? "inventory"]

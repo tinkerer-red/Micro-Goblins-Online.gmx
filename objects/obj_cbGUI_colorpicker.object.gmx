@@ -228,7 +228,8 @@ if (!surface_exists(_surface)) {
 if (surface_exists(_surface)) {
     draw_surface(_surface, x+_border/2, y+_bodyH+_border*2+_yoffset);
 }
-
+draw_set_alpha(1)
+draw_set_color(c_white)
 
 /*// debug
 draw_set_font(cbGUIDebugFont);

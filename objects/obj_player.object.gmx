@@ -125,6 +125,9 @@ attack = false
 attacking = false
 post_attack = false
 
+//menus
+is_in_menu = false
+
 ///Modifier variables
 for (var i = 0; i &lt;= 6; i++){
   item_mods[i] = -1
@@ -173,7 +176,7 @@ mod_evade_frame = 0
 
 enum e_player_state{
   move,
-  attack,
+  attack
 };
 
 self.player_state = e_player_state.move
@@ -182,7 +185,7 @@ enum e_player_anim{
   idle,
   walk,
   rot,
-  dmg,
+  dmg
 };
 
 self.player_anim_state = e_player_anim.idle
@@ -872,7 +875,7 @@ if (htme_isLocal())
             <string>///player state handler
 
 
-if (self.player_state = e_player_state.move)
+if (self.player_state = e_player_state.move) &amp;&amp; (!is_in_menu)
 {
   scr_player_state_move_input()
   
@@ -951,7 +954,9 @@ for (var i = 0; i &lt; 3; i++)
 ///////////////////////////
 //Melee weapon cancel check
 ///////////////////////////
-if (!is_jocky) &amp;&amp; (self.item_a_pressed || self.item_b_pressed || self.item_c_pressed)
+if (!is_jocky)
+&amp;&amp; (self.item_a_pressed || self.item_b_pressed || self.item_c_pressed)
+&amp;&amp; (!is_in_menu)
 {
   if (self.weap_num &gt;= 0) &amp;&amp; (self.player_state = e_player_state.attack)
   {
@@ -1006,7 +1011,9 @@ if (!is_jocky) &amp;&amp; (self.item_a_pressed || self.item_b_pressed || self.it
 //Button Queue
 ////////////////////////////////////////////////////////////////////
 
-if (!is_jocky) &amp;&amp; (self.player_state = e_player_state.move)
+if (!is_jocky)
+&amp;&amp; (self.player_state = e_player_state.move)
+&amp;&amp; (!is_in_menu)
 {
   if (self.item_a || self.item_b || self.item_c) || (self.mod_charge_timer &gt;= room_speed)
   {

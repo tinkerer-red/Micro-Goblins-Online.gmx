@@ -196,7 +196,9 @@ switch (_type) {
         draw_set_halign(fa_left);
         draw_set_valign(fa_middle);
         draw_text(x + _indent * _c._folderIndent + _c._colorW + _c._padding, y + _c._rowH / 2, _name);
-
+        draw_set_alpha(1)
+        draw_set_color(c_white)
+        
         _component.x = x + _c._bodyW - 150;
         _component.y = y + _topPadding;
         break;
@@ -217,6 +219,8 @@ if (_tooltip != noone) {
     
 }
 draw_set_valign(fa_top)
+draw_set_alpha(1)
+draw_set_color(c_white)
 /*
 if (_c._debug) {
     draw_set_alpha(.5);

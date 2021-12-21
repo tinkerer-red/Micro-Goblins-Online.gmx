@@ -24,5 +24,12 @@ if !is_undefined(map)
     draw_sprite_stretched(spr, 0, xx, yy, width, height)
     shader_reset()
   }
+  
+  //also draw the favorite mark if applicable
+  var fav = map[? "is_favorite"];
+  if !is_undefined(fav)
+  && (fav = true){
+    draw_sprite_stretched_ext(fnt_menu, 71, xx, yy, width/2, height/2, c_orange, 1)
+  }
 }
 

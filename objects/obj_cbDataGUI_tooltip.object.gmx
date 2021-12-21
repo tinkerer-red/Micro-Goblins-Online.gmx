@@ -248,6 +248,7 @@ if (!position_meeting(_nx, _ny, self) &amp;&amp; _mouseOver) {
           <argument>
             <kind>1</kind>
             <string>// ICON
+if _component._c._isOpen{
 if (_mouseOver) draw_set_alpha(1);
 else draw_set_alpha(.5);
 draw_sprite(sprite_tooltip_icon, 0, x, y);
@@ -288,7 +289,8 @@ if (alpha != 0) {
     d3d_transform_set_identity();
 
 }
-
+}
+draw_set_alpha(1)
 </string>
           </argument>
         </arguments>

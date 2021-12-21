@@ -1,6 +1,7 @@
-///item_unequip(nbt, equipment_slot)
+///item_unequip(player, equipment_slot)
 
-var nbt = argument0
+var player = argument0
+var nbt = player.nbt
 var equipment_slot = argument1
 
 switch (equipment_slot){
@@ -13,21 +14,26 @@ switch (equipment_slot){
   default:           var item_key = "";             break; //this is only here to prevent reading from a bad section of ram
 }
 
+//grab the item we want to handle
 var equipment_item = nbt[? item_key];
 
+
+//check to make sure there is room for the item
 var max_inventory_slots = nbt[? "max_inventory_slots"]
 var inventory = nbt[? "inventory"];
 
+//if the inventory has room
 if (ds_list_size(inventory) < max_inventory_slots){
+  
   ds_list_add(inventory, equipment_item)
+  
 }else{//if the inventory is full, then drop the item
+  
   //drop the item here
-  ///
-  ///
-  ///
-  ///
+  item_drop(player, equipment_slot)
 }
 
+//remove the key from the nbt data for the equipment slot
 ds_map_delete(nbt, item_key)
 
 
